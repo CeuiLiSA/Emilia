@@ -1,5 +1,6 @@
 package ceuilisa.mirai;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import javax.sql.CommonDataSource;
 
+import ceuilisa.mirai.activities.BaseActivity;
 import ceuilisa.mirai.fragments.FragmentLeft;
 import ceuilisa.mirai.fragments.FragmentRight;
 import ceuilisa.mirai.utils.Common;

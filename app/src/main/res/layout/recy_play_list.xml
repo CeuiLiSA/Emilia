@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.circularreveal.cardview.CircularRevealCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="@dimen/sixteen_dp"
+    android:layout_marginEnd="@dimen/sixteen_dp"
+    android:layout_marginTop="@dimen/eight_dp"
+    app:cardElevation="@dimen/four_dp"
+    android:layout_marginBottom="@dimen/eight_dp"
+    android:clickable="true"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/number"
+            android:text="2"
+            android:layout_margin="@dimen/sixteen_dp"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/song_name"
+            android:layout_toEndOf="@+id/number"
+            android:layout_marginTop="@dimen/eight_dp"
+            android:text="撒阿萨德阿萨德阿萨德"
+            android:textColor="#333333"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="撒大声地阿"
+            android:layout_marginTop="@dimen/six_dp"
+            android:id="@+id/song_author"
+            android:layout_marginBottom="@dimen/eight_dp"
+            android:layout_below="@+id/song_name"
+            android:textSize="12sp"
+            android:layout_toEndOf="@+id/number"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</android.support.design.circularreveal.cardview.CircularRevealCardView>
