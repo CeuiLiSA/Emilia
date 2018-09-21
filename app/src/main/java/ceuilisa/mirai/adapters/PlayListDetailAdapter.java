@@ -15,18 +15,18 @@ import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
+import ceuilisa.mirai.response.PlayListDetailResponse;
 import ceuilisa.mirai.response.PlayListTitleResponse;
-import ceuilisa.mirai.utils.RoundImageView;
 
 
-public class PlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private OnItemClickListener mOnItemClickListener;
-    private List<PlayListTitleResponse.Result.PlayList> allIllust;
+    private List<PlayListDetailResponse.PlaylistBean.TracksBean> allIllust;
 
-    public PlayListAdapter(List<PlayListTitleResponse.Result.PlayList> list, Context context) {
+    public PlayListDetailAdapter(List<PlayListDetailResponse.PlaylistBean.TracksBean> list, Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(mContext);
         allIllust = list;
@@ -35,15 +35,13 @@ public class PlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mLayoutInflater.inflate(R.layout.recy_play_list, parent, false);
+        View view = mLayoutInflater.inflate(R.layout.recy_play_list_detail, parent, false);
         return new TagHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((TagHolder) holder).mTextView.setText(allIllust.get(position).name);
-        ((TagHolder) holder).mTextView2.setText(allIllust.get(position).playCount);
-        Glide.with(mContext).load(allIllust.get(position).coverImgUrl).into(((TagHolder) holder).mNiceImageView);
+        ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName());
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(v ->
                     mOnItemClickListener.onItemClick(holder.itemView, position, 0));
@@ -66,9 +64,7 @@ public class PlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TagHolder(View itemView) {
             super(itemView);
 
-            mNiceImageView = itemView.findViewById(R.id.playlist_photo);
             mTextView = itemView.findViewById(R.id.song_name);
-            mTextView2 = itemView.findViewById(R.id.song_author);
         }
     }
 }

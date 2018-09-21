@@ -1,5 +1,6 @@
 package ceuilisa.mirai.network;
 
+import ceuilisa.mirai.response.PlayListDetailResponse;
 import ceuilisa.mirai.response.PlayListTitleResponse;
 import io.reactivex.Observable;
 import retrofit2.Call;
@@ -11,4 +12,7 @@ public interface AppApi {
 
     @GET("search/{username}?type=PLAYLIST")
     Observable<PlayListTitleResponse> getAllPlayList(@Path("username") String username);
+
+    @GET("playlist/{id}")
+    Observable<PlayListDetailResponse> getPlayListDetail(@Path("id") String id);
 }

@@ -5,13 +5,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected Context mContext;
-    protected ProgressBar mProgressBar;
     protected Activity mActivity;
     protected int mLayoutID;
 
@@ -25,10 +24,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         initData();
     }
 
-    void initView(){
+
+    void initView() {
         mContext = this;
         mActivity = this;
-        mProgressBar = new ProgressBar(mContext);
+
     }
 
     abstract void initData();

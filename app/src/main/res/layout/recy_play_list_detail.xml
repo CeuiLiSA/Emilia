@@ -4,21 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.othershe.library.NiceImageView
-        android:id="@+id/playlist_photo"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="@dimen/four_dp"
-        android:layout_marginTop="@dimen/four_dp"
-        android:layout_marginEnd="@dimen/sixteen_dp"
-        android:layout_marginBottom="@dimen/four_dp"
-        app:corner_radius="@dimen/four_dp" />
-
-
     <TextView
         android:id="@+id/song_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/sixteen_dp"
         android:layout_marginTop="@dimen/eight_dp"
         android:layout_toEndOf="@+id/playlist_photo"
         android:text="撒阿萨德阿萨德阿萨德"
@@ -29,6 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/song_name"
+        android:layout_marginStart="@dimen/sixteen_dp"
         android:layout_marginTop="@dimen/six_dp"
         android:layout_marginBottom="@dimen/eight_dp"
         android:layout_toEndOf="@+id/playlist_photo"
@@ -38,7 +29,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/playlist_photo"
-        android:layout_toEndOf="@+id/playlist_photo"
+        android:layout_below="@+id/song_author"
+        android:layout_toEndOf="@+id/song_author"
         android:background="#e6e6e6" />
 </RelativeLayout>

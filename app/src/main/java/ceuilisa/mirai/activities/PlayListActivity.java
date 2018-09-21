@@ -1,22 +1,26 @@
 package ceuilisa.mirai.activities;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ProgressBar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListAdapter;
+import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.PlayListTitleResponse;
 import ceuilisa.mirai.utils.Common;
+import ceuilisa.mirai.utils.Constant;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 public class PlayListActivity extends BaseActivity {
 
@@ -26,12 +30,7 @@ public class PlayListActivity extends BaseActivity {
     void initView() {
         super.initView();
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
         mRecyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -41,7 +40,7 @@ public class PlayListActivity extends BaseActivity {
 
     @Override
     void initData() {
-        RetrofitUtil.getAppApi().getAllPlayList("CeuiLiSA")
+        RetrofitUtil.getAppApi().getAllPlayList(Constant.USER_NAME)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<PlayListTitleResponse>() {
@@ -51,8 +50,18 @@ public class PlayListActivity extends BaseActivity {
 
                     @Override
                     public void onNext(PlayListTitleResponse playListTitleResponse) {
-                        PlayListAdapter adapter = new PlayListAdapter(playListTitleResponse.result.playlists, mContext);
-                        mRecyclerView.setAdapter(adapter);
+                        List<PlayListTitleResponse.Result.PlayList> mPlayLists =
+                                new ArrayList<>(playListTitleResponse.result.playlists);
+                        Common.showLog(playListTitleResponse.result.playlists.size());
+                        PlayListAdapter mAdapter = new PlayListAdapter(mPlayLists, mContext);
+                        mAdapter.setOnItemClickListener((view, position, viewType) -> {
+                            Intent intent = new Intent(mContext, PlayListDetailActivity.class);
+                            intent.putExtra("id", mPlayLists.get(position).id);
+                            intent.putExtra("name", mPlayLists.get(position).name);
+                            intent.putExtra("coverImg", mPlayLists.get(position).coverImgUrl);
+                            mContext.startActivity(intent);
+                        });
+                        mRecyclerView.setAdapter(new ScaleInAnimationAdapter(mAdapter));
                     }
 
                     @Override
@@ -61,7 +70,6 @@ public class PlayListActivity extends BaseActivity {
 
                     @Override
                     public void onComplete() {
-                        mProgressBar.setVisibility(View.INVISIBLE);
                     }
                 });
     }
