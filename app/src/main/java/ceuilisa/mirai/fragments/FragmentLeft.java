@@ -55,31 +55,11 @@ public class FragmentLeft extends BaseFragment {
 
     @Override
     void initData() {
-        RetrofitUtil.getAppApi().getAllPlayList("CeuiLiSA")
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<PlayListTitleResponse>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
 
-                    @Override
-                    public void onNext(PlayListTitleResponse playListTitleResponse) {
-                        Common.showLog(playListTitleResponse.result.playlists.get(1).name);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
-                });
     }
 
     @Override
-    void setLayoutID() {
+    void initLayout() {
         mLayoutID = R.layout.fragment_left;
     }
 }

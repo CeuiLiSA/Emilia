@@ -46,7 +46,7 @@ public class PlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         Glide.with(mContext).load(allIllust.get(position).coverImgUrl).into(((TagHolder) holder).mNiceImageView);
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(v ->
-                    mOnItemClickListener.onItemClick(holder.itemView, position, 0));
+                    mOnItemClickListener.onItemClick(((TagHolder) holder).mNiceImageView, position, 0));
         }
     }
 

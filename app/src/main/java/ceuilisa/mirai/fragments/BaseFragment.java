@@ -16,6 +16,8 @@ public abstract class BaseFragment extends Fragment {
     protected Activity mActivity;
     protected int mLayoutID;
 
+    abstract void initLayout();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +28,7 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        setLayoutID();
+        initLayout();
         View v = inflater.inflate(mLayoutID, container, false);
         return initView(v);
     }
@@ -40,6 +42,4 @@ public abstract class BaseFragment extends Fragment {
     abstract View initView(View v);
 
     abstract void initData();
-
-    abstract void setLayoutID();
 }

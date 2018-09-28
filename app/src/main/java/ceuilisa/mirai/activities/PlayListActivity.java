@@ -1,6 +1,7 @@
 package ceuilisa.mirai.activities;
 
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +26,11 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 public class PlayListActivity extends BaseActivity {
 
     private RecyclerView mRecyclerView;
+
+    @Override
+    void initLayout() {
+        mLayoutID = R.layout.activity_play_list;
+    }
 
     @Override
     void initView() {
@@ -56,10 +62,12 @@ public class PlayListActivity extends BaseActivity {
                         PlayListAdapter mAdapter = new PlayListAdapter(mPlayLists, mContext);
                         mAdapter.setOnItemClickListener((view, position, viewType) -> {
                             Intent intent = new Intent(mContext, PlayListDetailActivity.class);
+                            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                                    .makeSceneTransitionAnimation(mActivity, view, "sharedView");
                             intent.putExtra("id", mPlayLists.get(position).id);
                             intent.putExtra("name", mPlayLists.get(position).name);
                             intent.putExtra("coverImg", mPlayLists.get(position).coverImgUrl);
-                            mContext.startActivity(intent);
+                            mContext.startActivity(intent, optionsCompat.toBundle());
                         });
                         mRecyclerView.setAdapter(new ScaleInAnimationAdapter(mAdapter));
                     }
@@ -72,10 +80,5 @@ public class PlayListActivity extends BaseActivity {
                     public void onComplete() {
                     }
                 });
-    }
-
-    @Override
-    void setLayoutID() {
-        mLayoutID = R.layout.activity_play_list;
     }
 }

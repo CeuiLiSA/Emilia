@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.othershe.library.NiceImageView;
 
 import java.util.List;
@@ -16,7 +15,6 @@ import java.util.List;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.response.PlayListDetailResponse;
-import ceuilisa.mirai.response.PlayListTitleResponse;
 
 
 public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -42,9 +40,10 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName());
+        ((TagHolder) holder).mTextView2.setText(String.valueOf(position + 1));
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(v ->
-                    mOnItemClickListener.onItemClick(holder.itemView, position, 0));
+                    mOnItemClickListener.onItemClick(((TagHolder) holder).mNiceImageView, position, 0));
         }
     }
 
@@ -65,6 +64,7 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             super(itemView);
 
             mTextView = itemView.findViewById(R.id.song_name);
+            mTextView2 = itemView.findViewById(R.id.number);
         }
     }
 }

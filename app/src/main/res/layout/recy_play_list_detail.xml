@@ -4,13 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+
+    <TextView
+        android:layout_width="57dp"
+        android:text="235"
+        android:textSize="19sp"
+        android:gravity="center"
+        android:textColor="#989898"
+        android:id="@+id/number"
+        android:layout_height="57dp" />
+
     <TextView
         android:id="@+id/song_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/sixteen_dp"
         android:layout_marginTop="@dimen/eight_dp"
-        android:layout_toEndOf="@+id/playlist_photo"
+        android:layout_toEndOf="@+id/number"
         android:text="撒阿萨德阿萨德阿萨德"
         android:textColor="#333333" />
 
@@ -19,10 +28,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/song_name"
-        android:layout_marginStart="@dimen/sixteen_dp"
         android:layout_marginTop="@dimen/six_dp"
         android:layout_marginBottom="@dimen/eight_dp"
-        android:layout_toEndOf="@+id/playlist_photo"
+        android:layout_toEndOf="@+id/number"
         android:text="撒大声地阿"
         android:textSize="12sp" />
 
@@ -30,6 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/song_author"
-        android:layout_toEndOf="@+id/song_author"
+        android:layout_toEndOf="@+id/number"
         android:background="#e6e6e6" />
 </RelativeLayout>

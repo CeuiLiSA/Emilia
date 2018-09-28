@@ -179,19 +179,8 @@
         app:round_corner_top_left="@dimen/twelve_dp"
         app:round_corner_top_right="@dimen/twelve_dp">
 
-
-
-
     </com.gcssloop.widget.RCRelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:id="@+id/recyclerView"
-        app:layout_constraintTop_toBottomOf="@+id/devider_7"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_height="0dp">
-
-    </android.support.v7.widget.RecyclerView>
 
     <View
         android:layout_width="match_parent"
@@ -200,18 +189,5 @@
         android:layout_marginTop="60dp"
         android:id="@+id/devider_7"
         android:layout_height="1dp" />
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:fitsSystemWindows="true"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/play_list"
-        app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
-        app:titleTextColor="@android:color/white" />
 
 </android.support.constraint.ConstraintLayout>
