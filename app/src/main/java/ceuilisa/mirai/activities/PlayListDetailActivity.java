@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,11 +32,12 @@ public class PlayListDetailActivity extends BaseActivity {
 
     private int scrollDy;
     private String id, coverImg, name;
-    private TextView mTextView, mTextView2;
+    private LinearLayout mLinearLayout;
+    //private TextView mTextView, mTextView2;
     private RecyclerView mRecyclerView;
-    private ImageView mImageView;
-    private NiceImageView mImageView2;
-    private CircleImageView mCircleImageView;
+   // private ImageView mImageView;
+    //private NiceImageView mImageView2;
+    //private CircleImageView mCircleImageView;
 
     @Override
     void initLayout() {
@@ -50,12 +52,13 @@ public class PlayListDetailActivity extends BaseActivity {
         super.initView();
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
-        mImageView = findViewById(R.id.playlist_photo);
+        /*mImageView = findViewById(R.id.playlist_photo);
         mImageView2 = findViewById(R.id.imageView4);
-        mCircleImageView = findViewById(R.id.circleImageView);
+        mCircleImageView = findViewById(R.id.circleImageView);*/
         mRecyclerView = findViewById(R.id.recyclerView);
-        mTextView = findViewById(R.id.textView10);
-        mTextView2 = findViewById(R.id.textView9);
+        mLinearLayout = findViewById(R.id.header);
+        /*mTextView = findViewById(R.id.textView10);
+        mTextView2 = findViewById(R.id.textView9);*/
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -65,6 +68,8 @@ public class PlayListDetailActivity extends BaseActivity {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 scrollDy += dy;
+                //mLinearLayout.setPadding(0, scrollDy, 0, 0);
+                mLinearLayout.setPadding(scrollDy, -scrollDy, 0, 0);
                 Common.showLog(scrollDy);
             }
         });
@@ -75,10 +80,10 @@ public class PlayListDetailActivity extends BaseActivity {
         id = getIntent().getStringExtra("id");
         coverImg = getIntent().getStringExtra("coverImg");
         name = getIntent().getStringExtra("name");
-        Glide.with(mContext).load(coverImg).apply(bitmapTransform(
+        /*Glide.with(mContext).load(coverImg).apply(bitmapTransform(
                 new BlurTransformation(25, 5))).into(mImageView);
         Glide.with(mContext).load(coverImg).into(mImageView2);
-        mTextView.setText(name);
+        mTextView.setText(name);*/
         RetrofitUtil.getAppApi().getPlayListDetail(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -92,9 +97,9 @@ public class PlayListDetailActivity extends BaseActivity {
                         PlayListDetailAdapter adapter = new PlayListDetailAdapter(
                                 playListTitleResponse.getPlaylist().getTracks(), mContext);
                         mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
-                        mTextView2.setText(playListTitleResponse.getPlaylist().getCreator().getNickname());
+                       /* mTextView2.setText(playListTitleResponse.getPlaylist().getCreator().getNickname());
                         Glide.with(mContext).load(playListTitleResponse.getPlaylist().getCreator().
-                                getAvatarUrl()).into(mCircleImageView);
+                                getAvatarUrl()).into(mCircleImageView);*/
                     }
 
                     @Override
