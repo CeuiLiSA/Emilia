@@ -1,5 +1,6 @@
 package ceuilisa.mirai.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,16 +8,21 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.github.ybq.android.spinkit.SpinKitView;
+import com.github.ybq.android.spinkit.style.Wave;
 import com.othershe.library.NiceImageView;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
+import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.PlayListDetailResponse;
 import ceuilisa.mirai.utils.Common;
+import ceuilisa.mirai.utils.Reference;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -29,9 +35,9 @@ import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 public class PlayListDetailActivity extends BaseActivity {
 
-    private int scrollDy;
     private String id, coverImg, name;
     private TextView mTextView, mTextView2;
+    private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
     private ImageView mImageView;
     private NiceImageView mImageView2;
@@ -47,7 +53,6 @@ public class PlayListDetailActivity extends BaseActivity {
 
     @Override
     void initView() {
-        super.initView();
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
         mImageView = findViewById(R.id.playlist_photo);
@@ -56,18 +61,14 @@ public class PlayListDetailActivity extends BaseActivity {
         mRecyclerView = findViewById(R.id.recyclerView);
         mTextView = findViewById(R.id.textView10);
         mTextView2 = findViewById(R.id.textView9);
+        mProgressBar = findViewById(R.id.progress);
+        Wave wave = new Wave();
+        wave.setColor(getResources().getColor(R.color.colorPrimary));
+        mProgressBar.setIndeterminateDrawable(wave);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                scrollDy += dy;
-                Common.showLog(scrollDy);
-            }
-        });
     }
 
     @Override
@@ -89,12 +90,22 @@ public class PlayListDetailActivity extends BaseActivity {
 
                     @Override
                     public void onNext(PlayListDetailResponse playListTitleResponse) {
+                        Reference.allSongs = playListTitleResponse.getPlaylist().getTracks();
                         PlayListDetailAdapter adapter = new PlayListDetailAdapter(
                                 playListTitleResponse.getPlaylist().getTracks(), mContext);
-                        mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
+                        adapter.setOnItemClickListener(new OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position, int viewType) {
+                                Intent intent = new Intent(mContext, MusicActivity.class);
+                                intent.putExtra("index", position);
+                                startActivity(intent);
+                            }
+                        });
                         mTextView2.setText(playListTitleResponse.getPlaylist().getCreator().getNickname());
                         Glide.with(mContext).load(playListTitleResponse.getPlaylist().getCreator().
                                 getAvatarUrl()).into(mCircleImageView);
+                        mProgressBar.setVisibility(View.INVISIBLE);
+                        mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
                     }
 
                     @Override

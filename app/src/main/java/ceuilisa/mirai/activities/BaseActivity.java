@@ -20,15 +20,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         initLayout();
         setContentView(mLayoutID);
 
+        mContext = this;
+        mActivity = this;
         initView();
         initData();
     }
 
 
-    void initView() {
-        mContext = this;
-        mActivity = this;
-    }
+    abstract void initView();
 
     abstract void initData();
 }

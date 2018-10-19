@@ -8,23 +8,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.othershe.library.NiceImageView;
 
 import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.response.PlayListDetailResponse;
+import ceuilisa.mirai.response.ItemResponse;
+import ceuilisa.mirai.response.PlayListTitleResponse;
 
 
-public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private OnItemClickListener mOnItemClickListener;
-    private List<PlayListDetailResponse.PlaylistBean.TracksBean> allIllust;
+    private List<ItemResponse> allIllust;
 
-    public PlayListDetailAdapter(List<PlayListDetailResponse.PlaylistBean.TracksBean> list, Context context) {
+    public ItemListAdapter(List<ItemResponse> list, Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(mContext);
         allIllust = list;
@@ -33,27 +35,20 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mLayoutInflater.inflate(R.layout.recy_play_list_detail, parent, false);
+        View view = mLayoutInflater.inflate(R.layout.recy_item_list, parent, false);
         return new TagHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName());
-        if(allIllust.get(position).getAr().size() == 1) {
-            ((TagHolder) holder).mTextView3.setText(allIllust.get(position).getAr().get(0).getName());
-        } else {
-            StringBuilder artist = new StringBuilder();
-            for (int i = 0; i < allIllust.get(position).getAr().size(); i++) {
-                artist.append(allIllust.get(position).getAr().get(i).getName()).append(" / ");
-            }
-            ((TagHolder) holder).mTextView3.setText(artist.substring(0, artist.length() - 3));
-        }
-        ((TagHolder) holder).mTextView2.setText(String.valueOf(position + 1));
-        if (mOnItemClickListener != null) {
+        ((TagHolder) holder).mTextView.setText(String.valueOf(allIllust.get(position).getName()));
+        ((TagHolder) holder).mTextView2.setText(String.valueOf(allIllust.get(position).getId()));
+        ((TagHolder) holder).mTextView3.setText(String.valueOf(allIllust.get(position).getPassword()));
+        ((TagHolder) holder).mTextView4.setText(String.valueOf(allIllust.get(position).getVip()));
+        /*if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(v ->
                     mOnItemClickListener.onItemClick(((TagHolder) holder).mNiceImageView, position, 0));
-        }
+        }*/
     }
 
     @Override
@@ -66,15 +61,15 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     public class TagHolder extends RecyclerView.ViewHolder {
-        private TextView mTextView, mTextView2, mTextView3;
-        private NiceImageView mNiceImageView;
+        private TextView mTextView, mTextView2, mTextView3, mTextView4;
 
         TagHolder(View itemView) {
             super(itemView);
 
-            mTextView = itemView.findViewById(R.id.song_name);
-            mTextView2 = itemView.findViewById(R.id.number);
-            mTextView3 = itemView.findViewById(R.id.song_author);
+            mTextView = itemView.findViewById(R.id.title);
+            mTextView2 = itemView.findViewById(R.id.title_2);
+            mTextView3 = itemView.findViewById(R.id.title_3);
+            mTextView4 = itemView.findViewById(R.id.title_4);
         }
     }
 }

@@ -33,4 +33,31 @@ public class RetrofitUtil {
                 .build();
         return retrofit.create(AppApi.class);
     }
+
+
+    public static AppApi getTempApi(){
+
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                Log.i("RetrofitLog","retrofitBack = "+message);
+            }
+        });
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient
+                .Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .baseUrl(BASE_URL_2)
+                .build();
+        return retrofit.create(AppApi.class);
+    }
+
+
+
+    private static final String BASE_URL_2 = "http://104.129.180.80/";
 }

@@ -18,6 +18,10 @@ public abstract class BaseFragment extends Fragment {
 
     abstract void initLayout();
 
+    abstract View initView(View v);
+
+    abstract void initData();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,19 +31,18 @@ public abstract class BaseFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         initLayout();
         View v = inflater.inflate(mLayoutID, container, false);
         return initView(v);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initData();
     }
-
-    abstract View initView(View v);
-
-    abstract void initData();
 }
