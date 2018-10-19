@@ -8,7 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+<<<<<<< HEAD
 import android.widget.ProgressBar;
+=======
+import android.widget.LinearLayout;
+>>>>>>> 3ad3814ab5325e21c39b5237203fc29d833b46bb
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -36,12 +40,17 @@ import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 public class PlayListDetailActivity extends BaseActivity {
 
     private String id, coverImg, name;
+<<<<<<< HEAD
     private TextView mTextView, mTextView2;
     private ProgressBar mProgressBar;
+=======
+    private LinearLayout mLinearLayout;
+    //private TextView mTextView, mTextView2;
+>>>>>>> 3ad3814ab5325e21c39b5237203fc29d833b46bb
     private RecyclerView mRecyclerView;
-    private ImageView mImageView;
-    private NiceImageView mImageView2;
-    private CircleImageView mCircleImageView;
+   // private ImageView mImageView;
+    //private NiceImageView mImageView2;
+    //private CircleImageView mCircleImageView;
 
     @Override
     void initLayout() {
@@ -55,20 +64,39 @@ public class PlayListDetailActivity extends BaseActivity {
     void initView() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
-        mImageView = findViewById(R.id.playlist_photo);
+        /*mImageView = findViewById(R.id.playlist_photo);
         mImageView2 = findViewById(R.id.imageView4);
-        mCircleImageView = findViewById(R.id.circleImageView);
+        mCircleImageView = findViewById(R.id.circleImageView);*/
         mRecyclerView = findViewById(R.id.recyclerView);
+<<<<<<< HEAD
         mTextView = findViewById(R.id.textView10);
         mTextView2 = findViewById(R.id.textView9);
         mProgressBar = findViewById(R.id.progress);
         Wave wave = new Wave();
         wave.setColor(getResources().getColor(R.color.colorPrimary));
         mProgressBar.setIndeterminateDrawable(wave);
+=======
+        mLinearLayout = findViewById(R.id.header);
+        /*mTextView = findViewById(R.id.textView10);
+        mTextView2 = findViewById(R.id.textView9);*/
+>>>>>>> 3ad3814ab5325e21c39b5237203fc29d833b46bb
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
+<<<<<<< HEAD
+=======
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                scrollDy += dy;
+                //mLinearLayout.setPadding(0, scrollDy, 0, 0);
+                mLinearLayout.setPadding(scrollDy, -scrollDy, 0, 0);
+                Common.showLog(scrollDy);
+            }
+        });
+>>>>>>> 3ad3814ab5325e21c39b5237203fc29d833b46bb
     }
 
     @Override
@@ -76,10 +104,10 @@ public class PlayListDetailActivity extends BaseActivity {
         id = getIntent().getStringExtra("id");
         coverImg = getIntent().getStringExtra("coverImg");
         name = getIntent().getStringExtra("name");
-        Glide.with(mContext).load(coverImg).apply(bitmapTransform(
+        /*Glide.with(mContext).load(coverImg).apply(bitmapTransform(
                 new BlurTransformation(25, 5))).into(mImageView);
         Glide.with(mContext).load(coverImg).into(mImageView2);
-        mTextView.setText(name);
+        mTextView.setText(name);*/
         RetrofitUtil.getAppApi().getPlayListDetail(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -93,6 +121,7 @@ public class PlayListDetailActivity extends BaseActivity {
                         Reference.allSongs = playListTitleResponse.getPlaylist().getTracks();
                         PlayListDetailAdapter adapter = new PlayListDetailAdapter(
                                 playListTitleResponse.getPlaylist().getTracks(), mContext);
+<<<<<<< HEAD
                         adapter.setOnItemClickListener(new OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position, int viewType) {
@@ -106,6 +135,12 @@ public class PlayListDetailActivity extends BaseActivity {
                                 getAvatarUrl()).into(mCircleImageView);
                         mProgressBar.setVisibility(View.INVISIBLE);
                         mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
+=======
+                        mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
+                       /* mTextView2.setText(playListTitleResponse.getPlaylist().getCreator().getNickname());
+                        Glide.with(mContext).load(playListTitleResponse.getPlaylist().getCreator().
+                                getAvatarUrl()).into(mCircleImageView);*/
+>>>>>>> 3ad3814ab5325e21c39b5237203fc29d833b46bb
                     }
 
                     @Override
