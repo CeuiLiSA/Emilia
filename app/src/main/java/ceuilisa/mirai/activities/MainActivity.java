@@ -1,10 +1,17 @@
 package ceuilisa.mirai.activities;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -39,6 +46,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
         return false;
     };
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) mContext, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+    }
 
     @Override
     void initLayout() {

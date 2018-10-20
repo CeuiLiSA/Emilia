@@ -30,9 +30,9 @@
         android:id="@+id/song_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/song_name"
+        android:layout_alignBottom="@+id/playlist_photo"
         android:layout_marginTop="@dimen/six_dp"
-        android:layout_marginBottom="@dimen/eight_dp"
+        android:layout_marginBottom="@dimen/four_dp"
         android:layout_toEndOf="@+id/playlist_photo"
         android:text="撒大声地阿"
         android:textSize="12sp" />

@@ -6,6 +6,8 @@ android {
         applicationId "ceuilisa.mirai"
         minSdkVersion 21
         targetSdkVersion 28
+        renderscriptTargetApi 22
+        renderscriptSupportModeEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -39,7 +41,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.Othershe:NiceImageView:1.0.1'
     implementation 'com.gcssloop.widget:rclayout:1.6.0'
@@ -48,6 +51,12 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
     implementation 'com.github.ybq:Android-SpinKit:1.1.0'
+    implementation 'net.steamcrafted:materialiconlib:1.1.4'
+
+
+    implementation 'com.liulishuo.okdownload:okdownload:1.0.4-SNAPSHOT'
+    implementation 'com.liulishuo.okdownload:sqlite:1.0.4-SNAPSHOT'
+    implementation 'com.liulishuo.okdownload:okhttp:1.0.4-SNAPSHOT'
 
 
     testImplementation 'junit:junit:4.12'

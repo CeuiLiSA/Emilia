@@ -5,35 +5,41 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
-import android.support.v4.app.ActivityOptionsCompat;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-import ceuilisa.mirai.activities.PlayListDetailActivity;
-import ceuilisa.mirai.adapters.PlayListAdapter;
 import ceuilisa.mirai.interf.MusicOperate;
+import ceuilisa.mirai.interf.OnMusicPrepare;
+import ceuilisa.mirai.interf.OnMusicComplete;
 import ceuilisa.mirai.network.RetrofitUtil;
-import ceuilisa.mirai.response.PlayListTitleResponse;
 import ceuilisa.mirai.response.SingleSongResponse;
 import ceuilisa.mirai.utils.Common;
-import ceuilisa.mirai.utils.Constant;
+import ceuilisa.mirai.utils.Reference;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 public class MusicService extends Service implements MusicOperate {
 
-    private boolean isPlaying = false;
     private Context mContext;
-    private static volatile MusicService instance = null;
     private MediaPlayer mPlayer;
+    private SingleSongResponse mSingleSong;
+    private int nowPlayIndex = -1;
+    private boolean isPlaying = false;
+    private OnMusicComplete mOnMusicComplete;
+    private static volatile MusicService instance = null;
 
     public MusicService(){
         mPlayer = new MediaPlayer();
+        mPlayer.setOnErrorListener((mp, what, extra) -> true);
+        mPlayer.setOnCompletionListener(mediaPlayer -> {
+            if (nowPlayIndex != Reference.allSongs.size() - 1) {
+                mOnMusicComplete.nextSong();
+            } else {
+                mOnMusicComplete.stop();
+            }
+        });
     }
 
     @Override
@@ -69,7 +75,7 @@ public class MusicService extends Service implements MusicOperate {
     }
 
     @Override
-    public void playMusic(int id) {
+    public void playMusic(int id, OnMusicPrepare onMusicPrepare) {
         mPlayer.stop();
         RetrofitUtil.getAppApi().getSingleSong(String.valueOf(id))
                 .subscribeOn(Schedulers.newThread())
@@ -82,13 +88,17 @@ public class MusicService extends Service implements MusicOperate {
                     @Override
                     public void onNext(SingleSongResponse playListTitleResponse) {
                         try {
+                            mSingleSong = playListTitleResponse;
                             mPlayer.reset();
-                            if (playListTitleResponse.getData() != null &&
-                                    playListTitleResponse.getData().get(0).getUrl() != null) {
-                                mPlayer.setDataSource(playListTitleResponse.getData().get(0).getUrl());
+                            if (mSingleSong.getData() != null &&
+                                    mSingleSong.getData().get(0).getUrl() != null) {
+                                mPlayer.setDataSource(mSingleSong.getData().get(0).getUrl());
                                 mPlayer.prepareAsync();
                                 mPlayer.setOnPreparedListener(mp -> {
                                     isPlaying = true;
+                                    if(onMusicPrepare != null){
+                                        onMusicPrepare.updateUI();
+                                    }
                                     mPlayer.start();
                                 });
                             } else {
@@ -113,11 +123,9 @@ public class MusicService extends Service implements MusicOperate {
     @Override
     public void stopOrPlay() {
         if(isPlaying){
-            Common.showLog("停止播放");
             isPlaying = false;
             mPlayer.pause();
         }else {
-            Common.showLog("继续播放");
             isPlaying = true;
             mPlayer.start();
         }
@@ -126,5 +134,37 @@ public class MusicService extends Service implements MusicOperate {
     @Override
     public boolean isPlayingMusic() {
         return isPlaying;
+    }
+
+    public int getNowPlayIndex() {
+        return nowPlayIndex;
+    }
+
+    public void setNowPlayIndex(int nowPlayIndex) {
+        this.nowPlayIndex = nowPlayIndex;
+    }
+
+    public void setPlaying(boolean playing) {
+        isPlaying = playing;
+    }
+
+    public MediaPlayer getPlayer() {
+        return mPlayer;
+    }
+
+    public OnMusicComplete getOnMusicComplete() {
+        return mOnMusicComplete;
+    }
+
+    public void setOnMusicComplete(OnMusicComplete onMusicComplete) {
+        mOnMusicComplete = onMusicComplete;
+    }
+
+    public SingleSongResponse getSingleSong() {
+        return mSingleSong;
+    }
+
+    public void setSingleSong(SingleSongResponse singleSong) {
+        mSingleSong = singleSong;
     }
 }

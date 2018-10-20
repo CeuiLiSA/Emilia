@@ -42,7 +42,8 @@ public class PlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((TagHolder) holder).mTextView.setText(allIllust.get(position).name);
-        ((TagHolder) holder).mTextView2.setText(allIllust.get(position).playCount);
+        ((TagHolder) holder).mTextView2.setText(String.format("共%s首歌曲，播放%s次",
+                allIllust.get(position).trackCount, allIllust.get(position).playCount));
         Glide.with(mContext).load(allIllust.get(position).coverImgUrl).into(((TagHolder) holder).mNiceImageView);
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(v ->
