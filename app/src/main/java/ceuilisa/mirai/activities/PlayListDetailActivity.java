@@ -32,7 +32,6 @@ import io.reactivex.schedulers.Schedulers;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
-import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 public class PlayListDetailActivity extends BaseActivity {
 
@@ -50,12 +49,6 @@ public class PlayListDetailActivity extends BaseActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         mLayoutID = R.layout.activity_play_list_detail_rela;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Common.showLog("SADASDFASF ASFD ASF ");
     }
 
     @Override
@@ -83,8 +76,8 @@ public class PlayListDetailActivity extends BaseActivity {
         id = getIntent().getStringExtra("id");
         coverImg = getIntent().getStringExtra("coverImg");
         name = getIntent().getStringExtra("name");
-        Glide.with(mContext).load(coverImg).apply(bitmapTransform(
-                new BlurTransformation(25, 5))).into(mImageView);
+        Glide.with(mContext).load(coverImg).bitmapTransform(
+                new BlurTransformation(mContext, 20, 2)).into(mImageView);
         Glide.with(mContext).load(coverImg).into(mImageView2);
         mTextView.setText(name);
         RetrofitUtil.getAppApi().getPlayListDetail(id)

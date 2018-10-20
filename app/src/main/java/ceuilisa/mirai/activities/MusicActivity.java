@@ -1,6 +1,7 @@
 package ceuilisa.mirai.activities;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -27,7 +28,6 @@ import ceuilisa.mirai.utils.Reference;
 import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
-import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 public class MusicActivity extends BaseActivity {
 
@@ -100,6 +100,11 @@ public class MusicActivity extends BaseActivity {
             downloadDialog.show(getSupportFragmentManager(), "download");
         });
         mCircleImageView = findViewById(R.id.cover);
+        mCircleImageView.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, CoverDetailActivity.class);
+            intent.putExtra("cover", Reference.allSongs.get(index).getAl().getPicUrl());
+            startActivity(intent);
+        });
         mSeekBar = findViewById(R.id.song_progress);
         mSeekBar.setProgress(0);
         SeekBar.OnSeekBarChangeListener sbLis = new SeekBar.OnSeekBarChangeListener() {
@@ -152,8 +157,8 @@ public class MusicActivity extends BaseActivity {
     }
 
     private void refreshLayout() {
-        Glide.with(mContext).load(Reference.allSongs.get(index).getAl().getPicUrl()).apply(bitmapTransform(
-                new BlurTransformation(25, 5))).into(mImageView);
+        Glide.with(mContext).load(Reference.allSongs.get(index).getAl().getPicUrl()).bitmapTransform(
+                new BlurTransformation(mContext, 20, 2)).into(mImageView);
         Glide.with(mContext).load(Reference.allSongs.get(index).getAl().getPicUrl()).into(mCircleImageView);
         mToolbar.setTitle(Reference.allSongs.get(index).getName());
         mTextView.setText(Reference.allSongs.get(index).getName());
@@ -196,8 +201,8 @@ public class MusicActivity extends BaseActivity {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
         mAnimator.pause();
     }
