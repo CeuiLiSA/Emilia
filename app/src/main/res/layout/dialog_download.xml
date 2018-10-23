@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
@@ -14,22 +14,22 @@
     <TextView
         android:id="@+id/song_size"
         android:layout_width="wrap_content"
-        android:textSize="15sp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/sixteen_dp"
         android:layout_marginEnd="@dimen/sixteen_dp"
         android:layout_marginBottom="@dimen/sixteen_dp"
-        android:fitsSystemWindows="true" />
+        android:fitsSystemWindows="true"
+        android:textSize="15sp" />
 
     <ProgressBar
         android:id="@+id/progress"
-        android:max="100"
-        android:visibility="gone"
-        android:layout_marginStart="@dimen/sixteen_dp"
-        android:layout_marginEnd="@dimen/sixteen_dp"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:layout_marginEnd="@dimen/sixteen_dp"
+        android:max="100"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -54,7 +54,6 @@
             android:text="取消"
             android:textColor="@color/colorPrimaryDark" />
     </RelativeLayout>
-
 
 
 </LinearLayout>

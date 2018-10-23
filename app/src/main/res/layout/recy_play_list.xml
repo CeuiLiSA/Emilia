@@ -8,11 +8,11 @@
         android:id="@+id/playlist_photo"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:transitionName="sharedView"
         android:layout_marginStart="@dimen/four_dp"
         android:layout_marginTop="@dimen/four_dp"
         android:layout_marginEnd="@dimen/sixteen_dp"
         android:layout_marginBottom="@dimen/four_dp"
+        android:transitionName="sharedView"
         app:corner_radius="@dimen/four_dp" />
 
 
@@ -20,11 +20,11 @@
         android:id="@+id/song_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:transitionName="sharedText"
         android:layout_marginTop="@dimen/eight_dp"
         android:layout_toEndOf="@+id/playlist_photo"
         android:text="撒阿萨德阿萨德阿萨德"
-        android:textColor="#333333" />
+        android:textColor="#333333"
+        android:transitionName="sharedText" />
 
     <TextView
         android:id="@+id/song_author"

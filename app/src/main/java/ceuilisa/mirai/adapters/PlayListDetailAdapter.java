@@ -1,14 +1,16 @@
 package ceuilisa.mirai.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.othershe.library.NiceImageView;
 
 import java.util.List;
 
@@ -39,8 +41,8 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName());
-        if(allIllust.get(position).getAr().size() == 1) {
+
+        if (allIllust.get(position).getAr().size() == 1) {
             ((TagHolder) holder).mTextView3.setText(allIllust.get(position).getAr().get(0).getName());
         } else {
             StringBuilder artist = new StringBuilder();
@@ -49,10 +51,22 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
             ((TagHolder) holder).mTextView3.setText(artist.substring(0, artist.length() - 3));
         }
+        if (allIllust.get(position).getAlia().size() != 0) {
+            SpannableString spannableString = new SpannableString(String.format("%s (%s)",
+                    allIllust.get(position).getName(),
+                    allIllust.get(position).getAlia().get(0)));
+            spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#999999")),
+                    allIllust.get(position).getName().length(), spannableString.length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ((TagHolder) holder).mTextView.setText(spannableString);
+        } else {
+            ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName());
+        }
+
         ((TagHolder) holder).mTextView2.setText(String.valueOf(position + 1));
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(v ->
-                    mOnItemClickListener.onItemClick(((TagHolder) holder).mNiceImageView, position, 0));
+                    mOnItemClickListener.onItemClick(((TagHolder) holder).itemView, position, 0));
         }
     }
 
@@ -67,7 +81,6 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public class TagHolder extends RecyclerView.ViewHolder {
         private TextView mTextView, mTextView2, mTextView3;
-        private NiceImageView mNiceImageView;
 
         TagHolder(View itemView) {
             super(itemView);

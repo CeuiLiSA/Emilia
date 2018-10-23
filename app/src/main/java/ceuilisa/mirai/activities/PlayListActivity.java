@@ -6,13 +6,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListAdapter;
-import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.PlayListTitleResponse;
 import ceuilisa.mirai.utils.Common;
@@ -25,6 +25,7 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 public class PlayListActivity extends BaseActivity {
 
+    private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
 
     @Override
@@ -36,6 +37,7 @@ public class PlayListActivity extends BaseActivity {
     void initView() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(v -> finish());
+        mProgressBar = findViewById(R.id.progress);
         mRecyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -45,7 +47,7 @@ public class PlayListActivity extends BaseActivity {
 
     @Override
     void initData() {
-        RetrofitUtil.getAppApi().getAllPlayList(Constant.USER_NAME)
+        RetrofitUtil.getTengkoaApi().getAllPlayList(Constant.USER_NAME)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<PlayListTitleResponse>() {
@@ -68,6 +70,7 @@ public class PlayListActivity extends BaseActivity {
                             intent.putExtra("coverImg", mPlayLists.get(position).coverImgUrl);
                             mContext.startActivity(intent, optionsCompat.toBundle());
                         });
+                        mProgressBar.setVisibility(View.INVISIBLE);
                         mRecyclerView.setAdapter(new ScaleInAnimationAdapter(mAdapter));
                     }
 

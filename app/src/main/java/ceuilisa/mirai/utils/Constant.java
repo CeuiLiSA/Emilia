@@ -12,6 +12,7 @@ public class Constant {
     public static final int SIXTEEN_DP = 16;
 
     public static final int LIMIT = 30;
+    public static final String TYPE_COMMENT = "comments";
 
 
 

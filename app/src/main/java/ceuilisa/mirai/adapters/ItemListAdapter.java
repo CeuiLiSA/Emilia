@@ -8,15 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.othershe.library.NiceImageView;
-
 import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.response.ItemResponse;
-import ceuilisa.mirai.response.PlayListTitleResponse;
 
 
 public class ItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

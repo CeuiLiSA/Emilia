@@ -26,8 +26,8 @@ import ceuilisa.mirai.utils.Constant;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Fragment[] mFragments;
     public DrawerLayout mDrawerLayout;
+    private Fragment[] mFragments;
     private int lastShowFragment = Constant.FRAGMENT_ONE;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {

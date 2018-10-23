@@ -10,11 +10,10 @@
     <ImageView
         android:id="@+id/playlist_photo"
         android:layout_width="match_parent"
-        android:scaleType="centerCrop"
         android:layout_height="0dp"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/devider_7"
         app:layout_constraintTop_toTopOf="parent" />
-
 
 
     <ImageView
@@ -31,9 +30,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/sixteen_dp"
-        android:textColor="@android:color/white"
         android:layout_marginTop="@dimen/eight_dp"
         android:text="日系清新女声"
+        android:textColor="@android:color/white"
         android:textSize="@dimen/sixteen_sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView4"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,10 +55,10 @@
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
-        android:textColor="@android:color/white"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="CeuiLiSA"
+        android:textColor="@android:color/white"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
         app:layout_constraintStart_toEndOf="@+id/circleImageView"
@@ -117,8 +116,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/four_dp"
-        android:textColor="@android:color/white"
         android:text="评论"
+        android:textColor="@android:color/white"
         android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/imageView8"
         app:layout_constraintLeft_toLeftOf="@+id/imageView7"
@@ -130,8 +129,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/four_dp"
-        android:textColor="@android:color/white"
         android:text="分享"
+        android:textColor="@android:color/white"
         android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/imageView9"
         app:layout_constraintLeft_toLeftOf="@+id/imageView7"
@@ -142,9 +141,9 @@
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
         android:layout_marginTop="@dimen/four_dp"
         android:text="下载"
+        android:textColor="@android:color/white"
         android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/imageView10"
         app:layout_constraintLeft_toLeftOf="@+id/imageView7"
@@ -156,15 +155,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/four_dp"
-        android:textColor="@android:color/white"
         android:text="多选"
+        android:textColor="@android:color/white"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView10"
         app:layout_constraintLeft_toLeftOf="@+id/imageView7"
         app:layout_constraintStart_toStartOf="@+id/imageView10"
         app:layout_constraintTop_toBottomOf="@+id/imageView8" />
-
-
 
 
     <com.gcssloop.widget.RCRelativeLayout
@@ -183,11 +180,11 @@
 
 
     <View
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toTopOf="@+id/corner_rela"
-        android:background="#e6e6e6"
-        android:layout_marginTop="60dp"
         android:id="@+id/devider_7"
-        android:layout_height="1dp" />
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="60dp"
+        android:background="#e6e6e6"
+        app:layout_constraintTop_toTopOf="@+id/corner_rela" />
 
 </android.support.constraint.ConstraintLayout>

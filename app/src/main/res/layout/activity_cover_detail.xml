@@ -7,9 +7,9 @@
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/originalImage"
         android:layout_width="match_parent"
-        android:transitionName="sharedView"
         android:layout_height="match_parent"
-        android:scaleType="fitCenter" />
+        android:scaleType="fitCenter"
+        android:transitionName="sharedView" />
 
 
 </FrameLayout>

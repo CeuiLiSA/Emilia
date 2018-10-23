@@ -16,7 +16,6 @@ import java.util.List;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.response.PlayListTitleResponse;
-import ceuilisa.mirai.utils.RoundImageView;
 
 
 public class PlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

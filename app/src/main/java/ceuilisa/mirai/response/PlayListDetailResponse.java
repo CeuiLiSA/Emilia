@@ -717,7 +717,7 @@ public class PlayListDetailResponse {
             private int mv;
             private long publishTime;
             private List<ArBean> ar;
-            private List<?> alia;
+            private List<String> alia;
             private List<?> rtUrls;
 
             public String getName() {
@@ -972,7 +972,7 @@ public class PlayListDetailResponse {
                 return alia;
             }
 
-            public void setAlia(List<?> alia) {
+            public void setAlia(List<String> alia) {
                 this.alia = alia;
             }
 

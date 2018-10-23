@@ -77,7 +77,7 @@ public class MusicService extends Service implements MusicOperate {
     @Override
     public void playMusic(int id, OnMusicPrepare onMusicPrepare) {
         mPlayer.stop();
-        RetrofitUtil.getAppApi().getSingleSong(String.valueOf(id))
+        RetrofitUtil.getTengkoaApi().getSingleSong(String.valueOf(id))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<SingleSongResponse>() {

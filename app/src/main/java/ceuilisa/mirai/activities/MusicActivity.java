@@ -31,6 +31,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class MusicActivity extends BaseActivity {
 
+    public Handler mHandler = new Handler();
     private int index;
     private Toolbar mToolbar;
     private FloatingActionButton mFloatingActionButton;
@@ -38,7 +39,6 @@ public class MusicActivity extends BaseActivity {
     private MaterialIconView lastSong, nextSong;
     private ImageView mImageView;
     private ObjectAnimator mAnimator;
-    public Handler mHandler = new Handler();
     private MyRunnable mMyRunnable = new MyRunnable();
     private CircleImageView mCircleImageView;
     private SeekBar mSeekBar;
@@ -93,11 +93,17 @@ public class MusicActivity extends BaseActivity {
         mTextView3 = findViewById(R.id.song_elapsed_time);
         mTextView4 = findViewById(R.id.song_duration);
         mImageView = findViewById(R.id.album_art);
-        ImageView imageView = findViewById(R.id.download);
-        imageView.setOnClickListener(v -> {
+        ImageView download = findViewById(R.id.download);
+        download.setOnClickListener(v -> {
             DownloadDialog downloadDialog = new DownloadDialog();
             downloadDialog.setIndex(index);
             downloadDialog.show(getSupportFragmentManager(), "download");
+        });
+        ImageView comment = findViewById(R.id.comment);
+        comment.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, CommentActivity.class);
+            intent.putExtra("id", String.valueOf(Reference.allSongs.get(index).getId()));
+            startActivity(intent);
         });
         mCircleImageView = findViewById(R.id.cover);
         mCircleImageView.setOnClickListener(v -> {
@@ -157,12 +163,20 @@ public class MusicActivity extends BaseActivity {
     }
 
     private void refreshLayout() {
-        Glide.with(mContext).load(Reference.allSongs.get(index).getAl().getPicUrl()).bitmapTransform(
-                new BlurTransformation(mContext, 20, 2)).into(mImageView);
+        Glide.with(mContext).load(Reference.allSongs.get(index).getAl().getPicUrl())
+                .bitmapTransform(new BlurTransformation(mContext, 20, 2)).into(mImageView);
         Glide.with(mContext).load(Reference.allSongs.get(index).getAl().getPicUrl()).into(mCircleImageView);
         mToolbar.setTitle(Reference.allSongs.get(index).getName());
-        mTextView.setText(Reference.allSongs.get(index).getName());
-        mTextView2.setText(Reference.allSongs.get(index).getAr().get(0).getName());
+        mTextView.setText(Reference.allSongs.get(index).getAl().getName());
+        if (Reference.allSongs.get(index).getAr().size() == 1) {
+            mTextView2.setText(Reference.allSongs.get(index).getAr().get(0).getName());
+        } else {
+            StringBuilder artist = new StringBuilder();
+            for (int i = 0; i < Reference.allSongs.get(index).getAr().size(); i++) {
+                artist.append(Reference.allSongs.get(index).getAr().get(i).getName()).append(" / ");
+            }
+            mTextView2.setText(artist.substring(0, artist.length() - 3));
+        }
         mTextView4.setText(mTime.format(Reference.allSongs.get(index).getDt()));
         mAnimator.start();
         mAnimator.pause();
@@ -190,6 +204,13 @@ public class MusicActivity extends BaseActivity {
                 R.drawable.ic_pause_black_24dp : R.drawable.ic_play_arrow_black_24dp);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
+        mAnimator.pause();
+    }
+
     private class MyRunnable implements Runnable {
         @Override
         public void run() {
@@ -198,12 +219,5 @@ public class MusicActivity extends BaseActivity {
             mHandler.postDelayed(this, 1000);
             Log.d("&&&&****", "((()(()()()");
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mHandler.removeCallbacksAndMessages(null);
-        mAnimator.pause();
     }
 }

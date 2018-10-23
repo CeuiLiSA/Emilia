@@ -2,7 +2,8 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
 
     <RelativeLayout
@@ -10,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
+        android:background="#BDBDBD"
         app:layout_constraintHeight_percent=".65"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -22,24 +24,24 @@
             android:scaleType="centerCrop" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="250dp"
-            android:layout_centerVertical="true"
-            android:transitionName="sharedView"
-            android:layout_centerHorizontal="true"
-            android:src="@color/colorPrimary"
             android:id="@+id/cover"
-            android:layout_height="250dp" />
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@color/colorPrimary"
+            android:transitionName="sharedView" />
 
         <ceuilisa.mirai.utils.CircularSeekBar
             android:id="@+id/song_progress_circular"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
-            android:visibility="invisible"
             android:layout_height="290dp"
             android:layout_centerVertical="true"
             android:background="@android:color/transparent"
             android:maxHeight="1dp"
             android:progress="30"
+            android:visibility="invisible"
             app:circle_color="#33000000"
             app:circle_progress_color="#8BC34A"
             app:circle_stroke_width="2"
@@ -49,14 +51,14 @@
             app:pointer_halo_width="0.5" />
 
         <android.support.v7.widget.Toolbar
-            app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
             android:id="@+id/toolbar"
-            android:fitsSystemWindows="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:background="@android:color/transparent"
+            android:fitsSystemWindows="true"
             android:theme="@style/Theme.AppCompat"
+            app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     </RelativeLayout>
@@ -84,13 +86,13 @@
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/shuffle"
+                android:layout_toStartOf="@+id/comment"
                 android:ellipsize="marquee"
                 android:fadingEdge="horizontal"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:text="这是一手个的名字阿萨德阿萨德阿飞阿三"
+                android:text="@string/no_album_data"
                 android:textSize="16sp" />
 
             <TextView
@@ -98,17 +100,17 @@
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/shuffle"
-                android:layout_toStartOf="@+id/shuffle"
+                android:layout_alignBottom="@+id/comment"
+                android:layout_toStartOf="@+id/comment"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:paddingTop="3dp"
-                android:text="这是一手歌手的名字"
+                android:text="@string/no_singer_data"
                 android:textSize="14sp" />
 
 
             <ImageView
-                android:id="@+id/shuffle"
+                android:id="@+id/comment"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_toStartOf="@+id/download"
@@ -151,17 +153,17 @@
                 android:id="@+id/song_elapsed_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:paddingLeft="25dp"
-                android:text="00: 00" />
+                android:layout_alignParentStart="true"
+                android:paddingStart="23dp"
+                android:text="@string/time_start" />
 
             <TextView
                 android:id="@+id/song_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:paddingRight="25dp"
-                android:text="03: 45" />
+                android:layout_alignParentEnd="true"
+                android:paddingEnd="23dp"
+                android:text="@string/time_example" />
         </RelativeLayout>
 
 
@@ -186,12 +188,12 @@
                 android:id="@+id/playpausefloating"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:src="@drawable/ic_pause_black_24dp"
-                android:tint="@android:color/white"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:clickable="true"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_pause_black_24dp"
+                android:tint="@android:color/white" />
 
             <net.steamcrafted.materialiconlib.MaterialIconView
                 android:id="@+id/next"

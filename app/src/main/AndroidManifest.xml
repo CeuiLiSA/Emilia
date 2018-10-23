@@ -34,6 +34,8 @@
         </activity>
         <activity android:name=".activities.MusicActivity" />
         <activity android:name=".activities.CoverDetailActivity" />
+        <activity android:name=".activities.PlayHistoryActivity" />
+        <activity android:name=".activities.CommentActivity" />
     </application>
 
 </manifest>

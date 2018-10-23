@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,9 +8,9 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:elevation="@dimen/six_dp"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+        android:elevation="@dimen/six_dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -73,15 +72,15 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="@dimen/sixteen_dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="最近播放"
+        android:gravity="center_vertical"
+        android:text="播放记录"
         android:textColor="#333333"
         android:textSize="@dimen/sixteen_sp"
         app:layout_constraintBottom_toBottomOf="@+id/devider_2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/img_2"
         app:layout_constraintStart_toEndOf="@+id/img_2"
         app:layout_constraintTop_toBottomOf="@+id/devider_1" />
@@ -182,16 +181,17 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="@dimen/sixteen_dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:gravity="center_vertical"
         android:text="我的收藏"
         android:textColor="#333333"
         android:textSize="@dimen/sixteen_sp"
         app:layout_constraintBottom_toBottomOf="@+id/devider_5"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/img_5"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toEndOf="@+id/img_5"
         app:layout_constraintTop_toBottomOf="@+id/devider_4" />
 

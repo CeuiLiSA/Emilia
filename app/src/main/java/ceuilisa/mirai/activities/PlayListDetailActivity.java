@@ -2,27 +2,21 @@ package ceuilisa.mirai.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.github.ybq.android.spinkit.SpinKitView;
-import com.github.ybq.android.spinkit.style.Wave;
 import com.othershe.library.NiceImageView;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
-import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.PlayListDetailResponse;
-import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Reference;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observer;
@@ -80,7 +74,7 @@ public class PlayListDetailActivity extends BaseActivity {
                 new BlurTransformation(mContext, 20, 2)).into(mImageView);
         Glide.with(mContext).load(coverImg).into(mImageView2);
         mTextView.setText(name);
-        RetrofitUtil.getAppApi().getPlayListDetail(id)
+        RetrofitUtil.getTengkoaApi().getPlayListDetail(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<PlayListDetailResponse>() {

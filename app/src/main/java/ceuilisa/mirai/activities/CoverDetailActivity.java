@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide;
 
 import ceuilisa.mirai.R;
 
-public class CoverDetailActivity extends BaseActivity{
+public class CoverDetailActivity extends BaseActivity {
 
     private ImageView mImageView;
     private String coverImage;
