@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.scwang.smartrefresh.header.DeliveryHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class CommentActivity extends BaseActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRefreshLayout = findViewById(R.id.refreshLayout);
+        mRefreshLayout.setRefreshHeader(new DeliveryHeader(this));
         mRefreshLayout.setOnLoadMoreListener(layout -> getNextData());
         mRefreshLayout.setOnRefreshListener(layout -> fetchComment());
     }

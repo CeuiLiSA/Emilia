@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/top_parent"
     android:background="@android:color/white">
 
 
@@ -23,6 +24,7 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop" />
 
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/cover"
             android:layout_width="250dp"
@@ -31,24 +33,6 @@
             android:layout_centerVertical="true"
             android:src="@color/colorPrimary"
             android:transitionName="sharedView" />
-
-        <ceuilisa.mirai.utils.CircularSeekBar
-            android:id="@+id/song_progress_circular"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="290dp"
-            android:layout_centerVertical="true"
-            android:background="@android:color/transparent"
-            android:maxHeight="1dp"
-            android:progress="30"
-            android:visibility="invisible"
-            app:circle_color="#33000000"
-            app:circle_progress_color="#8BC34A"
-            app:circle_stroke_width="2"
-            app:pointer_color="#8BC34A"
-            app:pointer_halo_border_width="1.5"
-            app:pointer_halo_color="#8BC34A"
-            app:pointer_halo_width="0.5" />
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"

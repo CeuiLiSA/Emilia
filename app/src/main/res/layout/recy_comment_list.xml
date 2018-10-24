@@ -9,19 +9,18 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_head"
-        android:layout_width="40dp"
-        android:layout_height="40dp" />
+        android:layout_width="35dp"
+        android:layout_height="35dp" />
 
     <TextView
         android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/eight_dp"
-        android:layout_marginTop="1dp"
         android:layout_toEndOf="@+id/user_head"
         android:text="Michael"
         android:textColor="#666666"
-        android:textSize="15sp" />
+        android:textSize="13sp" />
 
     <TextView
         android:id="@+id/time"
@@ -29,10 +28,9 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/user_name"
         android:layout_alignBottom="@+id/user_head"
-        android:layout_marginBottom="1dp"
         android:text="2018年10月23日"
         android:textColor="#999999"
-        android:textSize="12sp" />
+        android:textSize="11sp" />
 
     <ImageView
         android:id="@+id/like"
@@ -66,7 +64,7 @@
         android:layout_marginTop="@dimen/eight_dp"
         android:text="阿发发货撒地方和暗室逢灯哈弗斯"
         android:textColor="#333333"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
 
 
     <RelativeLayout

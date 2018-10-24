@@ -1,4 +1,4 @@
-package com.company.utils;
+package ceuilisa.mirai.utils;
 
 import java.io.File;
 import java.io.FileReader;

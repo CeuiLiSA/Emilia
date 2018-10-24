@@ -26,6 +26,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int TYPE_HOT_HEAD = 0;
+    private static final int TYPE_NORMAL_HEAD = 1;
+    private static final int HOT_HEAD_COUNT = 1;
+    private static final int NORMAL_HEAD_COUNT = 1;
+    private static final int TYPE_HOT_COMMENT = 2;
+    private static final int TYPE_NORMAL_COMMENT = 3;
+
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private OnItemClickListener mOnItemClickListener;
@@ -44,47 +51,82 @@ public class CommentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mLayoutInflater.inflate(R.layout.recy_comment_list, parent, false);
-        return new TagHolder(view);
+        View view;
+        if (viewType == TYPE_HOT_HEAD) {
+            view = mLayoutInflater.inflate(R.layout.comment_devider, parent, false);
+            return new DividerHolder(view);
+        } else if (viewType == TYPE_HOT_COMMENT) {
+            view = mLayoutInflater.inflate(R.layout.recy_comment_list, parent, false);
+            return new TagHolder(view);
+        } else if (viewType == TYPE_NORMAL_HEAD) {
+            view = mLayoutInflater.inflate(R.layout.comment_devider, parent, false);
+            return new DividerHolder(view);
+        } else {
+            view = mLayoutInflater.inflate(R.layout.recy_comment_list, parent, false);
+            return new TagHolder(view);
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return TYPE_HOT_HEAD;
+        } else if (position > 0 && position < allIllust.size() + HOT_HEAD_COUNT) {
+            return TYPE_HOT_COMMENT;
+        } else if (position == allIllust.size() + HOT_HEAD_COUNT) {
+            return TYPE_NORMAL_HEAD;
+        } else {
+            return TYPE_NORMAL_COMMENT;
+        }
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (position < allIllust.size()) {
-            Glide.with(mContext).load(allIllust.get(position).getUser().getAvatarUrl())
+        int viewType = getItemViewType(position);
+        if (viewType == TYPE_HOT_HEAD) {
+            ((DividerHolder) holder).mTextView.setText("热门评论");
+        } else if (viewType == TYPE_HOT_COMMENT) {
+            int realPosition = position - HOT_HEAD_COUNT;
+            Glide.with(mContext).load(allIllust.get(realPosition).getUser().getAvatarUrl())
                     .into(((TagHolder) holder).mCircleImageView);
-            ((TagHolder) holder).mTextView.setText(allIllust.get(position).getUser().getNickname());
+            ((TagHolder) holder).mTextView.setText(allIllust.get(realPosition).getUser().getNickname());
             ((TagHolder) holder).mTextView2.setText(
-                    Common.timeStamp2Date(String.valueOf(allIllust.get(position).getTime())));
-            ((TagHolder) holder).mTextView3.setText(String.valueOf(allIllust.get(position).getLikedCount()));
-            ((TagHolder) holder).mTextView4.setText(String.valueOf(allIllust.get(position).getContent()));
-            if (allIllust.get(position).getBeReplied().size() == 0) {
-                ((TagHolder) holder).mRelativeLayout.setVisibility(View.GONE);
-            } else {
-                ((TagHolder) holder).mRelativeLayout.setVisibility(View.VISIBLE);
-                ((TagHolder) holder).mTextView5.setText(String.format("@%s：%s",
-                        allIllust.get(position).getBeReplied().get(0).getUser().getNickname(),
-                        allIllust.get(position).getBeReplied().get(0).getContent()));
-            }
-        } else {
-            int p = position - allIllust.size();
-            Common.showLog(p);
-            Glide.with(mContext).load(comment.get(p).getUser().getAvatarUrl())
-                    .into(((TagHolder) holder).mCircleImageView);
-            ((TagHolder) holder).mTextView.setText(comment.get(p).getUser().getNickname());
-            ((TagHolder) holder).mTextView2.setText(
-                    Common.timeStamp2Date(String.valueOf(comment.get(p).getTime())));
-            ((TagHolder) holder).mTextView3.setText(String.valueOf(comment.get(p).getLikedCount()));
-            ((TagHolder) holder).mTextView4.setText(String.valueOf(comment.get(p).getContent()));
-            if (comment.get(p).getBeReplied().size() == 0) {
+                    Common.timeStamp2Date(String.valueOf(allIllust.get(realPosition).getTime())));
+            ((TagHolder) holder).mTextView3.setText(String.valueOf(allIllust.get(realPosition).getLikedCount()));
+            ((TagHolder) holder).mTextView4.setText(String.valueOf(allIllust.get(realPosition).getContent()));
+            if (allIllust.get(realPosition).getBeReplied().size() == 0) {
                 ((TagHolder) holder).mRelativeLayout.setVisibility(View.GONE);
             } else {
                 ((TagHolder) holder).mRelativeLayout.setVisibility(View.VISIBLE);
                 SpannableString spannableString = new SpannableString(String.format("@%s：%s",
-                        comment.get(p).getBeReplied().get(0).getUser().getNickname(),
-                        comment.get(p).getBeReplied().get(0).getContent()));
+                        allIllust.get(realPosition).getBeReplied().get(0).getUser().getNickname(),
+                        allIllust.get(realPosition).getBeReplied().get(0).getContent()));
                 spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#507daf")),
-                        0, comment.get(p).getBeReplied().get(0).getUser().getNickname().length() + 1,
+                        0, allIllust.get(realPosition).getBeReplied().get(0).getUser().getNickname().length() + 1,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                ((TagHolder) holder).mTextView5.setText(spannableString);
+            }
+        } else if (viewType == TYPE_NORMAL_HEAD) {
+            ((DividerHolder) holder).mTextView.setText("最新评论");
+        } else {
+            int realPosition = position - allIllust.size() - HOT_HEAD_COUNT - NORMAL_HEAD_COUNT;
+            Common.showLog(realPosition);
+            Glide.with(mContext).load(comment.get(realPosition).getUser().getAvatarUrl())
+                    .into(((TagHolder) holder).mCircleImageView);
+            ((TagHolder) holder).mTextView.setText(comment.get(realPosition).getUser().getNickname());
+            ((TagHolder) holder).mTextView2.setText(
+                    Common.timeStamp2Date(String.valueOf(comment.get(realPosition).getTime())));
+            ((TagHolder) holder).mTextView3.setText(String.valueOf(comment.get(realPosition).getLikedCount()));
+            ((TagHolder) holder).mTextView4.setText(String.valueOf(comment.get(realPosition).getContent()));
+            if (comment.get(realPosition).getBeReplied().size() == 0) {
+                ((TagHolder) holder).mRelativeLayout.setVisibility(View.GONE);
+            } else {
+                ((TagHolder) holder).mRelativeLayout.setVisibility(View.VISIBLE);
+                SpannableString spannableString = new SpannableString(String.format("@%s：%s",
+                        comment.get(realPosition).getBeReplied().get(0).getUser().getNickname(),
+                        comment.get(realPosition).getBeReplied().get(0).getContent()));
+                spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#507daf")),
+                        0, comment.get(realPosition).getBeReplied().get(0).getUser().getNickname().length() + 1,
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 ((TagHolder) holder).mTextView5.setText(spannableString);
             }
@@ -97,7 +139,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        return allIllust.size() + comment.size();
+        return allIllust.size() + comment.size() + HOT_HEAD_COUNT + NORMAL_HEAD_COUNT;
     }
 
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
@@ -119,6 +161,16 @@ public class CommentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             mTextView4 = itemView.findViewById(R.id.content);
             mTextView5 = itemView.findViewById(R.id.reply_content);
             mRelativeLayout = itemView.findViewById(R.id.reply_comment);
+        }
+    }
+
+    public class DividerHolder extends RecyclerView.ViewHolder {
+        private TextView mTextView;
+
+        DividerHolder(View itemView) {
+            super(itemView);
+
+            mTextView = itemView.findViewById(R.id.comment_type);
         }
     }
 }

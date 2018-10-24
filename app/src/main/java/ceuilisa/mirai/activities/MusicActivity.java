@@ -4,10 +4,13 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -55,6 +58,9 @@ public class MusicActivity extends BaseActivity {
 
     @Override
     void initView() {
+        Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim_about_card_show);
+        ConstraintLayout constraintLayout = findViewById(R.id.top_parent);
+        constraintLayout.startAnimation(animation);
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setNavigationOnClickListener(v -> finish());
         lastSong = findViewById(R.id.previous);
@@ -106,10 +112,11 @@ public class MusicActivity extends BaseActivity {
             startActivity(intent);
         });
         mCircleImageView = findViewById(R.id.cover);
-        mCircleImageView.setOnClickListener(v -> {
+        mCircleImageView.setOnLongClickListener(v -> {
             Intent intent = new Intent(mContext, CoverDetailActivity.class);
             intent.putExtra("cover", Reference.allSongs.get(index).getAl().getPicUrl());
             startActivity(intent);
+            return true;
         });
         mSeekBar = findViewById(R.id.song_progress);
         mSeekBar.setProgress(0);
