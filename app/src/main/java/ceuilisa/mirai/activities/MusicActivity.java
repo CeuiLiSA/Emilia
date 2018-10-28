@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -54,7 +55,6 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
     private FragmentLrc mFragmentLrc;
     private SimpleDateFormat mTime = new SimpleDateFormat("mm: ss");
 
-
     @Override
     void initLayout() {
         getWindow().setStatusBarColor(Color.TRANSPARENT);
@@ -77,7 +77,29 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
         mFloatingActionButton = findViewById(R.id.playpausefloating);
         mFloatingActionButton.setOnClickListener(v -> stopOrPlay());
         mTextView = findViewById(R.id.song_title);
+        mTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, PlayListDetailActivity.class);
+                intent.putExtra("id", String.valueOf(Reference.allSongs.get(index).getAl().getId()));
+                intent.putExtra("name", Reference.allSongs.get(index).getAl().getName());
+                intent.putExtra("author", mTextView2.getText());
+                intent.putExtra("dataType", "专辑");
+                intent.putExtra("coverImg", Reference.allSongs.get(index).getAl().getPicUrl());
+                startActivity(intent);
+            }
+        });
         mTextView2 = findViewById(R.id.song_artist);
+        mTextView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Reference.allSongs.get(index).getAr().size() == 1) {
+                    Intent intent = new Intent(mContext, ArtistActivity.class);
+                    intent.putExtra("id", String.valueOf(Reference.allSongs.get(index).getAr().get(0).getId()));
+                    mContext.startActivity(intent);
+                }
+            }
+        });
         mTextView3 = findViewById(R.id.song_elapsed_time);
         mTextView4 = findViewById(R.id.song_duration);
         mImageView = findViewById(R.id.album_art);
@@ -258,11 +280,11 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
     private class MyRunnable implements Runnable {
         @Override
         public void run() {
-            mSeekBar.setProgress(MusicService.getInstance().getPlayer().getCurrentPosition());
-            mTextView3.setText(mTime.format(MusicService.getInstance().getPlayer().getCurrentPosition()));
+            int position = MusicService.getInstance().getPlayer().getCurrentPosition();
+            mSeekBar.setProgress(position);
+            mTextView3.setText(mTime.format(position));
             if (mFragmentLrc.isHasLyric()) {
-                mFragmentLrc.mLrcView.updateTime(
-                        MusicService.getInstance().getPlayer().getCurrentPosition());
+                mFragmentLrc.mLrcView.updateTime(position);
             }
             mHandler.postDelayed(this, 1000);
             Log.d("&&&&****", "((()(()()()");

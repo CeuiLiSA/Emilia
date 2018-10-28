@@ -7,19 +7,26 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import ceuilisa.mirai.MusicService;
+import java.util.List;
+
 import ceuilisa.mirai.R;
+import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.activities.PlayListActivity;
 import ceuilisa.mirai.adapters.PlayAllHistoryAdapter;
+import ceuilisa.mirai.adapters.PlayListAdapter;
+import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.adapters.PlayListTypeAdapter;
-import ceuilisa.mirai.adapters.PlayWeekHistoryAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.response.ArtistResponse;
 import ceuilisa.mirai.response.PlayAllHistoryResponse;
 import ceuilisa.mirai.response.PlayWeekHistoryResponse;
+import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.utils.ChatDetailItemDecoration;
 import ceuilisa.mirai.utils.Constant;
 import ceuilisa.mirai.utils.DensityUtil;
+import ceuilisa.mirai.utils.Reference;
+import ceuilisa.mirai.utils.Translate;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -87,14 +94,11 @@ public class FragmentSingleRecy extends BaseFragment {
         }
         mRecyclerView.addItemDecoration(new ChatDetailItemDecoration(DensityUtil.dip2px(mContext, 16.0f)));
         PlayListTypeAdapter adapter = new PlayListTypeAdapter(data, mContext);
-        adapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position, int viewType) {
-                Intent intent = new Intent(mContext, PlayListActivity.class);
-                intent.putExtra("dataType", "根据类型搜索歌单");
-                intent.putExtra("key", data[position]);
-                startActivity(intent);
-            }
+        adapter.setOnItemClickListener((view, position, viewType) -> {
+            Intent intent = new Intent(mContext, PlayListActivity.class);
+            intent.putExtra("dataType", "根据类型搜索歌单");
+            intent.putExtra("key", data[position]);
+            startActivity(intent);
         });
         mProgressBar.setVisibility(View.INVISIBLE);
         mRecyclerView.setAdapter(adapter);
@@ -111,13 +115,15 @@ public class FragmentSingleRecy extends BaseFragment {
 
                     @Override
                     public void onNext(PlayWeekHistoryResponse playListTitleResponse) {
-                        PlayWeekHistoryAdapter adapter = new PlayWeekHistoryAdapter(
+                        PlayAllHistoryAdapter adapter = new PlayAllHistoryAdapter(
                                 playListTitleResponse.getWeekData(), mContext);
                         adapter.setOnItemClickListener(new OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position, int viewType) {
-                                MusicService.getInstance().playMusic(playListTitleResponse
-                                        .getWeekData().get(position).getSong().getId(), null);
+                                Translate.translateMusic(playListTitleResponse.getWeekData());
+                                Intent intent = new Intent(mContext, MusicActivity.class);
+                                intent.putExtra("index", position);
+                                startActivity(intent);
                             }
                         });
                         mProgressBar.setVisibility(View.INVISIBLE);
@@ -147,12 +153,11 @@ public class FragmentSingleRecy extends BaseFragment {
                     public void onNext(PlayAllHistoryResponse playListTitleResponse) {
                         PlayAllHistoryAdapter adapter = new PlayAllHistoryAdapter(
                                 playListTitleResponse.getAllData(), mContext);
-                        adapter.setOnItemClickListener(new OnItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, int position, int viewType) {
-                                MusicService.getInstance().playMusic(playListTitleResponse
-                                        .getAllData().get(position).getSong().getId(), null);
-                            }
+                        adapter.setOnItemClickListener((view, position, viewType) -> {
+                            Translate.translateMusic(playListTitleResponse.getAllData());
+                            Intent intent = new Intent(mContext, MusicActivity.class);
+                            intent.putExtra("index", position);
+                            startActivity(intent);
                         });
                         mProgressBar.setVisibility(View.INVISIBLE);
                         mRecyclerView.setAdapter(adapter);
@@ -165,6 +170,7 @@ public class FragmentSingleRecy extends BaseFragment {
 
                     @Override
                     public void onComplete() {
+
                     }
                 });
     }

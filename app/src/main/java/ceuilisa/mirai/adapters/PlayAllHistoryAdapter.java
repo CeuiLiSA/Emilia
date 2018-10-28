@@ -16,6 +16,7 @@ import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
+import ceuilisa.mirai.response.HistorySongBean;
 import ceuilisa.mirai.response.PlayAllHistoryResponse;
 
 
@@ -24,9 +25,9 @@ public class PlayAllHistoryAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private OnItemClickListener mOnItemClickListener;
-    private List<PlayAllHistoryResponse.AllDataBean> allIllust;
+    private List<HistorySongBean> allIllust;
 
-    public PlayAllHistoryAdapter(List<PlayAllHistoryResponse.AllDataBean> list, Context context) {
+    public PlayAllHistoryAdapter(List<HistorySongBean> list, Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(mContext);
         allIllust = list;

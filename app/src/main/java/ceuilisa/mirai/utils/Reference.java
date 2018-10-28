@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ceuilisa.mirai.response.PlayListDetailResponse;
+import ceuilisa.mirai.response.TracksBean;
 
 public class Reference {
-    public static List<PlayListDetailResponse.PlaylistBean.TracksBean> allSongs = new ArrayList<>();
+    public static List<TracksBean> allSongs = new ArrayList<>();
 }

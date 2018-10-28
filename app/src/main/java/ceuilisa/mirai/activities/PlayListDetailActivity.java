@@ -2,6 +2,7 @@ package ceuilisa.mirai.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -16,8 +17,10 @@ import com.othershe.library.NiceImageView;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.response.AlbumResponse;
 import ceuilisa.mirai.response.PlayListDetailResponse;
 import ceuilisa.mirai.utils.Common;
+import ceuilisa.mirai.utils.DensityUtil;
 import ceuilisa.mirai.utils.Reference;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observer;
@@ -30,7 +33,8 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 public class PlayListDetailActivity extends BaseActivity {
 
-    private String id, coverImg, name, author;
+    private String id, coverImg, name, author, dataType;
+    private Toolbar mToolbar;
     private TextView mTextView, mTextView2;
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
@@ -48,8 +52,8 @@ public class PlayListDetailActivity extends BaseActivity {
 
     @Override
     void initView() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        mToolbar = findViewById(R.id.toolbar);
+        mToolbar.setNavigationOnClickListener(v -> onBackPressed());
         mImageView = findViewById(R.id.playlist_photo);
         mImageView2 = findViewById(R.id.imageView4);
         mCircleImageView = findViewById(R.id.circleImageView);
@@ -72,11 +76,21 @@ public class PlayListDetailActivity extends BaseActivity {
         coverImg = getIntent().getStringExtra("coverImg");
         name = getIntent().getStringExtra("name");
         author = getIntent().getStringExtra("author");
+        dataType = getIntent().getStringExtra("dataType");
         Glide.with(mContext).load(coverImg).bitmapTransform(
                 new BlurTransformation(mContext, 20, 2)).into(mImageView);
         Glide.with(mContext).load(coverImg).into(mImageView2);
         mTextView.setText(name);
         mTextView2.setText(author);
+        mToolbar.setTitle(dataType);
+        if(dataType.equals("歌单")){
+            getPlaylist();
+        }else if(dataType.equals("专辑")){
+            getAlbum();
+        }
+    }
+
+    private void getPlaylist(){
         RetrofitUtil.getImjadApi().getPlayListDetail(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -87,11 +101,10 @@ public class PlayListDetailActivity extends BaseActivity {
 
                     @Override
                     public void onNext(PlayListDetailResponse playListTitleResponse) {
-                        Common.showLog("onNext");
-                        Reference.allSongs = playListTitleResponse.getPlaylist().getTracks();
                         PlayListDetailAdapter adapter = new PlayListDetailAdapter(
                                 playListTitleResponse.getPlaylist().getTracks(), mContext);
                         adapter.setOnItemClickListener((view, position, viewType) -> {
+                            Reference.allSongs = playListTitleResponse.getPlaylist().getTracks();
                             Intent intent = new Intent(mContext, MusicActivity.class);
                             intent.putExtra("index", position);
                             startActivity(intent);
@@ -99,13 +112,46 @@ public class PlayListDetailActivity extends BaseActivity {
                         Glide.with(mContext).load(playListTitleResponse.getPlaylist().getCreator().
                                 getAvatarUrl()).into(mCircleImageView);
                         mProgressBar.setVisibility(View.GONE);
-                        mProgressBar = null;
                         mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Common.showLog("onError");
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    private void getAlbum(){
+        RetrofitUtil.getImjadApi().getAlbum(id)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<AlbumResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(AlbumResponse playListTitleResponse) {
+                        PlayListDetailAdapter adapter = new PlayListDetailAdapter(
+                                playListTitleResponse.getSongs(), mContext);
+                        adapter.setOnItemClickListener((view, position, viewType) -> {
+                            Reference.allSongs = playListTitleResponse.getSongs();
+                            Intent intent = new Intent(mContext, MusicActivity.class);
+                            intent.putExtra("index", position);
+                            startActivity(intent);
+                        });
+                        mProgressBar.setVisibility(View.GONE);
+                        mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
                         e.printStackTrace();
                     }
 

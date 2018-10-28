@@ -13,4 +13,6 @@
     <dimen name="six_dp">6dp</dimen>
     <dimen name="twelve_dp">12dp</dimen>
     <dimen name="eighteen_dp">18dp</dimen>
+    <dimen name="app_bar_height">230dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

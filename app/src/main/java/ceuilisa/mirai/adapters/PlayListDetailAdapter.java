@@ -17,6 +17,7 @@ import java.util.List;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.response.PlayListDetailResponse;
+import ceuilisa.mirai.response.TracksBean;
 
 
 public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -24,9 +25,9 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private OnItemClickListener mOnItemClickListener;
-    private List<PlayListDetailResponse.PlaylistBean.TracksBean> allIllust;
+    private List<TracksBean> allIllust;
 
-    public PlayListDetailAdapter(List<PlayListDetailResponse.PlaylistBean.TracksBean> list, Context context) {
+    public PlayListDetailAdapter(List<TracksBean> list, Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(mContext);
         allIllust = list;

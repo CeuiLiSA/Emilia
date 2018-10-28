@@ -18,7 +18,13 @@ import ceuilisa.mirai.activities.MainActivity;
 
 public class FragmentRight extends BaseFragment {
 
-
+    public static FragmentRight newInstance(int index) {
+        Bundle args = new Bundle();
+        args.putSerializable("index", index);
+        FragmentRight fragment = new FragmentRight();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     void initLayout() {

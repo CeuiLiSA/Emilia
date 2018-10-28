@@ -15,10 +15,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".activities.ArtistActivity"
+            android:label="@string/title_activity_artist"
+            android:theme="@style/AppTheme"></activity>
+
         <service
             android:name=".MusicService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity android:name=".activities.PlayListDetailActivity" />
         <activity android:name=".activities.PlayListActivity" />
@@ -36,6 +41,7 @@
         <activity android:name=".activities.CoverDetailActivity" />
         <activity android:name=".activities.PlayHistoryActivity" />
         <activity android:name=".activities.CommentActivity" />
+        <activity android:name=".activities.DownloadActivity" />
     </application>
 
 </manifest>

@@ -2,6 +2,8 @@ package ceuilisa.mirai.network;
 
 import java.util.List;
 
+import ceuilisa.mirai.response.AlbumResponse;
+import ceuilisa.mirai.response.ArtistResponse;
 import ceuilisa.mirai.response.CommentResponse;
 import ceuilisa.mirai.response.ItemResponse;
 import ceuilisa.mirai.response.LrcResponse;
@@ -11,6 +13,7 @@ import ceuilisa.mirai.response.PlayListTitleResponse;
 import ceuilisa.mirai.response.PlayWeekHistoryResponse;
 import ceuilisa.mirai.response.SingleSongResponse;
 import io.reactivex.Observable;
+import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -52,4 +55,9 @@ public interface AppApi {
     Observable<PlayWeekHistoryResponse> getWeekPlayHistory(@Query("id") String id,
                                                            @Query("period") int period);
 
+    @GET("cloudmusic/?type=album")
+    Observable<AlbumResponse> getAlbum(@Query("id") String id);
+
+    @GET("cloudmusic/?type=artist")
+    Observable<ArtistResponse> getArtist(@Query("id") String id);
 }

@@ -95,6 +95,7 @@ public class PlayListActivity extends BaseActivity {
                             intent.putExtra("id", String.valueOf(allPlaylist.get(position).getId()));
                             intent.putExtra("name", allPlaylist.get(position).getName());
                             intent.putExtra("author", allPlaylist.get(position).getCreator().getNickname());
+                            intent.putExtra("dataType", "歌单");
                             intent.putExtra("coverImg", allPlaylist.get(position).getCoverImgUrl());
                             mContext.startActivity(intent, optionsCompat.toBundle());
                         });
@@ -168,6 +169,7 @@ public class PlayListActivity extends BaseActivity {
                             intent.putExtra("id", String.valueOf(mPlayLists.get(position).getId()));
                             intent.putExtra("name", mPlayLists.get(position).getName());
                             intent.putExtra("author", mPlayLists.get(position).getCreator().getNickname());
+                            intent.putExtra("dataType", "歌单");
                             intent.putExtra("coverImg", mPlayLists.get(position).getCoverImgUrl());
                             mContext.startActivity(intent, optionsCompat.toBundle());
                         });

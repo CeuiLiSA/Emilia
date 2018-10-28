@@ -27,25 +27,6 @@ import ceuilisa.mirai.utils.Constant;
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public DrawerLayout mDrawerLayout;
-    private Fragment[] mFragments;
-    private int lastShowFragment = Constant.FRAGMENT_ONE;
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = item -> {
-        switch (item.getItemId()) {
-            case R.id.navigation_home:
-                switchFrament(Constant.FRAGMENT_ONE);
-                return true;
-            case R.id.navigation_dashboard:
-                switchFrament(Constant.FRAGMENT_TWO);
-                return true;
-            case R.id.navigation_notifications:
-                switchFrament(Constant.FRAGMENT_THREE);
-                return true;
-
-
-        }
-        return false;
-    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,8 +46,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     void initView() {
         mDrawerLayout = findViewById(R.id.drawer_layout);
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         initFragments();
@@ -87,28 +66,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void initFragments() {
         FragmentLeft fragmentLeft = new FragmentLeft();
-        FragmentCenter fragmentCenter = new FragmentCenter();
-        FragmentRight fragmentRight = new FragmentRight();
-        mFragments = new Fragment[]{fragmentLeft, fragmentCenter, fragmentRight};
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_container, mFragments[0])
-                .show(mFragments[0])
+                .add(R.id.fragment_container, fragmentLeft)
+                .show(fragmentLeft)
                 .commit();
-        lastShowFragment = 0;
-    }
-
-    public void switchFrament(int index) {
-        if (lastShowFragment == index) {
-            return;
-        }
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.hide(mFragments[lastShowFragment]);
-        if (!mFragments[index].isAdded()) {
-            transaction.add(R.id.fragment_container, mFragments[index]);
-        }
-        transaction.show(mFragments[index]).commitAllowingStateLoss();
-        lastShowFragment = index;
     }
 
     @Override
