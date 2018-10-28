@@ -31,6 +31,7 @@ public class FragmentLeft extends BaseFragment {
         TextView textView3 = v.findViewById(R.id.textView3);
         textView3.setOnClickListener(v12 -> {
             Intent intent = new Intent(mContext, PlayHistoryActivity.class);
+            intent.putExtra("dataType", "听歌记录");
             mContext.startActivity(intent);
         });
         TextView textView1 = v.findViewById(R.id.textView6);
@@ -38,12 +39,20 @@ public class FragmentLeft extends BaseFragment {
             Intent intent = new Intent(mContext, PlayListDetailActivity.class);
             intent.putExtra("id", "139786239");
             intent.putExtra("name", "CeuiLiSA喜欢的音乐");
-            intent.putExtra("coverImg", "http://p1.music.126.net/id-110tprTCxF4BXNbZIOw==/109951163198268119.jpg");
+            intent.putExtra("author", "CeuiLiSA");
+            intent.putExtra("coverImg", "https://p1.music.126.net/id-110tprTCxF4BXNbZIOw==/109951163198268119.jpg");
             mContext.startActivity(intent);
         });
         TextView textView = v.findViewById(R.id.textView7);
         textView.setOnClickListener(v12 -> {
             Intent intent = new Intent(mContext, PlayListActivity.class);
+            intent.putExtra("dataType", "本人歌单");
+            mContext.startActivity(intent);
+        });
+        TextView textView5 = v.findViewById(R.id.textView5);
+        textView5.setOnClickListener(v12 -> {
+            Intent intent = new Intent(mContext, PlayHistoryActivity.class);
+            intent.putExtra("dataType", "歌单分类");
             mContext.startActivity(intent);
         });
         return v;

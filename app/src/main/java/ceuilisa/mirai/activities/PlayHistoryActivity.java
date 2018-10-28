@@ -8,10 +8,13 @@ import android.support.v7.widget.Toolbar;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.fragments.FragmentSingleRecy;
+import ceuilisa.mirai.utils.Constant;
 
 public class PlayHistoryActivity extends BaseActivity {
 
-    private static final String[] TITLES = new String[]{"最近一周", "所有时间"};
+    private String[] data;
+    private Toolbar mToolbar;
+    private ViewPager mViewPager;
 
     @Override
     void initLayout() {
@@ -20,31 +23,38 @@ public class PlayHistoryActivity extends BaseActivity {
 
     @Override
     void initView() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(v -> finish());
-        ViewPager viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int i) {
-                return FragmentSingleRecy.newInstance(i);
-            }
-
-            @Override
-            public int getCount() {
-                return TITLES.length;
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return TITLES[position];
-            }
-        });
+        mToolbar = findViewById(R.id.toolbar);
+        mToolbar.setNavigationOnClickListener(v -> finish());
+        mViewPager = findViewById(R.id.view_pager);
         TabLayout tabLayout = findViewById(R.id.tab);
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager(mViewPager);
     }
 
     @Override
     void initData() {
+        String dataType = getIntent().getStringExtra("dataType");
+        if(dataType.equals("听歌记录")){
+            data = Constant.PLAY_HISTORY;
+            mToolbar.setTitle("播放记录");
+        }else if(dataType.equals("歌单分类")){
+            data = Constant.PLAYLIST_TYPE;
+            mToolbar.setTitle("歌单分类");
+        }
+        mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int i) {
+                return FragmentSingleRecy.newInstance(i, dataType);
+            }
 
+            @Override
+            public int getCount() {
+                return data.length;
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return data[position];
+            }
+        });
     }
 }

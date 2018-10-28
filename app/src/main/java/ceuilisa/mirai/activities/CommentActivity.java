@@ -63,7 +63,7 @@ public class CommentActivity extends BaseActivity {
     private void fetchComment() {
         allComment.clear();
         nowIndex = 0;
-        RetrofitUtil.getImjadApi().getComment(Constant.TYPE_COMMENT, id, Constant.LIMIT, nowIndex)
+        RetrofitUtil.getImjadApi().getComment(id, Constant.LIMIT, nowIndex)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<CommentResponse>() {
@@ -97,7 +97,7 @@ public class CommentActivity extends BaseActivity {
     }
 
     private void getNextData() {
-        RetrofitUtil.getImjadApi().getComment(Constant.TYPE_COMMENT, id, Constant.LIMIT, nowIndex)
+        RetrofitUtil.getImjadApi().getComment(id, Constant.LIMIT, nowIndex)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<CommentResponse>() {

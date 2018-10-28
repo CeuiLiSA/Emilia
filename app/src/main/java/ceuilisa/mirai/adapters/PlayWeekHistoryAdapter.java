@@ -16,17 +16,17 @@ import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.response.PlayListDetailResponse;
+import ceuilisa.mirai.response.PlayWeekHistoryResponse;
 
 
-public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PlayWeekHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private OnItemClickListener mOnItemClickListener;
-    private List<PlayListDetailResponse.PlaylistBean.TracksBean> allIllust;
+    private List<PlayWeekHistoryResponse.WeekDataBean> allIllust;
 
-    public PlayListDetailAdapter(List<PlayListDetailResponse.PlaylistBean.TracksBean> list, Context context) {
+    public PlayWeekHistoryAdapter(List<PlayWeekHistoryResponse.WeekDataBean> list, Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(mContext);
         allIllust = list;
@@ -41,30 +41,30 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
-        if (allIllust.get(position).getAr().size() == 1) {
+        if (allIllust.get(position).getSong().getAr().size() == 1) {
             ((TagHolder) holder).mTextView3.setText(String.format("%s - %s",
-                    allIllust.get(position).getAr().get(0).getName(),
-                    allIllust.get(position).getAl().getName()));
+                    allIllust.get(position).getSong().getAr().get(0).getName(),
+                    allIllust.get(position).getSong().getAl().getName()));
         } else {
             StringBuilder artist = new StringBuilder();
-            for (int i = 0; i < allIllust.get(position).getAr().size(); i++) {
-                artist.append(allIllust.get(position).getAr().get(i).getName()).append(" / ");
+            for (int i = 0; i < allIllust.get(position).getSong().getAr().size(); i++) {
+                artist.append(allIllust.get(position).getSong().getAr().get(i).getName()).append(" / ");
             }
             ((TagHolder) holder).mTextView3.setText(String.format("%s - %s",
                     artist.substring(0, artist.length() - 3),
-                    allIllust.get(position).getAl().getName()));
+                    allIllust.get(position).getSong().getAl().getName()));
         }
-        if (allIllust.get(position).getAlia().size() != 0) {
+
+        if (allIllust.get(position).getSong().getAlia().size() != 0) {
             SpannableString spannableString = new SpannableString(String.format("%s (%s)",
-                    allIllust.get(position).getName(),
-                    allIllust.get(position).getAlia().get(0)));
+                    allIllust.get(position).getSong().getName(),
+                    allIllust.get(position).getSong().getAlia().get(0)));
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#999999")),
-                    allIllust.get(position).getName().length(), spannableString.length(),
+                    allIllust.get(position).getSong().getName().length(), spannableString.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             ((TagHolder) holder).mTextView.setText(spannableString);
         } else {
-            ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName());
+            ((TagHolder) holder).mTextView.setText(allIllust.get(position).getSong().getName());
         }
 
         ((TagHolder) holder).mTextView2.setText(String.valueOf(position + 1));

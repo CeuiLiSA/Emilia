@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<me.wcy.lrcview.LrcView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:lrc="http://schemas.android.com/tools"
+    android:id="@+id/lrc_view_full"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    lrc:lrcAnimationDuration="1000"
+    lrc:lrcCurrentTextColor="@color/white"
+    lrc:lrcDividerHeight="24dp"
+    lrc:lrcNormalTextColor="@color/white_50p"
+    lrc:lrcPadding="40dp"
+    lrc:lrcTextSize="@dimen/text_size_common"
+    lrc:lrcTimelineColor="@color/white_50p"
+    lrc:lrcTimelineTextColor="#CCFFFFFF" />

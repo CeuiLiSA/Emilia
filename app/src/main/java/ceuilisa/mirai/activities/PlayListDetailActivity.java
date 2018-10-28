@@ -17,6 +17,7 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.PlayListDetailResponse;
+import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Reference;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observer;
@@ -29,7 +30,7 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 public class PlayListDetailActivity extends BaseActivity {
 
-    private String id, coverImg, name;
+    private String id, coverImg, name, author;
     private TextView mTextView, mTextView2;
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
@@ -70,11 +71,13 @@ public class PlayListDetailActivity extends BaseActivity {
         id = getIntent().getStringExtra("id");
         coverImg = getIntent().getStringExtra("coverImg");
         name = getIntent().getStringExtra("name");
+        author = getIntent().getStringExtra("author");
         Glide.with(mContext).load(coverImg).bitmapTransform(
                 new BlurTransformation(mContext, 20, 2)).into(mImageView);
         Glide.with(mContext).load(coverImg).into(mImageView2);
         mTextView.setText(name);
-        RetrofitUtil.getTengkoaApi().getPlayListDetail(id)
+        mTextView2.setText(author);
+        RetrofitUtil.getImjadApi().getPlayListDetail(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<PlayListDetailResponse>() {
@@ -84,6 +87,7 @@ public class PlayListDetailActivity extends BaseActivity {
 
                     @Override
                     public void onNext(PlayListDetailResponse playListTitleResponse) {
+                        Common.showLog("onNext");
                         Reference.allSongs = playListTitleResponse.getPlaylist().getTracks();
                         PlayListDetailAdapter adapter = new PlayListDetailAdapter(
                                 playListTitleResponse.getPlaylist().getTracks(), mContext);
@@ -92,7 +96,6 @@ public class PlayListDetailActivity extends BaseActivity {
                             intent.putExtra("index", position);
                             startActivity(intent);
                         });
-                        mTextView2.setText(playListTitleResponse.getPlaylist().getCreator().getNickname());
                         Glide.with(mContext).load(playListTitleResponse.getPlaylist().getCreator().
                                 getAvatarUrl()).into(mCircleImageView);
                         mProgressBar.setVisibility(View.GONE);
@@ -102,6 +105,8 @@ public class PlayListDetailActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
+                        Common.showLog("onError");
+                        e.printStackTrace();
                     }
 
                     @Override

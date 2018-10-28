@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="@dimen/six_dp"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
             app:title="播放记录"
             app:titleTextColor="@android:color/white" />
@@ -26,13 +27,14 @@
             app:tabIndicatorColor="@android:color/white"
             app:tabIndicatorHeight="2dp"
             app:tabSelectedTextColor="@android:color/white"
-            app:tabTextColor="#f2f2f2" />
+            app:tabTextColor="#a89bfa" />
 
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

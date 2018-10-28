@@ -9,8 +9,8 @@ import android.os.IBinder;
 import java.io.IOException;
 
 import ceuilisa.mirai.interf.MusicOperate;
-import ceuilisa.mirai.interf.OnMusicPrepare;
 import ceuilisa.mirai.interf.OnMusicComplete;
+import ceuilisa.mirai.interf.OnMusicPrepare;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.SingleSongResponse;
 import ceuilisa.mirai.utils.Common;
@@ -30,14 +30,16 @@ public class MusicService extends Service implements MusicOperate {
     private OnMusicComplete mOnMusicComplete;
     private static volatile MusicService instance = null;
 
-    public MusicService(){
+    public MusicService() {
         mPlayer = new MediaPlayer();
         mPlayer.setOnErrorListener((mp, what, extra) -> true);
         mPlayer.setOnCompletionListener(mediaPlayer -> {
-            if (nowPlayIndex != Reference.allSongs.size() - 1) {
-                mOnMusicComplete.nextSong();
-            } else {
-                mOnMusicComplete.stop();
+            if (mOnMusicComplete != null) {
+                if (nowPlayIndex != Reference.allSongs.size() - 1) {
+                    mOnMusicComplete.nextSong();
+                } else {
+                    mOnMusicComplete.stop();
+                }
             }
         });
     }
@@ -77,7 +79,7 @@ public class MusicService extends Service implements MusicOperate {
     @Override
     public void playMusic(int id, OnMusicPrepare onMusicPrepare) {
         mPlayer.stop();
-        RetrofitUtil.getTengkoaApi().getSingleSong(String.valueOf(id))
+        RetrofitUtil.getImjadApi().getSingleSong(String.valueOf(id))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<SingleSongResponse>() {
@@ -96,7 +98,7 @@ public class MusicService extends Service implements MusicOperate {
                                 mPlayer.prepareAsync();
                                 mPlayer.setOnPreparedListener(mp -> {
                                     isPlaying = true;
-                                    if(onMusicPrepare != null){
+                                    if (onMusicPrepare != null) {
                                         onMusicPrepare.updateUI();
                                     }
                                     mPlayer.start();
@@ -122,10 +124,10 @@ public class MusicService extends Service implements MusicOperate {
 
     @Override
     public void stopOrPlay() {
-        if(isPlaying){
+        if (isPlaying) {
             isPlaying = false;
             mPlayer.pause();
-        }else {
+        } else {
             isPlaying = true;
             mPlayer.start();
         }

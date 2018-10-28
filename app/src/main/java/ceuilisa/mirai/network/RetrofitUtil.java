@@ -31,7 +31,6 @@ public class RetrofitUtil {
     }
 
     public static AppApi getImjadApi(){
-
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(
                 message -> Log.i("RetrofitLog","retrofitBack = "+message));
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
