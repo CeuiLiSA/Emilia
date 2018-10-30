@@ -29,7 +29,7 @@ public interface AppApi {
     @GET("cloudmusic/?type=lyric")
     Observable<LrcResponse> getLrc(@Query("id") String id);
 
-    @GET("query_req")
+    @GET("piclist")
     Observable<List<ItemResponse>> getAllItem();
 
 

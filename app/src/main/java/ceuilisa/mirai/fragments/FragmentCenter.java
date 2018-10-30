@@ -35,8 +35,7 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 public class FragmentCenter extends BaseFragment {
 
-    private RecyclerView mRecyclerView;
-    private RefreshLayout mRefreshLayout;
+
 
     @Override
     void initLayout() {
@@ -45,59 +44,12 @@ public class FragmentCenter extends BaseFragment {
 
     @Override
     View initView(View v) {
-        mRecyclerView = v.findViewById(R.id.recyclerView);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.setHasFixedSize(true);
-        mRefreshLayout = v.findViewById(R.id.refreshLayout);
-        mRefreshLayout.setOnRefreshListener(refreshlayout -> initData());
-        /*refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadMore(2000,false);//传入false表示加载失败
-            }
-        });*/
+
         return v;
     }
 
     @Override
     void initData() {
-        RetrofitUtil.getTempApi().getAllItem()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<ItemResponse>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
 
-                    }
-
-                    @Override
-                    public void onNext(List<ItemResponse> itemResponses) {
-                        List<ItemResponse> mPlayLists = itemResponses;
-                        ItemListAdapter mAdapter = new ItemListAdapter(mPlayLists, mContext);
-                        /*mAdapter.setOnItemClickListener((view, position, viewType) -> {
-                            Intent intent = new Intent(mContext, PlayListDetailActivity.class);
-                            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                                    .makeSceneTransitionAnimation(mActivity, view, "sharedView");
-                            intent.putExtra("id", mPlayLists.get(position).id);
-                            intent.putExtra("name", mPlayLists.get(position).name);
-                            intent.putExtra("coverImg", mPlayLists.get(position).coverImgUrl);
-                            mContext.startActivity(intent, optionsCompat.toBundle());
-                        });*/
-                        mRecyclerView.setAdapter(new ScaleInAnimationAdapter(mAdapter));
-                        mRefreshLayout.finishRefresh();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
     }
 }

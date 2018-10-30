@@ -2,6 +2,7 @@ package ceuilisa.mirai.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -45,6 +46,7 @@ public class ArtistActivity extends BaseActivity {
     private ViewPager mViewPager;
     private ProgressBar mProgressBar;
     private BaseFragment[] mFragments;
+    private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private FragmentHotSongs fragmentHotSongs;
     private FragmentArtistInfo fragmentArtistInfo;
     private FragmentArtistInfo fragmentArtistInfo2;
@@ -57,9 +59,11 @@ public class ArtistActivity extends BaseActivity {
     @Override
     void initView() {
         mToolbar = findViewById(R.id.toolbar);
+        mCollapsingToolbarLayout = findViewById(R.id.toolbar_layout);
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationOnClickListener(v -> finish());
         mViewPager = findViewById(R.id.view_pager);
+        mViewPager.setOffscreenPageLimit(data.length);
         mImageView = findViewById(R.id.image);
         mProgressBar = findViewById(R.id.progress);
         TabLayout tabLayout = findViewById(R.id.tab);
@@ -81,7 +85,7 @@ public class ArtistActivity extends BaseActivity {
 
             @Override
             public int getCount() {
-                return data.length;
+                return mFragments.length;
             }
 
             @Override
@@ -104,6 +108,7 @@ public class ArtistActivity extends BaseActivity {
                     @Override
                     public void onNext(ArtistResponse playListTitleResponse) {
                         mToolbar.setTitle(playListTitleResponse.getArtist().getName());
+                        mCollapsingToolbarLayout.setTitle(playListTitleResponse.getArtist().getName());
                         fragmentHotSongs.showHotSongs(playListTitleResponse.getHotSongs());
                         fragmentArtistInfo.showInfo(playListTitleResponse.getArtist());
                         mProgressBar.setVisibility(View.INVISIBLE);

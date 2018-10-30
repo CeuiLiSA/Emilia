@@ -6,7 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -39,8 +42,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((TagHolder) holder).mTextView.setText(String.valueOf(allIllust.get(position).getName()));
         ((TagHolder) holder).mTextView2.setText(String.valueOf(allIllust.get(position).getId()));
-        ((TagHolder) holder).mTextView3.setText(String.valueOf(allIllust.get(position).getPassword()));
-        ((TagHolder) holder).mTextView4.setText(String.valueOf(allIllust.get(position).getVip()));
+        Glide.with(mContext).load(allIllust.get(position).getName()).into(((TagHolder) holder).mImageView);
         /*if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(v ->
                     mOnItemClickListener.onItemClick(((TagHolder) holder).mNiceImageView, position, 0));
@@ -57,15 +59,15 @@ public class ItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public class TagHolder extends RecyclerView.ViewHolder {
-        private TextView mTextView, mTextView2, mTextView3, mTextView4;
+        private TextView mTextView, mTextView2;
+        private ImageView mImageView;
 
         TagHolder(View itemView) {
             super(itemView);
 
             mTextView = itemView.findViewById(R.id.title);
             mTextView2 = itemView.findViewById(R.id.title_2);
-            mTextView3 = itemView.findViewById(R.id.title_3);
-            mTextView4 = itemView.findViewById(R.id.title_4);
+            mImageView = itemView.findViewById(R.id.image);
         }
     }
 }

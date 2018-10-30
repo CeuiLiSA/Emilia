@@ -4,38 +4,18 @@ public class ItemResponse {
 
 
     /**
-     * vip : 2
-     * password : 222
-     * id : 1
-     * name : yanglei
+     * id : 0
+     * name : .DS_Store
      */
 
-    private int vip;
-    private String password;
-    private int id;
+    private String id;
     private String name;
 
-    public int getVip() {
-        return vip;
-    }
-
-    public void setVip(int vip) {
-        this.vip = vip;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

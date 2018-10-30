@@ -13,6 +13,7 @@ import ceuilisa.mirai.activities.MainActivity;
 import ceuilisa.mirai.activities.PlayHistoryActivity;
 import ceuilisa.mirai.activities.PlayListActivity;
 import ceuilisa.mirai.activities.PlayListDetailActivity;
+import ceuilisa.mirai.activities.TestActivity;
 
 public class FragmentLeft extends BaseFragment {
     @Override
@@ -48,7 +49,7 @@ public class FragmentLeft extends BaseFragment {
         });
         TextView textView2 = v.findViewById(R.id.textView2);
         textView2.setOnClickListener(v12 -> {
-            Intent intent = new Intent(mContext, DownloadActivity.class);
+            Intent intent = new Intent(mContext, TestActivity.class);
             mContext.startActivity(intent);
         });
         TextView textView3 = v.findViewById(R.id.textView3);

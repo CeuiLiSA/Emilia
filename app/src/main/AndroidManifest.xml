@@ -42,6 +42,7 @@
         <activity android:name=".activities.PlayHistoryActivity" />
         <activity android:name=".activities.CommentActivity" />
         <activity android:name=".activities.DownloadActivity" />
+        <activity android:name=".activities.TestActivity" />
     </application>
 
 </manifest>

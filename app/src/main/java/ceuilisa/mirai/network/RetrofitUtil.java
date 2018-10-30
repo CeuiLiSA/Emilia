@@ -74,5 +74,5 @@ public class RetrofitUtil {
 
 
 
-    private static final String BASE_URL_2 = "http://104.129.180.80/";
+    private static final String BASE_URL_2 = "http://104.129.180.80:8082/";
 }

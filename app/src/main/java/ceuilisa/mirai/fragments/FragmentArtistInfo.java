@@ -13,6 +13,7 @@ import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.response.ArtistResponse;
 import ceuilisa.mirai.response.TracksBean;
+import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Reference;
 
 public class FragmentArtistInfo extends BaseFragment {
