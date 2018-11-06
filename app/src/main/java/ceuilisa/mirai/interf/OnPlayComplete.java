@@ -1,6 +1,6 @@
 package ceuilisa.mirai.interf;
 
-public interface OnMusicComplete {
+public interface OnPlayComplete {
     void nextSong();
     void stop();
 }

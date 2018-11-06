@@ -1,6 +1,7 @@
 package ceuilisa.mirai.dialogs;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.liulishuo.okdownload.DownloadTask;
 import com.liulishuo.okdownload.core.cause.EndCause;
@@ -27,6 +29,7 @@ import ceuilisa.mirai.response.DeleteImageResponse;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.FileUtil;
 import ceuilisa.mirai.utils.Reference;
+import es.dmoral.toasty.Toasty;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -36,13 +39,14 @@ public class DeleteImageDialog extends DialogFragment{
 
     private AlertDialog mAlertDialog;
     private OnPrepare mOnPrepare;
+    private Context mContext;
     private String name;
-    private int index;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        mContext = getActivity();
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         View view= LayoutInflater.from(getActivity()).inflate(R.layout.dialog_download, null);
         TextView textView = view.findViewById(R.id.song_size);
         textView.setText(String.format("这将会删除图片%s，是否继续？", name));
@@ -52,6 +56,9 @@ public class DeleteImageDialog extends DialogFragment{
         mAlertDialog = builder.create();
         return mAlertDialog;
     }
+
+
+
 
     public void deleteNow(){
         mAlertDialog.dismiss();
@@ -68,13 +75,23 @@ public class DeleteImageDialog extends DialogFragment{
                     public void onNext(DeleteImageResponse response) {
                         if(response.getMessage().equals("delete success")){
                             if(mOnPrepare != null){
+                                Toasty.success(mContext, "删除成功",
+                                        Toast.LENGTH_SHORT, true).show();
                                 mOnPrepare.updateUI();
+                            }else {
+                                Toasty.error(mContext, "This is an error toast.",
+                                        Toast.LENGTH_SHORT, true).show();
                             }
+                        }else {
+                            Toasty.error(mContext, "This is an error toast.",
+                                    Toast.LENGTH_SHORT, true).show();
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        Toasty.error(mContext, "This is an error toast.",
+                                Toast.LENGTH_SHORT, true).show();
                         Common.showLog("onError");
                     }
 
@@ -82,14 +99,6 @@ public class DeleteImageDialog extends DialogFragment{
                     public void onComplete() {
                     }
                 });
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
     }
 
     public String getName() {

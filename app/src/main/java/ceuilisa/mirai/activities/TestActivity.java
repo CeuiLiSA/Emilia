@@ -76,8 +76,13 @@ public class TestActivity extends BaseActivity{
                                 deleteImageDialog.setOnPrepare(new OnPrepare() {
                                     @Override
                                     public void updateUI() {
+                                        /*itemResponses.remove(position);
+                                        mAdapter.notifyDataSetChanged();*/
                                         itemResponses.remove(position);
-                                        mAdapter.notifyDataSetChanged();
+                                        mAdapter.notifyItemRemoved(position);
+                                        if (position != itemResponses.size()) {
+                                            mAdapter.notifyItemRangeChanged(position, itemResponses.size() - position);
+                                        }
                                     }
                                 });
                                 deleteImageDialog.show(getSupportFragmentManager(), "delete");

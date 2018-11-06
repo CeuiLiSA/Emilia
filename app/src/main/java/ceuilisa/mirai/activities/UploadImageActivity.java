@@ -77,26 +77,6 @@ public class UploadImageActivity extends BaseActivity{
     void initData() {
     }
 
-
-    public static byte[] File2Bytes(File file) {
-        int byte_size = 1024;
-        byte[] b = new byte[byte_size];
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream(
-                    byte_size);
-            for (int length; (length = fileInputStream.read(b)) != -1;) {
-                outputStream.write(b, 0, length);
-            }
-            fileInputStream.close();
-            outputStream.close();
-            return outputStream.toByteArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     private void changeHeadImage(File file) {
         mProgressBar.setVisibility(View.VISIBLE);
         RequestBody photoRequestBody = RequestBody.create(MediaType.parse("image/jpeg"), file);

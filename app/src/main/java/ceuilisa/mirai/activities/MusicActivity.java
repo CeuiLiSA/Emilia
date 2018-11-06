@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -30,7 +29,7 @@ import ceuilisa.mirai.dialogs.DownloadDialog;
 import ceuilisa.mirai.fragments.BaseFragment;
 import ceuilisa.mirai.fragments.FragmentCover;
 import ceuilisa.mirai.fragments.FragmentLrc;
-import ceuilisa.mirai.interf.OnMusicComplete;
+import ceuilisa.mirai.interf.OnPlayComplete;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.IndicatorLayout;
 import ceuilisa.mirai.utils.Reference;
@@ -162,8 +161,8 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
     @Override
     void initData() {
         index = getIntent().getIntExtra("index", 0);
-        if (MusicService.getInstance().getOnMusicComplete() == null) {
-            MusicService.getInstance().setOnMusicComplete(new OnMusicComplete() {
+        if (MusicService.getInstance().getOnPlayComplete() == null) {
+            MusicService.getInstance().setOnPlayComplete(new OnPlayComplete() {
                 @Override
                 public void nextSong() {
                     nextSong.performClick();

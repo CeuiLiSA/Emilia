@@ -9,7 +9,7 @@ import android.os.IBinder;
 import java.io.IOException;
 
 import ceuilisa.mirai.interf.MusicOperate;
-import ceuilisa.mirai.interf.OnMusicComplete;
+import ceuilisa.mirai.interf.OnPlayComplete;
 import ceuilisa.mirai.interf.OnPrepare;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.SingleSongResponse;
@@ -27,18 +27,18 @@ public class MusicService extends Service implements MusicOperate {
     private SingleSongResponse mSingleSong;
     private int nowPlayIndex = -1;
     private boolean isPlaying = false;
-    private OnMusicComplete mOnMusicComplete;
+    private OnPlayComplete mOnPlayComplete;
     private static volatile MusicService instance = null;
 
     public MusicService() {
         mPlayer = new MediaPlayer();
         mPlayer.setOnErrorListener((mp, what, extra) -> true);
         mPlayer.setOnCompletionListener(mediaPlayer -> {
-            if (mOnMusicComplete != null) {
+            if (mOnPlayComplete != null) {
                 if (nowPlayIndex != Reference.allSongs.size() - 1) {
-                    mOnMusicComplete.nextSong();
+                    mOnPlayComplete.nextSong();
                 } else {
-                    mOnMusicComplete.stop();
+                    mOnPlayComplete.stop();
                 }
             }
         });
@@ -154,12 +154,12 @@ public class MusicService extends Service implements MusicOperate {
         return mPlayer;
     }
 
-    public OnMusicComplete getOnMusicComplete() {
-        return mOnMusicComplete;
+    public OnPlayComplete getOnPlayComplete() {
+        return mOnPlayComplete;
     }
 
-    public void setOnMusicComplete(OnMusicComplete onMusicComplete) {
-        mOnMusicComplete = onMusicComplete;
+    public void setOnPlayComplete(OnPlayComplete onPlayComplete) {
+        mOnPlayComplete = onPlayComplete;
     }
 
     public SingleSongResponse getSingleSong() {
