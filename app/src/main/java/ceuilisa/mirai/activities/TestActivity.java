@@ -2,6 +2,9 @@ package ceuilisa.mirai.activities;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
@@ -9,8 +12,13 @@ import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.ItemListAdapter;
+import ceuilisa.mirai.dialogs.DeleteImageDialog;
+import ceuilisa.mirai.interf.FullClickListener;
+import ceuilisa.mirai.interf.OnPrepare;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.ItemResponse;
+import ceuilisa.mirai.utils.Common;
+import es.dmoral.toasty.Toasty;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -19,6 +27,7 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 public class TestActivity extends BaseActivity{
 
+    private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
     private RefreshLayout mRefreshLayout;
 
@@ -29,6 +38,7 @@ public class TestActivity extends BaseActivity{
 
     @Override
     void initView() {
+        mProgressBar = findViewById(R.id.progress);
         mRecyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -52,24 +62,37 @@ public class TestActivity extends BaseActivity{
 
                     @Override
                     public void onNext(List<ItemResponse> itemResponses) {
-
                         ItemListAdapter mAdapter = new ItemListAdapter(itemResponses, mContext);
-                        /*mAdapter.setOnItemClickListener((view, position, viewType) -> {
-                            Intent intent = new Intent(mContext, PlayListDetailActivity.class);
-                            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                                    .makeSceneTransitionAnimation(mActivity, view, "sharedView");
-                            intent.putExtra("id", mPlayLists.get(position).id);
-                            intent.putExtra("name", mPlayLists.get(position).name);
-                            intent.putExtra("coverImg", mPlayLists.get(position).coverImgUrl);
-                            mContext.startActivity(intent, optionsCompat.toBundle());
-                        });*/
+                        mAdapter.setOnItemClickListener(new FullClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position, int viewType) {
+
+                            }
+
+                            @Override
+                            public void onItemLongClick(View view, int position, int viewType) {
+                                DeleteImageDialog deleteImageDialog = new DeleteImageDialog();
+                                deleteImageDialog.setName(itemResponses.get(position).getName().substring(34));
+                                deleteImageDialog.setOnPrepare(new OnPrepare() {
+                                    @Override
+                                    public void updateUI() {
+                                        itemResponses.remove(position);
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                });
+                                deleteImageDialog.show(getSupportFragmentManager(), "delete");
+                            }
+                        });
                         mRecyclerView.setAdapter(new ScaleInAnimationAdapter(mAdapter));
+                        mProgressBar.setVisibility(View.INVISIBLE);
                         mRefreshLayout.finishRefresh();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        mProgressBar.setVisibility(View.INVISIBLE);
+                        Toasty.error(mContext, "This is an error toast.",
+                                Toast.LENGTH_SHORT, true).show();
                     }
 
                     @Override

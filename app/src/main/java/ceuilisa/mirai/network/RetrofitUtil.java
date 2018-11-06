@@ -10,25 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitUtil {
 
-    private static final String TENGKOA_BASE_URL = "https://v1.hitokoto.cn/nm/";
     private static final String IMJAD_BASE_URL = "https://api.imjad.cn/";
-
-    public static AppApi getTengkoaApi(){
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(
-                message -> Log.i("RetrofitLog","retrofitBack = "+message));
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient okHttpClient = new OkHttpClient
-                .Builder()
-                .addInterceptor(loggingInterceptor)
-                .build();
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(TENGKOA_BASE_URL)
-                .build();
-        return retrofit.create(AppApi.class);
-    }
 
     public static AppApi getImjadApi(){
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(

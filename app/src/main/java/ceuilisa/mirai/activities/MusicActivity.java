@@ -96,6 +96,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
                 if(Reference.allSongs.get(index).getAr().size() == 1) {
                     Intent intent = new Intent(mContext, ArtistActivity.class);
                     intent.putExtra("id", String.valueOf(Reference.allSongs.get(index).getAr().get(0).getId()));
+                    intent.putExtra("name", Reference.allSongs.get(index).getAr().get(0).getName());
                     mContext.startActivity(intent);
                 }
             }

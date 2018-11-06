@@ -1,5 +1,5 @@
 package ceuilisa.mirai.interf;
 
-public interface OnMusicPrepare {
+public interface OnPrepare {
     void updateUI();
 }

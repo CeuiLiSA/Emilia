@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/sixteen_dp"
-        android:text="下载歌曲至本地"
+        android:text="删除图片"
         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
     <TextView
@@ -21,15 +21,6 @@
         android:fitsSystemWindows="true"
         android:textSize="15sp" />
 
-    <ProgressBar
-        android:id="@+id/progress"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/sixteen_dp"
-        android:layout_marginEnd="@dimen/sixteen_dp"
-        android:max="100"
-        android:visibility="gone" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -42,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/sixteen_dp"
-            android:text="下载"
+            android:text="确定"
             android:textColor="@color/colorPrimaryDark" />
 
         <Button

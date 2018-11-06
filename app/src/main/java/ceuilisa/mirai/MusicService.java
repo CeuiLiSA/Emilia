@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import ceuilisa.mirai.interf.MusicOperate;
 import ceuilisa.mirai.interf.OnMusicComplete;
-import ceuilisa.mirai.interf.OnMusicPrepare;
+import ceuilisa.mirai.interf.OnPrepare;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.SingleSongResponse;
 import ceuilisa.mirai.utils.Common;
@@ -77,7 +77,7 @@ public class MusicService extends Service implements MusicOperate {
     }
 
     @Override
-    public void playMusic(int id, OnMusicPrepare onMusicPrepare) {
+    public void playMusic(int id, OnPrepare onPrepare) {
         mPlayer.stop();
         RetrofitUtil.getImjadApi().getSingleSong(String.valueOf(id))
                 .subscribeOn(Schedulers.newThread())
@@ -98,8 +98,8 @@ public class MusicService extends Service implements MusicOperate {
                                 mPlayer.prepareAsync();
                                 mPlayer.setOnPreparedListener(mp -> {
                                     isPlaying = true;
-                                    if (onMusicPrepare != null) {
-                                        onMusicPrepare.updateUI();
+                                    if (onPrepare != null) {
+                                        onPrepare.updateUI();
                                     }
                                     mPlayer.start();
                                 });

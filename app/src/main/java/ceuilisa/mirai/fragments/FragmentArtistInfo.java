@@ -1,20 +1,10 @@
 package ceuilisa.mirai.fragments;
 
-import android.content.Intent;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.List;
-
 import ceuilisa.mirai.R;
-import ceuilisa.mirai.activities.MusicActivity;
-import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.response.ArtistResponse;
-import ceuilisa.mirai.response.TracksBean;
-import ceuilisa.mirai.utils.Common;
-import ceuilisa.mirai.utils.Reference;
 
 public class FragmentArtistInfo extends BaseFragment {
 
@@ -36,8 +26,13 @@ public class FragmentArtistInfo extends BaseFragment {
     void initData() {
     }
 
-    public void showInfo(ArtistResponse.ArtistBean artistBean){
+    public void showInfo(ArtistResponse.ArtistBean artistBean) {
         artistName.setText(String.format("%s简介", artistBean.getName()));
-        artistInfo.setText(artistBean.getBriefDesc());
+        if (artistBean.getBriefDesc() != null &&
+                artistBean.getBriefDesc().length() != 0) {
+            artistInfo.setText(artistBean.getBriefDesc());
+        } else {
+            artistInfo.setText("无相关信息");
+        }
     }
 }

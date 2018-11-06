@@ -23,6 +23,7 @@ import java.util.List;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.fragments.BaseFragment;
+import ceuilisa.mirai.fragments.FragmentArtistAlbum;
 import ceuilisa.mirai.fragments.FragmentArtistInfo;
 import ceuilisa.mirai.fragments.FragmentHotSongs;
 import ceuilisa.mirai.fragments.FragmentRight;
@@ -40,7 +41,7 @@ import io.reactivex.schedulers.Schedulers;
 public class ArtistActivity extends BaseActivity {
 
     private String[] data = new String[]{"热门歌曲", "专辑", "艺人信息"};
-    private String id;
+    public String id, name;
     private Toolbar mToolbar;
     private ImageView mImageView;
     private ViewPager mViewPager;
@@ -49,7 +50,7 @@ public class ArtistActivity extends BaseActivity {
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private FragmentHotSongs fragmentHotSongs;
     private FragmentArtistInfo fragmentArtistInfo;
-    private FragmentArtistInfo fragmentArtistInfo2;
+    private FragmentArtistAlbum mFragmentArtistAlbum;
 
     @Override
     void initLayout() {
@@ -73,10 +74,11 @@ public class ArtistActivity extends BaseActivity {
     @Override
     void initData() {
         id = getIntent().getStringExtra("id");
+        name = getIntent().getStringExtra("name");
         fragmentHotSongs = new FragmentHotSongs();
+        mFragmentArtistAlbum = new FragmentArtistAlbum();
         fragmentArtistInfo = new FragmentArtistInfo();
-        fragmentArtistInfo2 = new FragmentArtistInfo();
-        mFragments = new BaseFragment[]{fragmentHotSongs, fragmentArtistInfo, fragmentArtistInfo2};
+        mFragments = new BaseFragment[]{fragmentHotSongs, mFragmentArtistAlbum, fragmentArtistInfo};
         mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
@@ -123,5 +125,4 @@ public class ArtistActivity extends BaseActivity {
                     }
                 });
     }
-
 }

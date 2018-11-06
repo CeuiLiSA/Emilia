@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import ceuilisa.mirai.R;
+import ceuilisa.mirai.interf.FullClickListener;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.response.ItemResponse;
 
@@ -22,7 +23,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private OnItemClickListener mOnItemClickListener;
+    private FullClickListener mOnItemClickListener;
     private List<ItemResponse> allIllust;
 
     public ItemListAdapter(List<ItemResponse> list, Context context) {
@@ -40,13 +41,17 @@ public class ItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((TagHolder) holder).mTextView.setText(String.valueOf(allIllust.get(position).getName()));
-        ((TagHolder) holder).mTextView2.setText(String.valueOf(allIllust.get(position).getId()));
+        ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName().substring(34));
         Glide.with(mContext).load(allIllust.get(position).getName()).into(((TagHolder) holder).mImageView);
-        /*if (mOnItemClickListener != null) {
+        if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(v ->
-                    mOnItemClickListener.onItemClick(((TagHolder) holder).mNiceImageView, position, 0));
-        }*/
+                    mOnItemClickListener.onItemClick(((TagHolder) holder).itemView, position, 0));
+
+            holder.itemView.setOnLongClickListener(v -> {
+                mOnItemClickListener.onItemLongClick(((TagHolder) holder).itemView, position, 0);
+                return true;
+            });
+        }
     }
 
     @Override
@@ -54,19 +59,18 @@ public class ItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return allIllust.size();
     }
 
-    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
+    public void setOnItemClickListener(FullClickListener itemClickListener) {
         mOnItemClickListener = itemClickListener;
     }
 
     public class TagHolder extends RecyclerView.ViewHolder {
-        private TextView mTextView, mTextView2;
+        private TextView mTextView;
         private ImageView mImageView;
 
         TagHolder(View itemView) {
             super(itemView);
 
             mTextView = itemView.findViewById(R.id.title);
-            mTextView2 = itemView.findViewById(R.id.title_2);
             mImageView = itemView.findViewById(R.id.image);
         }
     }

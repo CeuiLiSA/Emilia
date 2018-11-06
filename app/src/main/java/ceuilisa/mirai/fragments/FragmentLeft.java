@@ -7,13 +7,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import ceuilisa.mirai.R;
-import ceuilisa.mirai.activities.ArtistActivity;
-import ceuilisa.mirai.activities.DownloadActivity;
 import ceuilisa.mirai.activities.MainActivity;
 import ceuilisa.mirai.activities.PlayHistoryActivity;
 import ceuilisa.mirai.activities.PlayListActivity;
 import ceuilisa.mirai.activities.PlayListDetailActivity;
 import ceuilisa.mirai.activities.TestActivity;
+import ceuilisa.mirai.activities.UploadImageActivity;
 
 public class FragmentLeft extends BaseFragment {
     @Override
@@ -60,7 +59,8 @@ public class FragmentLeft extends BaseFragment {
         });
         TextView textView4 = v.findViewById(R.id.textView4);
         textView4.setOnClickListener(v12 -> {
-
+            Intent intent = new Intent(mContext, UploadImageActivity.class);
+            mContext.startActivity(intent);
         });
         TextView textView5 = v.findViewById(R.id.textView5);
         textView5.setOnClickListener(v12 -> {

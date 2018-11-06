@@ -20,6 +20,7 @@
             android:label="@string/title_activity_artist"
             android:theme="@style/AppTheme"></activity>
 
+
         <service
             android:name=".MusicService"
             android:enabled="true"
@@ -42,6 +43,7 @@
         <activity android:name=".activities.PlayHistoryActivity" />
         <activity android:name=".activities.CommentActivity" />
         <activity android:name=".activities.DownloadActivity" />
+        <activity android:name=".activities.UploadImageActivity" />
         <activity android:name=".activities.TestActivity" />
     </application>
 
