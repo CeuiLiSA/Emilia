@@ -110,4 +110,8 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="album_info">%s 发布, 共%d首歌曲</string>
+    <string name="select_artist">请选择要查看的歌手</string>
+    <string name="download_song">下载歌曲至本地</string>
+    <string name="no_playing_song">无正在播放歌曲</string>
+    <string name="unknown_artist">未知艺术家</string>
 </resources>

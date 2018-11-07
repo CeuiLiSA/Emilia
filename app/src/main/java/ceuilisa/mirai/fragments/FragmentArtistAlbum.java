@@ -81,21 +81,23 @@ public class FragmentArtistAlbum extends BaseFragment {
 
                     @Override
                     public void onNext(SearchAlbumResponse playListTitleResponse) {
-                        allData.addAll(playListTitleResponse.getResult().getAlbums());
-                        mAdapter = new AlbumListAdapter(allData, mContext);
-                        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, int position, int viewType) {
-                                Intent intent = new Intent(mContext, PlayListDetailActivity.class);
-                                intent.putExtra("id", String.valueOf(allData.get(position).getId()));
-                                intent.putExtra("name", allData.get(position).getName());
-                                intent.putExtra("author", allData.get(position).getArtist().getName());
-                                intent.putExtra("dataType", "专辑");
-                                intent.putExtra("coverImg", allData.get(position).getPicUrl());
-                                startActivity(intent);
-                            }
-                        });
-                        mRecyclerView.setAdapter(mAdapter);
+                        if (playListTitleResponse.getResult().getAlbums() != null) {
+                            allData.addAll(playListTitleResponse.getResult().getAlbums());
+                            mAdapter = new AlbumListAdapter(allData, mContext);
+                            mAdapter.setOnItemClickListener(new OnItemClickListener() {
+                                @Override
+                                public void onItemClick(View view, int position, int viewType) {
+                                    Intent intent = new Intent(mContext, PlayListDetailActivity.class);
+                                    intent.putExtra("id", String.valueOf(allData.get(position).getId()));
+                                    intent.putExtra("name", allData.get(position).getName());
+                                    intent.putExtra("author", allData.get(position).getArtist().getName());
+                                    intent.putExtra("dataType", "专辑");
+                                    intent.putExtra("coverImg", allData.get(position).getPicUrl());
+                                    startActivity(intent);
+                                }
+                            });
+                            mRecyclerView.setAdapter(mAdapter);
+                        }
                     }
 
                     @Override

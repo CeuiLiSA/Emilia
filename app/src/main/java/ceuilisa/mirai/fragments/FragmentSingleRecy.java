@@ -25,7 +25,6 @@ import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.utils.ChatDetailItemDecoration;
 import ceuilisa.mirai.utils.Constant;
 import ceuilisa.mirai.utils.DensityUtil;
-import ceuilisa.mirai.utils.Reference;
 import ceuilisa.mirai.utils.Translate;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -82,15 +81,15 @@ public class FragmentSingleRecy extends BaseFragment {
     private void getPlaylistType() {
         final String[] data;
         if (index == 0) {
-            data = Constant.TYPE_YUZHONG;
-        } else if (index == 1) {
             data = Constant.TYPE_FENGGE;
-        } else if (index == 2) {
+        } else if (index == 1) {
             data = Constant.TYPE_CHANGJIN;
-        } else if (index == 3) {
+        } else if (index == 2) {
             data = Constant.TYPE_QINGAN;
-        } else {
+        } else if (index == 3) {
             data = Constant.TYPE_ZHUTI;
+        } else {
+            data = Constant.TYPE_YUZHONG;
         }
         mRecyclerView.addItemDecoration(new ChatDetailItemDecoration(DensityUtil.dip2px(mContext, 16.0f)));
         PlayListTypeAdapter adapter = new PlayListTypeAdapter(data, mContext);

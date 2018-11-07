@@ -24,7 +24,7 @@ import ceuilisa.mirai.fragments.FragmentLeft;
 import ceuilisa.mirai.fragments.FragmentRight;
 import ceuilisa.mirai.utils.Constant;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends WithPanelActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public DrawerLayout mDrawerLayout;
 
@@ -39,12 +39,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
+    int getLayout() {
+        return R.layout.activity_main;
+    }
+
+    @Override
     void initLayout() {
-        mLayoutID = R.layout.activity_main;
+        super.initLayout();
+        mLayoutID = getLayout();
     }
 
     @Override
     void initView() {
+        super.initView();
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);

@@ -7,14 +7,16 @@ import android.media.MediaPlayer;
 import android.os.IBinder;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import ceuilisa.mirai.interf.MusicOperate;
 import ceuilisa.mirai.interf.OnPlayComplete;
 import ceuilisa.mirai.interf.OnPrepare;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.SingleSongResponse;
+import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.utils.Common;
-import ceuilisa.mirai.utils.Reference;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -29,13 +31,14 @@ public class MusicService extends Service implements MusicOperate {
     private boolean isPlaying = false;
     private OnPlayComplete mOnPlayComplete;
     private static volatile MusicService instance = null;
+    public static List<TracksBean> allSongs = null;
 
     public MusicService() {
         mPlayer = new MediaPlayer();
         mPlayer.setOnErrorListener((mp, what, extra) -> true);
         mPlayer.setOnCompletionListener(mediaPlayer -> {
             if (mOnPlayComplete != null) {
-                if (nowPlayIndex != Reference.allSongs.size() - 1) {
+                if (nowPlayIndex != allSongs.size() - 1) {
                     mOnPlayComplete.nextSong();
                 } else {
                     mOnPlayComplete.stop();
@@ -43,6 +46,7 @@ public class MusicService extends Service implements MusicOperate {
             }
         });
     }
+
 
     @Override
     public void onCreate() {
@@ -168,5 +172,9 @@ public class MusicService extends Service implements MusicOperate {
 
     public void setSingleSong(SingleSongResponse singleSong) {
         mSingleSong = singleSong;
+    }
+
+    public static void setAllSongs(List<TracksBean> allSongs) {
+        MusicService.allSongs = allSongs;
     }
 }

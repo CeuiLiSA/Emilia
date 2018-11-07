@@ -5,8 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="@dimen/four_dp"
     android:elevation="@dimen/six_dp"
-    android:clickable="true"
-    android:foreground="?attr/selectableItemBackground"
+    android:background="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@color/colorPrimary"
     android:layout_height="wrap_content">
 

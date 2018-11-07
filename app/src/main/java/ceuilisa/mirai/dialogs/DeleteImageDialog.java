@@ -28,7 +28,6 @@ import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.DeleteImageResponse;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.FileUtil;
-import ceuilisa.mirai.utils.Reference;
 import es.dmoral.toasty.Toasty;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -47,7 +46,7 @@ public class DeleteImageDialog extends DialogFragment{
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         mContext = getActivity();
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        View view= LayoutInflater.from(getActivity()).inflate(R.layout.dialog_download, null);
+        View view= LayoutInflater.from(getActivity()).inflate(R.layout.dialog_delete_image, null);
         TextView textView = view.findViewById(R.id.song_size);
         textView.setText(String.format("这将会删除图片%s，是否继续？", name));
         view.findViewById(R.id.download_now).setOnClickListener(v -> deleteNow());

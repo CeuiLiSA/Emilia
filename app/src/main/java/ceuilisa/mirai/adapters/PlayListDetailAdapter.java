@@ -16,7 +16,6 @@ import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.response.PlayListDetailResponse;
 import ceuilisa.mirai.response.TracksBean;
 
 
@@ -42,7 +41,7 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
+        //展示歌手名
         if (allIllust.get(position).getAr().size() == 1) {
             ((TagHolder) holder).mTextView3.setText(String.format("%s - %s",
                     allIllust.get(position).getAr().get(0).getName(),
@@ -56,6 +55,7 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     artist.substring(0, artist.length() - 3),
                     allIllust.get(position).getAl().getName()));
         }
+        //展示歌曲Alia
         if (allIllust.get(position).getAlia().size() != 0) {
             SpannableString spannableString = new SpannableString(String.format("%s (%s)",
                     allIllust.get(position).getName(),
@@ -65,10 +65,23 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             ((TagHolder) holder).mTextView.setText(spannableString);
         } else {
-            ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName());
+            //若歌曲Alia为空，查找歌曲tns
+            if (allIllust.get(position).getTns() != null &&
+                    allIllust.get(position).getTns().size() != 0) {
+                SpannableString spannableString = new SpannableString(String.format("%s (%s)",
+                        allIllust.get(position).getName(),
+                        allIllust.get(position).getTns().get(0)));
+                spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#999999")),
+                        allIllust.get(position).getName().length(), spannableString.length(),
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                ((TagHolder) holder).mTextView.setText(spannableString);
+            } else { //歌曲Alia和tns同时为空只显示歌曲名
+                ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName());
+            }
         }
-
+        //歌曲位置标号
         ((TagHolder) holder).mTextView2.setText(String.valueOf(position + 1));
+
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(v ->
                     mOnItemClickListener.onItemClick(((TagHolder) holder).itemView, position, 0));

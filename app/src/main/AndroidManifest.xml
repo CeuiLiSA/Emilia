@@ -45,6 +45,7 @@
         <activity android:name=".activities.DownloadActivity" />
         <activity android:name=".activities.UploadImageActivity" />
         <activity android:name=".activities.TestActivity" />
+        <activity android:name=".activities.WithPanelActivity" />
     </application>
 
 </manifest>

@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 
 import java.util.List;
 
+import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.activities.PlayListActivity;
@@ -24,7 +25,6 @@ import ceuilisa.mirai.utils.ChatDetailItemDecoration;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Constant;
 import ceuilisa.mirai.utils.DensityUtil;
-import ceuilisa.mirai.utils.Reference;
 import ceuilisa.mirai.utils.Translate;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -57,7 +57,7 @@ public class FragmentHotSongs extends BaseFragment {
     public void showHotSongs(List<TracksBean> tracksBeans){
         PlayListDetailAdapter adapter = new PlayListDetailAdapter(tracksBeans, mContext);
         adapter.setOnItemClickListener((view, position, viewType) -> {
-            Reference.allSongs = tracksBeans;
+            MusicService.allSongs = tracksBeans;
             Intent intent = new Intent(mContext, MusicActivity.class);
             intent.putExtra("index", position);
             startActivity(intent);

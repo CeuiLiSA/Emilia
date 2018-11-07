@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.scwang.smartrefresh.header.DeliveryHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -26,7 +27,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
-public class PlayListActivity extends BaseActivity {
+public class PlayListActivity extends WithPanelActivity {
 
     private String dataType, key;
     private int nowIndex;
@@ -38,12 +39,19 @@ public class PlayListActivity extends BaseActivity {
     private List<PlayListTitleResponse.ResultBean.PlaylistsBean> allPlaylist = new ArrayList<>();
 
     @Override
+    int getLayout() {
+        return R.layout.activity_play_list;
+    }
+
+    @Override
     void initLayout() {
-        mLayoutID = R.layout.activity_play_list;
+        super.initLayout();
+        mLayoutID = getLayout();
     }
 
     @Override
     void initView() {
+        super.initView();
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setNavigationOnClickListener(v -> finish());
         mProgressBar = findViewById(R.id.progress);

@@ -49,6 +49,16 @@ public class TracksBean {
     private List<ArBean> ar;
     private List<String> alia;
 
+    public List<String> getTns() {
+        return tns;
+    }
+
+    public void setTns(List<String> tns) {
+        this.tns = tns;
+    }
+
+    private List<String> tns;
+
     public String getName() {
         return name;
     }

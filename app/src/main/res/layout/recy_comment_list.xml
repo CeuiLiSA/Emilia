@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground"
     android:paddingStart="@dimen/twelve_dp"
     android:paddingTop="@dimen/twelve_dp"
     android:paddingEnd="@dimen/twelve_dp">

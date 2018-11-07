@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.othershe.library.NiceImageView;
 
+import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.network.RetrofitUtil;
@@ -21,7 +22,6 @@ import ceuilisa.mirai.response.AlbumResponse;
 import ceuilisa.mirai.response.PlayListDetailResponse;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.DensityUtil;
-import ceuilisa.mirai.utils.Reference;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -31,7 +31,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 
-public class PlayListDetailActivity extends BaseActivity {
+public class PlayListDetailActivity extends WithPanelActivity {
 
     private String id, coverImg, name, author, dataType;
     private Toolbar mToolbar;
@@ -43,15 +43,22 @@ public class PlayListDetailActivity extends BaseActivity {
     private CircleImageView mCircleImageView;
 
     @Override
+    int getLayout() {
+        return R.layout.activity_play_list_detail_rela;
+    }
+
+    @Override
     void initLayout() {
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        mLayoutID = R.layout.activity_play_list_detail_rela;
+        super.initLayout();
+        mLayoutID = getLayout();
     }
 
     @Override
     void initView() {
+        super.initView();
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setNavigationOnClickListener(v -> onBackPressed());
         mImageView = findViewById(R.id.playlist_photo);
@@ -104,7 +111,7 @@ public class PlayListDetailActivity extends BaseActivity {
                         PlayListDetailAdapter adapter = new PlayListDetailAdapter(
                                 playListTitleResponse.getPlaylist().getTracks(), mContext);
                         adapter.setOnItemClickListener((view, position, viewType) -> {
-                            Reference.allSongs = playListTitleResponse.getPlaylist().getTracks();
+                            MusicService.allSongs = playListTitleResponse.getPlaylist().getTracks();
                             Intent intent = new Intent(mContext, MusicActivity.class);
                             intent.putExtra("index", position);
                             startActivity(intent);
@@ -141,7 +148,7 @@ public class PlayListDetailActivity extends BaseActivity {
                         PlayListDetailAdapter adapter = new PlayListDetailAdapter(
                                 playListTitleResponse.getSongs(), mContext);
                         adapter.setOnItemClickListener((view, position, viewType) -> {
-                            Reference.allSongs = playListTitleResponse.getSongs();
+                            MusicService.allSongs = playListTitleResponse.getSongs();
                             Intent intent = new Intent(mContext, MusicActivity.class);
                             intent.putExtra("index", position);
                             startActivity(intent);

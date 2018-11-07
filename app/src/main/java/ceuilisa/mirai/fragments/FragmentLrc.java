@@ -6,12 +6,12 @@ import android.view.View;
 
 import java.util.Objects;
 
+import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.LrcResponse;
 import ceuilisa.mirai.utils.Common;
-import ceuilisa.mirai.utils.Reference;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -47,46 +47,50 @@ public class FragmentLrc extends BaseFragment {
     }
 
     public void loadLyric() {
-        index = ((MusicActivity) Objects.requireNonNull(getActivity())).index;
-        RetrofitUtil.getImjadApi().getLrc(String.valueOf(Reference.allSongs.get(index).getId()))
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<LrcResponse>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
-
-                    @Override
-                    public void onNext(LrcResponse playListTitleResponse) {
-                        Common.showLog("onNext");
-                        if (playListTitleResponse.isUncollected()) {
-                            mLrcView.setLabel("歌词未收录");
-                        } else if (playListTitleResponse.isNolyric()) {
-                            mLrcView.setLabel("纯音乐，请欣赏");
-                        } else {
-                            if (playListTitleResponse.getLrc().getLyric() != null &&
-                                    playListTitleResponse.getTlyric().getLyric() == null) {
-                                mLrcView.loadLrc(playListTitleResponse.getLrc().getLyric());
-                            } else if (playListTitleResponse.getLrc().getLyric() != null &&
-                                    playListTitleResponse.getTlyric().getLyric() != null) {
-                                mLrcView.loadLrc(playListTitleResponse.getLrc().getLyric() +
-                                        playListTitleResponse.getTlyric().getLyric());
-                            }else {
+        if (getActivity() != null) {
+            if (MusicService.allSongs != null) {
+                index = ((MusicActivity) Objects.requireNonNull(getActivity())).index;
+                RetrofitUtil.getImjadApi().getLrc(String.valueOf(MusicService.allSongs.get(index).getId()))
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<LrcResponse>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
                             }
-                        }
-                        hasLyric = true;
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Common.showLog("onError");
-                        e.printStackTrace();
-                    }
+                            @Override
+                            public void onNext(LrcResponse playListTitleResponse) {
+                                Common.showLog("onNext");
+                                if (playListTitleResponse.isUncollected()) {
+                                    mLrcView.setLabel("歌词未收录");
+                                } else if (playListTitleResponse.isNolyric()) {
+                                    mLrcView.setLabel("纯音乐，请欣赏");
+                                } else {
+                                    if (playListTitleResponse.getLrc().getLyric() != null &&
+                                            playListTitleResponse.getTlyric().getLyric() == null) {
+                                        mLrcView.loadLrc(playListTitleResponse.getLrc().getLyric());
+                                    } else if (playListTitleResponse.getLrc().getLyric() != null &&
+                                            playListTitleResponse.getTlyric().getLyric() != null) {
+                                        mLrcView.loadLrc(playListTitleResponse.getLrc().getLyric() +
+                                                playListTitleResponse.getTlyric().getLyric());
+                                    } else {
+                                    }
+                                }
+                                hasLyric = true;
+                            }
 
-                    @Override
-                    public void onComplete() {
-                    }
-                });
+                            @Override
+                            public void onError(Throwable e) {
+                                Common.showLog("onError");
+                                e.printStackTrace();
+                            }
+
+                            @Override
+                            public void onComplete() {
+                            }
+                        });
+            }
+        }
     }
 
     public boolean isHasLyric() {

@@ -10,19 +10,26 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.fragments.FragmentSingleRecy;
 import ceuilisa.mirai.utils.Constant;
 
-public class PlayHistoryActivity extends BaseActivity {
+public class PlayHistoryActivity extends WithPanelActivity {
 
     private String[] data;
     private Toolbar mToolbar;
     private ViewPager mViewPager;
 
     @Override
+    int getLayout() {
+        return R.layout.activity_play_history;
+    }
+
+    @Override
     void initLayout() {
-        mLayoutID = R.layout.activity_play_history;
+        super.initLayout();
+        mLayoutID = getLayout();
     }
 
     @Override
     void initView() {
+        super.initView();
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setNavigationOnClickListener(v -> finish());
         mViewPager = findViewById(R.id.view_pager);

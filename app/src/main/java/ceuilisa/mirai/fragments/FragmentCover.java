@@ -8,15 +8,12 @@ import android.view.animation.LinearInterpolator;
 
 import com.bumptech.glide.Glide;
 
-import java.sql.Ref;
-import java.util.Objects;
-
+import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.MusicActivity;
-import ceuilisa.mirai.utils.Reference;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class FragmentCover extends BaseFragment{
+public class FragmentCover extends BaseFragment {
 
     private ObjectAnimator mAnimator;
     private CircleImageView mCircleImageView;
@@ -36,16 +33,16 @@ public class FragmentCover extends BaseFragment{
         return v;
     }
 
-    public void refreshAnimation(){
+    public void refreshAnimation() {
         mAnimator.start();
         mAnimator.pause();
     }
 
-    public void resumeAnimation(){
+    public void resumeAnimation() {
         mAnimator.resume();
     }
 
-    public void pauseAnimation(){
+    public void pauseAnimation() {
         mAnimator.pause();
     }
 
@@ -61,8 +58,12 @@ public class FragmentCover extends BaseFragment{
     }
 
     public void loadCover() {
-        refreshAnimation();
-        int index = ((MusicActivity) Objects.requireNonNull(getActivity())).index;
-        Glide.with(getActivity()).load(Reference.allSongs.get(index).getAl().getPicUrl()).into(mCircleImageView);
+        if (getActivity() != null) {
+            if (MusicService.allSongs != null) {
+                refreshAnimation();
+                int index = ((MusicActivity) getActivity()).index;
+                Glide.with(getActivity()).load(MusicService.allSongs.get(index).getAl().getPicUrl()).into(mCircleImageView);
+            }
+        }
     }
 }

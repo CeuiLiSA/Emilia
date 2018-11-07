@@ -32,13 +32,12 @@ import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.ArtistResponse;
 import ceuilisa.mirai.utils.Constant;
-import ceuilisa.mirai.utils.Reference;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class ArtistActivity extends BaseActivity {
+public class ArtistActivity extends WithPanelActivity {
 
     private String[] data = new String[]{"热门歌曲", "专辑", "艺人信息"};
     public String id, name;
@@ -53,12 +52,19 @@ public class ArtistActivity extends BaseActivity {
     private FragmentArtistAlbum mFragmentArtistAlbum;
 
     @Override
+    int getLayout() {
+        return R.layout.activity_artist;
+    }
+
+    @Override
     void initLayout() {
-        mLayoutID = R.layout.activity_artist;
+        super.initLayout();
+        mLayoutID = getLayout();
     }
 
     @Override
     void initView() {
+        super.initView();
         mToolbar = findViewById(R.id.toolbar);
         mCollapsingToolbarLayout = findViewById(R.id.toolbar_layout);
         setSupportActionBar(mToolbar);

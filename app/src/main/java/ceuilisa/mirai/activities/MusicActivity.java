@@ -26,32 +26,32 @@ import java.text.SimpleDateFormat;
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.dialogs.DownloadDialog;
+import ceuilisa.mirai.dialogs.SelectArtistDialog;
 import ceuilisa.mirai.fragments.BaseFragment;
 import ceuilisa.mirai.fragments.FragmentCover;
 import ceuilisa.mirai.fragments.FragmentLrc;
 import ceuilisa.mirai.interf.OnPlayComplete;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.IndicatorLayout;
-import ceuilisa.mirai.utils.Reference;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 
 public class MusicActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
-    public Handler mHandler = new Handler();
     public int index;
     private Toolbar mToolbar;
     private FloatingActionButton mFloatingActionButton;
     private TextView mTextView, mTextView2, mTextView3, mTextView4;
     private MaterialIconView lastSong, nextSong;
     private ImageView mImageView;
-    private MyRunnable mMyRunnable = new MyRunnable();
     private ViewPager vpPlay;
     private IndicatorLayout mIndicatorLayout;
     private BaseFragment[] mViewPagerContent;
     private SeekBar mSeekBar;
     private FragmentCover mFragmentCover;
     private FragmentLrc mFragmentLrc;
+    public Handler mHandler = new Handler();
+    private MyRunnable mMyRunnable = new MyRunnable();
     private SimpleDateFormat mTime = new SimpleDateFormat("mm: ss");
 
     @Override
@@ -64,98 +64,102 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
 
     @Override
     void initView() {
-        Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim_about_card_show);
-        ConstraintLayout constraintLayout = findViewById(R.id.top_parent);
-        constraintLayout.startAnimation(animation);
-        mToolbar = findViewById(R.id.toolbar);
-        mToolbar.setNavigationOnClickListener(v -> finish());
-        lastSong = findViewById(R.id.previous);
-        lastSong.setOnClickListener(v -> lastSong());
-        nextSong = findViewById(R.id.next);
-        nextSong.setOnClickListener(v -> nextSong());
-        mFloatingActionButton = findViewById(R.id.playpausefloating);
-        mFloatingActionButton.setOnClickListener(v -> stopOrPlay());
-        mTextView = findViewById(R.id.song_title);
-        mTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, PlayListDetailActivity.class);
-                intent.putExtra("id", String.valueOf(Reference.allSongs.get(index).getAl().getId()));
-                intent.putExtra("name", Reference.allSongs.get(index).getAl().getName());
-                intent.putExtra("author", mTextView2.getText());
-                intent.putExtra("dataType", "专辑");
-                intent.putExtra("coverImg", Reference.allSongs.get(index).getAl().getPicUrl());
+        if(MusicService.allSongs != null) {
+            Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim_about_card_show);
+            ConstraintLayout constraintLayout = findViewById(R.id.top_parent);
+            constraintLayout.startAnimation(animation);
+            mToolbar = findViewById(R.id.toolbar);
+            mToolbar.setNavigationOnClickListener(v -> finish());
+            lastSong = findViewById(R.id.previous);
+            lastSong.setOnClickListener(v -> lastSong());
+            nextSong = findViewById(R.id.next);
+            nextSong.setOnClickListener(v -> nextSong());
+            mFloatingActionButton = findViewById(R.id.playpausefloating);
+            mFloatingActionButton.setOnClickListener(v -> stopOrPlay());
+            mTextView = findViewById(R.id.song_title);
+            mTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, PlayListDetailActivity.class);
+                    intent.putExtra("id", String.valueOf(MusicService.allSongs.get(index).getAl().getId()));
+                    intent.putExtra("name", MusicService.allSongs.get(index).getAl().getName());
+                    intent.putExtra("author", mTextView2.getText());
+                    intent.putExtra("dataType", "专辑");
+                    intent.putExtra("coverImg", MusicService.allSongs.get(index).getAl().getPicUrl());
+                    startActivity(intent);
+                }
+            });
+            mTextView2 = findViewById(R.id.song_artist);
+            mTextView2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (MusicService.allSongs.get(index).getAr().size() == 1) {
+                        Intent intent = new Intent(mContext, ArtistActivity.class);
+                        intent.putExtra("id", String.valueOf(MusicService.allSongs.get(index).getAr().get(0).getId()));
+                        intent.putExtra("name", MusicService.allSongs.get(index).getAr().get(0).getName());
+                        mContext.startActivity(intent);
+                    } else {
+                        new SelectArtistDialog().show(getSupportFragmentManager(), "select artist");
+                    }
+                }
+            });
+            mTextView3 = findViewById(R.id.song_elapsed_time);
+            mTextView4 = findViewById(R.id.song_duration);
+            mImageView = findViewById(R.id.album_art);
+            ImageView download = findViewById(R.id.download);
+            download.setOnClickListener(v -> {
+                DownloadDialog downloadDialog = new DownloadDialog();
+                downloadDialog.setIndex(index);
+                downloadDialog.show(getSupportFragmentManager(), "download");
+            });
+            ImageView comment = findViewById(R.id.comment);
+            comment.setOnClickListener(v -> {
+                Intent intent = new Intent(mContext, CommentActivity.class);
+                intent.putExtra("id", String.valueOf(MusicService.allSongs.get(index).getId()));
                 startActivity(intent);
-            }
-        });
-        mTextView2 = findViewById(R.id.song_artist);
-        mTextView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(Reference.allSongs.get(index).getAr().size() == 1) {
-                    Intent intent = new Intent(mContext, ArtistActivity.class);
-                    intent.putExtra("id", String.valueOf(Reference.allSongs.get(index).getAr().get(0).getId()));
-                    intent.putExtra("name", Reference.allSongs.get(index).getAr().get(0).getName());
-                    mContext.startActivity(intent);
+            });
+            mSeekBar = findViewById(R.id.song_progress);
+            mSeekBar.setProgress(0);
+            SeekBar.OnSeekBarChangeListener sbLis = new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress,
+                                              boolean fromUser) {
+                    mTextView3.setText(mTime.format(seekBar.getProgress()));
                 }
-            }
-        });
-        mTextView3 = findViewById(R.id.song_elapsed_time);
-        mTextView4 = findViewById(R.id.song_duration);
-        mImageView = findViewById(R.id.album_art);
-        ImageView download = findViewById(R.id.download);
-        download.setOnClickListener(v -> {
-            DownloadDialog downloadDialog = new DownloadDialog();
-            downloadDialog.setIndex(index);
-            downloadDialog.show(getSupportFragmentManager(), "download");
-        });
-        ImageView comment = findViewById(R.id.comment);
-        comment.setOnClickListener(v -> {
-            Intent intent = new Intent(mContext, CommentActivity.class);
-            intent.putExtra("id", String.valueOf(Reference.allSongs.get(index).getId()));
-            startActivity(intent);
-        });
-        mSeekBar = findViewById(R.id.song_progress);
-        mSeekBar.setProgress(0);
-        SeekBar.OnSeekBarChangeListener sbLis = new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,
-                                          boolean fromUser) {
-                mTextView3.setText(mTime.format(seekBar.getProgress()));
-            }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                mHandler.removeCallbacksAndMessages(null);
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                if (MusicService.getInstance().isPlayingMusic()) {
-                    mHandler.post(mMyRunnable);
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                    mHandler.removeCallbacksAndMessages(null);
                 }
-                MusicService.getInstance().getPlayer().seekTo(mSeekBar.getProgress());
-            }
-        };
-        mSeekBar.setOnSeekBarChangeListener(sbLis);
-        vpPlay = findViewById(R.id.view_pager);
-        vpPlay.addOnPageChangeListener(this);
-        mFragmentCover = new FragmentCover();
-        mFragmentLrc = new FragmentLrc();
-        mViewPagerContent = new BaseFragment[]{mFragmentCover, mFragmentLrc};
-        vpPlay.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int i) {
-                return mViewPagerContent[i];
-            }
 
-            @Override
-            public int getCount() {
-                return mViewPagerContent.length;
-            }
-        });
-        mIndicatorLayout = findViewById(R.id.il_indicator);
-        mIndicatorLayout.create(mViewPagerContent.length);
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    if (MusicService.getInstance().isPlayingMusic()) {
+                        mHandler.post(mMyRunnable);
+                    }
+                    MusicService.getInstance().getPlayer().seekTo(mSeekBar.getProgress());
+                }
+            };
+            mSeekBar.setOnSeekBarChangeListener(sbLis);
+            vpPlay = findViewById(R.id.view_pager);
+            vpPlay.addOnPageChangeListener(this);
+            mFragmentCover = new FragmentCover();
+            mFragmentLrc = new FragmentLrc();
+            mViewPagerContent = new BaseFragment[]{mFragmentCover, mFragmentLrc};
+            vpPlay.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+                @Override
+                public Fragment getItem(int i) {
+                    return mViewPagerContent[i];
+                }
+
+                @Override
+                public int getCount() {
+                    return mViewPagerContent.length;
+                }
+            });
+            mIndicatorLayout = findViewById(R.id.il_indicator);
+            mIndicatorLayout.create(mViewPagerContent.length);
+        }
     }
 
     @Override
@@ -181,47 +185,49 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
     }
 
     private void refreshLayout() {
-        if (!isDestroyed()) {
-            Glide.with(mContext).load(Reference.allSongs.get(index).getAl().getPicUrl())
-                    .bitmapTransform(new BlurTransformation(mContext, 15, 10)).into(mImageView);
-            mToolbar.setTitle(Reference.allSongs.get(index).getName());
-            mTextView.setText(Reference.allSongs.get(index).getAl().getName());
-            if (Reference.allSongs.get(index).getAr().size() == 1) {
-                mTextView2.setText(Reference.allSongs.get(index).getAr().get(0).getName());
-            } else {
-                StringBuilder artist = new StringBuilder();
-                for (int i = 0; i < Reference.allSongs.get(index).getAr().size(); i++) {
-                    artist.append(Reference.allSongs.get(index).getAr().get(i).getName()).append(" / ");
+        if(MusicService.allSongs != null) {
+            if (!isDestroyed()) {
+                Glide.with(mContext).load(MusicService.allSongs.get(index).getAl().getPicUrl())
+                        .bitmapTransform(new BlurTransformation(mContext, 15, 10)).into(mImageView);
+                mToolbar.setTitle(MusicService.allSongs.get(index).getName());
+                mTextView.setText(MusicService.allSongs.get(index).getAl().getName());
+                if (MusicService.allSongs.get(index).getAr().size() == 1) {
+                    mTextView2.setText(MusicService.allSongs.get(index).getAr().get(0).getName());
+                } else {
+                    StringBuilder artist = new StringBuilder();
+                    for (int i = 0; i < MusicService.allSongs.get(index).getAr().size(); i++) {
+                        artist.append(MusicService.allSongs.get(index).getAr().get(i).getName()).append(" / ");
+                    }
+                    mTextView2.setText(artist.substring(0, artist.length() - 3));
                 }
-                mTextView2.setText(artist.substring(0, artist.length() - 3));
+                mTextView4.setText(mTime.format(MusicService.allSongs.get(index).getDt()));
+                mSeekBar.setMax(MusicService.allSongs.get(index).getDt());
             }
-            mTextView4.setText(mTime.format(Reference.allSongs.get(index).getDt()));
-            mSeekBar.setMax(Reference.allSongs.get(index).getDt());
-        }
-        if (index != MusicService.getInstance().getNowPlayIndex()) {
-            mHandler.removeCallbacksAndMessages(null);
-            mSeekBar.setProgress(0);
-            mTextView3.setText("00: 00");
-            MusicService.getInstance().setPlaying(true);
-            MusicService.getInstance().playMusic(Reference.allSongs.get(index).getId(), () -> {
-                mFragmentCover.resumeAnimation();
-                mHandler.post(mMyRunnable);
-            });
-            MusicService.getInstance().setNowPlayIndex(index);
-        } else {
-            if (MusicService.getInstance().isPlayingMusic()) {
-                mHandler.post(mMyRunnable);
+            if (index != MusicService.getInstance().getNowPlayIndex()) {
+                mHandler.removeCallbacksAndMessages(null);
+                mSeekBar.setProgress(0);
+                mTextView3.setText("00: 00");
+                MusicService.getInstance().setPlaying(true);
+                MusicService.getInstance().playMusic(MusicService.allSongs.get(index).getId(), () -> {
+                    mFragmentCover.resumeAnimation();
+                    mHandler.post(mMyRunnable);
+                });
+                MusicService.getInstance().setNowPlayIndex(index);
             } else {
-                mSeekBar.setProgress(MusicService.getInstance().getPlayer().getCurrentPosition());
-                mTextView3.setText(mTime.format(MusicService.getInstance().getPlayer().getCurrentPosition()));
+                if (MusicService.getInstance().isPlayingMusic()) {
+                    mHandler.post(mMyRunnable);
+                } else {
+                    mSeekBar.setProgress(MusicService.getInstance().getPlayer().getCurrentPosition());
+                    mTextView3.setText(mTime.format(MusicService.getInstance().getPlayer().getCurrentPosition()));
+                }
             }
+            mFloatingActionButton.setImageResource(MusicService.getInstance().isPlayingMusic() ?
+                    R.drawable.ic_pause_black_24dp : R.drawable.ic_play_arrow_black_24dp);
         }
-        mFloatingActionButton.setImageResource(MusicService.getInstance().isPlayingMusic() ?
-                R.drawable.ic_pause_black_24dp : R.drawable.ic_play_arrow_black_24dp);
     }
 
     private void nextSong(){
-        if (index == Reference.allSongs.size() - 1) {
+        if (index == MusicService.allSongs.size() - 1) {
             Common.showToast(mContext, "这已经是最后一首歌了");
         } else {
             index = index + 1;

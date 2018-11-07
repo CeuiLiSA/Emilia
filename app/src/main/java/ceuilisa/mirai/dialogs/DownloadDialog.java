@@ -24,8 +24,10 @@ import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.FileUtil;
-import ceuilisa.mirai.utils.Reference;
 
+/**
+ * 歌曲播放页面，确认下载歌曲对话框
+ */
 public class DownloadDialog extends DialogFragment{
 
     private AlertDialog mAlertDialog;
@@ -50,7 +52,7 @@ public class DownloadDialog extends DialogFragment{
 
     public void startDownload(){
         File file = new File("/storage/emulated/0/EmiliaSongs",
-                Reference.allSongs.get(index).getName() + ".mp3");
+                MusicService.allSongs.get(index).getName() + ".mp3");
         if(file.exists()){
             mAlertDialog.dismiss();
             Common.showToast(getContext(), "该文件已存在");
