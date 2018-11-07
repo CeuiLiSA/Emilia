@@ -1,7 +1,10 @@
 package ceuilisa.mirai.activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -33,7 +36,7 @@ public abstract class WithPanelActivity extends BaseActivity{
     @Override
     void initView() {
         mRelativeLayout = findViewById(R.id.root_view);
-        mProgressBar = findViewById(R.id.progress);
+        mProgressBar = findViewById(R.id.time_progress);
         mNiceImageView = findViewById(R.id.now_play_image);
         songName = findViewById(R.id.song_name);
         artistName = findViewById(R.id.song_author);

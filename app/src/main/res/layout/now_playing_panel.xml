@@ -48,7 +48,7 @@
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:id="@+id/progress"
+        android:id="@+id/time_progress"
         android:layout_below="@+id/now_play_image"/>
 
 </RelativeLayout>
