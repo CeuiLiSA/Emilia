@@ -5,16 +5,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.fragments.FragmentSingleRecy;
 import ceuilisa.mirai.utils.Constant;
 
-public class PlayHistoryActivity extends WithPanelActivity {
+public class SearchActivity extends WithPanelActivity {
 
-    private String[] data;
-    private Toolbar mToolbar;
+    private ImageView back, search;
     private ViewPager mViewPager;
+    private EditText mEditText;
 
     @Override
     boolean hasImage() {
@@ -28,14 +30,16 @@ public class PlayHistoryActivity extends WithPanelActivity {
 
     @Override
     void initLayout() {
-        mLayoutID = R.layout.activity_play_history;
+        mLayoutID = R.layout.activity_search;
     }
 
     @Override
     void initView() {
         super.initView();
-        mToolbar = findViewById(R.id.toolbar);
-        mToolbar.setNavigationOnClickListener(v -> finish());
+        back = findViewById(R.id.back);
+        back.setOnClickListener(v -> finish());
+        search = findViewById(R.id.search_now);
+        mEditText = findViewById(R.id.edit_box);
         mViewPager = findViewById(R.id.view_pager);
         TabLayout tabLayout = findViewById(R.id.tab);
         tabLayout.setupWithViewPager(mViewPager);
@@ -43,28 +47,20 @@ public class PlayHistoryActivity extends WithPanelActivity {
 
     @Override
     void initData() {
-        String dataType = getIntent().getStringExtra("dataType");
-        if(dataType.equals("听歌记录")){
-            data = Constant.PLAY_HISTORY;
-            mToolbar.setTitle("播放记录");
-        }else if(dataType.equals("歌单分类")){
-            data = Constant.PLAYLIST_TYPE;
-            mToolbar.setTitle("歌单分类");
-        }
         mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
-                return FragmentSingleRecy.newInstance(i, dataType);
+                return FragmentSingleRecy.newInstance(i, "搜索结果");
             }
 
             @Override
             public int getCount() {
-                return data.length;
+                return Constant.SEARCH_TYPE.length;
             }
 
             @Override
             public CharSequence getPageTitle(int position) {
-                return data[position];
+                return Constant.SEARCH_TYPE[position];
             }
         });
     }

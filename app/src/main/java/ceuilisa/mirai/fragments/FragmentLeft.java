@@ -1,20 +1,34 @@
 package ceuilisa.mirai.fragments;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.Objects;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.MainActivity;
 import ceuilisa.mirai.activities.PlayHistoryActivity;
 import ceuilisa.mirai.activities.PlayListActivity;
 import ceuilisa.mirai.activities.PlayListDetailActivity;
+import ceuilisa.mirai.activities.SearchActivity;
 import ceuilisa.mirai.activities.TestActivity;
 import ceuilisa.mirai.activities.UploadImageActivity;
 
 public class FragmentLeft extends BaseFragment {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     @Override
     void initLayout() {
         mLayoutID = R.layout.fragment_left;
@@ -23,6 +37,7 @@ public class FragmentLeft extends BaseFragment {
     @Override
     View initView(View v) {
         Toolbar toolbar = v.findViewById(R.id.toolbar);
+        ((MainActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v1 -> {
             if (((MainActivity) getActivity()).mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
                 ((MainActivity) getActivity()).mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -74,5 +89,28 @@ public class FragmentLeft extends BaseFragment {
     @Override
     void initData() {
 
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                Intent intent = new Intent(mContext, SearchActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_settings:
+                break;
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

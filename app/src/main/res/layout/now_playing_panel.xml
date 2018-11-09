@@ -11,8 +11,8 @@
 
     <com.othershe.library.NiceImageView
         android:id="@+id/now_play_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_marginStart="@dimen/six_dp"
         android:src="@mipmap/headphone"
         android:layout_marginTop="@dimen/six_dp"
@@ -42,6 +42,26 @@
         android:layout_toEndOf="@+id/now_play_image"
         android:text="@string/unknown_artist"
         android:textSize="13sp" />
+
+    <ImageView
+        android:layout_width="24dp"
+        android:id="@+id/play_pause"
+        android:src="@drawable/ic_play_arrow_black_24dp"
+        android:tint="@color/colorPrimary"
+        android:layout_marginEnd="@dimen/sixteen_dp"
+        android:layout_toStartOf="@+id/play_list"
+        android:layout_centerVertical="true"
+        android:layout_height="24dp" />
+
+    <ImageView
+        android:layout_width="24dp"
+        android:src="@drawable/ic_queue_music_black_24dp"
+        android:tint="@color/colorPrimary"
+        android:id="@+id/play_list"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/sixteen_dp"
+        android:layout_centerVertical="true"
+        android:layout_height="24dp" />
 
 
     <ProgressBar xmlns:app="http://schemas.android.com/apk/res-auto"

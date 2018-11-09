@@ -6,8 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 import com.scwang.smartrefresh.header.DeliveryHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -25,28 +23,31 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 public class PlayListActivity extends WithPanelActivity {
 
     private String dataType, key;
     private int nowIndex;
-    private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
     private RefreshLayout mRefreshLayout;
     private PlayListAdapter mAdapter;
     private Toolbar mToolbar;
     private List<PlayListTitleResponse.ResultBean.PlaylistsBean> allPlaylist = new ArrayList<>();
 
+
     @Override
-    int getLayout() {
-        return R.layout.activity_play_list;
+    boolean hasImage() {
+        return true;
+    }
+
+    @Override
+    boolean hasProgress() {
+        return true;
     }
 
     @Override
     void initLayout() {
-        super.initLayout();
-        mLayoutID = getLayout();
+        mLayoutID = R.layout.activity_play_list;
     }
 
     @Override
@@ -54,7 +55,6 @@ public class PlayListActivity extends WithPanelActivity {
         super.initView();
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setNavigationOnClickListener(v -> finish());
-        mProgressBar = findViewById(R.id.progress);
         mRecyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -83,6 +83,8 @@ public class PlayListActivity extends WithPanelActivity {
 
     private void getPlaylistByKey(String playlistName) {
         nowIndex = 0;
+        mImageView.setVisibility(View.INVISIBLE);
+        loadProgress.setVisibility(View.VISIBLE);
         RetrofitUtil.getImjadApi().searchPlaylist(playlistName, Constant.LIMIT, nowIndex)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -93,28 +95,36 @@ public class PlayListActivity extends WithPanelActivity {
 
                     @Override
                     public void onNext(PlayListTitleResponse playListTitleResponse) {
-                        allPlaylist.clear();
-                        allPlaylist.addAll(playListTitleResponse.getResult().getPlaylists());
-                        mAdapter = new PlayListAdapter(allPlaylist, mContext);
-                        mAdapter.setOnItemClickListener((view, position, viewType) -> {
-                            Intent intent = new Intent(mContext, PlayListDetailActivity.class);
-                            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                                    .makeSceneTransitionAnimation(mActivity, view, "sharedView");
-                            intent.putExtra("id", String.valueOf(allPlaylist.get(position).getId()));
-                            intent.putExtra("name", allPlaylist.get(position).getName());
-                            intent.putExtra("author", allPlaylist.get(position).getCreator().getNickname());
-                            intent.putExtra("dataType", "歌单");
-                            intent.putExtra("coverImg", allPlaylist.get(position).getCoverImgUrl());
-                            mContext.startActivity(intent, optionsCompat.toBundle());
-                        });
-                        nowIndex = nowIndex + playListTitleResponse.getResult().getPlaylists().size();
-                        mProgressBar.setVisibility(View.INVISIBLE);
-                        mRefreshLayout.finishRefresh();
-                        mRecyclerView.setAdapter(mAdapter);
+                        if (playListTitleResponse.getResult().getPlaylists() != null &&
+                                playListTitleResponse.getResult().getPlaylists().size() > 0) {
+                            allPlaylist.clear();
+                            allPlaylist.addAll(playListTitleResponse.getResult().getPlaylists());
+                            mAdapter = new PlayListAdapter(allPlaylist, mContext);
+                            mAdapter.setOnItemClickListener((view, position, viewType) -> {
+                                Intent intent = new Intent(mContext, PlayListDetailActivity.class);
+                                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                                        .makeSceneTransitionAnimation(mActivity, view, "sharedView");
+                                intent.putExtra("id", String.valueOf(allPlaylist.get(position).getId()));
+                                intent.putExtra("name", allPlaylist.get(position).getName());
+                                intent.putExtra("author", allPlaylist.get(position).getCreator().getNickname());
+                                intent.putExtra("dataType", "歌单");
+                                intent.putExtra("coverImg", allPlaylist.get(position).getCoverImgUrl());
+                                mContext.startActivity(intent, optionsCompat.toBundle());
+                            });
+                            nowIndex = nowIndex + playListTitleResponse.getResult().getPlaylists().size();
+                            loadProgress.setVisibility(View.INVISIBLE);
+                            mRefreshLayout.finishRefresh();
+                            mRecyclerView.setAdapter(mAdapter);
+                        } else {
+                            mRefreshLayout.finishRefresh();
+                            loadNoData();
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        mRefreshLayout.finishRefresh();
+                        loadError();
                     }
 
                     @Override
@@ -146,6 +156,8 @@ public class PlayListActivity extends WithPanelActivity {
 
                     @Override
                     public void onError(Throwable e) {
+                        mRefreshLayout.finishLoadMore();
+                        loadError();
                     }
 
                     @Override
@@ -165,30 +177,32 @@ public class PlayListActivity extends WithPanelActivity {
 
                     @Override
                     public void onNext(PlayListTitleResponse playListTitleResponse) {
-                        Common.showLog("onNext");
-                        List<PlayListTitleResponse.ResultBean.PlaylistsBean> mPlayLists =
-                                new ArrayList<>(playListTitleResponse.getResult().getPlaylists());
-                        Common.showLog(playListTitleResponse.getResult().getPlaylists().size());
-                        PlayListAdapter mAdapter = new PlayListAdapter(mPlayLists, mContext);
-                        mAdapter.setOnItemClickListener((view, position, viewType) -> {
-                            Intent intent = new Intent(mContext, PlayListDetailActivity.class);
-                            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                                    .makeSceneTransitionAnimation(mActivity, view, "sharedView");
-                            intent.putExtra("id", String.valueOf(mPlayLists.get(position).getId()));
-                            intent.putExtra("name", mPlayLists.get(position).getName());
-                            intent.putExtra("author", mPlayLists.get(position).getCreator().getNickname());
-                            intent.putExtra("dataType", "歌单");
-                            intent.putExtra("coverImg", mPlayLists.get(position).getCoverImgUrl());
-                            mContext.startActivity(intent, optionsCompat.toBundle());
-                        });
-                        mProgressBar.setVisibility(View.INVISIBLE);
-                        mRecyclerView.setAdapter(mAdapter);
+                        if (playListTitleResponse.getResult().getPlaylists() != null &&
+                                playListTitleResponse.getResult().getPlaylists().size() > 0) {
+                            List<PlayListTitleResponse.ResultBean.PlaylistsBean> mPlayLists =
+                                    new ArrayList<>(playListTitleResponse.getResult().getPlaylists());
+                            PlayListAdapter mAdapter = new PlayListAdapter(mPlayLists, mContext);
+                            mAdapter.setOnItemClickListener((view, position, viewType) -> {
+                                Intent intent = new Intent(mContext, PlayListDetailActivity.class);
+                                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                                        .makeSceneTransitionAnimation(mActivity, view, "sharedView");
+                                intent.putExtra("id", String.valueOf(mPlayLists.get(position).getId()));
+                                intent.putExtra("name", mPlayLists.get(position).getName());
+                                intent.putExtra("author", mPlayLists.get(position).getCreator().getNickname());
+                                intent.putExtra("dataType", "歌单");
+                                intent.putExtra("coverImg", mPlayLists.get(position).getCoverImgUrl());
+                                mContext.startActivity(intent, optionsCompat.toBundle());
+                            });
+                            loadProgress.setVisibility(View.INVISIBLE);
+                            mRecyclerView.setAdapter(mAdapter);
+                        } else {
+                            loadNoData();
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Common.showLog("onError");
-                        e.printStackTrace();
+                        loadError();
                     }
 
                     @Override

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground">
+
+
+    <ImageView
+        android:layout_width="20dp"
+        android:src="@drawable/ic_volume_up_black_24dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/is_playing"
+        android:visibility="gone"
+        android:tint="@color/colorPrimary"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:layout_height="20dp" />
+
+
+
+
+    <TextView
+        android:id="@+id/song_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/is_playing"
+        android:layout_margin="@dimen/sixteen_dp"
+        android:text="撒阿萨德阿萨德阿萨德"
+        android:textColor="#333333"
+        android:textSize="15sp"
+        android:transitionName="sharedText" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/song_name"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:background="#e6e6e6" />
+</RelativeLayout>

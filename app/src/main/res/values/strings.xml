@@ -114,4 +114,6 @@
     <string name="download_song">下载歌曲至本地</string>
     <string name="no_playing_song">无正在播放歌曲</string>
     <string name="unknown_artist">未知艺术家</string>
+    <string name="toolbar_search">搜索</string>
+    <string name="now_playing">正在播放</string>
 </resources>

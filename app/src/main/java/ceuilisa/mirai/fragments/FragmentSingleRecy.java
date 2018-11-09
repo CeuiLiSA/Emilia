@@ -67,17 +67,23 @@ public class FragmentSingleRecy extends BaseFragment {
     void initData() {
         index = (int) getArguments().getSerializable("index");
         dataType = (String) getArguments().getSerializable("dataType");
-        if (dataType.equals("听歌记录")) {
+        if (dataType.equals("听歌记录")) {//展示听歌记录的相关列表
             if (index == 0) {
                 getWeeklyHistory();
             } else if (index == 1) {
                 getAllHistory();
             }
-        } else if (dataType.equals("歌单分类")) {
+        } else if (dataType.equals("歌单分类")) {//展示歌单分类的相关列表
             getPlaylistType();
+        } else if (dataType.equals("搜索结果")) {//展示搜索结果的相关列表
+            mProgressBar.setVisibility(View.INVISIBLE);
+            getSearchResult();
         }
     }
 
+    /**
+     * 获取歌单类型的列表（对比着云音乐客户端，本地写死了几十种类型）
+     */
     private void getPlaylistType() {
         final String[] data;
         if (index == 0) {
@@ -103,6 +109,25 @@ public class FragmentSingleRecy extends BaseFragment {
         mRecyclerView.setAdapter(adapter);
     }
 
+    private void getSearchResult(){
+        int searchType = 0;
+        if(index == 0){
+            searchType = Constant.SEARCH_SONG;
+        }else if(index == 1){
+            searchType = Constant.SEARCH_ALBUM;
+        }else if(index == 2){
+            searchType = Constant.SEARCH_SINGER;
+        }else if(index == 3){
+            searchType = Constant.SEARCH_PLAYLIST;
+        }else if(index == 4){
+            searchType = Constant.SEARCH_USER;
+        }
+    }
+
+
+    /**
+     * 获取本周听歌总次数排行
+     */
     private void getWeeklyHistory() {
         RetrofitUtil.getImjadApi().getWeekPlayHistory(Constant.USER_ID, 1)
                 .subscribeOn(Schedulers.newThread())
@@ -139,6 +164,9 @@ public class FragmentSingleRecy extends BaseFragment {
                 });
     }
 
+    /**
+     * 获取历史听歌总次数排行
+     */
     private void getAllHistory() {
         RetrofitUtil.getImjadApi().getAllPlayHistory(Constant.USER_ID, 0)
                 .subscribeOn(Schedulers.newThread())

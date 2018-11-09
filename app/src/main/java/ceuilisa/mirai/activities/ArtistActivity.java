@@ -44,7 +44,6 @@ public class ArtistActivity extends WithPanelActivity {
     private Toolbar mToolbar;
     private ImageView mImageView;
     private ViewPager mViewPager;
-    private ProgressBar mProgressBar;
     private BaseFragment[] mFragments;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private FragmentHotSongs fragmentHotSongs;
@@ -52,14 +51,18 @@ public class ArtistActivity extends WithPanelActivity {
     private FragmentArtistAlbum mFragmentArtistAlbum;
 
     @Override
-    int getLayout() {
-        return R.layout.activity_artist;
+    boolean hasImage() {
+        return false;
+    }
+
+    @Override
+    boolean hasProgress() {
+        return true;
     }
 
     @Override
     void initLayout() {
-        super.initLayout();
-        mLayoutID = getLayout();
+        mLayoutID = R.layout.activity_artist;
     }
 
     @Override
@@ -72,7 +75,7 @@ public class ArtistActivity extends WithPanelActivity {
         mViewPager = findViewById(R.id.view_pager);
         mViewPager.setOffscreenPageLimit(data.length);
         mImageView = findViewById(R.id.image);
-        mProgressBar = findViewById(R.id.progress);
+        loadProgress = findViewById(R.id.progress);
         TabLayout tabLayout = findViewById(R.id.tab);
         tabLayout.setupWithViewPager(mViewPager);
     }
@@ -119,7 +122,7 @@ public class ArtistActivity extends WithPanelActivity {
                         mCollapsingToolbarLayout.setTitle(playListTitleResponse.getArtist().getName());
                         fragmentHotSongs.showHotSongs(playListTitleResponse.getHotSongs());
                         fragmentArtistInfo.showInfo(playListTitleResponse.getArtist());
-                        mProgressBar.setVisibility(View.INVISIBLE);
+                        loadProgress.setVisibility(View.INVISIBLE);
                     }
 
                     @Override

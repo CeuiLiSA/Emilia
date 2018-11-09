@@ -36,15 +36,19 @@ public class PlayListDetailActivity extends WithPanelActivity {
     private String id, coverImg, name, author, dataType;
     private Toolbar mToolbar;
     private TextView mTextView, mTextView2;
-    private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
     private ImageView mImageView;
     private NiceImageView mImageView2;
     private CircleImageView mCircleImageView;
 
     @Override
-    int getLayout() {
-        return R.layout.activity_play_list_detail_rela;
+    boolean hasImage() {
+        return false;
+    }
+
+    @Override
+    boolean hasProgress() {
+        return true;
     }
 
     @Override
@@ -52,8 +56,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        super.initLayout();
-        mLayoutID = getLayout();
+        mLayoutID = R.layout.activity_play_list_detail_rela;
     }
 
     @Override
@@ -67,8 +70,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
         mRecyclerView = findViewById(R.id.recyclerView);
         mTextView = findViewById(R.id.textView10);
         mTextView2 = findViewById(R.id.textView9);
-        mProgressBar = findViewById(R.id.progress);
-        mProgressBar.setVisibility(View.VISIBLE);
+        loadProgress.setVisibility(View.VISIBLE);
         mTextView = findViewById(R.id.textView10);
         mTextView2 = findViewById(R.id.textView9);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
@@ -108,24 +110,25 @@ public class PlayListDetailActivity extends WithPanelActivity {
 
                     @Override
                     public void onNext(PlayListDetailResponse playListTitleResponse) {
-                        PlayListDetailAdapter adapter = new PlayListDetailAdapter(
-                                playListTitleResponse.getPlaylist().getTracks(), mContext);
-                        adapter.setOnItemClickListener((view, position, viewType) -> {
-                            MusicService.allSongs = playListTitleResponse.getPlaylist().getTracks();
-                            Intent intent = new Intent(mContext, MusicActivity.class);
-                            intent.putExtra("index", position);
-                            startActivity(intent);
-                        });
-                        Glide.with(mContext).load(playListTitleResponse.getPlaylist().getCreator().
-                                getAvatarUrl()).into(mCircleImageView);
-                        mProgressBar.setVisibility(View.GONE);
-                        mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
+                        if(playListTitleResponse.getPlaylist().getTracks() != null &&
+                                playListTitleResponse.getPlaylist().getTracks().size() > 0) {
+                            PlayListDetailAdapter adapter = new PlayListDetailAdapter(
+                                    playListTitleResponse.getPlaylist().getTracks(), mContext);
+                            adapter.setOnItemClickListener((view, position, viewType) -> {
+                                MusicService.allSongs = playListTitleResponse.getPlaylist().getTracks();
+                                Intent intent = new Intent(mContext, MusicActivity.class);
+                                intent.putExtra("index", position);
+                                startActivity(intent);
+                            });
+                            Glide.with(mContext).load(playListTitleResponse.getPlaylist().getCreator().
+                                    getAvatarUrl()).into(mCircleImageView);
+                            loadProgress.setVisibility(View.GONE);
+                            mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Common.showLog("onError");
-                        e.printStackTrace();
                     }
 
                     @Override
@@ -153,7 +156,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
                             intent.putExtra("index", position);
                             startActivity(intent);
                         });
-                        mProgressBar.setVisibility(View.GONE);
+                        loadProgress.setVisibility(View.GONE);
                         mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
                     }
 

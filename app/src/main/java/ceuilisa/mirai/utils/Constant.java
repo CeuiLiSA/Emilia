@@ -4,9 +4,11 @@ public class Constant {
 
     public static final String USER_NAME = "CeuiLiSA";
 
-    public static final int FRAGMENT_ONE = 0;
-    public static final int FRAGMENT_TWO = 1;
-    public static final int FRAGMENT_THREE = 2;
+    public static final int SEARCH_SONG = 1;
+    public static final int SEARCH_ALBUM = 10;
+    public static final int SEARCH_SINGER = 100;
+    public static final int SEARCH_PLAYLIST = 1000;
+    public static final int SEARCH_USER = 1002;
 
 
     public static final int SIXTEEN_DP = 16;
@@ -17,6 +19,7 @@ public class Constant {
 
     public static final String[] PLAY_HISTORY = new String[]{"最近一周", "所有时间"};
     public static final String[] PLAYLIST_TYPE = new String[]{"语种", "风格", "场景", "情感", "主题"};
+    public static final String[] SEARCH_TYPE = new String[]{"单曲", "歌手", "专辑", "歌单", "用户"};
 
 
     public static final String[] TYPE_YUZHONG = new String[]{"华语", "欧美", "日语", "韩语", "粤语", "小语种"};

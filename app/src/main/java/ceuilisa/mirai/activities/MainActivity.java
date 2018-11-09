@@ -39,19 +39,25 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
     }
 
     @Override
-    int getLayout() {
-        return R.layout.activity_main;
+    boolean hasImage() {
+        return false;
+    }
+
+    @Override
+    boolean hasProgress() {
+        return false;
     }
 
     @Override
     void initLayout() {
-        super.initLayout();
-        mLayoutID = getLayout();
+        mLayoutID = R.layout.activity_main;
     }
 
     @Override
     void initView() {
         super.initView();
+
+
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -87,28 +93,6 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

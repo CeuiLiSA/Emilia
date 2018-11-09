@@ -46,6 +46,7 @@
         <activity android:name=".activities.UploadImageActivity" />
         <activity android:name=".activities.TestActivity" />
         <activity android:name=".activities.WithPanelActivity" />
+        <activity android:name=".activities.SearchActivity" />
     </application>
 
 </manifest>
