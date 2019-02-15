@@ -59,7 +59,11 @@ public abstract class WithPanelActivity extends NetWorkControlActivity{
         playList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new PlayListDialog().show(getSupportFragmentManager());
+                if(MusicService.allSongs == null){
+                    Common.showToast(mContext, "无正在播放列表");
+                }else {
+                    new PlayListDialog().show(getSupportFragmentManager());
+                }
             }
         });
         songName = findViewById(R.id.song_name);

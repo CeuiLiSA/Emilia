@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:id="@+id/toolbar"
         android:background="@color/colorPrimary"
-        app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+        app:navigationIcon="@drawable/ic_arrow_back_white"
         app:title="上传图片"
         app:titleTextColor="@android:color/white"
         android:layout_height="wrap_content" />

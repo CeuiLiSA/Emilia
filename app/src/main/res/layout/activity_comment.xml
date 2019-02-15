@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:elevation="@dimen/six_dp"
-        app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+        app:navigationIcon="@drawable/ic_arrow_back_white"
         app:title="评论"
         app:titleTextColor="@android:color/white" />
 

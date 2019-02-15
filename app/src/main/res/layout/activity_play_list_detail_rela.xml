@@ -221,7 +221,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:fitsSystemWindows="true"
-            app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+            app:navigationIcon="@drawable/ic_arrow_back_white"
             app:title="@string/play_list"
             app:titleTextColor="@android:color/white" />
 

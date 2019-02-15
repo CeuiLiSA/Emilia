@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/search_song"
+        android:title="搜单曲" />
+
+    <item
+        android:id="@+id/search_singer"
+        android:title="搜歌手" />
+
+    <item
+        android:id="@+id/search_album"
+        android:title="搜专辑" />
+
+    <item
+        android:id="@+id/search_playlist"
+        android:title="搜歌单" />
+
+    <item
+        android:id="@+id/search_user"
+        android:title="搜用户" />
+
+</menu>

@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".activities.GlobalApp"
@@ -47,6 +48,7 @@
         <activity android:name=".activities.TestActivity" />
         <activity android:name=".activities.WithPanelActivity" />
         <activity android:name=".activities.SearchActivity" />
+        <activity android:name=".activities.SingleFragmentActivity" />
     </application>
 
 </manifest>

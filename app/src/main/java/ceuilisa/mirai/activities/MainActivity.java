@@ -17,26 +17,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.tbruyelle.rxpermissions2.RxPermissions;
+
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.fragments.FragmentCenter;
 import ceuilisa.mirai.fragments.FragmentLeft;
 import ceuilisa.mirai.fragments.FragmentRight;
+import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Constant;
 
 public class MainActivity extends WithPanelActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public DrawerLayout mDrawerLayout;
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((Activity) mContext, new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-        }
-    }
 
     @Override
     boolean hasImage() {
@@ -57,7 +50,23 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
     void initView() {
         super.initView();
 
+        final RxPermissions rxPermissions = new RxPermissions(this);
 
+
+        rxPermissions
+                .requestEachCombined(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_PHONE_STATE)
+                .subscribe(permission -> { // will emit 1 Permission object
+                    if (permission.granted) {
+                        // All permissions are granted !
+                    } else {
+                        // At least one denied permission with ask never again
+                        // Need to go to the settings
+                        Common.showToast(mContext, "请给与足够的权限");
+                        finish();
+                    }
+
+                });
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);

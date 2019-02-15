@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:elevation="@dimen/six_dp"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+                app:navigationIcon="@drawable/ic_arrow_back_white"
                 app:title="播放记录"
                 app:titleTextColor="@android:color/white" />
 

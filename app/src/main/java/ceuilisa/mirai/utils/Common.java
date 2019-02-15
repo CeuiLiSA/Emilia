@@ -1,11 +1,13 @@
 package ceuilisa.mirai.utils;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import java.text.ParseException;
@@ -19,6 +21,17 @@ public class Common {
     }
 
     private static Toast toast = null;
+
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        assert imm != null;
+        if (imm.isActive() && activity.getCurrentFocus() != null) {
+            if (activity.getCurrentFocus().getWindowToken() != null) {
+                imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }
+    }
 
     public static String getRealFilePath(final Context context, final Uri uri) {
         if (null == uri) return null;

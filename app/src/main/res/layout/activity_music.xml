@@ -52,7 +52,7 @@
             android:background="@android:color/transparent"
             android:fitsSystemWindows="true"
             android:theme="@style/Theme.AppCompat"
-            app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+            app:navigationIcon="@drawable/ic_arrow_back_white"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     </RelativeLayout>

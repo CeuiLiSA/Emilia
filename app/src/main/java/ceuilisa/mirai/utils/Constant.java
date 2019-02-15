@@ -19,7 +19,7 @@ public class Constant {
 
     public static final String[] PLAY_HISTORY = new String[]{"最近一周", "所有时间"};
     public static final String[] PLAYLIST_TYPE = new String[]{"语种", "风格", "场景", "情感", "主题"};
-    public static final String[] SEARCH_TYPE = new String[]{"单曲", "歌手", "专辑", "歌单", "用户"};
+    public static final String[] SEARCH_TYPE = new String[]{"搜单曲", "搜歌手", "搜专辑", "搜歌单", "搜用户"};
 
 
     public static final String[] TYPE_YUZHONG = new String[]{"华语", "欧美", "日语", "韩语", "粤语", "小语种"};

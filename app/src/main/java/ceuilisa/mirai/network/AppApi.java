@@ -21,18 +21,24 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface AppApi {
 
-    @GET("cloudmusic/?type=playlist")
-    Observable<PlayListDetailResponse> getPlayListDetail(@Query("id") String id);
+    /*@GET("cloudmusic/?type=playlist")
+    Observable<PlayListDetailResponse> getPlayListDetail(@Query("id") String id);*/
 
     @GET("cloudmusic/?type=song&br=320000")
     Observable<SingleSongResponse> getSingleSong(@Query("id") String id);
 
     @GET("cloudmusic/?type=lyric")
     Observable<LrcResponse> getLrc(@Query("id") String id);
+
+
+
+    @GET("nm/playlist/{playlistID}")
+    Observable<PlayListDetailResponse> getPlayListDetail(@Path("playlistID") String playlistID);
 
     @GET("id_delete")
     Observable<DeleteImageResponse> deleteImage(@Query("id") String id);

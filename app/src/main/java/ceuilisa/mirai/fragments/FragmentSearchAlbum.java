@@ -28,7 +28,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class FragmentArtistAlbum extends BaseFragment {
+public class FragmentSearchAlbum extends BaseFragment {
 
     private AlbumListAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -64,7 +64,6 @@ public class FragmentArtistAlbum extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        name = ((ArtistActivity) Objects.requireNonNull(getActivity())).name;
         getArtistAlbum();
     }
 

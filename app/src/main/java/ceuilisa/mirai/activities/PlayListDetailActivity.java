@@ -40,6 +40,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
     private ImageView mImageView;
     private NiceImageView mImageView2;
     private CircleImageView mCircleImageView;
+    private boolean showProgress = true;
 
     @Override
     boolean hasImage() {
@@ -99,8 +100,21 @@ public class PlayListDetailActivity extends WithPanelActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(showProgress){
+            Common.showLog("必须出现");
+            loadProgress.setVisibility(View.VISIBLE);
+        }else {
+            Common.showLog("必须消失");
+            loadProgress.setVisibility(View.INVISIBLE);
+        }
+    }
+
     private void getPlaylist(){
-        RetrofitUtil.getImjadApi().getPlayListDetail(id)
+        RetrofitUtil.getTenkoaApi().getPlayListDetail(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<PlayListDetailResponse>() {
@@ -124,6 +138,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
                                     getAvatarUrl()).into(mCircleImageView);
                             loadProgress.setVisibility(View.GONE);
                             mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
+                            showProgress = false;
                         }
                     }
 
@@ -158,6 +173,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
                         });
                         loadProgress.setVisibility(View.GONE);
                         mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
+                        showProgress = false;
                     }
 
                     @Override
