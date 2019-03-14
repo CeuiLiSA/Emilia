@@ -21,6 +21,7 @@ import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.AlbumResponse;
 import ceuilisa.mirai.response.PlayListDetailResponse;
 import ceuilisa.mirai.utils.Common;
+import ceuilisa.mirai.utils.Constant;
 import ceuilisa.mirai.utils.DensityUtil;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observer;
@@ -186,4 +187,6 @@ public class PlayListDetailActivity extends WithPanelActivity {
                     }
                 });
     }
+
+
 }

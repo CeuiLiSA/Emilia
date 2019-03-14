@@ -64,7 +64,7 @@ public class UploadImageActivity extends BaseActivity{
             public void onClick(View v) {
                 if(mUri != null){
                     File file = new File(Common.getRealFilePath(mContext, mUri));
-                    changeHeadImage(file);
+                    //changeHeadImage(file);
                 }else {
                     Common.showToast(mContext, "未选择图片");
                 }
@@ -77,35 +77,35 @@ public class UploadImageActivity extends BaseActivity{
     void initData() {
     }
 
-    private void changeHeadImage(File file) {
-        mProgressBar.setVisibility(View.VISIBLE);
-        RequestBody photoRequestBody = RequestBody.create(MediaType.parse("image/jpeg"), file);
-        MultipartBody.Part photo = MultipartBody.Part.createFormData("myfile", file.getName(), photoRequestBody);
-        Call<DeleteImageResponse> call = RetrofitUtil.getTempApi().changeHeadImg(photo);
-        call.enqueue(new Callback<DeleteImageResponse>() {
-            @Override
-            public void onResponse(Call<DeleteImageResponse> call, Response<DeleteImageResponse> response) {
-                if(response.body() != null && response.body().getMessage() != null){
-                    if(response.body().getMessage().equals("upload success")){
-                        Toasty.success(mContext, "上传成功",
-                                Toast.LENGTH_SHORT, true).show();
-                    }else {
-                        Toasty.error(mContext, "This is an error toast.",
-                                Toast.LENGTH_SHORT, true).show();
-                    }
-                }else {
-                    Toasty.error(mContext, "This is an error toast.",
-                            Toast.LENGTH_SHORT, true).show();
-                }
-                mProgressBar.setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void onFailure(Call<DeleteImageResponse> call, Throwable t) {
-                mProgressBar.setVisibility(View.INVISIBLE);
-                Toasty.error(mContext, "This is an error toast.",
-                        Toast.LENGTH_SHORT, true).show();
-            }
-        });
-    }
+//    private void changeHeadImage(File file) {
+//        mProgressBar.setVisibility(View.VISIBLE);
+//        RequestBody photoRequestBody = RequestBody.create(MediaType.parse("image/jpeg"), file);
+//        MultipartBody.Part photo = MultipartBody.Part.createFormData("myfile", file.getName(), photoRequestBody);
+//        Call<DeleteImageResponse> call = RetrofitUtil.getTempApi().changeHeadImg(photo);
+//        call.enqueue(new Callback<DeleteImageResponse>() {
+//            @Override
+//            public void onResponse(Call<DeleteImageResponse> call, Response<DeleteImageResponse> response) {
+//                if(response.body() != null && response.body().getMessage() != null){
+//                    if(response.body().getMessage().equals("upload success")){
+//                        Toasty.success(mContext, "上传成功",
+//                                Toast.LENGTH_SHORT, true).show();
+//                    }else {
+//                        Toasty.error(mContext, "This is an error toast.",
+//                                Toast.LENGTH_SHORT, true).show();
+//                    }
+//                }else {
+//                    Toasty.error(mContext, "This is an error toast.",
+//                            Toast.LENGTH_SHORT, true).show();
+//                }
+//                mProgressBar.setVisibility(View.INVISIBLE);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<DeleteImageResponse> call, Throwable t) {
+//                mProgressBar.setVisibility(View.INVISIBLE);
+//                Toasty.error(mContext, "This is an error toast.",
+//                        Toast.LENGTH_SHORT, true).show();
+//            }
+//        });
+//    }
 }

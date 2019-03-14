@@ -49,6 +49,9 @@
         <activity android:name=".activities.WithPanelActivity" />
         <activity android:name=".activities.SearchActivity" />
         <activity android:name=".activities.SingleFragmentActivity" />
+        <activity android:name=".activities.SearchUserActivity" />
+        <activity android:name=".activities.SettingsActivity" />
+        <activity android:name=".activities.LoginActivity" />
     </application>
 
 </manifest>

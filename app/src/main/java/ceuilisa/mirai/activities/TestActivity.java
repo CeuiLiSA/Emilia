@@ -51,59 +51,59 @@ public class TestActivity extends BaseActivity{
 
     @Override
     void initData() {
-        RetrofitUtil.getTempApi().getAllItem()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<ItemResponse>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<ItemResponse> itemResponses) {
-                        ItemListAdapter mAdapter = new ItemListAdapter(itemResponses, mContext);
-                        mAdapter.setOnItemClickListener(new FullClickListener() {
-                            @Override
-                            public void onItemClick(View view, int position, int viewType) {
-
-                            }
-
-                            @Override
-                            public void onItemLongClick(View view, int position, int viewType) {
-                                DeleteImageDialog deleteImageDialog = new DeleteImageDialog();
-                                deleteImageDialog.setName(itemResponses.get(position).getName().substring(34));
-                                deleteImageDialog.setOnPrepare(new OnPrepare() {
-                                    @Override
-                                    public void updateUI() {
-                                        /*itemResponses.remove(position);
-                                        mAdapter.notifyDataSetChanged();*/
-                                        itemResponses.remove(position);
-                                        mAdapter.notifyItemRemoved(position);
-                                        if (position != itemResponses.size()) {
-                                            mAdapter.notifyItemRangeChanged(position, itemResponses.size() - position);
-                                        }
-                                    }
-                                });
-                                deleteImageDialog.show(getSupportFragmentManager(), "delete");
-                            }
-                        });
-                        mRecyclerView.setAdapter(new ScaleInAnimationAdapter(mAdapter));
-                        mProgressBar.setVisibility(View.INVISIBLE);
-                        mRefreshLayout.finishRefresh();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mProgressBar.setVisibility(View.INVISIBLE);
-                        Toasty.error(mContext, "This is an error toast.",
-                                Toast.LENGTH_SHORT, true).show();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+//        RetrofitUtil.getTempApi().getAllItem()
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<List<ItemResponse>>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(List<ItemResponse> itemResponses) {
+//                        ItemListAdapter mAdapter = new ItemListAdapter(itemResponses, mContext);
+//                        mAdapter.setOnItemClickListener(new FullClickListener() {
+//                            @Override
+//                            public void onItemClick(View view, int position, int viewType) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onItemLongClick(View view, int position, int viewType) {
+//                                DeleteImageDialog deleteImageDialog = new DeleteImageDialog();
+//                                deleteImageDialog.setName(itemResponses.get(position).getName().substring(34));
+//                                deleteImageDialog.setOnPrepare(new OnPrepare() {
+//                                    @Override
+//                                    public void updateUI() {
+//                                        /*itemResponses.remove(position);
+//                                        mAdapter.notifyDataSetChanged();*/
+//                                        itemResponses.remove(position);
+//                                        mAdapter.notifyItemRemoved(position);
+//                                        if (position != itemResponses.size()) {
+//                                            mAdapter.notifyItemRangeChanged(position, itemResponses.size() - position);
+//                                        }
+//                                    }
+//                                });
+//                                deleteImageDialog.show(getSupportFragmentManager(), "delete");
+//                            }
+//                        });
+//                        mRecyclerView.setAdapter(new ScaleInAnimationAdapter(mAdapter));
+//                        mProgressBar.setVisibility(View.INVISIBLE);
+//                        mRefreshLayout.finishRefresh();
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        mProgressBar.setVisibility(View.INVISIBLE);
+//                        Toasty.error(mContext, "This is an error toast.",
+//                                Toast.LENGTH_SHORT, true).show();
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
     }
 }

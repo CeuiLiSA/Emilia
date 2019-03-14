@@ -113,6 +113,10 @@ public class SearchActivity extends WithPanelActivity implements MaterialSearchB
                 intent.putExtra("dataType", "根据类型搜索歌单");
                 intent.putExtra("key", searchBar.getText().trim());
                 startActivity(intent);
+            }else if(searchType == 4){
+                Intent intent = new Intent(mContext, SearchUserActivity.class);
+                intent.putExtra("key", searchBar.getText().trim());
+                startActivity(intent);
             }else {
                 BaseFragment fragment = FragmentSearch.newInstance(searchType, searchBar.getText().trim());
                 getSupportFragmentManager()

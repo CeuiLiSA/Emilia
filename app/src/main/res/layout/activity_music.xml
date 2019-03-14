@@ -170,7 +170,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="48dp"
+                android:layout_marginEnd="@dimen/sixteen_dp"
                 android:layout_toStartOf="@+id/playpausefloating"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:scaleType="center"
@@ -194,13 +194,24 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="48dp"
+                android:layout_marginStart="@dimen/sixteen_dp"
                 android:layout_toEndOf="@+id/playpausefloating"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:scaleType="center"
                 app:materialIcon="skip_next"
                 app:materialIconColor="@android:color/black"
                 app:materialIconSize="35dp" />
+
+
+            <com.like.LikeButton
+                app:icon_type="heart"
+                app:icon_size="20dp"
+                android:id="@+id/star_button"
+                android:layout_toEndOf="@+id/next"
+                android:layout_marginStart="@dimen/sixteen_dp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </RelativeLayout>
 
     </LinearLayout>

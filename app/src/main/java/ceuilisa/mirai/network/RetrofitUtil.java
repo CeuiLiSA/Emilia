@@ -52,7 +52,7 @@ public class RetrofitUtil {
    
 
 
-    public static AppApi getTempApi(){
+    public static BackSupport getTempApi(){
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
@@ -71,10 +71,10 @@ public class RetrofitUtil {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(BASE_URL_2)
                 .build();
-        return retrofit.create(AppApi.class);
+        return retrofit.create(BackSupport.class);
     }
 
 
 
-    private static final String BASE_URL_2 = "http://104.129.180.80:8082/";
+    private static final String BASE_URL_2 = "http://192.168.0.111:8080/Emilia_war_exploded/";
 }

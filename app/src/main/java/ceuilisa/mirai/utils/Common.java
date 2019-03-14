@@ -14,6 +14,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import ceuilisa.mirai.activities.GlobalApp;
+
 public class Common {
 
     public static <T> void showLog(T t) {
@@ -59,6 +61,16 @@ public class Common {
     public static <T> void showToast(Context context, T t) {
         if (toast == null) {
             toast = Toast.makeText(context, String.valueOf(t), Toast.LENGTH_SHORT);
+        } else {
+            toast.setText(String.valueOf(t));
+            toast.setDuration(Toast.LENGTH_SHORT);
+        }
+        toast.show();
+    }
+
+    public static <T> void showToast(T t) {
+        if (toast == null) {
+            toast = Toast.makeText(GlobalApp.getContext(), String.valueOf(t), Toast.LENGTH_SHORT);
         } else {
             toast.setText(String.valueOf(t));
             toast.setDuration(Toast.LENGTH_SHORT);

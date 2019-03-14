@@ -24,8 +24,11 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.fragments.FragmentCenter;
 import ceuilisa.mirai.fragments.FragmentLeft;
 import ceuilisa.mirai.fragments.FragmentRight;
+import ceuilisa.mirai.interf.OnPrepared;
+import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Constant;
+import ceuilisa.mirai.utils.Local;
 
 public class MainActivity extends WithPanelActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -49,28 +52,39 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
     @Override
     void initView() {
         super.initView();
+        checkPermission(new OnPrepared<Object>() {
+            @Override
+            public void doSomething(Object o) {
+                UserBean userBean = Local.getUser();
+                if(userBean != null && userBean.isLogin()){
+                    mDrawerLayout = findViewById(R.id.drawer_layout);
+                    NavigationView navigationView = findViewById(R.id.nav_view);
+                    navigationView.setNavigationItemSelectedListener(MainActivity.this);
+                    initFragments();
+                }else {
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+    }
 
+
+    private void checkPermission(OnPrepared<Object> onPrepared){
         final RxPermissions rxPermissions = new RxPermissions(this);
-
-
         rxPermissions
                 .requestEachCombined(Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_PHONE_STATE)
                 .subscribe(permission -> { // will emit 1 Permission object
                     if (permission.granted) {
-                        // All permissions are granted !
+                        onPrepared.doSomething(null);
                     } else {
                         // At least one denied permission with ask never again
                         // Need to go to the settings
                         Common.showToast(mContext, "请给与足够的权限");
                         finish();
                     }
-
                 });
-        mDrawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        initFragments();
     }
 
     @Override
@@ -117,7 +131,8 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
-
+            Intent intent = new Intent(mContext, SettingsActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

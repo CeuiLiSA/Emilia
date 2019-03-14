@@ -63,6 +63,8 @@ dependencies {
     implementation 'me.shaohui:bottomdialog:1.1.9'
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
     implementation 'com.github.mancj:MaterialSearchBar:0.8.2'
+    implementation 'com.github.jd-alexander:LikeButton:0.2.3'
+    implementation 'com.rengwuxian.materialedittext:library:2.1.4'
 
 
     testImplementation 'junit:junit:4.12'

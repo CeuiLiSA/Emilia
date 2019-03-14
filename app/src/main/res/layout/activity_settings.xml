@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="@dimen/six_dp"
+        app:navigationIcon="@drawable/ic_arrow_back_white"
+        app:title="设置"
+        app:titleTextColor="@android:color/white">
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:layout_marginTop="@dimen/eight_dp"
+        android:layout_marginBottom="@dimen/eight_dp"
+        android:textSize="13sp"
+        android:id="@+id/s_zhanghu"
+        android:text="账户"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_height="wrap_content">
+
+
+
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="用户名"
+            android:textColor="#212121"
+            android:layout_marginTop="@dimen/eight_dp"
+            android:id="@+id/s_yonghumin"
+            android:textSize="16sp"
+            android:layout_marginStart="@dimen/sixteen_dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="用户名"
+            android:textColor="#616161"
+            android:layout_marginTop="@dimen/four_dp"
+            android:layout_marginBottom="@dimen/eight_dp"
+            android:layout_marginStart="@dimen/sixteen_dp"
+            android:layout_below="@+id/s_yonghumin"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_height="wrap_content">
+
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="网易云音乐ID"
+            android:textColor="#212121"
+            android:layout_marginTop="@dimen/eight_dp"
+            android:id="@+id/s_wangyiyun_id"
+            android:textSize="16sp"
+            android:layout_marginStart="@dimen/sixteen_dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="网易云音乐ID"
+            android:textColor="#616161"
+            android:layout_marginTop="@dimen/four_dp"
+            android:layout_marginBottom="@dimen/eight_dp"
+            android:layout_marginStart="@dimen/sixteen_dp"
+            android:layout_below="@+id/s_wangyiyun_id"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:text="退出登录"
+        android:layout_margin="@dimen/sixteen_dp"
+        android:layout_height="wrap_content" />
+</LinearLayout>

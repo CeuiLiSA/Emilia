@@ -46,6 +46,16 @@ public class TracksBean {
     private AlBean al;
     private int dt;
     private long publishTime;
+
+    public String getIsLiked() {
+        return isLiked;
+    }
+
+    public void setIsLiked(String isLiked) {
+        this.isLiked = isLiked;
+    }
+
+    private String isLiked = "0";
     private List<ArBean> ar;
     private List<String> alia;
 

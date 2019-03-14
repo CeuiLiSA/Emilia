@@ -18,6 +18,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 import net.steamcrafted.materialiconlib.MaterialIconView;
 
@@ -25,15 +28,26 @@ import java.text.SimpleDateFormat;
 
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
+import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.dialogs.DownloadDialog;
 import ceuilisa.mirai.dialogs.SelectArtistDialog;
 import ceuilisa.mirai.fragments.BaseFragment;
 import ceuilisa.mirai.fragments.FragmentCover;
 import ceuilisa.mirai.fragments.FragmentLrc;
 import ceuilisa.mirai.interf.OnPlayComplete;
+import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.response.BackResponse;
+import ceuilisa.mirai.response.PlayListDetailResponse;
+import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.utils.Common;
+import ceuilisa.mirai.utils.Constant;
 import ceuilisa.mirai.utils.IndicatorLayout;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import jp.wasabeef.glide.transformations.BlurTransformation;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 
 public class MusicActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
@@ -44,6 +58,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
     private TextView mTextView, mTextView2, mTextView3, mTextView4;
     private MaterialIconView lastSong, nextSong;
     private ImageView mImageView;
+    private LikeButton mLikeButton;
     private ViewPager vpPlay;
     private IndicatorLayout mIndicatorLayout;
     private BaseFragment[] mViewPagerContent;
@@ -53,6 +68,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
     public Handler mHandler = new Handler();
     private MyRunnable mMyRunnable = new MyRunnable();
     private SimpleDateFormat mTime = new SimpleDateFormat("mm: ss");
+    private TracksBean mTracksBean;
 
     @Override
     void initLayout() {
@@ -106,6 +122,22 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
             mTextView3 = findViewById(R.id.song_elapsed_time);
             mTextView4 = findViewById(R.id.song_duration);
             mImageView = findViewById(R.id.album_art);
+            mLikeButton = findViewById(R.id.star_button);
+
+            mLikeButton.setOnLikeListener(new OnLikeListener() {
+                @Override
+                public void liked(LikeButton likeButton) {
+                    MusicService.allSongs.get(index).setIsLiked("1");
+                    //postLike("1");
+                }
+
+                @Override
+                public void unLiked(LikeButton likeButton) {
+                    MusicService.allSongs.get(index).setIsLiked("0");
+                    //postLike("0");
+                }
+            });
+
             ImageView download = findViewById(R.id.download);
             download.setOnClickListener(v -> {
                 DownloadDialog downloadDialog = new DownloadDialog();
@@ -186,6 +218,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
 
     private void refreshLayout() {
         if(MusicService.allSongs != null) {
+            mTracksBean = MusicService.allSongs.get(index);
             if (!isDestroyed()) {
                 Glide.with(mContext).load(MusicService.allSongs.get(index).getAl().getPicUrl())
                         .bitmapTransform(new BlurTransformation(mContext, 15, 10)).into(mImageView);
@@ -203,6 +236,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
                 mTextView4.setText(mTime.format(MusicService.allSongs.get(index).getDt()));
                 mSeekBar.setMax(MusicService.allSongs.get(index).getDt());
             }
+            mLikeButton.setLiked(MusicService.allSongs.get(index).getIsLiked().equals("1"));
             if (index != MusicService.getInstance().getNowPlayIndex()) {
                 mHandler.removeCallbacksAndMessages(null);
                 mSeekBar.setProgress(0);
@@ -296,4 +330,41 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
             Log.d("&&&&****", "((()(()()()");
         }
     }
+
+
+//    private void postLike(String isLike){
+//        Gson gson = new Gson();
+//        String songGson = gson.toJson(MusicService.allSongs.get(index));
+//        RetrofitUtil.getTempApi().postLike(Constant.USER_ID, songGson, isLike)
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<BackResponse>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(BackResponse backResponse) {
+//                        if(backResponse != null){
+//                            if(backResponse.getMessage() != null &&
+//                                    backResponse.getMessage().length() != 0) {
+//                                Common.showToast(backResponse.getMessage());
+//                            }
+//                        }else {
+//                            Common.showToast("操作失败");
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Common.showToast("操作失败");
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
+//    }
 }

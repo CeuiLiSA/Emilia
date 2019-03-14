@@ -40,6 +40,12 @@ public interface AppApi {
     @GET("nm/playlist/{playlistID}")
     Observable<PlayListDetailResponse> getPlayListDetail(@Path("playlistID") String playlistID);
 
+
+    @GET("cloudmusic/?type=playlist")
+    Observable<PlayListDetailResponse> getPlayListDetail22(@Query("id") String id);
+
+
+
     @GET("id_delete")
     Observable<DeleteImageResponse> deleteImage(@Query("id") String id);
 
