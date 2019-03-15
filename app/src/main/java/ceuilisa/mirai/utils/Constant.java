@@ -2,7 +2,7 @@ package ceuilisa.mirai.utils;
 
 public class Constant {
 
-    public static final String USER_NAME = "CeuiLiSA";
+    //public static final String USER_NAME = "CeuiLiSA";
 
     public static final int SEARCH_SONG = 1;
     public static final int SEARCH_ALBUM = 10;

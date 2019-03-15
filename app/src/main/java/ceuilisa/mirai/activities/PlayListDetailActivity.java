@@ -121,6 +121,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
                 .subscribe(new Observer<PlayListDetailResponse>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+
                     }
 
                     @Override
@@ -135,8 +136,10 @@ public class PlayListDetailActivity extends WithPanelActivity {
                                 intent.putExtra("index", position);
                                 startActivity(intent);
                             });
-                            Glide.with(mContext).load(playListTitleResponse.getPlaylist().getCreator().
-                                    getAvatarUrl()).into(mCircleImageView);
+                            if(!isDestroyed()) {
+                                Glide.with(mContext).load(playListTitleResponse.getPlaylist().getCreator().
+                                        getAvatarUrl()).into(mCircleImageView);
+                            }
                             loadProgress.setVisibility(View.GONE);
                             mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
                             showProgress = false;

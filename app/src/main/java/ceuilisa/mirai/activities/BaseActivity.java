@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import ceuilisa.mirai.R;
+import ceuilisa.mirai.response.UserBean;
+import ceuilisa.mirai.utils.Local;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -23,6 +25,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         mContext = this;
         mActivity = this;
+
+
         initView();
         initData();
     }

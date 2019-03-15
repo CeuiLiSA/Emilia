@@ -39,9 +39,11 @@ import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.BackResponse;
 import ceuilisa.mirai.response.PlayListDetailResponse;
 import ceuilisa.mirai.response.TracksBean;
+import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Constant;
 import ceuilisa.mirai.utils.IndicatorLayout;
+import ceuilisa.mirai.utils.Local;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -128,13 +130,13 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
                 @Override
                 public void liked(LikeButton likeButton) {
                     MusicService.allSongs.get(index).setIsLiked("1");
-                    //postLike("1");
+                    postLike("1");
                 }
 
                 @Override
                 public void unLiked(LikeButton likeButton) {
                     MusicService.allSongs.get(index).setIsLiked("0");
-                    //postLike("0");
+                    postLike("0");
                 }
             });
 
@@ -332,39 +334,40 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
     }
 
 
-//    private void postLike(String isLike){
-//        Gson gson = new Gson();
-//        String songGson = gson.toJson(MusicService.allSongs.get(index));
-//        RetrofitUtil.getTempApi().postLike(Constant.USER_ID, songGson, isLike)
-//                .subscribeOn(Schedulers.newThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<BackResponse>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(BackResponse backResponse) {
-//                        if(backResponse != null){
-//                            if(backResponse.getMessage() != null &&
-//                                    backResponse.getMessage().length() != 0) {
-//                                Common.showToast(backResponse.getMessage());
-//                            }
-//                        }else {
-//                            Common.showToast("操作失败");
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Common.showToast("操作失败");
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-//    }
+    private void postLike(String isLike){
+        Gson gson = new Gson();
+        String songGson = gson.toJson(MusicService.allSongs.get(index));
+        UserBean userBean = Local.getUser();
+        RetrofitUtil.getTempApi().postLike(userBean.getUserID(), songGson, isLike)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BackResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(BackResponse backResponse) {
+                        if(backResponse != null){
+                            if(backResponse.getMessage() != null &&
+                                    backResponse.getMessage().length() != 0) {
+                                Common.showToast(backResponse.getMessage());
+                            }
+                        }else {
+                            Common.showToast("操作失败");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Common.showToast("操作失败");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 }

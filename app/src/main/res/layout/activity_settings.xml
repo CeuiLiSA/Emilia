@@ -55,6 +55,7 @@
             android:layout_marginTop="@dimen/four_dp"
             android:layout_marginBottom="@dimen/eight_dp"
             android:layout_marginStart="@dimen/sixteen_dp"
+            android:id="@+id/user_name"
             android:layout_below="@+id/s_yonghumin"
             android:layout_height="wrap_content" />
 
@@ -68,12 +69,9 @@
         android:background="?android:attr/selectableItemBackground"
         android:layout_height="wrap_content">
 
-
-
-
         <TextView
             android:layout_width="wrap_content"
-            android:text="网易云音乐ID"
+            android:text="密码"
             android:textColor="#212121"
             android:layout_marginTop="@dimen/eight_dp"
             android:id="@+id/s_wangyiyun_id"
@@ -83,10 +81,11 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:text="网易云音乐ID"
+            android:text="密码"
             android:textColor="#616161"
             android:layout_marginTop="@dimen/four_dp"
             android:layout_marginBottom="@dimen/eight_dp"
+            android:id="@+id/wangyiyun_id"
             android:layout_marginStart="@dimen/sixteen_dp"
             android:layout_below="@+id/s_wangyiyun_id"
             android:layout_height="wrap_content" />
@@ -94,9 +93,24 @@
     </RelativeLayout>
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:text="退出登录"
-        android:layout_margin="@dimen/sixteen_dp"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:text="退出登录"
+            android:layout_margin="@dimen/sixteen_dp"
+            android:id="@+id/login_out"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:text="清空全部账号信息"
+            android:layout_margin="@dimen/sixteen_dp"
+            android:id="@+id/login_out_and_clear"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
 </LinearLayout>

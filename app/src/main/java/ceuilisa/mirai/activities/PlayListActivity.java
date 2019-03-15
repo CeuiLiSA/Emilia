@@ -17,8 +17,10 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListAdapter;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.PlayListTitleResponse;
+import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Constant;
+import ceuilisa.mirai.utils.Local;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -167,7 +169,8 @@ public class PlayListActivity extends WithPanelActivity {
     }
 
     private void getMyPlaylist() {
-        RetrofitUtil.getImjadApi().searchPlaylist("CeuiLiSA", Constant.LIMIT, 0)
+        UserBean userBean = Local.getUser();
+        RetrofitUtil.getImjadApi().searchPlaylist(userBean.getUserName(), Constant.LIMIT, 0)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<PlayListTitleResponse>() {

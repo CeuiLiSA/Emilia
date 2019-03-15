@@ -76,5 +76,5 @@ public class RetrofitUtil {
 
 
 
-    private static final String BASE_URL_2 = "http://192.168.0.111:8080/Emilia_war_exploded/";
+    private static final String BASE_URL_2 = "http://192.168.0.111:8080/";
 }

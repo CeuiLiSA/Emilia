@@ -2,7 +2,7 @@ package ceuilisa.mirai.response;
 
 import java.util.List;
 
-public class BackResponse<T> {
+public class LoginResponse {
 
 
     /**
@@ -11,7 +11,7 @@ public class BackResponse<T> {
      */
 
     private String message;
-    private List<T> datas;
+    private List<?> datas;
 
     public String getMessage() {
         return message;
@@ -21,11 +21,11 @@ public class BackResponse<T> {
         this.message = message;
     }
 
-    public List<T> getDatas() {
+    public List<?> getDatas() {
         return datas;
     }
 
-    public void setDatas(List<T> datas) {
+    public void setDatas(List<?> datas) {
         this.datas = datas;
     }
 }
