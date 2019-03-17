@@ -62,6 +62,8 @@ public class Local {
         SharedPreferences.Editor editor = sp.edit();
         editor.clear();
         editor.apply();
-        onPrepared.doSomething(null);
+        if(onPrepared != null) {
+            onPrepared.doSomething(null);
+        }
     }
 }

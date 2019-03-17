@@ -33,6 +33,7 @@ public class DownloadDialog extends DialogFragment{
     private AlertDialog mAlertDialog;
     private ProgressBar mProgressBar;
     private int index;
+    public static final String FILE_PATH = "/storage/emulated/0/EmiliaSongs";
 
     @NonNull
     @Override
@@ -51,7 +52,7 @@ public class DownloadDialog extends DialogFragment{
     }
 
     public void startDownload(){
-        File file = new File("/storage/emulated/0/EmiliaSongs",
+        File file = new File("FILE_PATH",
                 MusicService.allSongs.get(index).getName() + ".mp3");
         if(file.exists()){
             mAlertDialog.dismiss();
@@ -59,7 +60,7 @@ public class DownloadDialog extends DialogFragment{
         }else {
             DownloadTask downloadTask = new DownloadTask.Builder(
                     MusicService.getInstance().getSingleSong().getData().get(0).getUrl(),
-                    new File("/storage/emulated/0/EmiliaSongs"))
+                    new File(FILE_PATH))
                     .setFilename(file.getName())
                     .setMinIntervalMillisCallbackProcess(100)
                     .setPassIfAlreadyCompleted(false)
@@ -90,7 +91,7 @@ public class DownloadDialog extends DialogFragment{
                 public void taskEnd(@NonNull DownloadTask task, @NonNull EndCause cause, @Nullable Exception realCause, @NonNull Listener1Assist.Listener1Model model) {
                     mProgressBar.setVisibility(View.INVISIBLE);
                     mAlertDialog.dismiss();
-                    Common.showToast(mProgressBar.getContext(), "下载完成");
+                    Common.showToast("下载完成");
                 }
             });
         }
