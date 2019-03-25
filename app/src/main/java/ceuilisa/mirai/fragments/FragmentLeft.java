@@ -18,7 +18,7 @@ import ceuilisa.mirai.activities.PlayHistoryActivity;
 import ceuilisa.mirai.activities.PlayListActivity;
 import ceuilisa.mirai.activities.PlayListDetailActivity;
 import ceuilisa.mirai.activities.SearchActivity;
-import ceuilisa.mirai.activities.TestActivity;
+import ceuilisa.mirai.activities.TempActivity;
 import ceuilisa.mirai.activities.UploadImageActivity;
 
 public class FragmentLeft extends BaseFragment {
@@ -63,7 +63,7 @@ public class FragmentLeft extends BaseFragment {
         });
         TextView textView2 = v.findViewById(R.id.textView2);
         textView2.setOnClickListener(v12 -> {
-            Intent intent = new Intent(mContext, TestActivity.class);
+            Intent intent = new Intent(mContext, TempActivity.class);
             mContext.startActivity(intent);
         });
         TextView textView3 = v.findViewById(R.id.textView3);

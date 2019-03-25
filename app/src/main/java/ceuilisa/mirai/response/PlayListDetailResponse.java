@@ -1,8 +1,9 @@
 package ceuilisa.mirai.response;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class PlayListDetailResponse {
+public class PlayListDetailResponse extends BaseResponse<TracksBean> {
 
 
     /**
@@ -28,6 +29,16 @@ public class PlayListDetailResponse {
 
     public void setCode(int code) {
         this.code = code;
+    }
+
+    @Override
+    public List<TracksBean> getList() {
+        if(playlist != null) {
+            return playlist.tracks;
+        }
+        else {
+            return new ArrayList<>();
+        }
     }
 
     public static class PlaylistBean {

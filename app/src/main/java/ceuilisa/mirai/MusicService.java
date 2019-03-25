@@ -48,6 +48,11 @@ public class MusicService extends Service implements MusicOperate {
     }
 
 
+    public static void main(){
+
+    }
+
+
     @Override
     public void onCreate() {
         super.onCreate();

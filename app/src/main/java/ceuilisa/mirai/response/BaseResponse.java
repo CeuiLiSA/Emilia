@@ -1,6 +1,8 @@
 package ceuilisa.mirai.response;
 
-public class BaseResponse {
+import java.util.List;
+
+public abstract class BaseResponse<Item> {
 
     /**
      * message : success
@@ -15,4 +17,6 @@ public class BaseResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public abstract List<Item> getList();
 }

@@ -52,6 +52,9 @@
         <activity android:name=".activities.SearchUserActivity" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".fragments.SimpleListFragment" />
+        <activity android:name=".fragments.TestListFragment" />
+        <activity android:name=".activities.TempActivity" />
     </application>
 
 </manifest>

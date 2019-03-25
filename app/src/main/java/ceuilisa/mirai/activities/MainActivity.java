@@ -60,15 +60,14 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
         email = navigationView.getHeaderView(0).findViewById(R.id.email);
         navigationView.setNavigationItemSelectedListener(MainActivity.this);
         checkPermission(object -> {
-//            UserBean mUserBean = Local.getUser();
-//            if(mUserBean != null && mUserBean.isLogin()){
-//                initFragments();
-//            }else {
-//                Intent intent = new Intent(mContext, LoginActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }
-            initFragments();
+            UserBean mUserBean = Local.getUser();
+            if(mUserBean != null && mUserBean.isLogin()){
+                initFragments();
+            }else {
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
         });
     }
 
