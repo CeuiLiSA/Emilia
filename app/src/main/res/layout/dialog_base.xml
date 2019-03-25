@@ -19,7 +19,7 @@
         android:layout_marginEnd="@dimen/sixteen_dp"
         android:layout_marginBottom="@dimen/sixteen_dp"
         android:fitsSystemWindows="true"
-        android:textSize="16sp" />
+        android:textSize="17sp" />
 
 
     <RelativeLayout

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.scwang.smartrefresh.header.DeliveryHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -33,6 +34,7 @@ public class FragmentSearchAlbum extends BaseFragment {
     private AlbumListAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private RefreshLayout mRefreshLayout;
+    private ProgressBar mProgressBar;
     private List<SearchAlbumResponse.ResultBean.AlbumsBean> allData = new ArrayList<>();
     private String name;
     private int nowIndex = 0;
@@ -45,6 +47,7 @@ public class FragmentSearchAlbum extends BaseFragment {
     @Override
     View initView(View v) {
         mRecyclerView = v.findViewById(R.id.recyclerView);
+        mProgressBar = v.findViewById(R.id.progress);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -70,6 +73,7 @@ public class FragmentSearchAlbum extends BaseFragment {
     private void getArtistAlbum() {
         allData.clear();
         nowIndex = 0;
+        mProgressBar.setVisibility(View.VISIBLE);
         RetrofitUtil.getImjadApi().searchAlbum(name, Constant.LIMIT, nowIndex)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -97,10 +101,12 @@ public class FragmentSearchAlbum extends BaseFragment {
                             });
                             mRecyclerView.setAdapter(mAdapter);
                         }
+                        mProgressBar.setVisibility(View.INVISIBLE);
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        mProgressBar.setVisibility(View.INVISIBLE);
                     }
 
                     @Override

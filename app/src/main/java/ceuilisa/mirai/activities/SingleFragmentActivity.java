@@ -28,6 +28,8 @@ public class SingleFragmentActivity extends WithPanelActivity {
         mLayoutID = R.layout.activity_single_fragment;
     }
 
+
+
     @Override
     void initView() {
         super.initView();

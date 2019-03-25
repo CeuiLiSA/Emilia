@@ -50,6 +50,6 @@ public class SearchUserActivity extends WithPanelActivity{
     @Override
     void initData() {
         key = getIntent().getStringExtra("key");
-
+        Common.showLog(key);
     }
 }

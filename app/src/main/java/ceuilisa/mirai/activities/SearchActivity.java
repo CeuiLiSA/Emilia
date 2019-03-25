@@ -73,8 +73,8 @@ public class SearchActivity extends WithPanelActivity implements MaterialSearchB
                     }
                     break;
                 case R.id.search_user:
-                    if (searchType != 3) {
-                        searchType = 3;
+                    if (searchType != 4) {
+                        searchType = 4;
                         searchBar.setPlaceHolder(Constant.SEARCH_TYPE[searchType]);
                     }
                     break;
@@ -101,31 +101,36 @@ public class SearchActivity extends WithPanelActivity implements MaterialSearchB
         if(searchBar.getText().trim().length() == 0){
             Common.showToast(mContext, "请输入搜索关键字");
         }else {
-
-            if(searchType == 2){
+            Common.hideKeyboard(mActivity);
+            if(searchType == 0){//搜单曲
                 Intent intent = new Intent(mContext, SingleFragmentActivity.class);
                 intent.putExtra("key", searchBar.getText().trim());
                 intent.putExtra("title", "搜索专辑 " + searchBar.getText().trim());
                 startActivity(intent);
             }
-            else if(searchType == 3){
+            else if(searchType == 1){//搜歌手
+                Intent intent = new Intent(mContext, SingleFragmentActivity.class);
+                intent.putExtra("key", searchBar.getText().trim());
+                intent.putExtra("title", "搜索专辑 " + searchBar.getText().trim());
+                startActivity(intent);
+            }
+            else if(searchType == 2){//搜专辑 done
+                Intent intent = new Intent(mContext, SingleFragmentActivity.class);
+                intent.putExtra("key", searchBar.getText().trim());
+                intent.putExtra("title", "搜索专辑 " + searchBar.getText().trim());
+                startActivity(intent);
+            }
+            else if(searchType == 3){//搜歌单 done
                 Intent intent = new Intent(mContext, PlayListActivity.class);
                 intent.putExtra("dataType", "根据类型搜索歌单");
                 intent.putExtra("key", searchBar.getText().trim());
                 startActivity(intent);
-            }else if(searchType == 4){
+            }else if(searchType == 4){//搜用户
                 Intent intent = new Intent(mContext, SearchUserActivity.class);
                 intent.putExtra("key", searchBar.getText().trim());
                 startActivity(intent);
-            }else {
-                BaseFragment fragment = FragmentSearch.newInstance(searchType, searchBar.getText().trim());
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.fragment_container, fragment)
-                        .show(fragment)
-                        .commit();
             }
-            Common.hideKeyboard(mActivity);
+
         }
     }
 
