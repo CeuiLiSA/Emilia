@@ -11,6 +11,7 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.dialogs.BaseDialog;
 import ceuilisa.mirai.dialogs.ClearDataDialog;
 import ceuilisa.mirai.interf.OnPrepared;
+import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Local;
 
@@ -60,7 +61,7 @@ public class SettingsActivity extends BaseActivity{
     }
 
     private void fillData(){
-        UserBean userBean = Local.getUser();
+        LoginResponse userBean = Local.getUser();
         if(userBean != null){
             userName.setText(userBean.getUserName());
             netEasyAccount.setText(userBean.getPassword());

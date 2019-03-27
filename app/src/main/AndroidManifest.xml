@@ -52,9 +52,13 @@
         <activity android:name=".activities.SearchUserActivity" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".fragments.SimpleListFragment" />
+        <activity android:name=".fragments.BaseListFragment" />
         <activity android:name=".fragments.TestListFragment" />
         <activity android:name=".activities.TempActivity" />
+        <activity android:name=".activities.AddPlayListActivity" />
+        <activity android:name=".activities.MyPlayListActivity" />
+        <activity android:name=".activities.CommentListActivity" />
+        <activity android:name=".activities.UserDetailActivity" />
     </application>
 
 </manifest>

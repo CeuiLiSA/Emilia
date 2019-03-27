@@ -56,7 +56,7 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     allIllust.get(position).getAl().getName()));
         }
         //展示歌曲Alia
-        if (allIllust.get(position).getAlia().size() != 0) {
+        if (allIllust.get(position).getAlia() != null && allIllust.get(position).getAlia().size() != 0) {
             SpannableString spannableString = new SpannableString(String.format("%s (%s)",
                     allIllust.get(position).getName(),
                     allIllust.get(position).getAlia().get(0)));

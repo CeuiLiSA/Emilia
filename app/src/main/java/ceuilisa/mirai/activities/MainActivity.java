@@ -16,8 +16,10 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import ceuilisa.mirai.MusicService;
@@ -26,6 +28,7 @@ import ceuilisa.mirai.fragments.FragmentCenter;
 import ceuilisa.mirai.fragments.FragmentLeft;
 import ceuilisa.mirai.fragments.FragmentRight;
 import ceuilisa.mirai.interf.OnPrepared;
+import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Constant;
@@ -58,10 +61,19 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         userName = navigationView.getHeaderView(0).findViewById(R.id.user_name);
         email = navigationView.getHeaderView(0).findViewById(R.id.email);
+        ImageView userHead = navigationView.getHeaderView(0).findViewById(R.id.header);
+        ImageView userBG = navigationView.getHeaderView(0).findViewById(R.id.user_background);
         navigationView.setNavigationItemSelectedListener(MainActivity.this);
         checkPermission(object -> {
-            UserBean mUserBean = Local.getUser();
+            LoginResponse mUserBean = Local.getUser();
             if(mUserBean != null && mUserBean.isLogin()){
+                Glide.with(mContext).load(mUserBean.getProfile().getAvatarUrl()).into(userHead);
+                Glide.with(mContext).load(mUserBean.getProfile().getBackgroundUrl()).into(userBG);
+                userBG.setOnClickListener(v -> {
+                    Intent intent = new Intent(mContext, UserDetailActivity.class);
+                    intent.putExtra("user id", mUserBean.getProfile().getUserId());
+                    startActivity(intent);
+                });
                 initFragments();
             }else {
                 Intent intent = new Intent(mContext, LoginActivity.class);
@@ -149,16 +161,9 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-        UserBean userBean = Local.getUser();
-        if(userBean != null) {
-            if(userName != null) {
-                userName.setText(userBean.getUserName());
-            }
-            if (userBean.getEmail() != null && userBean.getEmail().length() == 0) {
-                if(email != null) {
-                    email.setText(userBean.getEmail());
-                }
-            }
+        LoginResponse userBean = Local.getUser();
+        if(userBean != null && userBean.getProfile() != null) {
+            userName.setText(userBean.getProfile().getNickname());
         }
     }
 }

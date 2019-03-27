@@ -20,9 +20,11 @@ import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.AlbumResponse;
 import ceuilisa.mirai.response.PlayListDetailResponse;
+import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Constant;
 import ceuilisa.mirai.utils.DensityUtil;
+import ceuilisa.mirai.utils.Local;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -88,14 +90,21 @@ public class PlayListDetailActivity extends WithPanelActivity {
         name = getIntent().getStringExtra("name");
         author = getIntent().getStringExtra("author");
         dataType = getIntent().getStringExtra("dataType");
-        Glide.with(mContext).load(coverImg).bitmapTransform(
-                new BlurTransformation(mContext, 20, 2)).into(mImageView);
-        Glide.with(mContext).load(coverImg).into(mImageView2);
+
+        if(coverImg != null && coverImg.length() != 0) {
+            Glide.with(mContext).load(coverImg).bitmapTransform(
+                    new BlurTransformation(mContext, 20, 2)).into(mImageView);
+            Glide.with(mContext).load(coverImg).into(mImageView2);
+        }else {
+            Glide.with(mContext).load(R.mipmap.default_playlist_cover).into(mImageView2);
+        }
         mTextView.setText(name);
         mTextView2.setText(author);
         mToolbar.setTitle(dataType);
         if(dataType.equals("歌单")){
             getPlaylist();
+        }else if(dataType.equals("我的收藏")){
+            //getMyFavor();
         }else if(dataType.equals("专辑")){
             getAlbum();
         }
@@ -126,7 +135,9 @@ public class PlayListDetailActivity extends WithPanelActivity {
 
                     @Override
                     public void onNext(PlayListDetailResponse playListTitleResponse) {
-                        if(playListTitleResponse.getPlaylist().getTracks() != null &&
+                        if(playListTitleResponse != null &&
+                                playListTitleResponse.getPlaylist() != null &&
+                                playListTitleResponse.getPlaylist().getTracks() != null &&
                                 playListTitleResponse.getPlaylist().getTracks().size() > 0) {
                             PlayListDetailAdapter adapter = new PlayListDetailAdapter(
                                     playListTitleResponse.getPlaylist().getTracks(), mContext);
@@ -143,11 +154,16 @@ public class PlayListDetailActivity extends WithPanelActivity {
                             loadProgress.setVisibility(View.GONE);
                             mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
                             showProgress = false;
+                        }else {
+                            loadProgress.setVisibility(View.INVISIBLE);
+                            Common.showToast("加载失败");
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        e.printStackTrace();
+                        Common.showToast("加载失败");
                     }
 
                     @Override
@@ -191,5 +207,59 @@ public class PlayListDetailActivity extends WithPanelActivity {
                 });
     }
 
+
+
+
+//    private void getMyFavor(){
+//        UserBean userBean = Local.getUser();
+//        RetrofitUtil.getTempApi().getMyFavor(userBean.getUserID())
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<PlayListDetailResponse>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(PlayListDetailResponse playListTitleResponse) {
+//                        if(playListTitleResponse != null &&
+//                                playListTitleResponse.getPlaylist() != null &&
+//                                playListTitleResponse.getPlaylist().getTracks() != null &&
+//                                playListTitleResponse.getPlaylist().getTracks().size() > 0) {
+//                            PlayListDetailAdapter adapter = new PlayListDetailAdapter(
+//                                    playListTitleResponse.getPlaylist().getTracks(), mContext);
+//                            adapter.setOnItemClickListener((view, position, viewType) -> {
+//                                MusicService.allSongs = playListTitleResponse.getPlaylist().getTracks();
+//                                Intent intent = new Intent(mContext, MusicActivity.class);
+//                                intent.putExtra("index", position);
+//                                startActivity(intent);
+//                            });
+//                            if(!isDestroyed()) {
+//                                if(playListTitleResponse.getPlaylist().getCreator() != null) {
+//                                    Glide.with(mContext).load(playListTitleResponse.getPlaylist().getCreator().
+//                                            getAvatarUrl()).into(mCircleImageView);
+//                                }
+//                            }
+//                            loadProgress.setVisibility(View.GONE);
+//                            mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
+//                            showProgress = false;
+//                        }else {
+//                            loadProgress.setVisibility(View.INVISIBLE);
+//                            Common.showToast("加载失败");
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        e.printStackTrace();
+//                        Common.showToast("加载失败");
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                    }
+//                });
+//    }
 
 }

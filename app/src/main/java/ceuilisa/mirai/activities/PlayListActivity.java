@@ -5,6 +5,8 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.scwang.smartrefresh.header.DeliveryHeader;
@@ -35,6 +37,7 @@ public class PlayListActivity extends WithPanelActivity {
     private PlayListAdapter mAdapter;
     private Toolbar mToolbar;
     private List<PlayListTitleResponse.ResultBean.PlaylistsBean> allPlaylist = new ArrayList<>();
+    public static boolean isNeedFresh = false;
 
 
     @Override
@@ -56,7 +59,6 @@ public class PlayListActivity extends WithPanelActivity {
     void initView() {
         super.initView();
         mToolbar = findViewById(R.id.toolbar);
-        mToolbar.setNavigationOnClickListener(v -> finish());
         mRecyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -69,7 +71,8 @@ public class PlayListActivity extends WithPanelActivity {
     void initData() {
         dataType = getIntent().getStringExtra("dataType");
         if (dataType.equals("本人歌单")) {
-            getMyPlaylist();
+            //getMyPlaylist();
+            setSupportActionBar(mToolbar);
             mToolbar.setTitle("我的歌单");
             mRefreshLayout.setEnableLoadMore(false);
             mRefreshLayout.setEnableRefresh(false);
@@ -81,6 +84,7 @@ public class PlayListActivity extends WithPanelActivity {
             getPlaylistByKey(key);
             mToolbar.setTitle(key);
         }
+        mToolbar.setNavigationOnClickListener(v -> finish());
     }
 
     private void getPlaylistByKey(String playlistName) {
@@ -168,49 +172,76 @@ public class PlayListActivity extends WithPanelActivity {
                 });
     }
 
-    private void getMyPlaylist() {
-        UserBean userBean = Local.getUser();
-        RetrofitUtil.getImjadApi().searchPlaylist(userBean.getUserName(), Constant.LIMIT, 0)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<PlayListTitleResponse>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+//    private void getMyPlaylist() {
+//        UserBean userBean = Local.getUser();
+//        RetrofitUtil.getTempApi().getMyPlaylist(userBean.getUserID())
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<PlayListTitleResponse>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//                    }
+//
+//                    @Override
+//                    public void onNext(PlayListTitleResponse playListTitleResponse) {
+//                        if (playListTitleResponse.getResult().getPlaylists() != null &&
+//                                playListTitleResponse.getResult().getPlaylists().size() > 0) {
+//                            List<PlayListTitleResponse.ResultBean.PlaylistsBean> mPlayLists =
+//                                    new ArrayList<>(playListTitleResponse.getResult().getPlaylists());
+//                            PlayListAdapter mAdapter = new PlayListAdapter(mPlayLists, mContext);
+//                            mAdapter.setOnItemClickListener((view, position, viewType) -> {
+//                                Intent intent = new Intent(mContext, PlayListDetailActivity.class);
+//                                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+//                                        .makeSceneTransitionAnimation(mActivity, view, "sharedView");
+//                                intent.putExtra("id", String.valueOf(mPlayLists.get(position).getId()));
+//                                intent.putExtra("name", mPlayLists.get(position).getName());
+//                                intent.putExtra("author", mPlayLists.get(position).getCreator().getNickname());
+//                                intent.putExtra("dataType", "歌单");
+//                                intent.putExtra("coverImg", mPlayLists.get(position).getCoverImgUrl());
+//                                mContext.startActivity(intent, optionsCompat.toBundle());
+//                            });
+//                            loadProgress.setVisibility(View.INVISIBLE);
+//                            mRecyclerView.setAdapter(mAdapter);
+//                        } else {
+//                            loadNoData();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        loadError();
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                    }
+//                });
+//    }
 
-                    @Override
-                    public void onNext(PlayListTitleResponse playListTitleResponse) {
-                        if (playListTitleResponse.getResult().getPlaylists() != null &&
-                                playListTitleResponse.getResult().getPlaylists().size() > 0) {
-                            List<PlayListTitleResponse.ResultBean.PlaylistsBean> mPlayLists =
-                                    new ArrayList<>(playListTitleResponse.getResult().getPlaylists());
-                            PlayListAdapter mAdapter = new PlayListAdapter(mPlayLists, mContext);
-                            mAdapter.setOnItemClickListener((view, position, viewType) -> {
-                                Intent intent = new Intent(mContext, PlayListDetailActivity.class);
-                                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                                        .makeSceneTransitionAnimation(mActivity, view, "sharedView");
-                                intent.putExtra("id", String.valueOf(mPlayLists.get(position).getId()));
-                                intent.putExtra("name", mPlayLists.get(position).getName());
-                                intent.putExtra("author", mPlayLists.get(position).getCreator().getNickname());
-                                intent.putExtra("dataType", "歌单");
-                                intent.putExtra("coverImg", mPlayLists.get(position).getCoverImgUrl());
-                                mContext.startActivity(intent, optionsCompat.toBundle());
-                            });
-                            loadProgress.setVisibility(View.INVISIBLE);
-                            mRecyclerView.setAdapter(mAdapter);
-                        } else {
-                            loadNoData();
-                        }
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        loadError();
-                    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.playlist_menu, menu);
+        return true;
+    }
 
-                    @Override
-                    public void onComplete() {
-                    }
-                });
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_add_playlist) {
+            Intent intent = new Intent(mContext, AddPlayListActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isNeedFresh){
+            //getMyPlaylist();
+            isNeedFresh = false;
+        }
     }
 }

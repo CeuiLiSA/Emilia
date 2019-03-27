@@ -14,12 +14,15 @@ import java.util.Objects;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.MainActivity;
+import ceuilisa.mirai.activities.MyPlayListActivity;
 import ceuilisa.mirai.activities.PlayHistoryActivity;
 import ceuilisa.mirai.activities.PlayListActivity;
 import ceuilisa.mirai.activities.PlayListDetailActivity;
 import ceuilisa.mirai.activities.SearchActivity;
 import ceuilisa.mirai.activities.TempActivity;
 import ceuilisa.mirai.activities.UploadImageActivity;
+import ceuilisa.mirai.response.UserBean;
+import ceuilisa.mirai.utils.Local;
 
 public class FragmentLeft extends BaseFragment {
 
@@ -47,20 +50,20 @@ public class FragmentLeft extends BaseFragment {
         });
         TextView textView = v.findViewById(R.id.textView7);
         textView.setOnClickListener(v12 -> {
-            Intent intent = new Intent(mContext, PlayListActivity.class);
+            Intent intent = new Intent(mContext, MyPlayListActivity.class);
             intent.putExtra("dataType", "本人歌单");
             mContext.startActivity(intent);
         });
-        TextView textView1 = v.findViewById(R.id.textView6);
-        textView1.setOnClickListener(v12 -> {
-            Intent intent = new Intent(mContext, PlayListDetailActivity.class);
-            intent.putExtra("id", "139786239");
-            intent.putExtra("name", "CeuiLiSA喜欢的音乐");
-            intent.putExtra("author", "CeuiLiSA");
-            intent.putExtra("dataType", "歌单");
-            intent.putExtra("coverImg", "https://p1.music.126.net/id-110tprTCxF4BXNbZIOw==/109951163198268119.jpg");
-            mContext.startActivity(intent);
-        });
+//        TextView textView1 = v.findViewById(R.id.textView6);
+//        textView1.setOnClickListener(v12 -> {
+//            Intent intent = new Intent(mContext, PlayListDetailActivity.class);
+//            UserBean userBean = Local.getUser();
+//            intent.putExtra("name",  userBean.getUserName() + "喜欢的音乐");
+//            intent.putExtra("author", userBean.getUserName());
+//            intent.putExtra("dataType", "我的收藏");
+//            intent.putExtra("coverImg", "https://p1.music.126.net/id-110tprTCxF4BXNbZIOw==/109951163198268119.jpg");
+//            mContext.startActivity(intent);
+//        });
         TextView textView2 = v.findViewById(R.id.textView2);
         textView2.setOnClickListener(v12 -> {
             Intent intent = new Intent(mContext, TempActivity.class);

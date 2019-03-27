@@ -36,8 +36,8 @@
             android:background="@android:color/transparent"
             android:elevation="12dp"
             android:fitsSystemWindows="true"
-            android:theme="@style/AppTheme.AppBarOverlay"
             app:navigationIcon="@drawable/ic_arrow_back_white"
+            android:theme="@style/AppTheme.AppBarOverlay"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:title=" "
             app:titleTextColor="#fff" />

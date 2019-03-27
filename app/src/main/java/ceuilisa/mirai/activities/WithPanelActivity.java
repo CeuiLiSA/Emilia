@@ -86,7 +86,7 @@ public abstract class WithPanelActivity extends NetWorkControlActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        if(MusicService.allSongs != null) {
+        if(MusicService.allSongs != null && MusicService.allSongs.size() != 0) {
             if (MusicService.getInstance().isPlayingMusic()) {
                 mHandler.post(mMyRunnable);
                 playPause.setImageResource(R.drawable.ic_pause_black_24dp);

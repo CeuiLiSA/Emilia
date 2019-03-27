@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:background="@android:color/white"
+    android:layout_height="wrap_content">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/top_rela"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="40dp"
+            android:id="@+id/user_head"
+            android:layout_marginStart="@dimen/sixteen_dp"
+            android:layout_marginTop="@dimen/sixteen_dp"
+            android:layout_marginBottom="@dimen/eight_dp"
+            android:layout_marginEnd="@dimen/eight_dp"
+            android:scaleType="centerCrop"
+            android:layout_height="40dp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/user_name"
+            android:layout_toEndOf="@+id/user_head"
+            android:textColor="#507daf"
+            android:layout_marginTop="@dimen/sixteen_dp"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/date"
+            android:textColor="#999999"
+            android:layout_alignBottom="@+id/user_head"
+            android:textSize="13sp"
+            android:layout_toEndOf="@+id/user_head"
+            android:layout_marginTop="@dimen/sixteen_dp"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="15sp"
+            android:id="@+id/content"
+            android:textColor="#333333"
+            android:layout_below="@+id/user_head"
+            android:layout_marginBottom="@dimen/sixteen_dp"
+            android:layout_marginEnd="@dimen/sixteen_dp"
+            android:layout_toEndOf="@+id/user_head"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:background="#f3f3f3"
+        android:layout_below="@+id/top_rela"
+        android:layout_height="1dp" />
+
+</RelativeLayout>

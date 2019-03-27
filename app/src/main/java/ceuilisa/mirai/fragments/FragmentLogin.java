@@ -18,6 +18,7 @@ import ceuilisa.mirai.activities.LoginActivity;
 import ceuilisa.mirai.activities.MainActivity;
 import ceuilisa.mirai.interf.OnPrepared;
 import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.response.BackResponse;
 import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Common;
@@ -64,6 +65,8 @@ public class FragmentLogin extends BaseFragment{
             }
         });
         rootView = v;
+        userName.setText("13990845246");
+        password.setText("merciskjl");
         return v;
     }
 
@@ -75,39 +78,37 @@ public class FragmentLogin extends BaseFragment{
 
     private void login(){
         mProgressBar.setVisibility(View.VISIBLE);
-        RetrofitUtil.getTempApi().login(userName.getText().toString().trim(),
+        RetrofitUtil.getNodeApi().loginByPhone(userName.getText().toString().trim(),
                 password.getText().toString().trim())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<BackResponse<UserBean>>() {
+                .subscribe(new Observer<LoginResponse>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(BackResponse<UserBean> userBeanBackResponse) {
-                        if(userBeanBackResponse != null){
-                            if(userBeanBackResponse.getDatas() != null) {
-                                if(userBeanBackResponse.getDatas().size() != 0) {
-                                    Local.saveUser(userBeanBackResponse.getDatas().get(0), new OnPrepared<Object>() {
-                                        @Override
-                                        public void doSomething(Object o) {
-                                            mProgressBar.setVisibility(View.INVISIBLE);
-                                            Common.showToast(userBeanBackResponse.getMessage());
-                                            Intent intent = new Intent(mContext, MainActivity.class);
-                                            startActivity(intent);
-                                            getActivity().finish();
-                                        }
-                                    });
-                                }else{
-                                    if(userBeanBackResponse.getMessage() != null &&
-                                            userBeanBackResponse.getMessage().length() != 0){
-                                        Common.showToast(userBeanBackResponse.getMessage());
-                                    }else {
-                                        Common.showToast("登录失败");
+                    public void onNext(LoginResponse loginResponse) {
+                        if(loginResponse != null){
+                            if(loginResponse.getAccount() != null) {
+                                loginResponse.setUserName(userName.getText().toString().trim());
+                                loginResponse.setPassword(password.getText().toString().trim());
+                                Local.saveUser(loginResponse, new OnPrepared<Object>() {
+                                    @Override
+                                    public void doSomething(Object o) {
+                                        mProgressBar.setVisibility(View.INVISIBLE);
+                                        Common.showToast("用户信息保存成功");
+                                        Intent intent = new Intent(mContext, MainActivity.class);
+                                        startActivity(intent);
+                                        getActivity().finish();
                                     }
-                                    mProgressBar.setVisibility(View.INVISIBLE);
+                                });
+                            }else {
+                                if(loginResponse.getMsg() != null && loginResponse.getMsg().length() != 0){
+                                    Common.showToast(loginResponse.getMsg());
+                                }else {
+                                    Common.showToast("登录失败");
                                 }
                             }
                         }else {
@@ -132,11 +133,11 @@ public class FragmentLogin extends BaseFragment{
 
     @Override
     void initData() {
-        UserBean userBean = Local.getUser();
-        if(userBean != null && userBean.getUserName().length() != 0){
+        LoginResponse userBean = Local.getUser();
+        if(userBean != null && userBean.getUserName() != null && userBean.getUserName().length() != 0){
             userName.setText(userBean.getUserName());
         }
-        if(userBean != null && userBean.getPassword().length() != 0){
+        if(userBean != null && userBean.getPassword() != null && userBean.getPassword().length() != 0){
             password.setText(userBean.getPassword());
         }
     }

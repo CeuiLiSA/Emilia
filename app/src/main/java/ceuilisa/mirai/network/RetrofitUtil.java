@@ -75,6 +75,30 @@ public class RetrofitUtil {
     }
 
 
+    public static NodeApi getNodeApi(){
+
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                Log.i("RetrofitLog","retrofitBack = "+message);
+            }
+        });
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient
+                .Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .baseUrl(BASE_URL_3)
+                .build();
+        return retrofit.create(NodeApi.class);
+    }
+
+
 
     private static final String BASE_URL_2 = "http://192.168.0.111:8080/";
+    private static final String BASE_URL_3 = "http://65.49.235.124/";
 }

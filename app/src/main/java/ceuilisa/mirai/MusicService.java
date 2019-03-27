@@ -31,7 +31,7 @@ public class MusicService extends Service implements MusicOperate {
     private boolean isPlaying = false;
     private OnPlayComplete mOnPlayComplete;
     private static volatile MusicService instance = null;
-    public static List<TracksBean> allSongs = null;
+    public static List<TracksBean> allSongs = new ArrayList<>();
 
     public MusicService() {
         mPlayer = new MediaPlayer();
@@ -118,6 +118,7 @@ public class MusicService extends Service implements MusicOperate {
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
+                            Common.showToast("歌曲加载失败");
                         }
                     }
 

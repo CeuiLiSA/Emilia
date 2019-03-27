@@ -32,16 +32,16 @@ import io.reactivex.schedulers.Schedulers;
  * @param <Adapter>  列表适配器
  * @param <ListItem>     列表数据元素
  */
-public abstract class SimpleListFragment<Response extends BaseResponse<ListItem>,
+public abstract class BaseListFragment<Response extends BaseResponse<ListItem>,
         Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>,
         ListItem> extends BaseFragment {
 
+    public static final int PAGE_SIZE = 20;
     protected Observable<Response> mApi;
     protected Adapter mAdapter;
     protected RecyclerView mRecyclerView;
     protected RefreshLayout mRefreshLayout;
     protected List<ListItem> allItems = new ArrayList<>();
-    protected int nowPage = 1;
     protected ProgressBar mProgressBar;
 
     @Override
@@ -51,6 +51,12 @@ public abstract class SimpleListFragment<Response extends BaseResponse<ListItem>
 
     @Override
     View initView(View v) {
+        Toolbar toolbar = v.findViewById(R.id.toolbar);
+        if(showToolbar()){
+            toolbar.setNavigationOnClickListener(view -> getActivity().finish());
+        }else {
+            toolbar.setVisibility(View.GONE);
+        }
         mProgressBar = v.findViewById(R.id.progress);
         mRecyclerView = v.findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
@@ -67,7 +73,6 @@ public abstract class SimpleListFragment<Response extends BaseResponse<ListItem>
 
     @Override
     void initData() {
-        initApi();
         getFirstData();
     }
 
@@ -75,10 +80,14 @@ public abstract class SimpleListFragment<Response extends BaseResponse<ListItem>
         return true;
     }
 
+    boolean showToolbar() {
+        return true;
+    }
+
     /**
      *
      */
-    abstract void initApi();
+    abstract Observable<Response> initApi();
 
     /**
      * the callback after getting the first page of data
@@ -90,8 +99,8 @@ public abstract class SimpleListFragment<Response extends BaseResponse<ListItem>
      * 获取第一波数据
      */
     public void getFirstData() {
+        mApi = initApi();
         if (mApi != null) {
-            nowPage = 1;
             mApi.subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<Response>() {
@@ -103,10 +112,10 @@ public abstract class SimpleListFragment<Response extends BaseResponse<ListItem>
                         @Override
                         public void onNext(Response response) {
                             if (response != null) {
+                                allItems.clear();
                                 allItems.addAll(response.getList());
                                 initAdapter();
                                 mRefreshLayout.finishRefresh(true);
-                                nowPage = nowPage + 1;
                                 if(mAdapter != null) {
                                     mRecyclerView.setAdapter(mAdapter);
                                 }
@@ -120,6 +129,7 @@ public abstract class SimpleListFragment<Response extends BaseResponse<ListItem>
                         public void onError(Throwable e) {
                             mProgressBar.setVisibility(View.INVISIBLE);
                             mRefreshLayout.finishRefresh(false);
+                            Common.showLog(e.toString());
                             Common.showToast(e.toString());
                         }
 
@@ -135,6 +145,8 @@ public abstract class SimpleListFragment<Response extends BaseResponse<ListItem>
      * 获取后续数据
      */
     public void getNextData() {
+        Common.showToast(allItems.size());
+        mApi = initApi();
         if (mApi != null) {
             mApi.subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -149,7 +161,6 @@ public abstract class SimpleListFragment<Response extends BaseResponse<ListItem>
                             if (response != null) {
                                 allItems.addAll(response.getList());
                                 mRefreshLayout.finishLoadMore(true);
-                                nowPage = nowPage + 1;
                                 if(mAdapter != null) {
                                     mAdapter.notifyDataSetChanged();
                                 }

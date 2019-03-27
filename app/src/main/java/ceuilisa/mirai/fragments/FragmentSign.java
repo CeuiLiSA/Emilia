@@ -57,7 +57,7 @@ public class FragmentSign extends BaseFragment{
             Common.hideKeyboard(mActivity);
             if(userName.getText().toString().trim().length() != 0){
                 if(password.getText().toString().trim().length() != 0){
-                    sign();
+                    //sign();
                 }else {
                     Common.showToast("请输入密码");
                 }
@@ -74,62 +74,62 @@ public class FragmentSign extends BaseFragment{
         mProgressBar = ((LoginActivity) getActivity()).getProgressBar();
     }
 
-    private void sign(){
-        mProgressBar.setVisibility(View.VISIBLE);
-        RetrofitUtil.getTempApi().sign(userName.getText().toString().trim(),
-                password.getText().toString().trim())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<BackResponse<UserBean>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(BackResponse<UserBean> userBeanBackResponse) {
-                        if(userBeanBackResponse != null){
-                            if(userBeanBackResponse.getDatas() != null) {
-                                if(userBeanBackResponse.getDatas().size() != 0) {
-                                    Local.saveUser(userBeanBackResponse.getDatas().get(0), new OnPrepared<Object>() {
-                                        @Override
-                                        public void doSomething(Object o) {
-                                            mProgressBar.setVisibility(View.INVISIBLE);
-                                            Common.showToast(userBeanBackResponse.getMessage());
-                                            Intent intent = new Intent(mContext, MainActivity.class);
-                                            startActivity(intent);
-                                            getActivity().finish();
-                                        }
-                                    });
-                                }else{
-                                    if(userBeanBackResponse.getMessage() != null &&
-                                            userBeanBackResponse.getMessage().length() != 0){
-                                        Common.showToast(userBeanBackResponse.getMessage());
-                                    }else {
-                                        Common.showToast("登录失败");
-                                    }
-                                    mProgressBar.setVisibility(View.INVISIBLE);
-                                }
-                            }
-                        }else {
-                            Common.showToast("登录失败");
-                            mProgressBar.setVisibility(View.INVISIBLE);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Common.showToast("登录失败");
-                        mProgressBar.setVisibility(View.INVISIBLE);
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
+//    private void sign(){
+//        mProgressBar.setVisibility(View.VISIBLE);
+//        RetrofitUtil.getTempApi().sign(userName.getText().toString().trim(),
+//                password.getText().toString().trim())
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<BackResponse<UserBean>>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(BackResponse<UserBean> userBeanBackResponse) {
+//                        if(userBeanBackResponse != null){
+//                            if(userBeanBackResponse.getDatas() != null) {
+//                                if(userBeanBackResponse.getDatas().size() != 0) {
+//                                    Local.saveUser(userBeanBackResponse.getDatas().get(0), new OnPrepared<Object>() {
+//                                        @Override
+//                                        public void doSomething(Object o) {
+//                                            mProgressBar.setVisibility(View.INVISIBLE);
+//                                            Common.showToast(userBeanBackResponse.getMessage());
+//                                            Intent intent = new Intent(mContext, MainActivity.class);
+//                                            startActivity(intent);
+//                                            getActivity().finish();
+//                                        }
+//                                    });
+//                                }else{
+//                                    if(userBeanBackResponse.getMessage() != null &&
+//                                            userBeanBackResponse.getMessage().length() != 0){
+//                                        Common.showToast(userBeanBackResponse.getMessage());
+//                                    }else {
+//                                        Common.showToast("登录失败");
+//                                    }
+//                                    mProgressBar.setVisibility(View.INVISIBLE);
+//                                }
+//                            }
+//                        }else {
+//                            Common.showToast("登录失败");
+//                            mProgressBar.setVisibility(View.INVISIBLE);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Common.showToast("登录失败");
+//                        mProgressBar.setVisibility(View.INVISIBLE);
+//                        e.printStackTrace();
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
+//    }
 
     @Override
     void initData() {

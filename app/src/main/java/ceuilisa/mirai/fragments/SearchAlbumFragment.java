@@ -8,13 +8,14 @@ import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.response.PlayListDetailResponse;
 import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Local;
 import io.reactivex.Observable;
 
-public class TestListFragment extends
+public class SearchAlbumFragment extends
         BaseListFragment<PlayListDetailResponse, PlayListDetailAdapter, TracksBean> {
 
     @Override

@@ -10,6 +10,7 @@ import java.lang.reflect.Type;
 import ceuilisa.mirai.activities.GlobalApp;
 import ceuilisa.mirai.interf.OnPrepare;
 import ceuilisa.mirai.interf.OnPrepared;
+import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.response.UserBean;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -24,7 +25,7 @@ public class Local {
 
     }
 
-    public static void saveUser(UserBean userBean, OnPrepared<Object> onPrepared) {
+    public static void saveUser(LoginResponse userBean, OnPrepared<Object> onPrepared) {
         if (sp == null) {
             sp = GlobalApp.getContext().getSharedPreferences("config", MODE_PRIVATE);
         }
@@ -33,24 +34,23 @@ public class Local {
         userBean.setLogin(true);
         String json = gson.toJson(userBean);
         editor.putString(USER, json);
-        editor.commit();
+        editor.apply();
         onPrepared.doSomething(null);
     }
 
 
-    public static UserBean getUser() {
+    public static LoginResponse getUser() {
         if (sp == null) {
             sp = GlobalApp.getContext().getSharedPreferences("config", MODE_PRIVATE);
         }
         Gson gson = new Gson();
         String json = sp.getString(USER, null);
-        UserBean userBean = gson.fromJson(json, UserBean.class);
-        return userBean;
+        return gson.fromJson(json, LoginResponse.class);
     }
 
 
     public static void loginOut(OnPrepared<Object> onPrepared) {
-        UserBean userBean = getUser();
+        LoginResponse userBean = getUser();
         userBean.setLogin(false);
         saveUser(userBean, onPrepared);
     }

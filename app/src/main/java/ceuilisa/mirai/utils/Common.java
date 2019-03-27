@@ -14,12 +14,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import ceuilisa.mirai.BuildConfig;
 import ceuilisa.mirai.activities.GlobalApp;
 
 public class Common {
 
     public static <T> void showLog(T t) {
-        Log.d("a line of my log", String.valueOf(t));
+        if(BuildConfig.DEBUG) {
+            Log.d("a line of my log", String.valueOf(t));
+        }
     }
 
     private static Toast toast = null;
@@ -86,7 +89,7 @@ public class Common {
             return "没有日期数据";
         }
         Long timeLong = Long.parseLong(time);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");//要转换的时间格式
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");//要转换的时间格式
         Date date;
         try {
             date = sdf.parse(sdf.format(timeLong));

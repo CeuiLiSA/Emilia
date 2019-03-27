@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="@dimen/six_dp"
+        app:navigationIcon="@drawable/ic_arrow_back_white"
+        app:title="添加歌单"
+        app:titleTextColor="@android:color/white" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content">
+
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="@dimen/sixteen_dp"
+            android:layout_marginEnd="60dp"
+            android:hint="歌单名称"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/arc_layout"
+            app:met_floatingLabel="highlight"
+            app:met_singleLineEllipsis="true" />
+
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_name"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:hint="一句话描述"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/user_name"
+            app:met_floatingLabel="highlight"
+            app:met_singleLineEllipsis="true" />
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/sixteen_dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/password"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="@dimen/eight_dp"
+            android:layout_marginEnd="60dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardCornerRadius="@dimen/four_dp"
+            app:cardElevation="@dimen/four_dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:text="创建"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
+
+</RelativeLayout>

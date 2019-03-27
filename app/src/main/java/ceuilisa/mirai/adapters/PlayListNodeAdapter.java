@@ -15,17 +15,18 @@ import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
+import ceuilisa.mirai.nodejs.PlaylistBean;
 import ceuilisa.mirai.response.PlayListTitleResponse;
 
 
-public class PlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PlayListNodeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private OnItemClickListener mOnItemClickListener;
-    private List<PlayListTitleResponse.ResultBean.PlaylistsBean> allIllust;
+    private List<PlaylistBean> allIllust;
 
-    public PlayListAdapter(List<PlayListTitleResponse.ResultBean.PlaylistsBean> list, Context context) {
+    public PlayListNodeAdapter(List<PlaylistBean> list, Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(mContext);
         allIllust = list;
