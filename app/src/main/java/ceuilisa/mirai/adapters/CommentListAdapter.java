@@ -1,6 +1,7 @@
 package ceuilisa.mirai.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import ceuilisa.mirai.R;
+import ceuilisa.mirai.activities.UserDetailActivity;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.response.CommentResponse;
 import ceuilisa.mirai.utils.Common;
@@ -106,6 +108,14 @@ public class CommentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 ((TagHolder) holder).mTextView5.setText(spannableString);
             }
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, UserDetailActivity.class);
+                    intent.putExtra("user id", allIllust.get(realPosition).getUser().getUserId());
+                    mContext.startActivity(intent);
+                }
+            });
         } else if (viewType == TYPE_NORMAL_HEAD) {
             ((DividerHolder) holder).mTextView.setText("最新评论");
         } else {
@@ -130,6 +140,14 @@ public class CommentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 ((TagHolder) holder).mTextView5.setText(spannableString);
             }
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, UserDetailActivity.class);
+                    intent.putExtra("user id", comment.get(realPosition).getUser().getUserId());
+                    mContext.startActivity(intent);
+                }
+            });
         }
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(v ->

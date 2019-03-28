@@ -15,6 +15,7 @@ public abstract class BaseFragment extends Fragment {
     protected Context mContext;
     protected Activity mActivity;
     protected int mLayoutID;
+    protected View parentView;
 
     abstract void initLayout();
 
@@ -34,15 +35,22 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        initLayout();
-        View v = inflater.inflate(mLayoutID, container, false);
-        return initView(v);
+        if (parentView == null) {
+            initLayout();
+            parentView = inflater.inflate(mLayoutID, container, false);
+            initView(parentView);
+            initData();
+        } else {
+            ViewGroup viewGroup = (ViewGroup) parentView.getParent();
+            if (viewGroup != null)
+                viewGroup.removeView(parentView);
+        }
+        return parentView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initData();
     }
 }

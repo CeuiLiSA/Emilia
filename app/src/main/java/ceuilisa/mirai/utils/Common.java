@@ -13,9 +13,11 @@ import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import ceuilisa.mirai.BuildConfig;
 import ceuilisa.mirai.activities.GlobalApp;
+import ceuilisa.mirai.nodejs.ArtistBean;
 
 public class Common {
 
@@ -98,5 +100,21 @@ public class Common {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static String getArtistList(List<ArtistBean> artistBeans){
+        String temp = "";
+        if(artistBeans == null){
+            return temp;
+        }
+        if(artistBeans.size() == 0){
+            return temp;
+        }
+
+        for (int i = 0; i < artistBeans.size(); i++) {
+            temp = temp + artistBeans.get(i).getName() + "/";
+        }
+        String after = temp.substring(0, temp.length() - 1);
+        return after;
     }
 }

@@ -1,5 +1,6 @@
 package ceuilisa.mirai.activities;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -25,7 +26,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class CommentActivity extends BaseActivity {
 
-    private String id;
+    private int id;
     private int nowIndex = 0;
     private Toolbar mToolbar;
     private CommentListAdapter mAdapter;
@@ -56,14 +57,14 @@ public class CommentActivity extends BaseActivity {
 
     @Override
     void initData() {
-        id = getIntent().getStringExtra("id");
+        id = getIntent().getIntExtra("id", 0);
         fetchComment();
     }
 
     private void fetchComment() {
         allComment.clear();
         nowIndex = 0;
-        RetrofitUtil.getImjadApi().getComment(id, Constant.LIMIT, nowIndex)
+        RetrofitUtil.getNodeApi().getComments(id, Constant.LIMIT, nowIndex)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<CommentResponse>() {
@@ -76,9 +77,7 @@ public class CommentActivity extends BaseActivity {
                         allComment.addAll(playListTitleResponse.getComments());
                         mAdapter = new CommentListAdapter(
                                 playListTitleResponse.getHotComments(), allComment, mContext);
-                        mAdapter.setOnItemClickListener((view, position, viewType) -> {
 
-                        });
                         nowIndex = nowIndex + playListTitleResponse.getComments().size();
                         mToolbar.setTitle("评论(" + playListTitleResponse.getTotal() + ")");
                         mProgressBar.setVisibility(View.INVISIBLE);
@@ -97,7 +96,7 @@ public class CommentActivity extends BaseActivity {
     }
 
     private void getNextData() {
-        RetrofitUtil.getImjadApi().getComment(id, Constant.LIMIT, nowIndex)
+        RetrofitUtil.getNodeApi().getComments(id, Constant.LIMIT, nowIndex)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<CommentResponse>() {

@@ -13,11 +13,13 @@ import android.widget.TextView;
 import java.util.Objects;
 
 import ceuilisa.mirai.R;
+import ceuilisa.mirai.activities.DayRecmActivity;
 import ceuilisa.mirai.activities.MainActivity;
 import ceuilisa.mirai.activities.MyPlayListActivity;
 import ceuilisa.mirai.activities.PlayHistoryActivity;
 import ceuilisa.mirai.activities.PlayListActivity;
 import ceuilisa.mirai.activities.PlayListDetailActivity;
+import ceuilisa.mirai.activities.RecmPlaylistActivity;
 import ceuilisa.mirai.activities.SearchActivity;
 import ceuilisa.mirai.activities.TempActivity;
 import ceuilisa.mirai.activities.UploadImageActivity;
@@ -50,8 +52,13 @@ public class FragmentLeft extends BaseFragment {
         });
         TextView textView = v.findViewById(R.id.textView7);
         textView.setOnClickListener(v12 -> {
+            Intent intent = new Intent(mContext, RecmPlaylistActivity.class);
+            mContext.startActivity(intent);
+        });
+
+        TextView textView6 = v.findViewById(R.id.textView6);
+        textView6.setOnClickListener(v12 -> {
             Intent intent = new Intent(mContext, MyPlayListActivity.class);
-            intent.putExtra("dataType", "本人歌单");
             mContext.startActivity(intent);
         });
 //        TextView textView1 = v.findViewById(R.id.textView6);
@@ -66,7 +73,7 @@ public class FragmentLeft extends BaseFragment {
 //        });
         TextView textView2 = v.findViewById(R.id.textView2);
         textView2.setOnClickListener(v12 -> {
-            Intent intent = new Intent(mContext, TempActivity.class);
+            Intent intent = new Intent(mContext, DayRecmActivity.class);
             mContext.startActivity(intent);
         });
         TextView textView3 = v.findViewById(R.id.textView3);

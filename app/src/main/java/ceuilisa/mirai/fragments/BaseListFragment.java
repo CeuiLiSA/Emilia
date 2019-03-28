@@ -54,6 +54,7 @@ public abstract class BaseListFragment<Response extends BaseResponse<ListItem>,
         Toolbar toolbar = v.findViewById(R.id.toolbar);
         if(showToolbar()){
             toolbar.setNavigationOnClickListener(view -> getActivity().finish());
+            toolbar.setTitle(getToolbarTitle());
         }else {
             toolbar.setVisibility(View.GONE);
         }
@@ -69,6 +70,10 @@ public abstract class BaseListFragment<Response extends BaseResponse<ListItem>,
         mRefreshLayout.setOnLoadMoreListener(layout -> getNextData());
         mRefreshLayout.setEnableLoadMore(hasNext());
         return v;
+    }
+
+    String getToolbarTitle(){
+        return " ";
     }
 
     @Override
@@ -145,7 +150,6 @@ public abstract class BaseListFragment<Response extends BaseResponse<ListItem>,
      * 获取后续数据
      */
     public void getNextData() {
-        Common.showToast(allItems.size());
         mApi = initApi();
         if (mApi != null) {
             mApi.subscribeOn(Schedulers.newThread())

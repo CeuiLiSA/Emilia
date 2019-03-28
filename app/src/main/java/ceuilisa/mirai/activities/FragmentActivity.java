@@ -33,9 +33,11 @@ public abstract class FragmentActivity extends BaseActivity {
 
         if (fragment == null) {
             fragment = createNewFragment();
-            fragmentManager.beginTransaction()
-                    .add(R.id.fragment_container, fragment)
-                    .commit();
+            if(fragment != null) {
+                fragmentManager.beginTransaction()
+                        .add(R.id.fragment_container, fragment)
+                        .commit();
+            }
         }
     }
 

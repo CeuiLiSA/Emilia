@@ -76,7 +76,6 @@ public class PlayListDetailActivity extends WithPanelActivity {
         mTextView2 = findViewById(R.id.textView9);
         loadProgress.setVisibility(View.VISIBLE);
         mTextView = findViewById(R.id.textView10);
-        mTextView2 = findViewById(R.id.textView9);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -146,6 +145,24 @@ public class PlayListDetailActivity extends WithPanelActivity {
                                 Intent intent = new Intent(mContext, MusicActivity.class);
                                 intent.putExtra("index", position);
                                 startActivity(intent);
+                            });
+                            mCircleImageView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(mContext, UserDetailActivity.class);
+                                    intent.putExtra("user id",
+                                            playListTitleResponse.getPlaylist().getCreator().getUserId());
+                                    startActivity(intent);
+                                }
+                            });
+                            mTextView2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(mContext, UserDetailActivity.class);
+                                    intent.putExtra("user id",
+                                            playListTitleResponse.getPlaylist().getCreator().getUserId());
+                                    startActivity(intent);
+                                }
                             });
                             if(!isDestroyed()) {
                                 Glide.with(mContext).load(playListTitleResponse.getPlaylist().getCreator().

@@ -4,6 +4,9 @@ import java.util.List;
 
 import ceuilisa.mirai.response.BaseResponse;
 
+/**
+ * 普通歌单列表适配器
+ */
 public class PlayListResponse extends BaseResponse<PlaylistBean> {
 
 

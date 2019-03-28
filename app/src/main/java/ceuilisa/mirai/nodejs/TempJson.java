@@ -10,4 +10,14 @@ public class TempJson {
     public void setMsg(String msg) {
         this.msg = msg;
     }
+
+    private RecommendSong song;
+
+    public RecommendSong getSong() {
+        return song;
+    }
+
+    public void setSong(RecommendSong song) {
+        this.song = song;
+    }
 }

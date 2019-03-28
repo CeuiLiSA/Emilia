@@ -12,28 +12,26 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:background="@android:color/white"
+            android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay">
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:title=" "
+                app:titleEnabled="false"
                 app:toolbarId="@+id/toolbar_help">
-
-
 
 
                 <RelativeLayout
                     android:id="@+id/top_rela"
-                    app:layout_scrollFlags="scroll"
-                    android:fitsSystemWindows="true"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp">
+                    android:layout_height="240dp"
+                    android:fitsSystemWindows="true">
 
 
                     <ImageView
@@ -87,14 +85,24 @@
                 </RelativeLayout>
 
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar_help"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_collapseMode="pin"
-                    app:navigationIcon="@drawable/ic_arrow_back_white"
-                    app:popupTheme="@style/AppTheme.PopupOverlay"
-                    app:title="哈哈哈哈" />
+                    android:layout_height="79dp"
+                    app:layout_collapseMode="pin">
+
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar_help"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:fitsSystemWindows="true"
+                        app:layout_collapseMode="pin"
+                        app:navigationIcon="@drawable/ic_arrow_back_white"
+                        app:popupTheme="@style/AppTheme.PopupOverlay"
+                        app:title=" " />
+
+
+                </LinearLayout>
 
 
             </android.support.design.widget.CollapsingToolbarLayout>
@@ -102,11 +110,17 @@
             <android.support.design.widget.TabLayout
                 android:id="@+id/tab"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabIndicatorColor="@android:color/white"
+                android:layout_height="40dp"
+                app:tabIndicatorFullWidth="false"
+                app:tabIndicatorColor="@color/colorPrimary"
                 app:tabIndicatorHeight="2dp"
-                app:tabSelectedTextColor="@android:color/white"
-                app:tabTextColor="#a89bfa" />
+                app:tabSelectedTextColor="@color/colorPrimaryDark"
+                app:tabTextColor="#6d6d6d" />
+
+            <View
+                android:layout_width="match_parent"
+                android:background="#f3f3f3"
+                android:layout_height="1dp" />
 
         </android.support.design.widget.AppBarLayout>
 
@@ -120,6 +134,7 @@
         </android.support.v4.view.ViewPager>
 
     </android.support.design.widget.CoordinatorLayout>
+
 
     <include
         android:id="@+id/root_view"

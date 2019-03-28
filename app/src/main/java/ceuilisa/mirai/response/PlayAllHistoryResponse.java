@@ -2,7 +2,7 @@ package ceuilisa.mirai.response;
 
 import java.util.List;
 
-public class PlayAllHistoryResponse {
+public class PlayAllHistoryResponse extends BaseResponse<HistorySongBean>{
 
 
     /**
@@ -27,5 +27,10 @@ public class PlayAllHistoryResponse {
 
     public void setAllData(List<HistorySongBean> allData) {
         this.allData = allData;
+    }
+
+    @Override
+    public List<HistorySongBean> getList() {
+        return allData;
     }
 }

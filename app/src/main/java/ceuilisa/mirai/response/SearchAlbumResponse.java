@@ -2,6 +2,8 @@ package ceuilisa.mirai.response;
 
 import java.util.List;
 
+import ceuilisa.mirai.nodejs.ArtistBean;
+
 public class SearchAlbumResponse {
 
     /**
@@ -100,7 +102,7 @@ public class SearchAlbumResponse {
             private String picId_str;
             private List<?> songs;
             private List<?> alias;
-            private List<ArtistsBean> artists;
+            private List<ArtistBean> artists;
 
             public String getName() {
                 return name;
@@ -270,254 +272,12 @@ public class SearchAlbumResponse {
                 this.alias = alias;
             }
 
-            public List<ArtistsBean> getArtists() {
+            public List<ArtistBean> getArtists() {
                 return artists;
             }
 
-            public void setArtists(List<ArtistsBean> artists) {
+            public void setArtists(List<ArtistBean> artists) {
                 this.artists = artists;
-            }
-
-            public static class ArtistBean {
-                /**
-                 * name : ClariS
-                 * id : 18961
-                 * picId : 109951163394838820
-                 * img1v1Id : 0
-                 * briefDesc :
-                 * picUrl : https://p2.music.126.net/h5fVffzw-B7W2bmgSIGmvg==/109951163394838814.jpg
-                 * img1v1Url : https://p2.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg
-                 * albumSize : 40
-                 * alias : ["クラリス"]
-                 * trans :
-                 * musicSize : 280
-                 * picId_str : 109951163394838814
-                 */
-
-                private String name;
-                private int id;
-                private long picId;
-                private int img1v1Id;
-                private String briefDesc;
-                private String picUrl;
-                private String img1v1Url;
-                private int albumSize;
-                private String trans;
-                private int musicSize;
-                private String picId_str;
-                private List<String> alias;
-
-                public String getName() {
-                    return name;
-                }
-
-                public void setName(String name) {
-                    this.name = name;
-                }
-
-                public int getId() {
-                    return id;
-                }
-
-                public void setId(int id) {
-                    this.id = id;
-                }
-
-                public long getPicId() {
-                    return picId;
-                }
-
-                public void setPicId(long picId) {
-                    this.picId = picId;
-                }
-
-                public int getImg1v1Id() {
-                    return img1v1Id;
-                }
-
-                public void setImg1v1Id(int img1v1Id) {
-                    this.img1v1Id = img1v1Id;
-                }
-
-                public String getBriefDesc() {
-                    return briefDesc;
-                }
-
-                public void setBriefDesc(String briefDesc) {
-                    this.briefDesc = briefDesc;
-                }
-
-                public String getPicUrl() {
-                    return picUrl;
-                }
-
-                public void setPicUrl(String picUrl) {
-                    this.picUrl = picUrl;
-                }
-
-                public String getImg1v1Url() {
-                    return img1v1Url;
-                }
-
-                public void setImg1v1Url(String img1v1Url) {
-                    this.img1v1Url = img1v1Url;
-                }
-
-                public int getAlbumSize() {
-                    return albumSize;
-                }
-
-                public void setAlbumSize(int albumSize) {
-                    this.albumSize = albumSize;
-                }
-
-                public String getTrans() {
-                    return trans;
-                }
-
-                public void setTrans(String trans) {
-                    this.trans = trans;
-                }
-
-                public int getMusicSize() {
-                    return musicSize;
-                }
-
-                public void setMusicSize(int musicSize) {
-                    this.musicSize = musicSize;
-                }
-
-                public String getPicId_str() {
-                    return picId_str;
-                }
-
-                public void setPicId_str(String picId_str) {
-                    this.picId_str = picId_str;
-                }
-
-                public List<String> getAlias() {
-                    return alias;
-                }
-
-                public void setAlias(List<String> alias) {
-                    this.alias = alias;
-                }
-            }
-
-            public static class ArtistsBean {
-                /**
-                 * name : ClariS
-                 * id : 18961
-                 * picId : 0
-                 * img1v1Id : 0
-                 * briefDesc :
-                 * picUrl : https://p2.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg
-                 * img1v1Url : https://p2.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg
-                 * albumSize : 0
-                 * alias : []
-                 * trans :
-                 * musicSize : 0
-                 */
-
-                private String name;
-                private int id;
-                private int picId;
-                private int img1v1Id;
-                private String briefDesc;
-                private String picUrl;
-                private String img1v1Url;
-                private int albumSize;
-                private String trans;
-                private int musicSize;
-                private List<?> alias;
-
-                public String getName() {
-                    return name;
-                }
-
-                public void setName(String name) {
-                    this.name = name;
-                }
-
-                public int getId() {
-                    return id;
-                }
-
-                public void setId(int id) {
-                    this.id = id;
-                }
-
-                public int getPicId() {
-                    return picId;
-                }
-
-                public void setPicId(int picId) {
-                    this.picId = picId;
-                }
-
-                public int getImg1v1Id() {
-                    return img1v1Id;
-                }
-
-                public void setImg1v1Id(int img1v1Id) {
-                    this.img1v1Id = img1v1Id;
-                }
-
-                public String getBriefDesc() {
-                    return briefDesc;
-                }
-
-                public void setBriefDesc(String briefDesc) {
-                    this.briefDesc = briefDesc;
-                }
-
-                public String getPicUrl() {
-                    return picUrl;
-                }
-
-                public void setPicUrl(String picUrl) {
-                    this.picUrl = picUrl;
-                }
-
-                public String getImg1v1Url() {
-                    return img1v1Url;
-                }
-
-                public void setImg1v1Url(String img1v1Url) {
-                    this.img1v1Url = img1v1Url;
-                }
-
-                public int getAlbumSize() {
-                    return albumSize;
-                }
-
-                public void setAlbumSize(int albumSize) {
-                    this.albumSize = albumSize;
-                }
-
-                public String getTrans() {
-                    return trans;
-                }
-
-                public void setTrans(String trans) {
-                    this.trans = trans;
-                }
-
-                public int getMusicSize() {
-                    return musicSize;
-                }
-
-                public void setMusicSize(int musicSize) {
-                    this.musicSize = musicSize;
-                }
-
-                public List<?> getAlias() {
-                    return alias;
-                }
-
-                public void setAlias(List<?> alias) {
-                    this.alias = alias;
-                }
             }
         }
     }

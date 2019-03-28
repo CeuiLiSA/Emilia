@@ -69,9 +69,9 @@ public class FragmentSingleRecy extends BaseFragment {
         dataType = (String) getArguments().getSerializable("dataType");
         if (dataType.equals("听歌记录")) {//展示听歌记录的相关列表
             if (index == 0) {
-                getWeeklyHistory();
+                //getWeeklyHistory();
             } else if (index == 1) {
-                getAllHistory();
+                //getAllHistory();
             }
         } else if (dataType.equals("歌单分类")) {//展示歌单分类的相关列表
             getPlaylistType();
@@ -128,77 +128,77 @@ public class FragmentSingleRecy extends BaseFragment {
     /**
      * 获取本周听歌总次数排行
      */
-    private void getWeeklyHistory() {
-        RetrofitUtil.getImjadApi().getWeekPlayHistory(Constant.USER_ID, 1)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<PlayWeekHistoryResponse>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
-
-                    @Override
-                    public void onNext(PlayWeekHistoryResponse playListTitleResponse) {
-                        PlayAllHistoryAdapter adapter = new PlayAllHistoryAdapter(
-                                playListTitleResponse.getWeekData(), mContext);
-                        adapter.setOnItemClickListener(new OnItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, int position, int viewType) {
-                                Translate.translateMusic(playListTitleResponse.getWeekData());
-                                Intent intent = new Intent(mContext, MusicActivity.class);
-                                intent.putExtra("index", position);
-                                startActivity(intent);
-                            }
-                        });
-                        mProgressBar.setVisibility(View.INVISIBLE);
-                        mRecyclerView.setAdapter(adapter);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
-                });
-    }
+//    private void getWeeklyHistory() {
+//        RetrofitUtil.getImjadApi().getWeekPlayHistory(Constant.USER_ID, 1)
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<PlayWeekHistoryResponse>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//                    }
+//
+//                    @Override
+//                    public void onNext(PlayWeekHistoryResponse playListTitleResponse) {
+//                        PlayAllHistoryAdapter adapter = new PlayAllHistoryAdapter(
+//                                playListTitleResponse.getWeekData(), mContext);
+//                        adapter.setOnItemClickListener(new OnItemClickListener() {
+//                            @Override
+//                            public void onItemClick(View view, int position, int viewType) {
+//                                Translate.translateMusic(playListTitleResponse.getWeekData());
+//                                Intent intent = new Intent(mContext, MusicActivity.class);
+//                                intent.putExtra("index", position);
+//                                startActivity(intent);
+//                            }
+//                        });
+//                        mProgressBar.setVisibility(View.INVISIBLE);
+//                        mRecyclerView.setAdapter(adapter);
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                    }
+//                });
+//    }
 
     /**
      * 获取历史听歌总次数排行
      */
-    private void getAllHistory() {
-        RetrofitUtil.getImjadApi().getAllPlayHistory(Constant.USER_ID, 0)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<PlayAllHistoryResponse>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
-
-                    @Override
-                    public void onNext(PlayAllHistoryResponse playListTitleResponse) {
-                        PlayAllHistoryAdapter adapter = new PlayAllHistoryAdapter(
-                                playListTitleResponse.getAllData(), mContext);
-                        adapter.setOnItemClickListener((view, position, viewType) -> {
-                            Translate.translateMusic(playListTitleResponse.getAllData());
-                            Intent intent = new Intent(mContext, MusicActivity.class);
-                            intent.putExtra("index", position);
-                            startActivity(intent);
-                        });
-                        mProgressBar.setVisibility(View.INVISIBLE);
-                        mRecyclerView.setAdapter(adapter);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
+//    private void getAllHistory() {
+//        RetrofitUtil.getImjadApi().getAllPlayHistory(Constant.USER_ID, 0)
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<PlayAllHistoryResponse>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//                    }
+//
+//                    @Override
+//                    public void onNext(PlayAllHistoryResponse playListTitleResponse) {
+//                        PlayAllHistoryAdapter adapter = new PlayAllHistoryAdapter(
+//                                playListTitleResponse.getAllData(), mContext);
+//                        adapter.setOnItemClickListener((view, position, viewType) -> {
+//                            Translate.translateMusic(playListTitleResponse.getAllData());
+//                            Intent intent = new Intent(mContext, MusicActivity.class);
+//                            intent.putExtra("index", position);
+//                            startActivity(intent);
+//                        });
+//                        mProgressBar.setVisibility(View.INVISIBLE);
+//                        mRecyclerView.setAdapter(adapter);
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
+//    }
 }

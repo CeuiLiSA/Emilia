@@ -59,6 +59,8 @@
         <activity android:name=".activities.MyPlayListActivity" />
         <activity android:name=".activities.CommentListActivity" />
         <activity android:name=".activities.UserDetailActivity" />
+        <activity android:name=".activities.DayRecmActivity" />
+        <activity android:name=".activities.RecmPlaylistActivity" />
     </application>
 
 </manifest>

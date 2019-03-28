@@ -149,7 +149,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
             ImageView comment = findViewById(R.id.comment);
             comment.setOnClickListener(v -> {
                 Intent intent = new Intent(mContext, CommentActivity.class);
-                intent.putExtra("id", String.valueOf(MusicService.allSongs.get(index).getId()));
+                intent.putExtra("id", MusicService.allSongs.get(index).getId());
                 startActivity(intent);
             });
             mSeekBar = findViewById(R.id.song_progress);

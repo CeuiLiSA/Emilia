@@ -135,11 +135,11 @@ public interface AppApi {
     //https://v1.hitokoto.cn/nm/record/113568254?weekly=false
 
     @GET("cloudmusic/?type=record")
-    Observable<PlayAllHistoryResponse> getAllPlayHistory(@Query("id") String id,
+    Observable<PlayAllHistoryResponse> getAllPlayHistory(@Query("id") int id,
                                                          @Query("period") int period);
 
     @GET("cloudmusic/?type=record")
-    Observable<PlayWeekHistoryResponse> getWeekPlayHistory(@Query("id") String id,
+    Observable<PlayWeekHistoryResponse> getWeekPlayHistory(@Query("id") int id,
                                                            @Query("period") int period);
 
     /**

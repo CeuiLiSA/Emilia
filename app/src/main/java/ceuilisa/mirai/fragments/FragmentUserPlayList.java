@@ -1,6 +1,7 @@
 package ceuilisa.mirai.fragments;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 
 import ceuilisa.mirai.activities.PlayListDetailActivity;
@@ -12,20 +13,25 @@ import ceuilisa.mirai.nodejs.PlaylistBean;
 import ceuilisa.mirai.utils.Local;
 import io.reactivex.Observable;
 
-/**
- * 获取已登录用户自己的歌单（创建的+收藏的）
- */
-public class FragmentMyPlayList extends BaseListFragment<PlayListResponse, PlayListNodeAdapter, PlaylistBean> {
+public class FragmentUserPlayList extends BaseListFragment<PlayListResponse, PlayListNodeAdapter, PlaylistBean> {
 
-    @Override
-    Observable<PlayListResponse> initApi() {
-        LoginResponse user = Local.getUser();
-        return RetrofitUtil.getNodeApi().getMyPlayList(user.getProfile().getUserId(), PAGE_SIZE, allItems.size());
+    public static FragmentUserPlayList newInstance(int userID) {
+        Bundle args = new Bundle();
+        args.putSerializable("user id", userID);
+        FragmentUserPlayList fragment = new FragmentUserPlayList();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
-    String getToolbarTitle() {
-        return "我的歌单";
+    Observable<PlayListResponse> initApi() {
+        int userID = (int) getArguments().getSerializable("user id");
+        return RetrofitUtil.getNodeApi().getMyPlayList(userID, PAGE_SIZE, allItems.size());
+    }
+
+    @Override
+    boolean showToolbar() {
+        return false;
     }
 
     @Override

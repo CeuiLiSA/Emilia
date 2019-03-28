@@ -2,6 +2,8 @@ package ceuilisa.mirai.response;
 
 import java.util.List;
 
+import ceuilisa.mirai.nodejs.ArtistBean;
+
 public class AlbumResponse {
 
     /**
@@ -291,142 +293,6 @@ public class AlbumResponse {
 
         public void setArtists(List<ArtistsBean> artists) {
             this.artists = artists;
-        }
-
-        public static class ArtistBean {
-            /**
-             * img1v1Id : 18686200114669622
-             * topicPerson : 0
-             * trans :
-             * picUrl : https://p1.music.126.net/nRQ7mViKonmM9jzVs48U6w==/5885685743649582.jpg
-             * musicSize : 2145
-             * alias : ["よこやま まさる"]
-             * name : 横山克
-             * id : 15917
-             * img1v1Url : https://p1.music.126.net/VnZiScyynLG7atLIZ2YPkw==/18686200114669622.jpg
-             * picId : 5885685743649582
-             * briefDesc :
-             * albumSize : 82
-             * img1v1Id_str : 18686200114669622
-             */
-
-            private long img1v1Id;
-            private int topicPerson;
-            private String trans;
-            private String picUrl;
-            private int musicSize;
-            private String name;
-            private int id;
-            private String img1v1Url;
-            private long picId;
-            private String briefDesc;
-            private int albumSize;
-            private String img1v1Id_str;
-            private List<String> alias;
-
-            public long getImg1v1Id() {
-                return img1v1Id;
-            }
-
-            public void setImg1v1Id(long img1v1Id) {
-                this.img1v1Id = img1v1Id;
-            }
-
-            public int getTopicPerson() {
-                return topicPerson;
-            }
-
-            public void setTopicPerson(int topicPerson) {
-                this.topicPerson = topicPerson;
-            }
-
-            public String getTrans() {
-                return trans;
-            }
-
-            public void setTrans(String trans) {
-                this.trans = trans;
-            }
-
-            public String getPicUrl() {
-                return picUrl;
-            }
-
-            public void setPicUrl(String picUrl) {
-                this.picUrl = picUrl;
-            }
-
-            public int getMusicSize() {
-                return musicSize;
-            }
-
-            public void setMusicSize(int musicSize) {
-                this.musicSize = musicSize;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public int getId() {
-                return id;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
-
-            public String getImg1v1Url() {
-                return img1v1Url;
-            }
-
-            public void setImg1v1Url(String img1v1Url) {
-                this.img1v1Url = img1v1Url;
-            }
-
-            public long getPicId() {
-                return picId;
-            }
-
-            public void setPicId(long picId) {
-                this.picId = picId;
-            }
-
-            public String getBriefDesc() {
-                return briefDesc;
-            }
-
-            public void setBriefDesc(String briefDesc) {
-                this.briefDesc = briefDesc;
-            }
-
-            public int getAlbumSize() {
-                return albumSize;
-            }
-
-            public void setAlbumSize(int albumSize) {
-                this.albumSize = albumSize;
-            }
-
-            public String getImg1v1Id_str() {
-                return img1v1Id_str;
-            }
-
-            public void setImg1v1Id_str(String img1v1Id_str) {
-                this.img1v1Id_str = img1v1Id_str;
-            }
-
-            public List<String> getAlias() {
-                return alias;
-            }
-
-            public void setAlias(List<String> alias) {
-                this.alias = alias;
-            }
         }
 
         public static class InfoBean {

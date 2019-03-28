@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="?android:attr/selectableItemBackground"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/number"
+        android:layout_width="57dp"
+        android:layout_height="57dp"
+        android:padding="@dimen/six_dp"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        android:id="@+id/song_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/eight_dp"
+        android:layout_toStartOf="@+id/more"
+        android:layout_toEndOf="@+id/number"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="撒阿萨德阿萨德阿萨德"
+        android:textColor="#333333" />
+
+    <TextView
+        android:id="@+id/song_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/song_name"
+        android:layout_marginTop="@dimen/six_dp"
+        android:layout_marginBottom="@dimen/eight_dp"
+        android:layout_toStartOf="@+id/more"
+        android:layout_toEndOf="@+id/number"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="撒大声地阿"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/more"
+        android:layout_width="57dp"
+        android:layout_height="57dp"
+        android:layout_alignParentEnd="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="@dimen/eighteen_dp"
+        android:src="@drawable/ic_more_vert_black_24dp"
+        android:tint="#a1a1a1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/more"
+        android:layout_toEndOf="@+id/number"
+        android:background="#e6e6e6" />
+</RelativeLayout>

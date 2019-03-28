@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.othershe.library.NiceImageView;
 
 import java.util.List;
 
@@ -53,7 +54,17 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         currentOne.date.setText(Common.timeStamp2Date(String.valueOf(allIllust.get(position).getEventTime())));
         Gson gson = new Gson();
         TempJson tempJson = gson.fromJson(allIllust.get(position).getJson(), TempJson.class);
-        currentOne.content.setText(tempJson.getMsg());
+        if(tempJson.getMsg() != null && tempJson.getMsg().length() != 0) {
+            currentOne.content.setText(tempJson.getMsg());
+            currentOne.content.setVisibility(View.VISIBLE);
+        }else {
+            currentOne.content.setVisibility(View.GONE);
+        }
+        if(tempJson.getSong() != null) {
+            currentOne.songName.setText(tempJson.getSong().getName());
+            currentOne.artistName.setText(Common.getArtistList(tempJson.getSong().getArtists()));
+            Glide.with(mContext).load(tempJson.getSong().getAlbum().getPicUrl()).into(currentOne.songImage);
+        }
         Glide.with(mContext).load(allIllust.get(position).getUser().getAvatarUrl()).into(currentOne.userHead);
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(v ->
@@ -71,8 +82,9 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     public class TagHolder extends RecyclerView.ViewHolder {
-        private TextView userName, date, content;
+        private TextView userName, date, content, songName, artistName;
         private CircleImageView userHead;
+        private NiceImageView songImage;
 
         TagHolder(View itemView) {
             super(itemView);
@@ -81,6 +93,9 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             date = itemView.findViewById(R.id.date);
             content = itemView.findViewById(R.id.content);
             userHead = itemView.findViewById(R.id.user_head);
+            songName = itemView.findViewById(R.id.song_name);
+            artistName = itemView.findViewById(R.id.artist_name);
+            songImage = itemView.findViewById(R.id.song_image);
         }
     }
 }

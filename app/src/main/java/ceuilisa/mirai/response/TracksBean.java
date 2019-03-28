@@ -2,6 +2,9 @@ package ceuilisa.mirai.response;
 
 import java.util.List;
 
+import ceuilisa.mirai.nodejs.AlbumBean;
+import ceuilisa.mirai.nodejs.ArtistBean;
+
 public class TracksBean {
 
     /**
@@ -43,7 +46,7 @@ public class TracksBean {
 
     private String name;
     private int id;
-    private AlBean al;
+    private AlbumBean al;
     private int dt;
     private long publishTime;
 
@@ -56,7 +59,7 @@ public class TracksBean {
     }
 
     private String isLiked = "0";
-    private List<ArBean> ar;
+    private List<ArtistBean> ar;
     private List<String> alia;
 
     public List<String> getTns() {
@@ -85,11 +88,11 @@ public class TracksBean {
         this.id = id;
     }
 
-    public AlBean getAl() {
+    public AlbumBean getAl() {
         return al;
     }
 
-    public void setAl(AlBean al) {
+    public void setAl(AlbumBean al) {
         this.al = al;
     }
 
@@ -109,11 +112,11 @@ public class TracksBean {
         this.publishTime = publishTime;
     }
 
-    public List<ArBean> getAr() {
+    public List<ArtistBean> getAr() {
         return ar;
     }
 
-    public void setAr(List<ArBean> ar) {
+    public void setAr(List<ArtistBean> ar) {
         this.ar = ar;
     }
 
@@ -123,117 +126,5 @@ public class TracksBean {
 
     public void setAlia(List<String> alia) {
         this.alia = alia;
-    }
-
-    public static class AlBean {
-        /**
-         * id : 3094402
-         * name : 四月は君の嘘 ORIGINAL SONG & SOUNDTRACK
-         * picUrl : https://p2.music.126.net/GSciAiBHt0OplBApxsUC-A==/7742760882881891.jpg
-         * pic_str : 7742760882881891
-         * pic : 7742760882881891
-         * alia : ["四月是你的谎言 原声带"]
-         */
-
-        private int id;
-        private String name;
-        private String picUrl;
-        private String pic_str;
-        private long pic;
-        private List<String> alia;
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getPicUrl() {
-            return picUrl;
-        }
-
-        public void setPicUrl(String picUrl) {
-            this.picUrl = picUrl;
-        }
-
-        public String getPic_str() {
-            return pic_str;
-        }
-
-        public void setPic_str(String pic_str) {
-            this.pic_str = pic_str;
-        }
-
-        public long getPic() {
-            return pic;
-        }
-
-        public void setPic(long pic) {
-            this.pic = pic;
-        }
-
-        public List<String> getAlia() {
-            return alia;
-        }
-
-        public void setAlia(List<String> alia) {
-            this.alia = alia;
-        }
-    }
-
-    public static class ArBean {
-        /**
-         * id : 954456
-         * name : 當山みれい
-         * tns : []
-         * alias : []
-         */
-
-        private int id;
-        private String name;
-        private List<?> tns;
-        private List<?> alias;
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public List<?> getTns() {
-            return tns;
-        }
-
-        public void setTns(List<?> tns) {
-            this.tns = tns;
-        }
-
-        public List<?> getAlias() {
-            return alias;
-        }
-
-        public void setAlias(List<?> alias) {
-            this.alias = alias;
-        }
     }
 }
