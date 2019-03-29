@@ -130,7 +130,7 @@ public class UserDetailActivity extends BaseActivity {
         BaseFragment[] baseFragments = new BaseFragment[]{
                 FragmentUserPlayList.newInstance(response.getProfile().getUserId()),
                 FragmentEvents.newInstance(response.getProfile().getUserId()),
-                new FragmentAboutUser()};
+                FragmentAboutUser.newInstance(response)};
 
         mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override

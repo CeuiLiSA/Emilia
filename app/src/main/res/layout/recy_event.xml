@@ -60,6 +60,7 @@
             android:background="#f3f3f3"
             android:layout_below="@+id/content"
             android:layout_marginEnd="@dimen/sixteen_dp"
+            android:id="@+id/content_rela"
             android:layout_marginBottom="@dimen/sixteen_dp"
             android:padding="@dimen/six_dp"
             android:layout_toEndOf="@+id/user_head"

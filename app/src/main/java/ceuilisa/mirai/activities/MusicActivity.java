@@ -58,7 +58,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
     private Toolbar mToolbar;
     private FloatingActionButton mFloatingActionButton;
     private TextView mTextView, mTextView2, mTextView3, mTextView4;
-    private MaterialIconView lastSong, nextSong;
+    private MaterialIconView lastSong, nextSong, playType;
     private ImageView mImageView;
     private LikeButton mLikeButton;
     private ViewPager vpPlay;
@@ -89,7 +89,9 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
             mToolbar = findViewById(R.id.toolbar);
             mToolbar.setNavigationOnClickListener(v -> finish());
             lastSong = findViewById(R.id.previous);
+            playType = findViewById(R.id.play_type);
             lastSong.setOnClickListener(v -> lastSong());
+            playType.setOnClickListener(v -> Common.showToast("哈哈哈"));
             nextSong = findViewById(R.id.next);
             nextSong.setOnClickListener(v -> nextSong());
             mFloatingActionButton = findViewById(R.id.playpausefloating);

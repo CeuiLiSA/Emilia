@@ -34,15 +34,15 @@ public class FragmentLeft extends BaseFragment {
 
     @Override
     View initView(View v) {
-        Toolbar toolbar = v.findViewById(R.id.toolbar);
-        ((MainActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(v1 -> {
-            if (((MainActivity) getActivity()).mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-                ((MainActivity) getActivity()).mDrawerLayout.closeDrawer(GravityCompat.START);
-            } else {
-                ((MainActivity) getActivity()).mDrawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
+//        Toolbar toolbar = v.findViewById(R.id.toolbar);
+//        ((MainActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
+//        toolbar.setNavigationOnClickListener(v1 -> {
+//            if (((MainActivity) getActivity()).mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+//                ((MainActivity) getActivity()).mDrawerLayout.closeDrawer(GravityCompat.START);
+//            } else {
+//                ((MainActivity) getActivity()).mDrawerLayout.openDrawer(GravityCompat.START);
+//            }
+//        });
         TextView textView = v.findViewById(R.id.textView7);
         textView.setOnClickListener(v12 -> {
             Intent intent = new Intent(mContext, TemplateFragmentActivity.class);
@@ -95,28 +95,5 @@ public class FragmentLeft extends BaseFragment {
     @Override
     void initData() {
 
-    }
-
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.main, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_search:
-                Intent intent = new Intent(mContext, SearchActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.action_settings:
-                break;
-            default:
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

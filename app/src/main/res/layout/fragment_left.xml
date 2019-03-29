@@ -6,23 +6,6 @@
     android:layout_height="match_parent">
 
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:elevation="@dimen/six_dp"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_menu_white"
-        app:title="Emilia"
-        app:titleTextColor="@android:color/white">
-
-    </android.support.v7.widget.Toolbar>
-
     <ImageView
         android:id="@+id/img_1"
         android:layout_width="wrap_content"
@@ -32,15 +15,14 @@
         android:src="@drawable/ic_music_note_black_24dp"
         android:tint="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center_vertical"
         android:layout_marginStart="@dimen/sixteen_dp"
-        android:layout_marginEnd="8dp"
+        android:gravity="center_vertical"
         android:text="每日推荐"
         android:textColor="#333333"
         android:textSize="@dimen/sixteen_sp"
@@ -48,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@id/img_1"
         app:layout_constraintStart_toEndOf="@+id/img_1"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
 
 

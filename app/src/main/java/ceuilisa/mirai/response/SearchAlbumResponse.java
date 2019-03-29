@@ -2,6 +2,7 @@ package ceuilisa.mirai.response;
 
 import java.util.List;
 
+import ceuilisa.mirai.nodejs.AlbumBean;
 import ceuilisa.mirai.nodejs.ArtistBean;
 
 public class SearchAlbumResponse {
@@ -37,7 +38,7 @@ public class SearchAlbumResponse {
          */
 
         private int albumCount;
-        private List<AlbumsBean> albums;
+        private List<AlbumBean> albums;
 
         public int getAlbumCount() {
             return albumCount;
@@ -47,238 +48,12 @@ public class SearchAlbumResponse {
             this.albumCount = albumCount;
         }
 
-        public List<AlbumsBean> getAlbums() {
+        public List<AlbumBean> getAlbums() {
             return albums;
         }
 
-        public void setAlbums(List<AlbumsBean> albums) {
+        public void setAlbums(List<AlbumBean> albums) {
             this.albums = albums;
-        }
-
-        public static class AlbumsBean {
-            /**
-             * name : CheerS (期間生産限定盤)
-             * id : 71723921
-             * type : EP/Single
-             * size : 4
-             * picId : 109951163405633620
-             * blurPicUrl : https://p2.music.126.net/KmoE_DfRxMc3ZAIWEHiluw==/109951163405633616.jpg
-             * companyId : 0
-             * pic : 109951163405633620
-             * picUrl : https://p2.music.126.net/KmoE_DfRxMc3ZAIWEHiluw==/109951163405633616.jpg
-             * publishTime : 1534262400007
-             * description :
-             * tags :
-             * company : SACRA MUSIC
-             * briefDesc :
-             * artist : {"name":"ClariS","id":18961,"picId":109951163394838820,"img1v1Id":0,"briefDesc":"","picUrl":"https://p2.music.126.net/h5fVffzw-B7W2bmgSIGmvg==/109951163394838814.jpg","img1v1Url":"https://p2.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg","albumSize":40,"alias":["クラリス"],"trans":"","musicSize":280,"picId_str":"109951163394838814"}
-             * songs : []
-             * alias : []
-             * status : 0
-             * copyrightId : 663018
-             * commentThreadId : R_AL_3_71723921
-             * artists : [{"name":"ClariS","id":18961,"picId":0,"img1v1Id":0,"briefDesc":"","picUrl":"https://p2.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg","img1v1Url":"https://p2.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg","albumSize":0,"alias":[],"trans":"","musicSize":0}]
-             * picId_str : 109951163405633616
-             */
-
-            private String name;
-            private int id;
-            private String type;
-            private int size;
-            private long picId;
-            private String blurPicUrl;
-            private int companyId;
-            private long pic;
-            private String picUrl;
-            private long publishTime;
-            private String description;
-            private String tags;
-            private String company;
-            private String briefDesc;
-            private ArtistBean artist;
-            private int status;
-            private int copyrightId;
-            private String commentThreadId;
-            private String picId_str;
-            private List<?> songs;
-            private List<?> alias;
-            private List<ArtistBean> artists;
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public int getId() {
-                return id;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
-
-            public String getType() {
-                return type;
-            }
-
-            public void setType(String type) {
-                this.type = type;
-            }
-
-            public int getSize() {
-                return size;
-            }
-
-            public void setSize(int size) {
-                this.size = size;
-            }
-
-            public long getPicId() {
-                return picId;
-            }
-
-            public void setPicId(long picId) {
-                this.picId = picId;
-            }
-
-            public String getBlurPicUrl() {
-                return blurPicUrl;
-            }
-
-            public void setBlurPicUrl(String blurPicUrl) {
-                this.blurPicUrl = blurPicUrl;
-            }
-
-            public int getCompanyId() {
-                return companyId;
-            }
-
-            public void setCompanyId(int companyId) {
-                this.companyId = companyId;
-            }
-
-            public long getPic() {
-                return pic;
-            }
-
-            public void setPic(long pic) {
-                this.pic = pic;
-            }
-
-            public String getPicUrl() {
-                return picUrl;
-            }
-
-            public void setPicUrl(String picUrl) {
-                this.picUrl = picUrl;
-            }
-
-            public long getPublishTime() {
-                return publishTime;
-            }
-
-            public void setPublishTime(long publishTime) {
-                this.publishTime = publishTime;
-            }
-
-            public String getDescription() {
-                return description;
-            }
-
-            public void setDescription(String description) {
-                this.description = description;
-            }
-
-            public String getTags() {
-                return tags;
-            }
-
-            public void setTags(String tags) {
-                this.tags = tags;
-            }
-
-            public String getCompany() {
-                return company;
-            }
-
-            public void setCompany(String company) {
-                this.company = company;
-            }
-
-            public String getBriefDesc() {
-                return briefDesc;
-            }
-
-            public void setBriefDesc(String briefDesc) {
-                this.briefDesc = briefDesc;
-            }
-
-            public ArtistBean getArtist() {
-                return artist;
-            }
-
-            public void setArtist(ArtistBean artist) {
-                this.artist = artist;
-            }
-
-            public int getStatus() {
-                return status;
-            }
-
-            public void setStatus(int status) {
-                this.status = status;
-            }
-
-            public int getCopyrightId() {
-                return copyrightId;
-            }
-
-            public void setCopyrightId(int copyrightId) {
-                this.copyrightId = copyrightId;
-            }
-
-            public String getCommentThreadId() {
-                return commentThreadId;
-            }
-
-            public void setCommentThreadId(String commentThreadId) {
-                this.commentThreadId = commentThreadId;
-            }
-
-            public String getPicId_str() {
-                return picId_str;
-            }
-
-            public void setPicId_str(String picId_str) {
-                this.picId_str = picId_str;
-            }
-
-            public List<?> getSongs() {
-                return songs;
-            }
-
-            public void setSongs(List<?> songs) {
-                this.songs = songs;
-            }
-
-            public List<?> getAlias() {
-                return alias;
-            }
-
-            public void setAlias(List<?> alias) {
-                this.alias = alias;
-            }
-
-            public List<ArtistBean> getArtists() {
-                return artists;
-            }
-
-            public void setArtists(List<ArtistBean> artists) {
-                this.artists = artists;
-            }
         }
     }
 }

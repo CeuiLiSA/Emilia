@@ -1,8 +1,10 @@
 package ceuilisa.mirai.network;
 
+import ceuilisa.mirai.nodejs.ArtistAlbumResponse;
 import ceuilisa.mirai.nodejs.DayRecommend;
 import ceuilisa.mirai.nodejs.EventResponse;
 import ceuilisa.mirai.nodejs.LoginResponse;
+import ceuilisa.mirai.nodejs.MvRankResponse;
 import ceuilisa.mirai.nodejs.PlayListResponse;
 import ceuilisa.mirai.nodejs.RecmPlayListResponse;
 import ceuilisa.mirai.nodejs.UserDetailResponse;
@@ -51,4 +53,23 @@ public interface NodeApi {
     Observable<RecmPlayListResponse> getRecmPlayList(@Query("uid") int uid,
                                                      @Query("limit") int limit,
                                                      @Query("offset") int offset);
+
+
+    /**
+     * 获取某一个歌手的专辑
+     *
+     * @param id
+     * @param limit
+     * @param offset
+     * @return
+     */
+    @GET("/artist/album")
+    Observable<ArtistAlbumResponse> getArtistAlbum(@Query("id") int id,
+                                                   @Query("limit") int limit,
+                                                   @Query("offset") int offset);
+
+
+    @GET("/top/mv")
+    Observable<MvRankResponse> getMvRank(@Query("limit") int limit,
+                                         @Query("offset") int offset);
 }

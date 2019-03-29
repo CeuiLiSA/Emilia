@@ -17,6 +17,7 @@ import ceuilisa.mirai.adapters.AlbumListAdapter;
 import ceuilisa.mirai.adapters.PlayListAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.nodejs.AlbumBean;
 import ceuilisa.mirai.response.PlayListTitleResponse;
 import ceuilisa.mirai.response.SearchAlbumResponse;
 import ceuilisa.mirai.utils.Common;
@@ -32,7 +33,7 @@ public class FragmentSearch extends BaseFragment {
     private int index, nowIndex = 0;
     private String keyWord;
     private ProgressBar mProgressBar;
-    private List<SearchAlbumResponse.ResultBean.AlbumsBean> allAlbums = new ArrayList<>();
+    private List<AlbumBean> allAlbums = new ArrayList<>();
     private List<PlayListTitleResponse.ResultBean.PlaylistsBean> allPlaylist = new ArrayList<>();
 
     public static FragmentSearch newInstance(int index, String keyWord) {

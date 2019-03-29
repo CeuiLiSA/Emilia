@@ -21,6 +21,7 @@ import ceuilisa.mirai.activities.PlayListDetailActivity;
 import ceuilisa.mirai.adapters.AlbumListAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.nodejs.AlbumBean;
 import ceuilisa.mirai.response.SearchAlbumResponse;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Constant;
@@ -35,7 +36,7 @@ public class FragmentSearchAlbum extends BaseFragment {
     private RecyclerView mRecyclerView;
     private RefreshLayout mRefreshLayout;
     private ProgressBar mProgressBar;
-    private List<SearchAlbumResponse.ResultBean.AlbumsBean> allData = new ArrayList<>();
+    private List<AlbumBean> allData = new ArrayList<>();
     private String name;
     private int nowIndex = 0;
 

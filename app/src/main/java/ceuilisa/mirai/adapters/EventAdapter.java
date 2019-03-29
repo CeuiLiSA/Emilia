@@ -1,12 +1,14 @@
 package ceuilisa.mirai.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -17,6 +19,7 @@ import java.util.List;
 
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
+import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.nodejs.EventsBean;
 import ceuilisa.mirai.nodejs.TempJson;
@@ -66,10 +69,23 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             Glide.with(mContext).load(tempJson.getSong().getAlbum().getPicUrl()).into(currentOne.songImage);
         }
         Glide.with(mContext).load(allIllust.get(position).getUser().getAvatarUrl()).into(currentOne.userHead);
-        if (mOnItemClickListener != null) {
-            holder.itemView.setOnClickListener(v ->
-                    mOnItemClickListener.onItemClick(((TagHolder) holder).itemView, position, 0));
-        }
+        currentOne.contentRela.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TracksBean tracksBean = tempJson.getSong();
+                tracksBean.setAr(tempJson.getSong().getArtists());
+                tracksBean.setAl(tempJson.getSong().getAlbum());
+                MusicService.allSongs.add(tracksBean);
+                Intent intent = new Intent(mContext, MusicActivity.class);
+                intent.putExtra("index", MusicService.allSongs.size() - 1);
+                mContext.startActivity(intent);
+            }
+        });
+
+//        if (mOnItemClickListener != null) {
+//            holder.itemView.setOnClickListener(v ->
+//                    mOnItemClickListener.onItemClick(((TagHolder) holder).itemView, position, 0));
+//        }
     }
 
     @Override
@@ -85,6 +101,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         private TextView userName, date, content, songName, artistName;
         private CircleImageView userHead;
         private NiceImageView songImage;
+        private RelativeLayout contentRela;
 
         TagHolder(View itemView) {
             super(itemView);
@@ -96,6 +113,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             songName = itemView.findViewById(R.id.song_name);
             artistName = itemView.findViewById(R.id.artist_name);
             songImage = itemView.findViewById(R.id.song_image);
+            contentRela = itemView.findViewById(R.id.content_rela);
         }
     }
 }

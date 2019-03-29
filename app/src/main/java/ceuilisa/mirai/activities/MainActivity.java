@@ -8,13 +8,19 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,8 +30,10 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
+import ceuilisa.mirai.fragments.BaseFragment;
 import ceuilisa.mirai.fragments.FragmentCenter;
 import ceuilisa.mirai.fragments.FragmentLeft;
+import ceuilisa.mirai.fragments.FragmentMvRank;
 import ceuilisa.mirai.fragments.FragmentRight;
 import ceuilisa.mirai.interf.OnPrepared;
 import ceuilisa.mirai.nodejs.LoginResponse;
@@ -38,6 +46,9 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
 
     public DrawerLayout mDrawerLayout;
     private TextView userName, email;
+    private ViewPager mViewPager;
+    private BaseFragment[] mBaseFragments;
+    public static final String[] TITLES = new String[]{"音乐", "视频"};
 
     @Override
     boolean hasImage() {
@@ -58,6 +69,9 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
     void initView() {
         super.initView();
         mDrawerLayout = findViewById(R.id.drawer_layout);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(v -> mDrawerLayout.openDrawer(Gravity.START));
         NavigationView navigationView = findViewById(R.id.nav_view);
         userName = navigationView.getHeaderView(0).findViewById(R.id.user_name);
         email = navigationView.getHeaderView(0).findViewById(R.id.email);
@@ -115,12 +129,27 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
     }
 
     private void initFragments() {
-        FragmentLeft fragmentLeft = new FragmentLeft();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.fragment_container, fragmentLeft)
-                .show(fragmentLeft)
-                .commit();
+        mBaseFragments = new BaseFragment[]{new FragmentLeft(), new FragmentMvRank()};
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int i) {
+                return mBaseFragments[i];
+            }
+
+            @Override
+            public int getCount() {
+                return mBaseFragments.length;
+            }
+
+            @Nullable
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return TITLES[position];
+            }
+        });
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
@@ -165,5 +194,28 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
         if(userBean != null && userBean.getProfile() != null) {
             userName.setText(userBean.getProfile().getNickname());
         }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                Intent intent = new Intent(mContext, SearchActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_settings:
+                break;
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
