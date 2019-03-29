@@ -31,6 +31,7 @@ import ceuilisa.mirai.fragments.FragmentSingleRecy;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.ArtistResponse;
+import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Constant;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -118,11 +119,15 @@ public class ArtistActivity extends WithPanelActivity {
 
                     @Override
                     public void onNext(ArtistResponse playListTitleResponse) {
-                        mToolbar.setTitle(playListTitleResponse.getArtist().getName());
-                        mCollapsingToolbarLayout.setTitle(playListTitleResponse.getArtist().getName());
-                        fragmentHotSongs.showHotSongs(playListTitleResponse.getHotSongs());
-                        fragmentArtistInfo.showInfo(playListTitleResponse.getArtist());
-                        loadProgress.setVisibility(View.INVISIBLE);
+                        if(playListTitleResponse != null) {
+                            mToolbar.setTitle(playListTitleResponse.getArtist().getName());
+                            mCollapsingToolbarLayout.setTitle(playListTitleResponse.getArtist().getName());
+                            fragmentHotSongs.showHotSongs(playListTitleResponse.getHotSongs());
+                            fragmentArtistInfo.showInfo(playListTitleResponse.getArtist());
+                            loadProgress.setVisibility(View.INVISIBLE);
+                        }else {
+                            Common.showToast("加载失败");
+                        }
                     }
 
                     @Override

@@ -18,7 +18,7 @@ public  class RecommendPlaylistBean {
      * alg : bysong_play_rt
      */
 
-    private int id;
+    private long id;
     private int type;
     private String name;
     private String copywriter;
@@ -30,11 +30,11 @@ public  class RecommendPlaylistBean {
     private int userId;
     private String alg;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -19,8 +19,6 @@ public class ArtistBean {
 
     private String name;
     private int id;
-    private int picId;
-    private int img1v1Id;
     private String briefDesc;
     private String picUrl;
     private String img1v1Url;
@@ -43,22 +41,6 @@ public class ArtistBean {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getPicId() {
-        return picId;
-    }
-
-    public void setPicId(int picId) {
-        this.picId = picId;
-    }
-
-    public int getImg1v1Id() {
-        return img1v1Id;
-    }
-
-    public void setImg1v1Id(int img1v1Id) {
-        this.img1v1Id = img1v1Id;
     }
 
     public String getBriefDesc() {

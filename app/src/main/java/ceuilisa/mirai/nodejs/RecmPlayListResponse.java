@@ -5,7 +5,7 @@ import java.util.List;
 import ceuilisa.mirai.response.BaseResponse;
 
 /**
- * 推荐歌单列表适配器
+ * 推荐歌单response
  */
 public class RecmPlayListResponse extends BaseResponse<RecommendPlaylistBean> {
 

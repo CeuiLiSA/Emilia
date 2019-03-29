@@ -66,18 +66,7 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             ((TagHolder) holder).mTextView.setText(spannableString);
         } else {
             //若歌曲Alia为空，查找歌曲tns
-            if (allIllust.get(position).getTns() != null &&
-                    allIllust.get(position).getTns().size() != 0) {
-                SpannableString spannableString = new SpannableString(String.format("%s (%s)",
-                        allIllust.get(position).getName(),
-                        allIllust.get(position).getTns().get(0)));
-                spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#999999")),
-                        allIllust.get(position).getName().length(), spannableString.length(),
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                ((TagHolder) holder).mTextView.setText(spannableString);
-            } else { //歌曲Alia和tns同时为空只显示歌曲名
-                ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName());
-            }
+            ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName());
         }
         //歌曲位置标号
         ((TagHolder) holder).mTextView2.setText(String.valueOf(position + 1));

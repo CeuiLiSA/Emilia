@@ -129,13 +129,13 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
             mLikeButton.setOnLikeListener(new OnLikeListener() {
                 @Override
                 public void liked(LikeButton likeButton) {
-                    MusicService.allSongs.get(index).setIsLiked("1");
+                    MusicService.allSongs.get(index).setLiked(false);
                     //postLike("1");
                 }
 
                 @Override
                 public void unLiked(LikeButton likeButton) {
-                    MusicService.allSongs.get(index).setIsLiked("0");
+                    MusicService.allSongs.get(index).setLiked(true);
                     //postLike("0");
                 }
             });
@@ -238,7 +238,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
                 mTextView4.setText(mTime.format(MusicService.allSongs.get(index).getDt()));
                 mSeekBar.setMax(MusicService.allSongs.get(index).getDt());
             }
-            mLikeButton.setLiked(MusicService.allSongs.get(index).getIsLiked().equals("1"));
+            mLikeButton.setLiked(MusicService.allSongs.get(index).isLiked());
             if (index != MusicService.getInstance().getNowPlayIndex()) {
                 mHandler.removeCallbacksAndMessages(null);
                 mSeekBar.setProgress(0);

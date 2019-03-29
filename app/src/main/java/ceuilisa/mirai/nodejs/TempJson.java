@@ -1,5 +1,7 @@
 package ceuilisa.mirai.nodejs;
 
+import ceuilisa.mirai.response.TracksBean;
+
 public class TempJson {
     private String msg;
 
@@ -11,13 +13,13 @@ public class TempJson {
         this.msg = msg;
     }
 
-    private RecommendSong song;
+    private TracksBean song;
 
-    public RecommendSong getSong() {
+    public TracksBean getSong() {
         return song;
     }
 
-    public void setSong(RecommendSong song) {
+    public void setSong(TracksBean song) {
         this.song = song;
     }
 }

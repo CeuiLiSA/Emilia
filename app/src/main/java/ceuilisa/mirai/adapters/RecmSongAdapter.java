@@ -19,7 +19,6 @@ import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.nodejs.RecommendSong;
 import ceuilisa.mirai.response.TracksBean;
 
 
@@ -28,9 +27,9 @@ public class RecmSongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private OnItemClickListener mOnItemClickListener;
-    private List<RecommendSong> allIllust;
+    private List<TracksBean> allIllust;
 
-    public RecmSongAdapter(List<RecommendSong> list, Context context) {
+    public RecmSongAdapter(List<TracksBean> list, Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(mContext);
         allIllust = list;
@@ -60,10 +59,10 @@ public class RecmSongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     allIllust.get(position).getAlbum().getName()));
         }
         //展示歌曲Alia
-        if (allIllust.get(position).getAlias() != null && allIllust.get(position).getAlias().size() != 0) {
+        if (allIllust.get(position).getAlia() != null && allIllust.get(position).getAlia().size() != 0) {
             SpannableString spannableString = new SpannableString(String.format("%s (%s)",
                     allIllust.get(position).getName(),
-                    allIllust.get(position).getAlias().get(0)));
+                    allIllust.get(position).getAlia().get(0)));
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#999999")),
                     allIllust.get(position).getName().length(), spannableString.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

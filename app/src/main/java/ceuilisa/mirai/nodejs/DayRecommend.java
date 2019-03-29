@@ -5,7 +5,7 @@ import java.util.List;
 import ceuilisa.mirai.response.BaseResponse;
 import ceuilisa.mirai.response.TracksBean;
 
-public class DayRecommend extends BaseResponse<RecommendSong> {
+public class DayRecommend extends BaseResponse<TracksBean> {
 
 
     /**
@@ -14,7 +14,7 @@ public class DayRecommend extends BaseResponse<RecommendSong> {
      */
 
     private int code;
-    private List<RecommendSong> recommend;
+    private List<TracksBean> recommend;
 
     public int getCode() {
         return code;
@@ -24,17 +24,17 @@ public class DayRecommend extends BaseResponse<RecommendSong> {
         this.code = code;
     }
 
-    public List<RecommendSong> getRecommend() {
+    public List<TracksBean> getRecommend() {
         return recommend;
     }
 
-    public void setRecommend(List<RecommendSong> recommend) {
+    public void setRecommend(List<TracksBean> recommend) {
         this.recommend = recommend;
     }
 
 
     @Override
-    public List<RecommendSong> getList() {
+    public List<TracksBean> getList() {
         return recommend;
     }
 }
