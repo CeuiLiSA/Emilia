@@ -147,6 +147,7 @@ public abstract class BaseListFragment<Response extends BaseResponse<ListItem>,
         getFirstData();
     }
 
+
     boolean hasNext() {
         return true;
     }
