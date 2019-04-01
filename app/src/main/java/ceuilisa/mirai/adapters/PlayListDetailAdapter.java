@@ -10,6 +10,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -71,7 +72,15 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         //歌曲位置标号
         ((TagHolder) holder).mTextView2.setText(String.valueOf(position + 1));
 
+        if(allIllust.get(position).getMv() != 0){
+            ((TagHolder) holder).mView.setVisibility(View.VISIBLE);
+        }else {
+            ((TagHolder) holder).mView.setVisibility(View.GONE);
+        }
+
         if (mOnItemClickListener != null) {
+            ((TagHolder) holder).mView.setOnClickListener(v ->
+                    mOnItemClickListener.onItemClick(((TagHolder) holder).itemView, position, 1));
             holder.itemView.setOnClickListener(v ->
                     mOnItemClickListener.onItemClick(((TagHolder) holder).itemView, position, 0));
         }
@@ -88,13 +97,14 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public class TagHolder extends RecyclerView.ViewHolder {
         private TextView mTextView, mTextView2, mTextView3;
-
+        private ImageView mView;
         TagHolder(View itemView) {
             super(itemView);
 
             mTextView = itemView.findViewById(R.id.song_name);
             mTextView2 = itemView.findViewById(R.id.number);
             mTextView3 = itemView.findViewById(R.id.song_author);
+            mView = itemView.findViewById(R.id.show_video);
         }
     }
 }

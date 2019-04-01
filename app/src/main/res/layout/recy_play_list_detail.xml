@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/eight_dp"
-        android:layout_toStartOf="@+id/more"
+        android:layout_toStartOf="@+id/show_video"
         android:layout_toEndOf="@+id/number"
         android:ellipsize="end"
         android:maxLines="1"
@@ -33,12 +33,23 @@
         android:layout_below="@+id/song_name"
         android:layout_marginTop="@dimen/six_dp"
         android:layout_marginBottom="@dimen/eight_dp"
-        android:layout_toStartOf="@+id/more"
+        android:layout_toStartOf="@+id/show_video"
         android:layout_toEndOf="@+id/number"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="撒大声地阿"
         android:textSize="12sp" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:tint="@color/colorPrimary"
+        android:layout_marginStart="@dimen/eight_dp"
+        android:id="@+id/show_video"
+        android:layout_toStartOf="@+id/more"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_video_library_black_24dp"
+        android:layout_height="wrap_content" />
 
     <ImageView
         android:id="@+id/more"

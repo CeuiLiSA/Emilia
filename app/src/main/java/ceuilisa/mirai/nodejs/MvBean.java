@@ -1,8 +1,9 @@
 package ceuilisa.mirai.nodejs;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class MvBean {
+public class MvBean implements Serializable {
     /**
      * id : 10848831
      * cover : http://p1.music.126.net/xYgPXyHWHmTQdrBjgh3VBA==/109951163828442446.jpg
@@ -157,7 +158,7 @@ public class MvBean {
         this.alias = alias;
     }
 
-    public static class ArtistsBean {
+    public static class ArtistsBean implements Serializable{
         /**
          * id : 14608268
          * name : Corki

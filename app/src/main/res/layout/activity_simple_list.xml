@@ -41,6 +41,17 @@
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/no_data"
+        android:id="@+id/no_data"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/refreshLayout"
+        app:layout_constraintEnd_toEndOf="@+id/refreshLayout"
+        app:layout_constraintStart_toStartOf="@+id/refreshLayout"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ProgressBar
         android:id="@+id/progress"
         android:layout_width="wrap_content"

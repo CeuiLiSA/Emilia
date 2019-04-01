@@ -141,10 +141,16 @@ public class PlayListDetailActivity extends WithPanelActivity {
                             PlayListDetailAdapter adapter = new PlayListDetailAdapter(
                                     playListTitleResponse.getPlaylist().getTracks(), mContext);
                             adapter.setOnItemClickListener((view, position, viewType) -> {
-                                MusicService.allSongs = playListTitleResponse.getPlaylist().getTracks();
-                                Intent intent = new Intent(mContext, MusicActivity.class);
-                                intent.putExtra("index", position);
-                                startActivity(intent);
+                                if(viewType == 0) {
+                                    MusicService.allSongs = playListTitleResponse.getPlaylist().getTracks();
+                                    Intent intent = new Intent(mContext, MusicActivity.class);
+                                    intent.putExtra("index", position);
+                                    startActivity(intent);
+                                }else if(viewType == 1){
+                                    Intent intent = new Intent(mContext, VideoPlayActivity.class);
+                                    intent.putExtra("mv id", playListTitleResponse.getList().get(position).getMv());
+                                    startActivity(intent);
+                                }
                             });
                             mCircleImageView.setOnClickListener(new View.OnClickListener() {
                                 @Override

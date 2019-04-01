@@ -4,11 +4,13 @@ import ceuilisa.mirai.nodejs.ArtistAlbumResponse;
 import ceuilisa.mirai.nodejs.DayRecommend;
 import ceuilisa.mirai.nodejs.EventResponse;
 import ceuilisa.mirai.nodejs.LoginResponse;
+import ceuilisa.mirai.nodejs.MvPlayUrlResponse;
 import ceuilisa.mirai.nodejs.MvRankResponse;
 import ceuilisa.mirai.nodejs.PlayListResponse;
 import ceuilisa.mirai.nodejs.RecmPlayListResponse;
 import ceuilisa.mirai.nodejs.UserDetailResponse;
 import ceuilisa.mirai.response.CommentResponse;
+import ceuilisa.mirai.response.MvDetail;
 import ceuilisa.mirai.response.PlayListTitleResponse;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -72,4 +74,12 @@ public interface NodeApi {
     @GET("/top/mv")
     Observable<MvRankResponse> getMvRank(@Query("limit") int limit,
                                          @Query("offset") int offset);
+
+
+    @GET("/mv/detail")
+    Observable<MvDetail> getMvDetail(@Query("mvid") int mvid);
+
+
+    @GET("/mv/url")
+    Observable<MvPlayUrlResponse> getMvPlayUrl(@Query("id") int id);
 }
