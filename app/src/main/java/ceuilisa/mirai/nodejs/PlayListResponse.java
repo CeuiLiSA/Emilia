@@ -2,12 +2,13 @@ package ceuilisa.mirai.nodejs;
 
 import java.util.List;
 
+import ceuilisa.mirai.interf.ListShow;
 import ceuilisa.mirai.response.BaseResponse;
 
 /**
  * 普通歌单列表适配器
  */
-public class PlayListResponse extends BaseResponse<PlaylistBean> {
+public class PlayListResponse implements ListShow<PlaylistBean> {
 
 
     /**
@@ -17,7 +18,6 @@ public class PlayListResponse extends BaseResponse<PlaylistBean> {
      */
 
     private boolean more;
-    private int code;
     private List<PlaylistBean> playlist;
 
     public boolean isMore() {
@@ -26,14 +26,6 @@ public class PlayListResponse extends BaseResponse<PlaylistBean> {
 
     public void setMore(boolean more) {
         this.more = more;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
     }
 
     public List<PlaylistBean> getPlaylist() {

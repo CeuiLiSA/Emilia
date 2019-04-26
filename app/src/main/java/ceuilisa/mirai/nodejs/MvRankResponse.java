@@ -2,9 +2,10 @@ package ceuilisa.mirai.nodejs;
 
 import java.util.List;
 
+import ceuilisa.mirai.interf.ListShow;
 import ceuilisa.mirai.response.BaseResponse;
 
-public class MvRankResponse extends BaseResponse<MvBean> {
+public class MvRankResponse extends BaseResponse implements ListShow<MvBean> {
 
 
     /**
@@ -16,7 +17,6 @@ public class MvRankResponse extends BaseResponse<MvBean> {
 
     private long updateTime;
     private boolean hasMore;
-    private int code;
     private List<MvBean> data;
 
     public long getUpdateTime() {
@@ -35,13 +35,6 @@ public class MvRankResponse extends BaseResponse<MvBean> {
         this.hasMore = hasMore;
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
 
     public List<MvBean> getData() {
         return data;

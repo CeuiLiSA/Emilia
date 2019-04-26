@@ -35,6 +35,7 @@ import ceuilisa.mirai.fragments.BaseFragment;
 import ceuilisa.mirai.fragments.FragmentCover;
 import ceuilisa.mirai.fragments.FragmentLrc;
 import ceuilisa.mirai.interf.OnPlayComplete;
+import ceuilisa.mirai.network.Operate;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.BackResponse;
 import ceuilisa.mirai.response.PlayListDetailResponse;
@@ -131,14 +132,14 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
             mLikeButton.setOnLikeListener(new OnLikeListener() {
                 @Override
                 public void liked(LikeButton likeButton) {
-                    MusicService.allSongs.get(index).setLiked(false);
-                    //postLike("1");
+                    MusicService.allSongs.get(index).setLiked(true);
+                    Operate.likeSong(MusicService.allSongs.get(index).getId(), true);
                 }
 
                 @Override
                 public void unLiked(LikeButton likeButton) {
-                    MusicService.allSongs.get(index).setLiked(true);
-                    //postLike("0");
+                    MusicService.allSongs.get(index).setLiked(false);
+                    Operate.likeSong(MusicService.allSongs.get(index).getId(), false);
                 }
             });
 

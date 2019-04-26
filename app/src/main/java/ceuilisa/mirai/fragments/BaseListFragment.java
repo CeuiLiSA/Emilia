@@ -18,6 +18,7 @@ import java.util.List;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListAdapter;
 import ceuilisa.mirai.fragments.BaseFragment;
+import ceuilisa.mirai.interf.ListShow;
 import ceuilisa.mirai.response.BaseResponse;
 import ceuilisa.mirai.response.CommentResponse;
 import ceuilisa.mirai.response.PlayListTitleResponse;
@@ -90,7 +91,7 @@ import io.reactivex.schedulers.Schedulers;
  * @param <Adapter>  列表适配器
  * @param <ListItem>     列表数据元素
  */
-public abstract class BaseListFragment<Response extends BaseResponse<ListItem>,
+public abstract class BaseListFragment<Response extends ListShow<ListItem>,
         Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>,
         ListItem> extends BaseFragment {
 

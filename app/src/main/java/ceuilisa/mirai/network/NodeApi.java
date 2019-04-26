@@ -9,8 +9,11 @@ import ceuilisa.mirai.nodejs.MvRankResponse;
 import ceuilisa.mirai.nodejs.PlayListResponse;
 import ceuilisa.mirai.nodejs.RecmPlayListResponse;
 import ceuilisa.mirai.nodejs.UserDetailResponse;
+import ceuilisa.mirai.response.BaseResponse;
 import ceuilisa.mirai.response.CommentResponse;
+import ceuilisa.mirai.response.LikeSongResponse;
 import ceuilisa.mirai.response.MvDetail;
+import ceuilisa.mirai.response.PlayListDetailResponse;
 import ceuilisa.mirai.response.PlayListTitleResponse;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -22,6 +25,10 @@ public interface NodeApi {
     @GET("/login/cellphone")
     Observable<LoginResponse> loginByPhone(@Query("phone") String phone,
                                          @Query("password") String password);
+
+    @GET("/login")
+    Observable<LoginResponse> loginByEmail(@Query("email") String email,
+                                           @Query("password") String password);
 
 
 
@@ -82,4 +89,20 @@ public interface NodeApi {
 
     @GET("/mv/url")
     Observable<MvPlayUrlResponse> getMvPlayUrl(@Query("id") int id);
+
+
+    /**
+     * 收藏音乐
+     *
+     * @param id
+     * @param like
+     * @return
+     */
+    @GET("/like")
+    Observable<LikeSongResponse> likeSong(@Query("id") int id,
+                                          @Query("like") boolean like);
+
+
+    @GET("/playlist/detail")
+    Observable<PlayListDetailResponse> getPlayListDetail(@Query("id") String id);
 }

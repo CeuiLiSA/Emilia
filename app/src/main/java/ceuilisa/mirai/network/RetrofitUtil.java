@@ -107,7 +107,7 @@ public class RetrofitUtil {
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .baseUrl(BASE_URL_3)
+                    .baseUrl(BASE_URL_2)
                     .build();
         }
         return nodeApi.create(NodeApi.class);
@@ -115,6 +115,6 @@ public class RetrofitUtil {
 
 
 
-    private static final String BASE_URL_2 = "http://192.168.0.111:8080/";
+    private static final String BASE_URL_2 = "http://192.168.0.112:3000/";
     private static final String BASE_URL_3 = "http://65.49.235.124/";
 }

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import ceuilisa.mirai.R;
+import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Local;
 
@@ -16,6 +17,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Context mContext;
     protected Activity mActivity;
     protected int mLayoutID;
+    protected LoginResponse user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,6 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         mContext = this;
         mActivity = this;
 
+        user = Local.getUser();
 
         initView();
         initData();

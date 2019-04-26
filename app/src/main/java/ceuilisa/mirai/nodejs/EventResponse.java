@@ -2,9 +2,10 @@ package ceuilisa.mirai.nodejs;
 
 import java.util.List;
 
+import ceuilisa.mirai.interf.ListShow;
 import ceuilisa.mirai.response.BaseResponse;
 
-public class EventResponse extends BaseResponse<EventsBean> {
+public class EventResponse implements ListShow<EventsBean> {
 
 
     /**
@@ -18,7 +19,6 @@ public class EventResponse extends BaseResponse<EventsBean> {
     private long lasttime;
     private boolean more;
     private int size;
-    private int code;
     private List<EventsBean> events;
 
     public long getLasttime() {
@@ -43,14 +43,6 @@ public class EventResponse extends BaseResponse<EventsBean> {
 
     public void setSize(int size) {
         this.size = size;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
     }
 
     public List<EventsBean> getEvents() {

@@ -96,7 +96,7 @@ public class TracksBean {
     private int mv;
     private long publishTime;
     private List<ArtistBean> ar, artists;
-    private List<String> alia;
+    private List<String> alias;
     private List<?> rtUrls;
 
     public String getName() {
@@ -325,11 +325,11 @@ public class TracksBean {
     }
 
     public List<String> getAlia() {
-        return alia;
+        return alias;
     }
 
     public void setAlia(List<String> alia) {
-        this.alia = alia;
+        this.alias = alia;
     }
 
     public List<?> getRtUrls() {

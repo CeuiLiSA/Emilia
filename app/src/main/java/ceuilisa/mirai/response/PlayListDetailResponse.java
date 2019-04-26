@@ -3,7 +3,9 @@ package ceuilisa.mirai.response;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayListDetailResponse extends BaseResponse<TracksBean> {
+import ceuilisa.mirai.interf.ListShow;
+
+public class PlayListDetailResponse implements ListShow<TracksBean> {
 
 
     /**
@@ -13,22 +15,12 @@ public class PlayListDetailResponse extends BaseResponse<TracksBean> {
      */
 
     private PlaylistBean playlist;
-    private int code;
-
     public PlaylistBean getPlaylist() {
         return playlist;
     }
 
     public void setPlaylist(PlaylistBean playlist) {
         this.playlist = playlist;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
     }
 
     @Override

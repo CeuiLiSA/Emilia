@@ -2,7 +2,9 @@ package ceuilisa.mirai.response;
 
 import java.util.List;
 
-public class PlayAllHistoryResponse extends BaseResponse<HistorySongBean>{
+import ceuilisa.mirai.interf.ListShow;
+
+public class PlayAllHistoryResponse implements ListShow<HistorySongBean> {
 
 
     /**
@@ -10,16 +12,8 @@ public class PlayAllHistoryResponse extends BaseResponse<HistorySongBean>{
      * code : 200
      */
 
-    private int code;
     private List<HistorySongBean> allData;
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
 
     public List<HistorySongBean> getAllData() {
         return allData;

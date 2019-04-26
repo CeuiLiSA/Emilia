@@ -2,9 +2,10 @@ package ceuilisa.mirai.nodejs;
 
 import java.util.List;
 
+import ceuilisa.mirai.interf.ListShow;
 import ceuilisa.mirai.response.BaseResponse;
 
-public class ArtistAlbumResponse extends BaseResponse<AlbumBean> {
+public class ArtistAlbumResponse implements ListShow<AlbumBean> {
 
 
     /**
@@ -14,18 +15,9 @@ public class ArtistAlbumResponse extends BaseResponse<AlbumBean> {
      * more : true
      */
 
-    private int code;
     private ArtistBean artist;
     private boolean more;
     private List<AlbumBean> hotAlbums;
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
 
     public ArtistBean getArtist() {
         return artist;
