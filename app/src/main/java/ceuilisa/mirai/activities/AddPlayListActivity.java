@@ -2,15 +2,21 @@ package ceuilisa.mirai.activities;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ProgressBar;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import org.greenrobot.eventbus.EventBus;
+
 import ceuilisa.mirai.R;
+import ceuilisa.mirai.network.Listen;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.response.BackResponse;
+import ceuilisa.mirai.response.BaseResponse;
 import ceuilisa.mirai.response.UserBean;
+import ceuilisa.mirai.utils.Channel;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Constant;
 import ceuilisa.mirai.utils.Local;
@@ -42,7 +48,7 @@ public class AddPlayListActivity extends BaseActivity{
             if(playlistName.getText().toString().trim().length() == 0){
                 Common.showToast("请输入歌单名称");
             }else {
-                //addPlaylist();
+                addPlaylist();
             }
         });
     }
@@ -52,38 +58,38 @@ public class AddPlayListActivity extends BaseActivity{
 
     }
 
-//    private void addPlaylist(){
-//        LoginResponse userBean = Local.getUser();
-//        RetrofitUtil.getTempApi().addPlaylist(userBean.getUserID(), userBean.getUserName(),
-//                playlistName.getText().toString().trim(), playlistInfo.getText().toString().trim())
-//                .subscribeOn(Schedulers.newThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<BackResponse>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(BackResponse backResponse) {
-//                        if(backResponse != null && backResponse.getMessage() != null){
-//                            if(backResponse.getMessage().equals("歌单创建成功")){
-//                                PlayListActivity.isNeedFresh = true;
-//                                finish();
-//                            }
-//                            Common.showToast(backResponse.getMessage());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-//    }
+    private void addPlaylist(){
+        mProgressBar.setVisibility(View.VISIBLE);
+        RetrofitUtil.getNodeApi().createPlaylist(playlistName.getText().toString().trim())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        if(baseResponse != null){
+
+                        }
+                        mProgressBar.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        Common.showToast(e.toString());
+                        mProgressBar.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Channel channel = new Channel();
+                        channel.setReceiver("FragmentMyPlayList");
+                        EventBus.getDefault().post(channel);
+                    }
+                });
+    }
 }

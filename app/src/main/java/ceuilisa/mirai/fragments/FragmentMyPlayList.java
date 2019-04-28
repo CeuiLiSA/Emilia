@@ -1,7 +1,12 @@
 package ceuilisa.mirai.fragments;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import ceuilisa.mirai.activities.PlayListDetailActivity;
 import ceuilisa.mirai.adapters.PlayListNodeAdapter;
@@ -9,6 +14,8 @@ import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.nodejs.PlayListResponse;
 import ceuilisa.mirai.nodejs.PlaylistBean;
+import ceuilisa.mirai.utils.Channel;
+import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Local;
 import io.reactivex.Observable;
 
@@ -42,5 +49,25 @@ public class FragmentMyPlayList extends BaseListFragment<PlayListResponse, PlayL
             intent.putExtra("coverImg", allItems.get(position).getCoverImgUrl());
             mContext.startActivity(intent, optionsCompat.toBundle());
         });
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(Channel channel) {
+        if(channel.getReceiver().equals(className)){
+            getFirstData();
+        }
     }
 }

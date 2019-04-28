@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 public abstract class BaseFragment extends Fragment {
 
+    protected String className = this.getClass().getSimpleName();
     protected Context mContext;
     protected Activity mActivity;
     protected int mLayoutID;

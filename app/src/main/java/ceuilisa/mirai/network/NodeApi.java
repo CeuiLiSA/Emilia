@@ -105,4 +105,9 @@ public interface NodeApi {
 
     @GET("/playlist/detail")
     Observable<PlayListDetailResponse> getPlayListDetail(@Query("id") String id);
+
+
+
+    @GET("/playlist/create")
+    Observable<BaseResponse> createPlaylist(@Query("name") String name);
 }
