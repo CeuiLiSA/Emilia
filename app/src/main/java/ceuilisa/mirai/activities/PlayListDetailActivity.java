@@ -25,6 +25,7 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.dialogs.LikeSongDialog;
 import ceuilisa.mirai.network.MusicChannel;
+import ceuilisa.mirai.network.Operate;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.EventsBean;
 import ceuilisa.mirai.nodejs.LoginResponse;
@@ -47,11 +48,12 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 public class PlayListDetailActivity extends WithPanelActivity {
 
-    private String id, coverImg, name, author, dataType;
+    private String coverImg, name, author, dataType;
     private Toolbar mToolbar;
-    private TextView mTextView, mTextView2;
+    private long id;
+    private TextView mTextView, mTextView2, starPlaylistTv;
     private RecyclerView mRecyclerView;
-    private ImageView mImageView;
+    private ImageView mImageView, starPlaylist;
     private NiceImageView mImageView2;
     private CircleImageView mCircleImageView;
     private boolean showProgress = true;
@@ -81,12 +83,26 @@ public class PlayListDetailActivity extends WithPanelActivity {
         mToolbar.setNavigationOnClickListener(v -> onBackPressed());
         mImageView = findViewById(R.id.playlist_photo);
         mImageView2 = findViewById(R.id.imageView4);
+        starPlaylistTv = findViewById(R.id.textView8);
         mCircleImageView = findViewById(R.id.circleImageView);
         mRecyclerView = findViewById(R.id.recyclerView);
         mTextView = findViewById(R.id.textView10);
         mTextView2 = findViewById(R.id.textView9);
         loadProgress.setVisibility(View.VISIBLE);
         mTextView = findViewById(R.id.textView10);
+        starPlaylist = findViewById(R.id.imageView10);
+        starPlaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(starPlaylistTv.getText().toString().equals("取消收藏")) {
+                    Operate.starPlaylist(id, false);
+                    starPlaylistTv.setText("收藏");
+                }else {
+                    Operate.starPlaylist(id, true);
+                    starPlaylistTv.setText("取消收藏");
+                }
+            }
+        });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -95,7 +111,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
 
     @Override
     void initData() {
-        id = getIntent().getStringExtra("id");
+        id = getIntent().getLongExtra("id", 0);
         coverImg = getIntent().getStringExtra("coverImg");
         name = getIntent().getStringExtra("name");
         author = getIntent().getStringExtra("author");
@@ -151,12 +167,16 @@ public class PlayListDetailActivity extends WithPanelActivity {
                             if(playListTitleResponse.getPlaylist().getTracks() != null &&
                                     playListTitleResponse.getPlaylist().getTracks().size() > 0) {
 
+                                if(playListTitleResponse.getPlaylist().isSubscribed()){
+                                    starPlaylistTv.setText("取消收藏");
+                                }else {
+                                    starPlaylistTv.setText("收藏");
+                                }
                                 PlayListDetailAdapter adapter = new PlayListDetailAdapter(
                                         playListTitleResponse.getPlaylist().getTracks(), mContext);
                                 adapter.setOnItemClickListener((view, position, viewType) -> {
                                     if (viewType == 0) {
-                                        MusicChannel channel = MusicChannel.getInstance();
-                                        channel.setMusicList(playListTitleResponse.getPlaylist().getTracks());
+                                        mChannel.setMusicList(playListTitleResponse.getPlaylist().getTracks());
                                         Intent intent = new Intent(mContext, MusicActivity.class);
                                         intent.putExtra("index", position);
                                         startActivity(intent);
@@ -232,11 +252,26 @@ public class PlayListDetailActivity extends WithPanelActivity {
                         PlayListDetailAdapter adapter = new PlayListDetailAdapter(
                                 playListTitleResponse.getSongs(), mContext);
                         adapter.setOnItemClickListener((view, position, viewType) -> {
-                            mChannel.setMusicList(playListTitleResponse.getSongs());
-                            Intent intent = new Intent(mContext, MusicActivity.class);
-                            intent.putExtra("index", position);
-                            startActivity(intent);
+                            if (viewType == 0) {
+                                mChannel.setMusicList(playListTitleResponse.getSongs());
+                                Intent intent = new Intent(mContext, MusicActivity.class);
+                                intent.putExtra("index", position);
+                                startActivity(intent);
+                            } else if (viewType == 1) {
+                                Intent intent = new Intent(mContext, VideoPlayActivity.class);
+                                intent.putExtra("mv id", playListTitleResponse.getSongs().get(position).getMv());
+                                startActivity(intent);
+                            } else if (viewType == 2) {
+                                LikeSongDialog dialog = LikeSongDialog.newInstance(
+                                        playListTitleResponse.getSongs().get(position));
+                                dialog.show(getSupportFragmentManager());
+                            }
                         });
+                        mTextView2.setText(playListTitleResponse.getAlbum().getArtist().getName());
+                        if (!isDestroyed()) {
+                            Glide.with(mContext).load(playListTitleResponse.getAlbum()
+                                    .getArtist().getPicUrl()).into(mCircleImageView);
+                        }
                         loadProgress.setVisibility(View.GONE);
                         mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
                         showProgress = false;

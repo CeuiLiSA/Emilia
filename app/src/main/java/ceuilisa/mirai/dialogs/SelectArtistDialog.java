@@ -39,8 +39,13 @@ public class SelectArtistDialog extends DialogFragment{
 
     private AlertDialog mAlertDialog;
     private Context mContext;
-    private TracksBean mTracksBean = MusicChannel.getInstance().getMusicList()
-                    .get(MusicService.getInstance().getNowPlayIndex());
+    private TracksBean mTracksBean;
+
+    public static SelectArtistDialog newInstance(TracksBean tracksBean){
+        SelectArtistDialog dialog = new SelectArtistDialog();
+        dialog.mTracksBean = tracksBean;
+        return dialog;
+    }
 
     @NonNull
     @Override

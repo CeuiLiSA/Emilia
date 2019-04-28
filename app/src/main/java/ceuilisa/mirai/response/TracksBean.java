@@ -105,6 +105,28 @@ public class TracksBean {
     private List<String> alia;
     private List<?> rtUrls;
 
+    public static class H{
+        private long size;
+
+        public long getSize() {
+            return size;
+        }
+
+        public void setSize(long size) {
+            this.size = size;
+        }
+    }
+
+    private H h;
+
+    public H getH() {
+        return h;
+    }
+
+    public void setH(H h) {
+        this.h = h;
+    }
+
     public String getName() {
         return name;
     }

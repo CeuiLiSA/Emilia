@@ -41,7 +41,8 @@ import io.reactivex.schedulers.Schedulers;
 public class ArtistActivity extends WithPanelActivity {
 
     private String[] data = new String[]{"热门歌曲", "专辑", "艺人信息"};
-    public String id, name;
+    public String name;
+    public int id;
     private Toolbar mToolbar;
     private ImageView mImageView;
     private ViewPager mViewPager;
@@ -83,7 +84,7 @@ public class ArtistActivity extends WithPanelActivity {
 
     @Override
     void initData() {
-        id = getIntent().getStringExtra("id");
+        id = getIntent().getIntExtra("id", 0);
         name = getIntent().getStringExtra("name");
         fragmentHotSongs = new FragmentHotSongs();
         mFragmentArtistAlbum = FragmentArtistAlbum.newInstance(Integer.valueOf(id));

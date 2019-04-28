@@ -30,7 +30,7 @@ public interface AppApi {
     Observable<PlayListDetailResponse> getPlayListDetail(@Query("id") String id);*/
 
     @GET("cloudmusic/?type=song&br=320000")
-    Observable<SingleSongResponse> getSingleSong(@Query("id") String id);
+    Observable<SingleSongResponse> getSingleSong(@Query("id") long id);
 
     @GET("cloudmusic/?type=lyric")
     Observable<LrcResponse> getLrc(@Query("id") String id);
@@ -149,7 +149,7 @@ public interface AppApi {
      * @return Observable<AlbumResponse>
      */
     @GET("cloudmusic/?type=album")
-    Observable<AlbumResponse> getAlbum(@Query("id") String id);
+    Observable<AlbumResponse> getAlbum(@Query("id") long id);
 
     /**
      * 获取歌手详情
@@ -158,5 +158,5 @@ public interface AppApi {
      * @return Observable<ArtistResponse>
      */
     @GET("cloudmusic/?type=artist")
-    Observable<ArtistResponse> getArtist(@Query("id") String id);
+    Observable<ArtistResponse> getArtist(@Query("id") int id);
 }

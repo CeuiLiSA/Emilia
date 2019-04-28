@@ -83,7 +83,6 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
 
     @Override
     void initView() {
-        mChannel = MusicChannel.getInstance();
         if(mChannel.getMusicList() != null && mChannel.getMusicList().size() != 0) {
             Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim_about_card_show);
             ConstraintLayout constraintLayout = findViewById(R.id.top_parent);
@@ -103,7 +102,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, PlayListDetailActivity.class);
-                    intent.putExtra("id", String.valueOf(mTracksBean.getAl().getId()));
+                    intent.putExtra("id", mTracksBean.getAl().getId());
                     intent.putExtra("name", mTracksBean.getAl().getName());
                     intent.putExtra("author", mTextView2.getText());
                     intent.putExtra("dataType", "专辑");
@@ -121,7 +120,8 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
                         intent.putExtra("name", mTracksBean.getAr().get(0).getName());
                         mContext.startActivity(intent);
                     } else {
-                        new SelectArtistDialog().show(getSupportFragmentManager(), "select artist");
+                        SelectArtistDialog.newInstance(mTracksBean)
+                                .show(getSupportFragmentManager(), "select artist");
                     }
                 }
             });
@@ -146,8 +146,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
 
             ImageView download = findViewById(R.id.download);
             download.setOnClickListener(v -> {
-                DownloadDialog downloadDialog = new DownloadDialog();
-                downloadDialog.setIndex(index);
+                DownloadDialog downloadDialog = DownloadDialog.newInstance(mTracksBean);
                 downloadDialog.show(getSupportFragmentManager(), "download");
             });
             ImageView comment = findViewById(R.id.comment);
@@ -203,22 +202,24 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
     @Override
     void initData() {
         index = getIntent().getIntExtra("index", 0);
-        mTracksBean = mChannel.getMusicList().get(index);
-        if (MusicService.getInstance().getOnPlayComplete() == null) {
-            MusicService.getInstance().setOnPlayComplete(new OnPlayComplete() {
-                @Override
-                public void nextSong() {
-                    nextSong.performClick();
-                }
+        if(mChannel.getMusicList() != null && mChannel.getMusicList().size() != 0) {
+            mTracksBean = mChannel.getMusicList().get(index);
+            if (MusicService.getInstance().getOnPlayComplete() == null) {
+                MusicService.getInstance().setOnPlayComplete(new OnPlayComplete() {
+                    @Override
+                    public void nextSong() {
+                        nextSong.performClick();
+                    }
 
-                @Override
-                public void stop() {
-                    mFragmentCover.pauseAnimation();
-                    mHandler.removeCallbacksAndMessages(null);
-                    mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
-                    MusicService.getInstance().setPlaying(false);
-                }
-            });
+                    @Override
+                    public void stop() {
+                        mFragmentCover.pauseAnimation();
+                        mHandler.removeCallbacksAndMessages(null);
+                        mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+                        MusicService.getInstance().setPlaying(false);
+                    }
+                });
+            }
         }
         refreshLayout();
     }

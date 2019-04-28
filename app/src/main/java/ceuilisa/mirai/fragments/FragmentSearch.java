@@ -94,7 +94,7 @@ public class FragmentSearch extends BaseFragment {
                                     @Override
                                     public void onItemClick(View view, int position, int viewType) {
                                         Intent intent = new Intent(mContext, PlayListDetailActivity.class);
-                                        intent.putExtra("id", String.valueOf(allAlbums.get(position).getId()));
+                                        intent.putExtra("id", allAlbums.get(position).getId());
                                         intent.putExtra("name", allAlbums.get(position).getName());
                                         intent.putExtra("author", allAlbums.get(position).getArtist().getName());
                                         intent.putExtra("dataType", "专辑");
@@ -136,7 +136,7 @@ public class FragmentSearch extends BaseFragment {
                                     Intent intent = new Intent(mContext, PlayListDetailActivity.class);
                                     ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
                                             .makeSceneTransitionAnimation(mActivity, view, "sharedView");
-                                    intent.putExtra("id", String.valueOf(allPlaylist.get(position).getId()));
+                                    intent.putExtra("id", allPlaylist.get(position).getId());
                                     intent.putExtra("name", allPlaylist.get(position).getName());
                                     intent.putExtra("author", allPlaylist.get(position).getCreator().getNickname());
                                     intent.putExtra("dataType", "歌单");

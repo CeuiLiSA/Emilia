@@ -104,10 +104,22 @@ public interface NodeApi {
 
 
     @GET("/playlist/detail")
-    Observable<PlayListDetailResponse> getPlayListDetail(@Query("id") String id);
+    Observable<PlayListDetailResponse> getPlayListDetail(@Query("id") long id);
 
 
 
     @GET("/playlist/create")
     Observable<BaseResponse> createPlaylist(@Query("name") String name);
+
+
+    /**
+     * 收藏或取消收藏 歌单
+     *
+     * @param t
+     * @param id
+     * @return
+     */
+    @GET("/playlist/subscribe")
+    Observable<BaseResponse> starPlaylist(@Query("t") String t,
+                                            @Query("id") long id);
 }

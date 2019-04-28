@@ -89,7 +89,7 @@ public class MusicService extends Service implements MusicOperate {
     @Override
     public void playMusic(int id, OnPrepare onPrepare) {
         mPlayer.stop();
-        RetrofitUtil.getImjadApi().getSingleSong(String.valueOf(id))
+        RetrofitUtil.getImjadApi().getSingleSong(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<SingleSongResponse>() {

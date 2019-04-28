@@ -110,7 +110,7 @@ public class PlayListActivity extends WithPanelActivity {
                                 Intent intent = new Intent(mContext, PlayListDetailActivity.class);
                                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
                                         .makeSceneTransitionAnimation(mActivity, view, "sharedView");
-                                intent.putExtra("id", String.valueOf(allPlaylist.get(position).getId()));
+                                intent.putExtra("id", allPlaylist.get(position).getId());
                                 intent.putExtra("name", allPlaylist.get(position).getName());
                                 intent.putExtra("author", allPlaylist.get(position).getCreator().getNickname());
                                 intent.putExtra("dataType", "歌单");

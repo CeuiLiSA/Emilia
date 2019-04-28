@@ -58,7 +58,7 @@ public class FragmentMyPlayList extends BaseListFragment<PlayListResponse, PlayL
             Intent intent = new Intent(mContext, PlayListDetailActivity.class);
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
                     .makeSceneTransitionAnimation(mActivity, view, "sharedView");
-            intent.putExtra("id", String.valueOf(allItems.get(position).getId()));
+            intent.putExtra("id", allItems.get(position).getId());
             intent.putExtra("name", allItems.get(position).getName());
             intent.putExtra("author", allItems.get(position).getCreator().getNickname());
             intent.putExtra("dataType", "歌单");

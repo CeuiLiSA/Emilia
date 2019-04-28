@@ -92,7 +92,7 @@ public class FragmentSearchAlbum extends BaseFragment {
                                 @Override
                                 public void onItemClick(View view, int position, int viewType) {
                                     Intent intent = new Intent(mContext, PlayListDetailActivity.class);
-                                    intent.putExtra("id", String.valueOf(allData.get(position).getId()));
+                                    intent.putExtra("id", allData.get(position).getId());
                                     intent.putExtra("name", allData.get(position).getName());
                                     intent.putExtra("author", allData.get(position).getArtist().getName());
                                     intent.putExtra("dataType", "专辑");

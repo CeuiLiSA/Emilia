@@ -1,9 +1,14 @@
 package ceuilisa.mirai.dialogs;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
 import ceuilisa.mirai.R;
+import ceuilisa.mirai.activities.ArtistActivity;
+import ceuilisa.mirai.activities.CommentActivity;
+import ceuilisa.mirai.activities.PlayListDetailActivity;
 import ceuilisa.mirai.response.TracksBean;
 import me.shaohui.bottomdialog.BaseBottomDialog;
 
@@ -18,6 +23,7 @@ public class LikeSongDialog extends BaseBottomDialog {
         return dialog;
     }
 
+    private Context mContext;
     private TracksBean mTracksBean;
     private TextView songName, addToPlaylist, download,
             comment, artist, album, delete;
@@ -29,6 +35,7 @@ public class LikeSongDialog extends BaseBottomDialog {
 
     @Override
     public void bindView(View v) {
+        mContext = getContext();
         songName = v.findViewById(R.id.song_name);
         addToPlaylist = v.findViewById(R.id.like);
         download = v.findViewById(R.id.download);
@@ -38,5 +45,47 @@ public class LikeSongDialog extends BaseBottomDialog {
         delete = v.findViewById(R.id.delete);
 
         songName.setText("歌曲：" + mTracksBean.getFullSongName());
+
+        download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DownloadDialog downloadDialog = DownloadDialog.newInstance(mTracksBean);
+                downloadDialog.show(getActivity().getSupportFragmentManager(), "download");
+                dismiss();
+            }
+        });
+        album.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, PlayListDetailActivity.class);
+                intent.putExtra("id", mTracksBean.getAl().getId());
+                intent.putExtra("name", mTracksBean.getAl().getName());
+                intent.putExtra("dataType", "专辑");
+                intent.putExtra("coverImg", mTracksBean.getAl().getPicUrl());
+                startActivity(intent);
+                dismiss();
+            }
+        });
+        artist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mTracksBean.getAr().size() == 1) {
+                    Intent intent = new Intent(mContext, ArtistActivity.class);
+                    intent.putExtra("id", String.valueOf(mTracksBean.getAr().get(0).getId()));
+                    intent.putExtra("name", mTracksBean.getAr().get(0).getName());
+                    mContext.startActivity(intent);
+                } else {
+                    SelectArtistDialog.newInstance(mTracksBean)
+                            .show(getActivity().getSupportFragmentManager(), "select artist");
+                }
+                dismiss();
+            }
+        });
+        comment.setOnClickListener(view -> {
+            Intent intent = new Intent(mContext, CommentActivity.class);
+            intent.putExtra("id", mTracksBean.getId());
+            startActivity(intent);
+            dismiss();
+        });
     }
 }

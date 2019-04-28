@@ -23,8 +23,16 @@ import java.io.File;
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.network.MusicChannel;
+import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.response.SingleSongResponse;
+import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.FileUtil;
+import ceuilisa.mirai.utils.Translate;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 歌曲播放页面，确认下载歌曲对话框
@@ -35,6 +43,13 @@ public class DownloadDialog extends DialogFragment{
     private ProgressBar mProgressBar;
     private int index;
     public static final String FILE_PATH = "/storage/emulated/0/EmiliaSongs";
+    private TracksBean mTracksBean;
+
+    public static DownloadDialog newInstance(TracksBean tracksBean){
+        DownloadDialog downloadDialog = new DownloadDialog();
+        downloadDialog.mTracksBean = tracksBean;
+        return downloadDialog;
+    }
 
     @NonNull
     @Override
@@ -44,7 +59,7 @@ public class DownloadDialog extends DialogFragment{
         mProgressBar = view.findViewById(R.id.progress);
         TextView textView = view.findViewById(R.id.song_size);
         textView.setText(String.format("这将会占用%s的存储空间，是否继续？", FileUtil.convertFileSize(
-                MusicService.getInstance().getSingleSong().getData().get(0).getSize())));
+                mTracksBean.getH().getSize())));
         view.findViewById(R.id.download_now).setOnClickListener(v -> startDownload());
         view.findViewById(R.id.cancel).setOnClickListener(v -> mAlertDialog.dismiss());
         builder.setView(view);
@@ -53,56 +68,80 @@ public class DownloadDialog extends DialogFragment{
     }
 
     public void startDownload(){
-        File file = new File("FILE_PATH",
-                MusicChannel.getInstance().getMusicList().get(index).getName() + ".mp3");
+        File file = new File(FILE_PATH, mTracksBean.getName() + ".mp3");
         if(file.exists()){
             mAlertDialog.dismiss();
             Common.showToast(getContext(), "该文件已存在");
         }else {
-            DownloadTask downloadTask = new DownloadTask.Builder(
-                    MusicService.getInstance().getSingleSong().getData().get(0).getUrl(),
-                    new File(FILE_PATH))
-                    .setFilename(file.getName())
-                    .setMinIntervalMillisCallbackProcess(100)
-                    .setPassIfAlreadyCompleted(false)
-                    .build();
-            downloadTask.enqueue(new DownloadListener1() {
-                @Override
-                public void taskStart(@NonNull DownloadTask task, @NonNull Listener1Assist.Listener1Model model) {
-                    mProgressBar.setMax(MusicService.getInstance().getSingleSong().getData().get(0).getSize());
-                    mProgressBar.setVisibility(View.VISIBLE);
-                }
+            RetrofitUtil.getImjadApi().getSingleSong(mTracksBean.getId())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<SingleSongResponse>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
 
-                @Override
-                public void retry(@NonNull DownloadTask task, @NonNull ResumeFailedCause cause) {
+                        }
 
-                }
+                        @Override
+                        public void onNext(SingleSongResponse singleSongResponse) {
+                            if(singleSongResponse != null){
+                                if(singleSongResponse.getData() != null){
+                                    DownloadTask downloadTask = new DownloadTask.Builder(
+                                            singleSongResponse.getData().get(0).getUrl(),
+                                            new File(FILE_PATH))
+                                            .setFilename(file.getName())
+                                            .setMinIntervalMillisCallbackProcess(100)
+                                            .setPassIfAlreadyCompleted(false)
+                                            .build();
+                                    downloadTask.enqueue(new DownloadListener1() {
+                                        @Override
+                                        public void taskStart(@NonNull DownloadTask task, @NonNull Listener1Assist.Listener1Model model) {
+                                            mProgressBar.setMax(singleSongResponse.getData().get(0).getSize());
+                                            mProgressBar.setVisibility(View.VISIBLE);
+                                        }
 
-                @Override
-                public void connected(@NonNull DownloadTask task, int blockCount, long currentOffset, long totalLength) {
+                                        @Override
+                                        public void retry(@NonNull DownloadTask task, @NonNull ResumeFailedCause cause) {
 
-                }
+                                        }
 
-                @Override
-                public void progress(@NonNull DownloadTask task, long currentOffset, long totalLength) {
-                    mProgressBar.setProgress((int) currentOffset);
-                }
+                                        @Override
+                                        public void connected(@NonNull DownloadTask task, int blockCount, long currentOffset, long totalLength) {
 
-                @Override
-                public void taskEnd(@NonNull DownloadTask task, @NonNull EndCause cause, @Nullable Exception realCause, @NonNull Listener1Assist.Listener1Model model) {
-                    mProgressBar.setVisibility(View.INVISIBLE);
-                    mAlertDialog.dismiss();
-                    Common.showToast("下载完成");
-                }
-            });
+                                        }
+
+                                        @Override
+                                        public void progress(@NonNull DownloadTask task, long currentOffset, long totalLength) {
+                                            mProgressBar.setProgress((int) currentOffset);
+                                        }
+
+                                        @Override
+                                        public void taskEnd(@NonNull DownloadTask task, @NonNull EndCause cause, @Nullable Exception realCause, @NonNull Listener1Assist.Listener1Model model) {
+                                            mProgressBar.setVisibility(View.INVISIBLE);
+                                            mAlertDialog.dismiss();
+                                            Common.showToast("下载完成");
+                                        }
+                                    });
+                                } else {
+                                    Common.showToast("暂无版权");
+                                }
+                            }else {
+                                Common.showToast("请检查网络连接");
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            e.printStackTrace();
+                            Common.showToast(e.toString());
+                            mProgressBar.setVisibility(View.INVISIBLE);
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
         }
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
     }
 }
