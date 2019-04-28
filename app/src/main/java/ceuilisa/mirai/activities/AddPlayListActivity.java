@@ -89,6 +89,7 @@ public class AddPlayListActivity extends BaseActivity{
                         Channel channel = new Channel();
                         channel.setReceiver("FragmentMyPlayList");
                         EventBus.getDefault().post(channel);
+                        finish();
                     }
                 });
     }

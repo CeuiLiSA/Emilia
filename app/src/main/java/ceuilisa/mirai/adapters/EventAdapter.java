@@ -21,6 +21,7 @@ import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.interf.OnItemClickListener;
+import ceuilisa.mirai.network.MusicChannel;
 import ceuilisa.mirai.nodejs.EventsBean;
 import ceuilisa.mirai.nodejs.TempJson;
 import ceuilisa.mirai.response.TracksBean;
@@ -75,9 +76,10 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 TracksBean tracksBean = tempJson.getSong();
                 tracksBean.setAr(tempJson.getSong().getArtists());
                 tracksBean.setAl(tempJson.getSong().getAlbum());
-                MusicService.allSongs.add(tracksBean);
+                MusicChannel.getInstance().getMusicList().add(tracksBean);
                 Intent intent = new Intent(mContext, MusicActivity.class);
-                intent.putExtra("index", MusicService.allSongs.size() - 1);
+                intent.putExtra("index",
+                        MusicChannel.getInstance().getMusicList().size() - 1);
                 mContext.startActivity(intent);
             }
         });

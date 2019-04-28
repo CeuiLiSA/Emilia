@@ -57,7 +57,7 @@ public class FragmentHotSongs extends BaseFragment {
     public void showHotSongs(List<TracksBean> tracksBeans){
         PlayListDetailAdapter adapter = new PlayListDetailAdapter(tracksBeans, mContext);
         adapter.setOnItemClickListener((view, position, viewType) -> {
-            MusicService.allSongs = tracksBeans;
+            mChannel.setMusicList(tracksBeans);
             Intent intent = new Intent(mContext, MusicActivity.class);
             intent.putExtra("index", position);
             startActivity(intent);

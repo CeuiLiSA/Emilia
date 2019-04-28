@@ -14,6 +14,8 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:elevation="@dimen/six_dp"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

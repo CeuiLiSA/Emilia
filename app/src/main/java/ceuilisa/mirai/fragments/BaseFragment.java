@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ceuilisa.mirai.network.MusicChannel;
+import ceuilisa.mirai.response.TracksBean;
+
 public abstract class BaseFragment extends Fragment {
 
     protected String className = this.getClass().getSimpleName();
@@ -17,6 +20,8 @@ public abstract class BaseFragment extends Fragment {
     protected Activity mActivity;
     protected int mLayoutID;
     protected View parentView;
+    protected TracksBean mTracksBean;
+    protected MusicChannel mChannel = MusicChannel.getInstance();
 
     abstract void initLayout();
 

@@ -43,7 +43,7 @@ public abstract class WithPanelActivity extends NetWorkControlActivity{
         playPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(MusicService.allSongs != null) {
+                if(mChannel != null && mChannel.getMusicList().size() != 0) {
                     if (MusicService.getInstance().isPlayingMusic()) {
                         playPause.setImageResource(R.drawable.ic_play_arrow_black_24dp);
                         mHandler.removeCallbacksAndMessages(null);
@@ -59,10 +59,10 @@ public abstract class WithPanelActivity extends NetWorkControlActivity{
         playList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(MusicService.allSongs == null){
-                    Common.showToast(mContext, "无正在播放列表");
-                }else {
+                if(mChannel != null && mChannel.getMusicList().size() != 0){
                     new PlayListDialog().show(getSupportFragmentManager());
+                }else {
+                    Common.showToast(mContext, "无正在播放列表");
                 }
             }
         });
@@ -86,18 +86,18 @@ public abstract class WithPanelActivity extends NetWorkControlActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        if(MusicService.allSongs != null && MusicService.allSongs.size() != 0) {
+        if(mChannel != null && mChannel.getMusicList().size() != 0) {
+            mTracksBean = mChannel.getMusicList().get(MusicService.getInstance().getNowPlayIndex());
             if (MusicService.getInstance().isPlayingMusic()) {
                 mHandler.post(mMyRunnable);
                 playPause.setImageResource(R.drawable.ic_pause_black_24dp);
             }else {
                 playPause.setImageResource(R.drawable.ic_play_arrow_black_24dp);
             }
-            Glide.with(mContext).load(MusicService.allSongs.get(
-                    MusicService.getInstance().getNowPlayIndex()).getAl().getPicUrl()).into(mNiceImageView);
-            songName.setText(MusicService.allSongs.get(MusicService.getInstance().getNowPlayIndex()).getName());
-            artistName.setText(MusicService.allSongs.get(MusicService.getInstance().getNowPlayIndex()).getAr().get(0).getName());
-            timeProgress.setMax(MusicService.allSongs.get(MusicService.getInstance().getNowPlayIndex()).getDt());
+            Glide.with(mContext).load(mTracksBean.getAl().getPicUrl()).into(mNiceImageView);
+            songName.setText(mTracksBean.getName());
+            artistName.setText(mTracksBean.getAr().get(0).getName());
+            timeProgress.setMax(mTracksBean.getDt());
         }
     }
 

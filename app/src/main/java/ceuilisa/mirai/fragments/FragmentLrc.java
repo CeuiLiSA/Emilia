@@ -9,6 +9,7 @@ import java.util.Objects;
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.MusicActivity;
+import ceuilisa.mirai.network.MusicChannel;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.LrcResponse;
 import ceuilisa.mirai.utils.Common;
@@ -48,9 +49,10 @@ public class FragmentLrc extends BaseFragment {
 
     public void loadLyric() {
         if (getActivity() != null) {
-            if (MusicService.allSongs != null) {
+            if (mChannel != null && mChannel.getMusicList().size() != 0) {
                 index = ((MusicActivity) Objects.requireNonNull(getActivity())).index;
-                RetrofitUtil.getImjadApi().getLrc(String.valueOf(MusicService.allSongs.get(index).getId()))
+                mTracksBean = mChannel.getMusicList().get(index);
+                RetrofitUtil.getImjadApi().getLrc(String.valueOf(mTracksBean.getId()))
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<LrcResponse>() {

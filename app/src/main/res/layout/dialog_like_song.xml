@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/song_name"
+        android:layout_margin="@dimen/sixteen_dp"
+        android:text="歌曲："
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="#616161"
+        android:layout_height="wrap_content" />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/like"
+        android:text="收藏到歌单"
+        android:textColor="#313131"
+        android:layout_margin="@dimen/sixteen_dp"
+        android:textSize="16sp"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:background="#e8e8e8"
+        android:layout_height="1dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/download"
+        android:text="下载这首歌曲"
+        android:textColor="#313131"
+        android:layout_margin="@dimen/sixteen_dp"
+        android:textSize="16sp"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:background="#e8e8e8"
+        android:layout_height="1dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/comments"
+        android:text="查看评论"
+        android:textColor="#313131"
+        android:layout_margin="@dimen/sixteen_dp"
+        android:textSize="16sp"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:background="#e8e8e8"
+        android:layout_height="1dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/artist_info"
+        android:text="查看歌手"
+        android:textColor="#313131"
+        android:layout_margin="@dimen/sixteen_dp"
+        android:textSize="16sp"
+        android:layout_height="wrap_content" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:background="#e8e8e8"
+        android:layout_height="1dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/album"
+        android:text="查看专辑"
+        android:textColor="#313131"
+        android:layout_margin="@dimen/sixteen_dp"
+        android:textSize="16sp"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:background="#e8e8e8"
+        android:layout_height="1dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/delete"
+        android:text="删除"
+        android:textColor="#313131"
+        android:layout_margin="@dimen/sixteen_dp"
+        android:textSize="16sp"
+        android:layout_height="wrap_content" />
+</LinearLayout>

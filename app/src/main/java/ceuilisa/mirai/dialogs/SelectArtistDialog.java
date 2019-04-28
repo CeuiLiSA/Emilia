@@ -27,6 +27,8 @@ import java.io.File;
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.ArtistActivity;
+import ceuilisa.mirai.network.MusicChannel;
+import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.FileUtil;
 
@@ -37,6 +39,8 @@ public class SelectArtistDialog extends DialogFragment{
 
     private AlertDialog mAlertDialog;
     private Context mContext;
+    private TracksBean mTracksBean = MusicChannel.getInstance().getMusicList()
+                    .get(MusicService.getInstance().getNowPlayIndex());
 
     @NonNull
     @Override
@@ -45,18 +49,16 @@ public class SelectArtistDialog extends DialogFragment{
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         View view= LayoutInflater.from(mContext).inflate(R.layout.dialog_select_artist, null);
         LinearLayout linearLayout = view.findViewById(R.id.root_view);
-        for (int i = 0; i < MusicService.allSongs.get(MusicService.getInstance().getNowPlayIndex()).getAr().size(); i++) {
+        for (int i = 0; i < mTracksBean.getAr().size(); i++) {
             final int position = i;
             View artist= LayoutInflater.from(mContext).inflate(R.layout.item_artist, null);
             TextView textView = artist.findViewById(R.id.song_name);
-            textView.setText(MusicService.allSongs.get(MusicService.getInstance().getNowPlayIndex()).getAr().get(i).getName());
+            textView.setText(mTracksBean.getAr().get(i).getName());
             artist.setOnClickListener(v -> {
                 mAlertDialog.dismiss();
                 Intent intent = new Intent(mContext, ArtistActivity.class);
-                intent.putExtra("id", String.valueOf(MusicService.allSongs.get(
-                        MusicService.getInstance().getNowPlayIndex()).getAr().get(position).getId()));
-                intent.putExtra("name", MusicService.allSongs.get(
-                        MusicService.getInstance().getNowPlayIndex()).getAr().get(position).getName());
+                intent.putExtra("id", mTracksBean.getAr().get(position).getId());
+                intent.putExtra("name", mTracksBean.getAr().get(position).getName());
                 mContext.startActivity(intent);
             });
             linearLayout.addView(artist);

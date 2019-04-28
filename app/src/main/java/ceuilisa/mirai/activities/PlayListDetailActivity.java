@@ -23,6 +23,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
+import ceuilisa.mirai.dialogs.LikeSongDialog;
+import ceuilisa.mirai.network.MusicChannel;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.EventsBean;
 import ceuilisa.mirai.nodejs.LoginResponse;
@@ -153,7 +155,8 @@ public class PlayListDetailActivity extends WithPanelActivity {
                                         playListTitleResponse.getPlaylist().getTracks(), mContext);
                                 adapter.setOnItemClickListener((view, position, viewType) -> {
                                     if (viewType == 0) {
-                                        MusicService.allSongs = playListTitleResponse.getPlaylist().getTracks();
+                                        MusicChannel channel = MusicChannel.getInstance();
+                                        channel.setMusicList(playListTitleResponse.getPlaylist().getTracks());
                                         Intent intent = new Intent(mContext, MusicActivity.class);
                                         intent.putExtra("index", position);
                                         startActivity(intent);
@@ -161,6 +164,10 @@ public class PlayListDetailActivity extends WithPanelActivity {
                                         Intent intent = new Intent(mContext, VideoPlayActivity.class);
                                         intent.putExtra("mv id", playListTitleResponse.getList().get(position).getMv());
                                         startActivity(intent);
+                                    } else if (viewType == 2) {
+                                        LikeSongDialog dialog = LikeSongDialog.newInstance(
+                                                playListTitleResponse.getPlaylist().getTracks().get(position));
+                                        dialog.show(getSupportFragmentManager());
                                     }
                                 });
                                 mCircleImageView.setOnClickListener(new View.OnClickListener() {
@@ -225,7 +232,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
                         PlayListDetailAdapter adapter = new PlayListDetailAdapter(
                                 playListTitleResponse.getSongs(), mContext);
                         adapter.setOnItemClickListener((view, position, viewType) -> {
-                            MusicService.allSongs = playListTitleResponse.getSongs();
+                            mChannel.setMusicList(playListTitleResponse.getSongs());
                             Intent intent = new Intent(mContext, MusicActivity.class);
                             intent.putExtra("index", position);
                             startActivity(intent);

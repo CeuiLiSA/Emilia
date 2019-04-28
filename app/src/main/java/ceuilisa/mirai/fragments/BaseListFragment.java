@@ -102,6 +102,7 @@ public abstract class BaseListFragment<Response extends ListShow<ListItem>,
     protected RefreshLayout mRefreshLayout;
     protected List<ListItem> allItems = new ArrayList<>();
     protected ProgressBar mProgressBar;
+    protected Toolbar mToolbar;
     private ImageView noData;
 
     @Override
@@ -111,12 +112,12 @@ public abstract class BaseListFragment<Response extends ListShow<ListItem>,
 
     @Override
     View initView(View v) {
-        Toolbar toolbar = v.findViewById(R.id.toolbar);
+        mToolbar = v.findViewById(R.id.toolbar);
         if(showToolbar()){
-            toolbar.setNavigationOnClickListener(view -> getActivity().finish());
-            toolbar.setTitle(getToolbarTitle());
+            mToolbar.setNavigationOnClickListener(view -> getActivity().finish());
+            mToolbar.setTitle(getToolbarTitle());
         }else {
-            toolbar.setVisibility(View.GONE);
+            mToolbar.setVisibility(View.GONE);
         }
         mProgressBar = v.findViewById(R.id.progress);
         noData = v.findViewById(R.id.no_data);
@@ -172,6 +173,7 @@ public abstract class BaseListFragment<Response extends ListShow<ListItem>,
      * 获取第一波数据
      */
     public void getFirstData() {
+        allItems.clear();
         mApi = initApi();
         if (mApi != null) {
             mProgressBar.setVisibility(View.VISIBLE);

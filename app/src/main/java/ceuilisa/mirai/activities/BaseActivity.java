@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import ceuilisa.mirai.R;
+import ceuilisa.mirai.network.MusicChannel;
 import ceuilisa.mirai.nodejs.LoginResponse;
+import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Local;
 
@@ -18,6 +20,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Activity mActivity;
     protected int mLayoutID;
     protected LoginResponse user;
+    protected MusicChannel mChannel = MusicChannel.getInstance();
+    protected TracksBean mTracksBean;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

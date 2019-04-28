@@ -35,6 +35,7 @@ import ceuilisa.mirai.fragments.BaseFragment;
 import ceuilisa.mirai.fragments.FragmentCover;
 import ceuilisa.mirai.fragments.FragmentLrc;
 import ceuilisa.mirai.interf.OnPlayComplete;
+import ceuilisa.mirai.network.MusicChannel;
 import ceuilisa.mirai.network.Operate;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.BackResponse;
@@ -71,7 +72,6 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
     public Handler mHandler = new Handler();
     private MyRunnable mMyRunnable = new MyRunnable();
     private SimpleDateFormat mTime = new SimpleDateFormat("mm: ss");
-    private TracksBean mTracksBean;
 
     @Override
     void initLayout() {
@@ -83,7 +83,8 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
 
     @Override
     void initView() {
-        if(MusicService.allSongs != null) {
+        mChannel = MusicChannel.getInstance();
+        if(mChannel.getMusicList() != null && mChannel.getMusicList().size() != 0) {
             Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim_about_card_show);
             ConstraintLayout constraintLayout = findViewById(R.id.top_parent);
             constraintLayout.startAnimation(animation);
@@ -102,11 +103,11 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, PlayListDetailActivity.class);
-                    intent.putExtra("id", String.valueOf(MusicService.allSongs.get(index).getAl().getId()));
-                    intent.putExtra("name", MusicService.allSongs.get(index).getAl().getName());
+                    intent.putExtra("id", String.valueOf(mTracksBean.getAl().getId()));
+                    intent.putExtra("name", mTracksBean.getAl().getName());
                     intent.putExtra("author", mTextView2.getText());
                     intent.putExtra("dataType", "专辑");
-                    intent.putExtra("coverImg", MusicService.allSongs.get(index).getAl().getPicUrl());
+                    intent.putExtra("coverImg", mTracksBean.getAl().getPicUrl());
                     startActivity(intent);
                 }
             });
@@ -114,10 +115,10 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
             mTextView2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (MusicService.allSongs.get(index).getAr().size() == 1) {
+                    if (mTracksBean.getAr().size() == 1) {
                         Intent intent = new Intent(mContext, ArtistActivity.class);
-                        intent.putExtra("id", String.valueOf(MusicService.allSongs.get(index).getAr().get(0).getId()));
-                        intent.putExtra("name", MusicService.allSongs.get(index).getAr().get(0).getName());
+                        intent.putExtra("id", String.valueOf(mTracksBean.getAr().get(0).getId()));
+                        intent.putExtra("name", mTracksBean.getAr().get(0).getName());
                         mContext.startActivity(intent);
                     } else {
                         new SelectArtistDialog().show(getSupportFragmentManager(), "select artist");
@@ -132,14 +133,14 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
             mLikeButton.setOnLikeListener(new OnLikeListener() {
                 @Override
                 public void liked(LikeButton likeButton) {
-                    MusicService.allSongs.get(index).setLiked(true);
-                    Operate.likeSong(MusicService.allSongs.get(index).getId(), true);
+                    mTracksBean.setLiked(true);
+                    Operate.likeSong(mTracksBean.getId(), true);
                 }
 
                 @Override
                 public void unLiked(LikeButton likeButton) {
-                    MusicService.allSongs.get(index).setLiked(false);
-                    Operate.likeSong(MusicService.allSongs.get(index).getId(), false);
+                    mTracksBean.setLiked(false);
+                    Operate.likeSong(mTracksBean.getId(), false);
                 }
             });
 
@@ -152,7 +153,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
             ImageView comment = findViewById(R.id.comment);
             comment.setOnClickListener(v -> {
                 Intent intent = new Intent(mContext, CommentActivity.class);
-                intent.putExtra("id", MusicService.allSongs.get(index).getId());
+                intent.putExtra("id", mTracksBean.getId());
                 startActivity(intent);
             });
             mSeekBar = findViewById(R.id.song_progress);
@@ -202,6 +203,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
     @Override
     void initData() {
         index = getIntent().getIntExtra("index", 0);
+        mTracksBean = mChannel.getMusicList().get(index);
         if (MusicService.getInstance().getOnPlayComplete() == null) {
             MusicService.getInstance().setOnPlayComplete(new OnPlayComplete() {
                 @Override
@@ -222,32 +224,32 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
     }
 
     private void refreshLayout() {
-        if(MusicService.allSongs != null) {
-            mTracksBean = MusicService.allSongs.get(index);
+        if(mChannel.getMusicList() != null && mChannel.getMusicList().size() != 0) {
+            mTracksBean = mChannel.getMusicList().get(index);
             if (!isDestroyed()) {
-                Glide.with(mContext).load(MusicService.allSongs.get(index).getAl().getPicUrl())
+                Glide.with(mContext).load(mTracksBean.getAl().getPicUrl())
                         .bitmapTransform(new BlurTransformation(mContext, 15, 10)).into(mImageView);
-                mToolbar.setTitle(MusicService.allSongs.get(index).getName());
-                mTextView.setText(MusicService.allSongs.get(index).getAl().getName());
-                if (MusicService.allSongs.get(index).getAr().size() == 1) {
-                    mTextView2.setText(MusicService.allSongs.get(index).getAr().get(0).getName());
+                mToolbar.setTitle(mTracksBean.getName());
+                mTextView.setText(mTracksBean.getAl().getName());
+                if (mTracksBean.getAr().size() == 1) {
+                    mTextView2.setText(mTracksBean.getAr().get(0).getName());
                 } else {
                     StringBuilder artist = new StringBuilder();
-                    for (int i = 0; i < MusicService.allSongs.get(index).getAr().size(); i++) {
-                        artist.append(MusicService.allSongs.get(index).getAr().get(i).getName()).append(" / ");
+                    for (int i = 0; i < mTracksBean.getAr().size(); i++) {
+                        artist.append(mTracksBean.getAr().get(i).getName()).append(" / ");
                     }
                     mTextView2.setText(artist.substring(0, artist.length() - 3));
                 }
-                mTextView4.setText(mTime.format(MusicService.allSongs.get(index).getDt()));
-                mSeekBar.setMax(MusicService.allSongs.get(index).getDt());
+                mTextView4.setText(mTime.format(mTracksBean.getDt()));
+                mSeekBar.setMax(mTracksBean.getDt());
             }
-            mLikeButton.setLiked(MusicService.allSongs.get(index).isLiked());
+            mLikeButton.setLiked(mTracksBean.isLiked());
             if (index != MusicService.getInstance().getNowPlayIndex()) {
                 mHandler.removeCallbacksAndMessages(null);
                 mSeekBar.setProgress(0);
                 mTextView3.setText("00: 00");
                 MusicService.getInstance().setPlaying(true);
-                MusicService.getInstance().playMusic(MusicService.allSongs.get(index).getId(), () -> {
+                MusicService.getInstance().playMusic(mTracksBean.getId(), () -> {
                     mFragmentCover.resumeAnimation();
                     mHandler.post(mMyRunnable);
                 });
@@ -266,7 +268,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
     }
 
     private void nextSong(){
-        if (index == MusicService.allSongs.size() - 1) {
+        if (index == mChannel.getMusicList().size() - 1) {
             Common.showToast(mContext, "这已经是最后一首歌了");
         } else {
             index = index + 1;
@@ -335,42 +337,4 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
             Log.d("&&&&****", "((()(()()()");
         }
     }
-
-
-//    private void postLike(String isLike){
-//        Gson gson = new Gson();
-//        String songGson = gson.toJson(MusicService.allSongs.get(index));
-//        UserBean userBean = Local.getUser();
-//        RetrofitUtil.getTempApi().postLike(userBean.getUserID(), songGson, isLike)
-//                .subscribeOn(Schedulers.newThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<BackResponse>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(BackResponse backResponse) {
-//                        if(backResponse != null){
-//                            if(backResponse.getMessage() != null &&
-//                                    backResponse.getMessage().length() != 0) {
-//                                Common.showToast(backResponse.getMessage());
-//                            }
-//                        }else {
-//                            Common.showToast("操作失败");
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Common.showToast("操作失败");
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-//    }
 }

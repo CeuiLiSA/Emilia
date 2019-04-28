@@ -35,8 +35,7 @@ public class SearchAlbumFragment extends
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, int viewType) {
-                MusicService.allSongs.clear();
-                MusicService.allSongs.addAll(allItems);
+                mChannel.setMusicList(allItems);
                 Intent intent = new Intent(mContext, MusicActivity.class);
                 intent.putExtra("index", position);
                 startActivity(intent);

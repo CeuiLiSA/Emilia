@@ -3,12 +3,20 @@ package ceuilisa.mirai.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import ceuilisa.mirai.R;
+import ceuilisa.mirai.activities.AddPlayListActivity;
 import ceuilisa.mirai.activities.PlayListDetailActivity;
+import ceuilisa.mirai.activities.SearchActivity;
+import ceuilisa.mirai.activities.TemplateFragmentActivity;
 import ceuilisa.mirai.adapters.PlayListNodeAdapter;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.LoginResponse;
@@ -36,6 +44,14 @@ public class FragmentMyPlayList extends BaseListFragment<PlayListResponse, PlayL
     }
 
     @Override
+    View initView(View v) {
+        super.initView(v);
+        ((TemplateFragmentActivity)getActivity()).setSupportActionBar(mToolbar);
+        mToolbar.setNavigationOnClickListener(view -> getActivity().finish());
+        return v;
+    }
+
+    @Override
     void initAdapter() {
         mAdapter = new PlayListNodeAdapter(allItems, mContext);
         mAdapter.setOnItemClickListener((view, position, viewType) -> {
@@ -56,6 +72,7 @@ public class FragmentMyPlayList extends BaseListFragment<PlayListResponse, PlayL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -69,5 +86,21 @@ public class FragmentMyPlayList extends BaseListFragment<PlayListResponse, PlayL
         if(channel.getReceiver().equals(className)){
             getFirstData();
         }
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.add_playlist, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_add_playlist) {
+            Intent intent = new Intent(mContext, AddPlayListActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

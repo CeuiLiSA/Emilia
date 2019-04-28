@@ -79,10 +79,12 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
         if (mOnItemClickListener != null) {
-            ((TagHolder) holder).mView.setOnClickListener(v ->
-                    mOnItemClickListener.onItemClick(((TagHolder) holder).itemView, position, 1));
             holder.itemView.setOnClickListener(v ->
                     mOnItemClickListener.onItemClick(((TagHolder) holder).itemView, position, 0));
+            ((TagHolder) holder).mView.setOnClickListener(v ->
+                    mOnItemClickListener.onItemClick(((TagHolder) holder).itemView, position, 1));
+            ((TagHolder) holder).more.setOnClickListener(v ->
+                    mOnItemClickListener.onItemClick(((TagHolder) holder).itemView, position, 2));
         }
     }
 
@@ -97,7 +99,7 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public class TagHolder extends RecyclerView.ViewHolder {
         private TextView mTextView, mTextView2, mTextView3;
-        private ImageView mView;
+        private ImageView mView, more;
         TagHolder(View itemView) {
             super(itemView);
 
@@ -105,6 +107,7 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             mTextView2 = itemView.findViewById(R.id.number);
             mTextView3 = itemView.findViewById(R.id.song_author);
             mView = itemView.findViewById(R.id.show_video);
+            more = itemView.findViewById(R.id.more);
         }
     }
 }

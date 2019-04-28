@@ -8,6 +8,7 @@ import android.view.View;
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.NowPlayListAdapter;
+import ceuilisa.mirai.network.MusicChannel;
 import me.shaohui.bottomdialog.BaseBottomDialog;
 
 public class PlayListDialog extends BaseBottomDialog {
@@ -27,7 +28,8 @@ public class PlayListDialog extends BaseBottomDialog {
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         nowPlayList.setLayoutManager(layoutManager);
         nowPlayList.setHasFixedSize(true);
-        NowPlayListAdapter adapter = new NowPlayListAdapter(MusicService.allSongs, mContext);
+        NowPlayListAdapter adapter = new NowPlayListAdapter(
+                MusicChannel.getInstance().getMusicList(), mContext);
         nowPlayList.setAdapter(adapter);
         nowPlayList.scrollToPosition(MusicService.getInstance().getNowPlayIndex());
     }

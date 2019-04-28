@@ -1,7 +1,13 @@
 package ceuilisa.mirai.response;
 
+import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+
 import java.util.List;
 
+import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.nodejs.AlbumBean;
 import ceuilisa.mirai.nodejs.ArtistBean;
 
@@ -96,7 +102,7 @@ public class TracksBean {
     private int mv;
     private long publishTime;
     private List<ArtistBean> ar, artists;
-    private List<String> alias;
+    private List<String> alia;
     private List<?> rtUrls;
 
     public String getName() {
@@ -325,11 +331,11 @@ public class TracksBean {
     }
 
     public List<String> getAlia() {
-        return alias;
+        return alia;
     }
 
     public void setAlia(List<String> alia) {
-        this.alias = alia;
+        this.alia = alia;
     }
 
     public List<?> getRtUrls() {
@@ -338,5 +344,16 @@ public class TracksBean {
 
     public void setRtUrls(List<?> rtUrls) {
         this.rtUrls = rtUrls;
+    }
+
+    public String getFullSongName(){
+        if (getAlia() != null && getAlia().size() != 0) {
+            String spannableString = String.format("%s (%s)",
+                    getName(), getAlia().get(0));
+            return spannableString;
+        } else {
+            //若歌曲Alia为空，查找歌曲tns
+            return getName();
+        }
     }
 }

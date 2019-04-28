@@ -22,6 +22,7 @@ import java.io.File;
 
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
+import ceuilisa.mirai.network.MusicChannel;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.FileUtil;
 
@@ -53,7 +54,7 @@ public class DownloadDialog extends DialogFragment{
 
     public void startDownload(){
         File file = new File("FILE_PATH",
-                MusicService.allSongs.get(index).getName() + ".mp3");
+                MusicChannel.getInstance().getMusicList().get(index).getName() + ".mp3");
         if(file.exists()){
             mAlertDialog.dismiss();
             Common.showToast(getContext(), "该文件已存在");

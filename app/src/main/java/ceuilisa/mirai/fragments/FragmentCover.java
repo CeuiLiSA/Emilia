@@ -59,10 +59,11 @@ public class FragmentCover extends BaseFragment {
 
     public void loadCover() {
         if (getActivity() != null) {
-            if (MusicService.allSongs != null) {
+            if (mChannel != null && mChannel.getMusicList().size() != 0) {
                 refreshAnimation();
                 int index = ((MusicActivity) getActivity()).index;
-                Glide.with(getActivity()).load(MusicService.allSongs.get(index).getAl().getPicUrl()).into(mCircleImageView);
+                mTracksBean = mChannel.getMusicList().get(index);
+                Glide.with(getActivity()).load(mTracksBean.getAl().getPicUrl()).into(mCircleImageView);
             }
         }
     }
