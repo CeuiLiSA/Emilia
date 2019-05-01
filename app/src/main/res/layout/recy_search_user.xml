@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="@dimen/four_dp"
+    android:background="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="@dimen/four_dp"
+    android:layout_height="160dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/back"
+            android:scaleType="centerCrop"
+            android:layout_height="match_parent" />
+
+
+        <RelativeLayout
+            android:id="@+id/top_rela"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/playlist_photo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="@dimen/eight_dp"
+                android:transitionName="sharedView"
+                app:corner_radius="@dimen/four_dp" />
+
+
+            <TextView
+                android:id="@+id/artist_name"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/six_dp"
+                android:layout_marginEnd="@dimen/six_dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_marginBottom="@dimen/four_dp"
+                android:textColor="@android:color/white"
+                android:shadowColor="#FF000000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/playlist_photo"
+                android:text="撒阿萨德阿萨德阿萨德"/>
+
+
+            <TextView
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_marginBottom="@dimen/four_dp"
+                android:textColor="@android:color/white"
+                android:shadowColor="#FF000000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:layout_centerVertical="true"
+                android:id="@+id/follow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/follow_user_bg"
+                android:paddingStart="@dimen/sixteen_dp"
+                android:paddingEnd="@dimen/sixteen_dp"
+                android:paddingTop="@dimen/six_dp"
+                android:textSize="11sp"
+                android:paddingBottom="@dimen/six_dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/sixteen_dp"
+                android:text="+ 关 注" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/info"
+            android:layout_margin="@dimen/eight_dp"
+            android:layout_below="@+id/top_rela"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

@@ -6,29 +6,30 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.othershe.library.NiceImageView;
 
 import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.nodejs.PlaylistBean;
-import ceuilisa.mirai.response.PlayListTitleResponse;
+import ceuilisa.mirai.nodejs.FollowedsBean;
+import ceuilisa.mirai.nodejs.UserprofilesBean;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * 歌单列表（不是歌曲列表)
+ *
  */
-public class PlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class FollowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private OnItemClickListener mOnItemClickListener;
-    private List<PlaylistBean> allIllust;
+    private List<FollowedsBean> allIllust;
 
-    public PlayListAdapter(List<PlaylistBean> list, Context context) {
+    public FollowAdapter(List<FollowedsBean> list, Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(mContext);
         allIllust = list;
@@ -37,20 +38,16 @@ public class PlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mLayoutInflater.inflate(R.layout.recy_play_list, parent, false);
+        View view = mLayoutInflater.inflate(R.layout.recy_search_user, parent, false);
         return new TagHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName());
-        ((TagHolder) holder).mTextView2.setText(String.format("共%s首歌曲，播放%s次",
-                allIllust.get(position).getTrackCount(), allIllust.get(position).getPlayCount()));
-        if(allIllust.get(position).getCoverImgUrl() == null || allIllust.get(position).getCoverImgUrl().length() == 0){
-            Glide.with(mContext).load(R.mipmap.default_playlist_cover).into(((TagHolder) holder).mNiceImageView);
-        }else {
-            Glide.with(mContext).load(allIllust.get(position).getCoverImgUrl()).into(((TagHolder) holder).mNiceImageView);
-        }
+        ((TagHolder) holder).mTextView.setText(allIllust.get(position).getNickname());
+        ((TagHolder) holder).mTextView2.setText(allIllust.get(position).getSignature());
+        Glide.with(mContext).load(R.color.colorPrimary).into(((TagHolder) holder).mImageView);
+        Glide.with(mContext).load(allIllust.get(position).getAvatarUrl()).into(((TagHolder) holder).mNiceImageView);
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(v ->
                     mOnItemClickListener.onItemClick(((TagHolder) holder).mNiceImageView, position, 0));
@@ -68,14 +65,16 @@ public class PlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class TagHolder extends RecyclerView.ViewHolder {
         private TextView mTextView, mTextView2;
-        private NiceImageView mNiceImageView;
+        private CircleImageView mNiceImageView;
+        private ImageView mImageView;
 
         TagHolder(View itemView) {
             super(itemView);
 
             mNiceImageView = itemView.findViewById(R.id.playlist_photo);
-            mTextView = itemView.findViewById(R.id.song_name);
-            mTextView2 = itemView.findViewById(R.id.song_author);
+            mTextView = itemView.findViewById(R.id.artist_name);
+            mTextView2 = itemView.findViewById(R.id.info);
+            mImageView = itemView.findViewById(R.id.back);
         }
     }
 }

@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.fragments.BaseFragment;
+import ceuilisa.mirai.fragments.FragmentFollow;
+import ceuilisa.mirai.fragments.FragmentFollowers;
 import ceuilisa.mirai.fragments.FragmentNewSong;
 import ceuilisa.mirai.fragments.FragmentPlayAllHistory;
 import ceuilisa.mirai.fragments.FragmentPlayWeekHistory;
@@ -106,6 +108,32 @@ public class PlayHistoryActivity extends WithPanelActivity {
                     return data[position];
                 }
             });
+        }else if(dataType.equals("关注与粉丝")){
+            data = Constant.FOLLOW_AND_FOLLOWERS;
+            int uid = getIntent().getIntExtra("uid", 0);
+            mToolbar.setTitle("TA的好友");
+            mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+                @Override
+                public Fragment getItem(int i) {
+                    if(i == 0){
+                        return FragmentFollow.newInstance(uid);
+                    }else {
+                        return FragmentFollowers.newInstance(uid);
+                    }
+                }
+
+                @Override
+                public int getCount() {
+                    return data.length;
+                }
+
+                @Override
+                public CharSequence getPageTitle(int position) {
+                    return data[position];
+                }
+            });
+            int currentPage = getIntent().getIntExtra("currentPage", 0);
+            mViewPager.setCurrentItem(currentPage);
         }
 
     }

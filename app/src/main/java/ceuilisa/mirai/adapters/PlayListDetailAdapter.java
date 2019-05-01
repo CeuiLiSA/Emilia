@@ -19,7 +19,9 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.response.TracksBean;
 
-
+/**
+ * 歌曲列表
+ */
 public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;

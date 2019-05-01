@@ -3,11 +3,14 @@ package ceuilisa.mirai.network;
 import ceuilisa.mirai.nodejs.ArtistAlbumResponse;
 import ceuilisa.mirai.nodejs.DayRecommend;
 import ceuilisa.mirai.nodejs.EventResponse;
+import ceuilisa.mirai.nodejs.FollowResponse;
+import ceuilisa.mirai.nodejs.FollowerResponse;
 import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.nodejs.MvPlayUrlResponse;
 import ceuilisa.mirai.nodejs.MvRankResponse;
 import ceuilisa.mirai.nodejs.PlayListResponse;
 import ceuilisa.mirai.nodejs.RecmPlayListResponse;
+import ceuilisa.mirai.nodejs.SearchUserResponse;
 import ceuilisa.mirai.nodejs.UserDetailResponse;
 import ceuilisa.mirai.response.BaseResponse;
 import ceuilisa.mirai.response.CommentResponse;
@@ -16,6 +19,7 @@ import ceuilisa.mirai.response.MvDetail;
 import ceuilisa.mirai.response.NewSongResponse;
 import ceuilisa.mirai.response.PlayListDetailResponse;
 import ceuilisa.mirai.response.PlayListTitleResponse;
+import ceuilisa.mirai.response.SearchArtistResponse;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -138,10 +142,62 @@ public interface NodeApi {
 
 
     /**
-     * 将一首歌收藏至某歌单
+     * 新歌速递
      *
      * @return
      */
     @GET("/top/song")
     Observable<NewSongResponse> newSong(@Query("type") int type);
+
+
+
+    /**
+     * 搜索歌手
+     *
+     * @return
+     */
+    @GET("/search?type=100")
+    Observable<SearchArtistResponse> searchArtist(@Query("keywords") String keywords,
+                                                  @Query("limit") int limit,
+                                                  @Query("offset") int offset);
+
+
+    /**
+     * 搜索用户
+     *
+     * @return
+     */
+    @GET("/search?type=1002")
+    Observable<SearchUserResponse> searchUser(@Query("keywords") String keywords,
+                                              @Query("limit") int limit,
+                                              @Query("offset") int offset);
+
+
+    /**
+     * 获取粉丝列表
+     *
+     * @param uid
+     * @param limit
+     * @param offset
+     * @return
+     */
+    @GET("/user/followeds")
+    Observable<FollowerResponse> getFollowers(@Query("uid") long uid,
+                                              @Query("limit") int limit,
+                                              @Query("offset") int offset);
+
+
+
+    /**
+     * 获取关注列表
+     *
+     * @param uid
+     * @param limit
+     * @param offset
+     * @return
+     */
+    @GET("/user/follows")
+    Observable<FollowResponse> getFollow(@Query("uid") int uid,
+                                         @Query("limit") int limit,
+                                         @Query("offset") int offset);
 }

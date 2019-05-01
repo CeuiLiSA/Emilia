@@ -109,9 +109,9 @@ public class SearchActivity extends WithPanelActivity implements MaterialSearchB
                 startActivity(intent);
             }
             else if(searchType == 1){//搜歌手
-                Intent intent = new Intent(mContext, SingleFragmentActivity.class);
+                Intent intent = new Intent(mContext, TemplateFragmentActivity.class);
                 intent.putExtra("key", searchBar.getText().trim());
-                intent.putExtra("title", "搜索专辑 " + searchBar.getText().trim());
+                intent.putExtra("dataType", "搜索歌手");
                 startActivity(intent);
             }
             else if(searchType == 2){//搜专辑 done
@@ -126,8 +126,9 @@ public class SearchActivity extends WithPanelActivity implements MaterialSearchB
                 intent.putExtra("key", searchBar.getText().trim());
                 startActivity(intent);
             }else if(searchType == 4){//搜用户
-                Intent intent = new Intent(mContext, SearchUserActivity.class);
+                Intent intent = new Intent(mContext, TemplateFragmentActivity.class);
                 intent.putExtra("key", searchBar.getText().trim());
+                intent.putExtra("dataType", "搜索用户");
                 startActivity(intent);
             }
 

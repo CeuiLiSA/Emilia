@@ -15,20 +15,20 @@ import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
+import ceuilisa.mirai.nodejs.ArtistBean;
 import ceuilisa.mirai.nodejs.PlaylistBean;
-import ceuilisa.mirai.response.PlayListTitleResponse;
 
 /**
- * 歌单列表（不是歌曲列表)
+ * 搜索歌手列表
  */
-public class PlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ArtistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private OnItemClickListener mOnItemClickListener;
-    private List<PlaylistBean> allIllust;
+    private List<ArtistBean> allIllust;
 
-    public PlayListAdapter(List<PlaylistBean> list, Context context) {
+    public ArtistAdapter(List<ArtistBean> list, Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(mContext);
         allIllust = list;
@@ -37,19 +37,21 @@ public class PlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mLayoutInflater.inflate(R.layout.recy_play_list, parent, false);
+        View view = mLayoutInflater.inflate(R.layout.recy_search_artist, parent, false);
         return new TagHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName());
-        ((TagHolder) holder).mTextView2.setText(String.format("共%s首歌曲，播放%s次",
-                allIllust.get(position).getTrackCount(), allIllust.get(position).getPlayCount()));
-        if(allIllust.get(position).getCoverImgUrl() == null || allIllust.get(position).getCoverImgUrl().length() == 0){
+        String artistName = allIllust.get(position).getName();
+        if(allIllust.get(position).getAlias() != null && allIllust.get(position).getAlias().size() != 0){
+            artistName = artistName + " (" + allIllust.get(position).getAlias().get(0)  + ")";
+        }
+        ((TagHolder) holder).mTextView.setText(artistName);
+        if(allIllust.get(position).getImg1v1Url() == null || allIllust.get(position).getImg1v1Url().length() == 0){
             Glide.with(mContext).load(R.mipmap.default_playlist_cover).into(((TagHolder) holder).mNiceImageView);
         }else {
-            Glide.with(mContext).load(allIllust.get(position).getCoverImgUrl()).into(((TagHolder) holder).mNiceImageView);
+            Glide.with(mContext).load(allIllust.get(position).getImg1v1Url()).into(((TagHolder) holder).mNiceImageView);
         }
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(v ->
@@ -67,15 +69,14 @@ public class PlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public class TagHolder extends RecyclerView.ViewHolder {
-        private TextView mTextView, mTextView2;
+        private TextView mTextView;
         private NiceImageView mNiceImageView;
 
         TagHolder(View itemView) {
             super(itemView);
 
             mNiceImageView = itemView.findViewById(R.id.playlist_photo);
-            mTextView = itemView.findViewById(R.id.song_name);
-            mTextView2 = itemView.findViewById(R.id.song_author);
+            mTextView = itemView.findViewById(R.id.artist_name);
         }
     }
 }

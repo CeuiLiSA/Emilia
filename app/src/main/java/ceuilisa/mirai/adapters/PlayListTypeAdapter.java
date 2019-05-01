@@ -14,7 +14,9 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.response.ItemResponse;
 
-
+/**
+ * 歌单类型
+ */
 public class PlayListTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;

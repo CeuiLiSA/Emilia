@@ -81,6 +81,25 @@ public class UserDetailActivity extends BaseActivity {
         });
         mViewPager = findViewById(R.id.view_pager);
         mTabLayout = findViewById(R.id.tab);
+        follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, PlayHistoryActivity.class);
+                intent.putExtra("dataType", "关注与粉丝");
+                intent.putExtra("uid", mUserDetailResponse.getProfile().getUserId());
+                startActivity(intent);
+            }
+        });
+        fans.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, PlayHistoryActivity.class);
+                intent.putExtra("dataType", "关注与粉丝");
+                intent.putExtra("uid", mUserDetailResponse.getProfile().getUserId());
+                intent.putExtra("currentPage", 1);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
