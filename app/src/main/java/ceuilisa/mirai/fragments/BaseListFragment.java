@@ -189,13 +189,15 @@ public abstract class BaseListFragment<Response extends ListShow<ListItem>,
                         @Override
                         public void onNext(Response response) {
                             if (response != null) {
-                                allItems.clear();
-                                allItems.addAll(response.getList());
-                                initAdapter();
-                                mRefreshLayout.finishRefresh(true);
-                                noData.setVisibility(View.INVISIBLE);
-                                if(mAdapter != null) {
-                                    mRecyclerView.setAdapter(mAdapter);
+                                if(response.getList().size() != 0) {
+                                    allItems.clear();
+                                    allItems.addAll(response.getList());
+                                    initAdapter();
+                                    mRefreshLayout.finishRefresh(true);
+                                    noData.setVisibility(View.INVISIBLE);
+                                    if (mAdapter != null) {
+                                        mRecyclerView.setAdapter(mAdapter);
+                                    }
                                 }
                             } else {
                                 noData.setVisibility(View.VISIBLE);

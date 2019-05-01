@@ -13,6 +13,7 @@ import ceuilisa.mirai.response.BaseResponse;
 import ceuilisa.mirai.response.CommentResponse;
 import ceuilisa.mirai.response.LikeSongResponse;
 import ceuilisa.mirai.response.MvDetail;
+import ceuilisa.mirai.response.NewSongResponse;
 import ceuilisa.mirai.response.PlayListDetailResponse;
 import ceuilisa.mirai.response.PlayListTitleResponse;
 import io.reactivex.Observable;
@@ -122,4 +123,25 @@ public interface NodeApi {
     @GET("/playlist/subscribe")
     Observable<BaseResponse> starPlaylist(@Query("t") String t,
                                             @Query("id") long id);
+
+
+    /**
+     * 将一首歌收藏至某歌单
+     *
+     * @param pid
+     * @param tracks
+     * @return
+     */
+    @GET("/playlist/tracks?op=add")
+    Observable<BaseResponse> addChart(@Query("pid") long pid,
+                                          @Query("tracks") long tracks);
+
+
+    /**
+     * 将一首歌收藏至某歌单
+     *
+     * @return
+     */
+    @GET("/top/song")
+    Observable<NewSongResponse> newSong(@Query("type") int type);
 }

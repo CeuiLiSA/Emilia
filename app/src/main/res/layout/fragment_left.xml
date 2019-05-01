@@ -87,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="@dimen/sixteen_dp"
-        android:src="@drawable/ic_file_download_black_24dp"
+        android:src="@drawable/ic_fiber_new_black_24dp"
         android:tint="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/devider_2" />
@@ -99,7 +99,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/sixteen_dp"
         android:gravity="center_vertical"
-        android:text="上传图片"
+        android:text="新歌速递"
         android:textColor="#333333"
         android:textSize="@dimen/sixteen_sp"
         app:layout_constraintBottom_toBottomOf="@+id/devider_3"

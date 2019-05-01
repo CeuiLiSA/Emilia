@@ -18,6 +18,7 @@ import java.util.List;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListAdapter;
 import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.nodejs.PlaylistBean;
 import ceuilisa.mirai.response.PlayListTitleResponse;
 import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Common;
@@ -36,7 +37,7 @@ public class PlayListActivity extends WithPanelActivity {
     private RefreshLayout mRefreshLayout;
     private PlayListAdapter mAdapter;
     private Toolbar mToolbar;
-    private List<PlayListTitleResponse.ResultBean.PlaylistsBean> allPlaylist = new ArrayList<>();
+    private List<PlaylistBean> allPlaylist = new ArrayList<>();
     public static boolean isNeedFresh = false;
 
 

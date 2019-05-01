@@ -216,7 +216,13 @@ public class TracksBean {
     }
 
     public AlbumBean getAl() {
-        return al;
+        if(al != null) {
+            return al;
+        }
+        if(album != null){
+            return album;
+        }
+        return null;
     }
 
     public void setAl(AlbumBean al) {
@@ -345,7 +351,13 @@ public class TracksBean {
     }
 
     public List<ArtistBean> getAr() {
-        return ar;
+        if(ar != null) {
+            return ar;
+        }
+        if(artists != null){
+            return artists;
+        }
+        return null;
     }
 
     public void setAr(List<ArtistBean> ar) {

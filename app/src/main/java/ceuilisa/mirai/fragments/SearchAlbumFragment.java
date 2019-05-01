@@ -6,6 +6,7 @@ import android.view.View;
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
+import ceuilisa.mirai.dialogs.LikeSongDialog;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.LoginResponse;
@@ -35,10 +36,16 @@ public class SearchAlbumFragment extends
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, int viewType) {
-                mChannel.setMusicList(allItems);
-                Intent intent = new Intent(mContext, MusicActivity.class);
-                intent.putExtra("index", position);
-                startActivity(intent);
+                if(viewType == 0) {
+                    mChannel.setMusicList(allItems);
+                    Intent intent = new Intent(mContext, MusicActivity.class);
+                    intent.putExtra("index", position);
+                    startActivity(intent);
+                }else if (viewType == 2) {
+                    LikeSongDialog dialog = LikeSongDialog.newInstance(
+                            allItems.get(position));
+                    dialog.show(getChildFragmentManager());
+                }
             }
         });
     }

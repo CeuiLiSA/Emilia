@@ -46,6 +46,16 @@ public class LikeSongDialog extends BaseBottomDialog {
 
         songName.setText("歌曲：" + mTracksBean.getFullSongName());
 
+
+        addToPlaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddChartDialog dialog = AddChartDialog.newInctance(mTracksBean.getId());
+                dialog.show(getActivity().getSupportFragmentManager(), "AddChartDialog");
+                dismiss();
+            }
+        });
+
         download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

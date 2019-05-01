@@ -2,6 +2,8 @@ package ceuilisa.mirai.response;
 
 import java.util.List;
 
+import ceuilisa.mirai.nodejs.PlaylistBean;
+
 public class PlayListTitleResponse {
 
 
@@ -36,7 +38,7 @@ public class PlayListTitleResponse {
          */
 
         private int playlistCount;
-        private List<PlaylistsBean> playlists;
+        private List<PlaylistBean> playlists;
 
         public int getPlaylistCount() {
             return playlistCount;
@@ -46,204 +48,13 @@ public class PlayListTitleResponse {
             this.playlistCount = playlistCount;
         }
 
-        public List<PlaylistsBean> getPlaylists() {
+        public List<PlaylistBean> getPlaylists() {
             return playlists;
         }
 
-        public void setPlaylists(List<PlaylistsBean> playlists) {
+        public void setPlaylists(List<PlaylistBean> playlists) {
             this.playlists = playlists;
         }
 
-        public static class PlaylistsBean {
-            /**
-             * id : 369790156
-             * name : 『日系』清新女声
-             * coverImgUrl : http://p1.music.126.net/DlotD-DtCq_OgLF7KluqIg==/3412884094557524.jpg
-             * creator : {"nickname":"CeuiLiSA","userId":113568254,"userType":0,"authStatus":0,"expertTags":null,"experts":null}
-             * subscribed : false
-             * trackCount : 203
-             * userId : 113568254
-             * playCount : 1149
-             * bookCount : 4
-             * description : Ho-kago Tea Time 放课後的下午茶时间
-             * highQuality : false
-             * alg : alg_playlist_basic
-             */
-
-            private long id;
-            private String name;
-            private String coverImgUrl;
-            private CreatorBean creator;
-            private boolean subscribed;
-            private int trackCount;
-            private int userId;
-            private int playCount;
-            private int bookCount;
-            private String description;
-            private boolean highQuality;
-            private String alg;
-
-            public long getId() {
-                return id;
-            }
-
-            public void setId(long id) {
-                this.id = id;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public String getCoverImgUrl() {
-                return coverImgUrl;
-            }
-
-            public void setCoverImgUrl(String coverImgUrl) {
-                this.coverImgUrl = coverImgUrl;
-            }
-
-            public CreatorBean getCreator() {
-                return creator;
-            }
-
-            public void setCreator(CreatorBean creator) {
-                this.creator = creator;
-            }
-
-            public boolean isSubscribed() {
-                return subscribed;
-            }
-
-            public void setSubscribed(boolean subscribed) {
-                this.subscribed = subscribed;
-            }
-
-            public int getTrackCount() {
-                return trackCount;
-            }
-
-            public void setTrackCount(int trackCount) {
-                this.trackCount = trackCount;
-            }
-
-            public int getUserId() {
-                return userId;
-            }
-
-            public void setUserId(int userId) {
-                this.userId = userId;
-            }
-
-            public int getPlayCount() {
-                return playCount;
-            }
-
-            public void setPlayCount(int playCount) {
-                this.playCount = playCount;
-            }
-
-            public int getBookCount() {
-                return bookCount;
-            }
-
-            public void setBookCount(int bookCount) {
-                this.bookCount = bookCount;
-            }
-
-            public String getDescription() {
-                return description;
-            }
-
-            public void setDescription(String description) {
-                this.description = description;
-            }
-
-            public boolean isHighQuality() {
-                return highQuality;
-            }
-
-            public void setHighQuality(boolean highQuality) {
-                this.highQuality = highQuality;
-            }
-
-            public String getAlg() {
-                return alg;
-            }
-
-            public void setAlg(String alg) {
-                this.alg = alg;
-            }
-
-            public static class CreatorBean {
-                /**
-                 * nickname : CeuiLiSA
-                 * userId : 113568254
-                 * userType : 0
-                 * authStatus : 0
-                 * expertTags : null
-                 * experts : null
-                 */
-
-                private String nickname;
-                private int userId;
-                private int userType;
-                private int authStatus;
-                private Object expertTags;
-                private Object experts;
-
-                public String getNickname() {
-                    return nickname;
-                }
-
-                public void setNickname(String nickname) {
-                    this.nickname = nickname;
-                }
-
-                public int getUserId() {
-                    return userId;
-                }
-
-                public void setUserId(int userId) {
-                    this.userId = userId;
-                }
-
-                public int getUserType() {
-                    return userType;
-                }
-
-                public void setUserType(int userType) {
-                    this.userType = userType;
-                }
-
-                public int getAuthStatus() {
-                    return authStatus;
-                }
-
-                public void setAuthStatus(int authStatus) {
-                    this.authStatus = authStatus;
-                }
-
-                public Object getExpertTags() {
-                    return expertTags;
-                }
-
-                public void setExpertTags(Object expertTags) {
-                    this.expertTags = expertTags;
-                }
-
-                public Object getExperts() {
-                    return experts;
-                }
-
-                public void setExperts(Object experts) {
-                    this.experts = experts;
-                }
-            }
-        }
     }
 }

@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.fragments.BaseFragment;
+import ceuilisa.mirai.fragments.FragmentNewSong;
 import ceuilisa.mirai.fragments.FragmentPlayAllHistory;
 import ceuilisa.mirai.fragments.FragmentPlayWeekHistory;
 import ceuilisa.mirai.fragments.FragmentSingleRecy;
@@ -74,6 +75,25 @@ public class PlayHistoryActivity extends WithPanelActivity {
                 @Override
                 public Fragment getItem(int i) {
                     return FragmentSingleRecy.newInstance(i, dataType);
+                }
+
+                @Override
+                public int getCount() {
+                    return data.length;
+                }
+
+                @Override
+                public CharSequence getPageTitle(int position) {
+                    return data[position];
+                }
+            });
+        }else if(dataType.equals("新歌速递")){
+            data = Constant.PLAYLIST_NEW_SONG;
+            mToolbar.setTitle("新歌速递");
+            mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+                @Override
+                public Fragment getItem(int i) {
+                    return FragmentNewSong.newInstance(i);
                 }
 
                 @Override

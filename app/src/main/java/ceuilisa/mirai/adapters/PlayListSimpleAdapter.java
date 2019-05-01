@@ -18,15 +18,17 @@ import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.nodejs.PlaylistBean;
 import ceuilisa.mirai.response.PlayListTitleResponse;
 
-
-public class PlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+/**
+ * 简陋版本的歌单列表
+ */
+public class PlayListSimpleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private OnItemClickListener mOnItemClickListener;
     private List<PlaylistBean> allIllust;
 
-    public PlayListAdapter(List<PlaylistBean> list, Context context) {
+    public PlayListSimpleAdapter(List<PlaylistBean> list, Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(mContext);
         allIllust = list;
@@ -35,7 +37,7 @@ public class PlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mLayoutInflater.inflate(R.layout.recy_play_list, parent, false);
+        View view = mLayoutInflater.inflate(R.layout.recy_play_list_dialog_item, parent, false);
         return new TagHolder(view);
     }
 

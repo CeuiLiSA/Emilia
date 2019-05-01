@@ -60,6 +60,7 @@
         <activity android:name=".activities.VideoPlayActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
+        <activity android:name=".activities.ViewPagerActivty" />
     </application>
 
 </manifest>

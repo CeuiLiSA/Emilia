@@ -78,6 +78,7 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             ((TagHolder) holder).mView.setVisibility(View.GONE);
         }
 
+
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(v ->
                     mOnItemClickListener.onItemClick(((TagHolder) holder).itemView, position, 0));

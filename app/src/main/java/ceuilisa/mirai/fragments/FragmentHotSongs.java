@@ -16,6 +16,7 @@ import ceuilisa.mirai.activities.PlayListActivity;
 import ceuilisa.mirai.adapters.PlayAllHistoryAdapter;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.adapters.PlayListTypeAdapter;
+import ceuilisa.mirai.dialogs.LikeSongDialog;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.PlayAllHistoryResponse;
@@ -57,10 +58,16 @@ public class FragmentHotSongs extends BaseFragment {
     public void showHotSongs(List<TracksBean> tracksBeans){
         PlayListDetailAdapter adapter = new PlayListDetailAdapter(tracksBeans, mContext);
         adapter.setOnItemClickListener((view, position, viewType) -> {
-            mChannel.setMusicList(tracksBeans);
-            Intent intent = new Intent(mContext, MusicActivity.class);
-            intent.putExtra("index", position);
-            startActivity(intent);
+            if(viewType == 0) {
+                mChannel.setMusicList(tracksBeans);
+                Intent intent = new Intent(mContext, MusicActivity.class);
+                intent.putExtra("index", position);
+                startActivity(intent);
+            }else if (viewType == 2) {
+                LikeSongDialog dialog = LikeSongDialog.newInstance(
+                        tracksBeans.get(position));
+                dialog.show(getChildFragmentManager());
+            }
         });
         mRecyclerView.setAdapter(adapter);
     }

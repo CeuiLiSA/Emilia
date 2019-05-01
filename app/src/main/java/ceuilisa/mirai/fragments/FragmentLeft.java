@@ -3,6 +3,7 @@ package ceuilisa.mirai.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +19,7 @@ import ceuilisa.mirai.activities.PlayHistoryActivity;
 import ceuilisa.mirai.activities.SearchActivity;
 import ceuilisa.mirai.activities.TemplateFragmentActivity;
 import ceuilisa.mirai.activities.UploadImageActivity;
+import ceuilisa.mirai.activities.ViewPagerActivty;
 
 public class FragmentLeft extends BaseFragment {
 
@@ -80,7 +82,8 @@ public class FragmentLeft extends BaseFragment {
         });
         TextView textView4 = v.findViewById(R.id.textView4);
         textView4.setOnClickListener(v12 -> {
-            Intent intent = new Intent(mContext, UploadImageActivity.class);
+            Intent intent = new Intent(mContext, PlayHistoryActivity.class);
+            intent.putExtra("dataType", "新歌速递");
             mContext.startActivity(intent);
         });
         TextView textView5 = v.findViewById(R.id.textView5);
