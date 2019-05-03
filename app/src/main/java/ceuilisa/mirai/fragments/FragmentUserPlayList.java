@@ -5,15 +5,13 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 
 import ceuilisa.mirai.activities.PlayListDetailActivity;
-import ceuilisa.mirai.adapters.PlayListNodeAdapter;
+import ceuilisa.mirai.adapters.PlayListAdapter;
 import ceuilisa.mirai.network.RetrofitUtil;
-import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.nodejs.PlayListResponse;
 import ceuilisa.mirai.nodejs.PlaylistBean;
-import ceuilisa.mirai.utils.Local;
 import io.reactivex.Observable;
 
-public class FragmentUserPlayList extends BaseListFragment<PlayListResponse, PlayListNodeAdapter, PlaylistBean> {
+public class FragmentUserPlayList extends BaseListFragment<PlayListResponse, PlayListAdapter, PlaylistBean> {
 
     public static FragmentUserPlayList newInstance(int userID) {
         Bundle args = new Bundle();
@@ -36,7 +34,7 @@ public class FragmentUserPlayList extends BaseListFragment<PlayListResponse, Pla
 
     @Override
     void initAdapter() {
-        mAdapter = new PlayListNodeAdapter(allItems, mContext);
+        mAdapter = new PlayListAdapter(allItems, mContext);
         mAdapter.setOnItemClickListener((view, position, viewType) -> {
             Intent intent = new Intent(mContext, PlayListDetailActivity.class);
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat

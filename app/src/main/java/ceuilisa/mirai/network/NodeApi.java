@@ -6,10 +6,12 @@ import ceuilisa.mirai.nodejs.EventResponse;
 import ceuilisa.mirai.nodejs.FollowResponse;
 import ceuilisa.mirai.nodejs.FollowerResponse;
 import ceuilisa.mirai.nodejs.LoginResponse;
+import ceuilisa.mirai.nodejs.MvBean;
 import ceuilisa.mirai.nodejs.MvPlayUrlResponse;
 import ceuilisa.mirai.nodejs.MvRankResponse;
 import ceuilisa.mirai.nodejs.PlayListResponse;
 import ceuilisa.mirai.nodejs.RecmPlayListResponse;
+import ceuilisa.mirai.nodejs.RelatedMvResponse;
 import ceuilisa.mirai.nodejs.SearchSongResponse;
 import ceuilisa.mirai.nodejs.SearchUserResponse;
 import ceuilisa.mirai.nodejs.UserDetailResponse;
@@ -85,9 +87,30 @@ public interface NodeApi {
                                                    @Query("offset") int offset);
 
 
+    /**
+     * 最热榜单mv
+     *
+     * @param limit
+     * @param offset
+     * @return
+     */
     @GET("/top/mv")
     Observable<MvRankResponse> getMvRank(@Query("limit") int limit,
                                          @Query("offset") int offset);
+
+
+    /**
+     * 最新mv
+     *
+     * @param limit
+     * @param offset
+     * @return
+     */
+    @GET("/mv/first")
+    Observable<MvRankResponse> getMvFirst(@Query("limit") int limit,
+                                         @Query("offset") int offset);
+
+
 
 
     @GET("/mv/detail")
@@ -256,4 +279,8 @@ public interface NodeApi {
 
     @GET("/song/url?br=320000")
     Observable<SingleSongResponse> getSongUrl(@Query("id") long id);
+
+
+    @GET("/simi/mv")
+    Observable<RelatedMvResponse> getRelatedMv(@Query("mvid") int mvid);
 }

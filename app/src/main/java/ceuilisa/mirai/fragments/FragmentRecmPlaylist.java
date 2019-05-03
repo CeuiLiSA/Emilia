@@ -4,12 +4,9 @@ import android.content.Intent;
 import android.support.v4.app.ActivityOptionsCompat;
 
 import ceuilisa.mirai.activities.PlayListDetailActivity;
-import ceuilisa.mirai.adapters.PlayListNodeAdapter;
 import ceuilisa.mirai.adapters.RecmPlayListAdapter;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.LoginResponse;
-import ceuilisa.mirai.nodejs.PlayListResponse;
-import ceuilisa.mirai.nodejs.PlaylistBean;
 import ceuilisa.mirai.nodejs.RecmPlayListResponse;
 import ceuilisa.mirai.nodejs.RecommendPlaylistBean;
 import ceuilisa.mirai.utils.Local;

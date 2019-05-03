@@ -196,12 +196,14 @@ public class PlayListDetailActivity extends WithPanelActivity {
                                         //如果歌单创建者是自己，则可以删除歌单中的歌曲
                                         if(playListTitleResponse.getPlaylist().getCreator().getUserId() ==
                                                 Local.getUser().getProfile().getUserId()){
+                                            //支持删除歌曲的LikeSongDialog
                                             LikeSongDialog dialog = LikeSongDialog.newInstance(
                                                     allDatas.get(position),
                                                     playListTitleResponse.getPlaylist().getId(),
                                                     position);
                                             dialog.show(getSupportFragmentManager());
                                         }else {
+                                            //不支持删除歌曲的LikeSongDialog
                                             LikeSongDialog dialog = LikeSongDialog.newInstance(
                                                     allDatas.get(position));
                                             dialog.show(getSupportFragmentManager());

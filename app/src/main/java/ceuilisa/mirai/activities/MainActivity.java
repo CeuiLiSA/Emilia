@@ -33,6 +33,7 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.fragments.BaseFragment;
 import ceuilisa.mirai.fragments.FragmentCenter;
 import ceuilisa.mirai.fragments.FragmentLeft;
+import ceuilisa.mirai.fragments.FragmentMvNew;
 import ceuilisa.mirai.fragments.FragmentMvRank;
 import ceuilisa.mirai.fragments.FragmentRight;
 import ceuilisa.mirai.interf.OnPrepared;
@@ -129,7 +130,7 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
     }
 
     private void initFragments() {
-        mBaseFragments = new BaseFragment[]{new FragmentLeft(), new FragmentMvRank()};
+        mBaseFragments = new BaseFragment[]{new FragmentLeft(), new FragmentMvNew()};
         ViewPager viewPager = findViewById(R.id.view_pager);
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
@@ -181,11 +182,12 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
-            Intent intent = new Intent(mContext, TemplateFragmentActivity.class);
-            intent.putExtra("dataType", "项目主页");
-            intent.putExtra("title", "项目主页");
-            intent.putExtra("url", "https://github.com/CeuiLiSA/Emilia");
-            mContext.startActivity(intent);
+//            Intent intent = new Intent(mContext, TemplateFragmentActivity.class);
+//            intent.putExtra("dataType", "项目主页");
+//            intent.putExtra("title", "项目主页");
+//            intent.putExtra("url", "https://github.com/CeuiLiSA/Emilia");
+//            mContext.startActivity(intent);
+            Common.openUrl("https://github.com/CeuiLiSA/Emilia", mContext);
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);

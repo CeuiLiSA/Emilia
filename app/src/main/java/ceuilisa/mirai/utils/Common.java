@@ -128,4 +128,16 @@ public class Common {
         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
         context.startActivity(Intent.createChooser(intent, "分享歌曲"));
     }
+
+
+    public static void openUrl(String url, Context context) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        context.startActivity(intent);
+    }
+
+    public static void sendAlbumBroadcast(Context context, File file) {
+        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                Uri.fromFile(file)));
+    }
 }

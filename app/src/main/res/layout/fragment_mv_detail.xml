@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:textColor="@color/dark_text"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_margin="@dimen/sixteen_dp"
+        android:id="@+id/name"
+        android:layout_height="wrap_content" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/time"
+            android:layout_marginBottom="@dimen/sixteen_dp"
+            android:layout_marginStart="@dimen/sixteen_dp"
+            android:layout_marginEnd="@dimen/sixteen_dp"
+            android:layout_height="wrap_content" />
+
+
+        <View
+            android:layout_width="1dp"
+            android:background="@color/back_ground"
+            android:layout_alignBottom="@+id/time"
+            android:layout_toEndOf="@+id/time"
+            android:id="@+id/devider"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/play_count"
+            android:layout_marginBottom="@dimen/sixteen_dp"
+            android:layout_marginStart="@dimen/sixteen_dp"
+            android:layout_toEndOf="@+id/devider"
+            android:layout_marginEnd="@dimen/eight_dp"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:textColor="@color/dark_text"
+        android:text="歌手信息"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:layout_marginTop="@dimen/sixteen_dp"
+        android:layout_marginBottom="@dimen/eight_dp"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/artist_info"
+        android:layout_marginEnd="@dimen/sixteen_dp"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="来源"
+        android:textColor="@color/dark_text"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:layout_marginTop="@dimen/sixteen_dp"
+        android:layout_marginBottom="@dimen/eight_dp"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/brief_desc"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:layout_marginEnd="@dimen/sixteen_dp"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

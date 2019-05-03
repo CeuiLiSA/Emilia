@@ -12,4 +12,14 @@
         android:transitionName="sharedView" />
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/download"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="@dimen/sixteen_dp"
+        android:text="下载图片"
+        android:textColor="@android:color/white"
+        android:drawableStart="@drawable/ic_file_download_white_24dp"
+        android:layout_height="wrap_content" />
+
 </FrameLayout>

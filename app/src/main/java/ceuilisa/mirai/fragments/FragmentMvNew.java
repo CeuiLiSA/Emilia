@@ -11,11 +11,11 @@ import ceuilisa.mirai.nodejs.MvBean;
 import ceuilisa.mirai.nodejs.MvRankResponse;
 import io.reactivex.Observable;
 
-public class FragmentMvRank extends BaseListFragment<MvRankResponse, MvListAdapter, MvBean> {
+public class FragmentMvNew extends BaseListFragment<MvRankResponse, MvListAdapter, MvBean> {
 
     @Override
     Observable<MvRankResponse> initApi() {
-        return RetrofitUtil.getNodeApi().getMvRank(PAGE_SIZE, allItems.size());
+        return RetrofitUtil.getNodeApi().getMvFirst(PAGE_SIZE, allItems.size());
     }
 
     @Override

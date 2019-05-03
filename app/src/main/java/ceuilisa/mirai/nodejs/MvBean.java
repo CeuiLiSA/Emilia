@@ -3,6 +3,8 @@ package ceuilisa.mirai.nodejs;
 import java.io.Serializable;
 import java.util.List;
 
+import ceuilisa.mirai.response.MvDetail;
+
 public class MvBean implements Serializable {
     /**
      * id : 10848831
@@ -26,7 +28,7 @@ public class MvBean implements Serializable {
     private String cover;
     private String name;
     private int playCount;
-    private Object briefDesc;
+    private String briefDesc;
     private Object desc;
     private String artistName;
     private int artistId;
@@ -35,8 +37,90 @@ public class MvBean implements Serializable {
     private int lastRank;
     private int score;
     private boolean subed;
-    private List<ArtistsBean> artists;
+    private List<ArtistBean> artists;
     private List<String> alias;
+    private long coverId;
+    private int subCount;
+    private int shareCount;
+    private int likeCount;
+    private int commentCount;
+    private int nType;
+
+    public long getCoverId() {
+        return coverId;
+    }
+
+    public void setCoverId(long coverId) {
+        this.coverId = coverId;
+    }
+
+    public int getSubCount() {
+        return subCount;
+    }
+
+    public void setSubCount(int subCount) {
+        this.subCount = subCount;
+    }
+
+    public int getShareCount() {
+        return shareCount;
+    }
+
+    public void setShareCount(int shareCount) {
+        this.shareCount = shareCount;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public int getnType() {
+        return nType;
+    }
+
+    public void setnType(int nType) {
+        this.nType = nType;
+    }
+
+    public String getPublishTime() {
+        return publishTime;
+    }
+
+    public void setPublishTime(String publishTime) {
+        this.publishTime = publishTime;
+    }
+
+    public boolean isReward() {
+        return isReward;
+    }
+
+    public void setReward(boolean reward) {
+        isReward = reward;
+    }
+
+    public String getCommentThreadId() {
+        return commentThreadId;
+    }
+
+    public void setCommentThreadId(String commentThreadId) {
+        this.commentThreadId = commentThreadId;
+    }
+
+    private String publishTime;
+    private boolean isReward;
+    private String commentThreadId;
 
     public int getId() {
         return id;
@@ -70,11 +154,11 @@ public class MvBean implements Serializable {
         this.playCount = playCount;
     }
 
-    public Object getBriefDesc() {
+    public String getBriefDesc() {
         return briefDesc;
     }
 
-    public void setBriefDesc(Object briefDesc) {
+    public void setBriefDesc(String briefDesc) {
         this.briefDesc = briefDesc;
     }
 
@@ -142,11 +226,11 @@ public class MvBean implements Serializable {
         this.subed = subed;
     }
 
-    public List<ArtistsBean> getArtists() {
+    public List<ArtistBean> getArtists() {
         return artists;
     }
 
-    public void setArtists(List<ArtistsBean> artists) {
+    public void setArtists(List<ArtistBean> artists) {
         this.artists = artists;
     }
 
@@ -156,31 +240,5 @@ public class MvBean implements Serializable {
 
     public void setAlias(List<String> alias) {
         this.alias = alias;
-    }
-
-    public static class ArtistsBean implements Serializable{
-        /**
-         * id : 14608268
-         * name : Corki
-         */
-
-        private int id;
-        private String name;
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
     }
 }

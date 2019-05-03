@@ -2,7 +2,7 @@ package ceuilisa.mirai.response;
 
 import java.util.List;
 
-public class CommentResponse {
+public class CommentResponse extends BaseResponse{
 
 
     /**

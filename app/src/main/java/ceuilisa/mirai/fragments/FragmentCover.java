@@ -1,6 +1,7 @@
 package ceuilisa.mirai.fragments;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.bumptech.glide.Glide;
 
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
+import ceuilisa.mirai.activities.CoverDetailActivity;
 import ceuilisa.mirai.activities.MusicActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -26,6 +28,15 @@ public class FragmentCover extends BaseFragment {
     @Override
     View initView(View v) {
         mCircleImageView = v.findViewById(R.id.cover);
+        mCircleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, CoverDetailActivity.class);
+                mTracksBean = mChannel.getMusicList().get(MusicService.get().getNowPlayIndex());
+                intent.putExtra("cover", mTracksBean.getAl().getPicUrl());
+                startActivity(intent);
+            }
+        });
         mAnimator = ObjectAnimator.ofFloat(mCircleImageView, "rotation", 0f, 360.0f);
         mAnimator.setDuration(50000);
         mAnimator.setInterpolator(new LinearInterpolator());

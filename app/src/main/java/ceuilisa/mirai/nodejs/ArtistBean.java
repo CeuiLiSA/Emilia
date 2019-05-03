@@ -1,8 +1,9 @@
 package ceuilisa.mirai.nodejs;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ArtistBean {
+public class ArtistBean implements Serializable {
     /**
      * name : 高田憂希
      * id : 12074587

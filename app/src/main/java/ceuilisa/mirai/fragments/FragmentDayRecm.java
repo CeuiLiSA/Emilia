@@ -35,13 +35,7 @@ public class FragmentDayRecm extends BaseListFragment<DayRecommend, RecmSongAdap
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, int viewType) {
-                mChannel.getMusicList().clear();
-                for (int i = 0; i < allItems.size(); i++) {
-                    TracksBean tracksBean = allItems.get(i);
-                    tracksBean.setAl(tracksBean.getAlbum());
-                    tracksBean.setAr(tracksBean.getArtists());
-                    mChannel.getMusicList().add(tracksBean);
-                }
+                mChannel.setMusicList(allItems);
                 Intent intent = new Intent(mContext, MusicActivity.class);
                 intent.putExtra("index", position);
                 startActivity(intent);

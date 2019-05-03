@@ -91,7 +91,7 @@ public class LikeSongDialog extends BaseBottomDialog {
             public void onClick(View v) {
                 if (mTracksBean.getAr().size() == 1) {
                     Intent intent = new Intent(mContext, ArtistActivity.class);
-                    intent.putExtra("id", String.valueOf(mTracksBean.getAr().get(0).getId()));
+                    intent.putExtra("id", mTracksBean.getAr().get(0).getId());
                     intent.putExtra("name", mTracksBean.getAr().get(0).getName());
                     mContext.startActivity(intent);
                 } else {
