@@ -4,7 +4,6 @@ import java.util.List;
 
 import ceuilisa.mirai.interf.ListShow;
 import ceuilisa.mirai.nodejs.AlbumBean;
-import ceuilisa.mirai.nodejs.ArtistBean;
 
 public class SearchAlbumResponse extends BaseResponse implements ListShow<AlbumBean> {
 

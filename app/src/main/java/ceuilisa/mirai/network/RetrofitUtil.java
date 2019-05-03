@@ -18,15 +18,14 @@ public class RetrofitUtil {
 
     private static final String IMJAD_BASE_URL = "https://api.imjad.cn/";
     private static final String TENKOA_BASE_URL = "https://v1.hitokoto.cn/";
-
+    //private static final String BASE_URL_2 = "http://192.168.0.112:3000/";
+    private static final String BASE_URL_2 = "http://192.168.0.101:3000/";
+    private static final String BASE_URL_3 = "http://65.49.235.124/";
     private static Retrofit nodeApi = null;
 
-
-
-
-    public static AppApi getImjadApi(){
+    public static AppApi getImjadApi() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(
-                message -> Log.i("RetrofitLog","retrofitBack = "+message));
+                message -> Log.i("RetrofitLog", "retrofitBack = " + message));
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient
                 .Builder()
@@ -41,11 +40,9 @@ public class RetrofitUtil {
         return retrofit.create(AppApi.class);
     }
 
-
-
-    public static AppApi getTenkoaApi(){
+    public static AppApi getTenkoaApi() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(
-                message -> Log.i("RetrofitLog","retrofitBack = "+message));
+                message -> Log.i("RetrofitLog", "retrofitBack = " + message));
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient
                 .Builder()
@@ -60,10 +57,9 @@ public class RetrofitUtil {
         return retrofit.create(AppApi.class);
     }
 
+    public static NodeApi getNodeApi() {
 
-    public static NodeApi getNodeApi(){
-
-        if(nodeApi == null) {
+        if (nodeApi == null) {
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                 @Override
                 public void log(String message) {
@@ -87,10 +83,4 @@ public class RetrofitUtil {
         }
         return nodeApi.create(NodeApi.class);
     }
-
-
-
-    //private static final String BASE_URL_2 = "http://192.168.0.112:3000/";
-    private static final String BASE_URL_2 = "http://192.168.0.101:3000/";
-    private static final String BASE_URL_3 = "http://65.49.235.124/";
 }

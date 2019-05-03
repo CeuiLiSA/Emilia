@@ -18,20 +18,16 @@ import java.io.File;
 
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
-import ceuilisa.mirai.dialogs.DownloadDialog;
 import ceuilisa.mirai.network.MusicChannel;
 import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.utils.Common;
 
-import static ceuilisa.mirai.dialogs.DownloadDialog.FILE_PATH;
-
 public class CoverDetailActivity extends BaseActivity {
 
+    public static final String PHOTO_FILE_PATH = "/storage/emulated/0/EmiliaPhotos";
     private ImageView mImageView;
     private String coverImage;
     private TextView download;
-
-    public static final String PHOTO_FILE_PATH = "/storage/emulated/0/EmiliaPhotos";
 
     @Override
     void initLayout() {
@@ -51,9 +47,9 @@ public class CoverDetailActivity extends BaseActivity {
             public void onClick(View v) {
                 TracksBean tracksBean = MusicChannel.get().getMusicList().get(MusicService.get().getNowPlayIndex());
                 File file = new File(PHOTO_FILE_PATH, tracksBean.getName() + "_" + tracksBean.getDt() + ".png");
-                if(file.exists()){
+                if (file.exists()) {
                     Common.showToast("该文件已存在");
-                }else {
+                } else {
                     DownloadTask downloadTask = new DownloadTask.Builder(
                             coverImage,
                             new File(PHOTO_FILE_PATH))

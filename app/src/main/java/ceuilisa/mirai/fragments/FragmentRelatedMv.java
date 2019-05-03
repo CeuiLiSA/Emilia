@@ -10,7 +10,7 @@ public class FragmentRelatedMv extends BaseListFragment<RelatedMvResponse, MvLis
 
     private int mvID;
 
-    public static FragmentRelatedMv newInstance(int id){
+    public static FragmentRelatedMv newInstance(int id) {
         FragmentRelatedMv fragmentRelatedMv = new FragmentRelatedMv();
         fragmentRelatedMv.mvID = id;
         return fragmentRelatedMv;

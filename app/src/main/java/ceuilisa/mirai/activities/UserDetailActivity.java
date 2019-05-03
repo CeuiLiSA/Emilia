@@ -35,6 +35,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class UserDetailActivity extends BaseActivity {
 
+    private static final String[] TITLES = new String[]{"音乐", "动态", "关于"};
     private int userID;
     private ImageView background;
     private TabLayout mTabLayout;
@@ -42,10 +43,8 @@ public class UserDetailActivity extends BaseActivity {
     private TextView userName, follow, fans, nowFollow;
     private ViewPager mViewPager;
     private UserDetailResponse mUserDetailResponse;
-    private static final String[] TITLES = new String[]{"音乐", "动态", "关于"};
 
     @Override
-
     void initLayout() {
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
@@ -66,10 +65,10 @@ public class UserDetailActivity extends BaseActivity {
         nowFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mUserDetailResponse.getProfile().isFollowed()){
+                if (mUserDetailResponse.getProfile().isFollowed()) {
                     Operate.starUser(mUserDetailResponse.getProfile().getUserId(), false);
                     nowFollow.setText("+ 关 注");
-                }else {
+                } else {
                     Operate.starUser(mUserDetailResponse.getProfile().getUserId(), true);
                     nowFollow.setText("取消关注");
                 }
@@ -82,7 +81,7 @@ public class UserDetailActivity extends BaseActivity {
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
                 if (state == State.EXPANDED) {
                 } else if (state == State.COLLAPSED) {
-                    if(mUserDetailResponse != null) {
+                    if (mUserDetailResponse != null) {
                         toolbar.setTitle(mUserDetailResponse.getProfile().getNickname());
                     }
                 } else {
@@ -155,8 +154,8 @@ public class UserDetailActivity extends BaseActivity {
         Glide.with(mContext).load(response.getProfile().getAvatarUrl()).into(userHead);
         Glide.with(mContext).load(response.getProfile().getBackgroundUrl()).into(background);
         userName.setText(response.getProfile().getNickname());
-        follow.setText("关注：" + String.valueOf(response.getProfile().getFollows()));
-        fans.setText("粉丝：" + String.valueOf(response.getProfile().getFolloweds()));
+        follow.setText("关注：" + response.getProfile().getFollows());
+        fans.setText("粉丝：" + response.getProfile().getFolloweds());
         BaseFragment[] baseFragments = new BaseFragment[]{
                 FragmentUserPlayList.newInstance(response.getProfile().getUserId()),
                 FragmentEvents.newInstance(response.getProfile().getUserId()),
@@ -182,7 +181,7 @@ public class UserDetailActivity extends BaseActivity {
         nowFollow.setText(response.getProfile().isFollowed() ? "取消关注" : "+ 关 注");
         if (response.getProfile().getUserId() == Local.getUser().getProfile().getUserId()) {
             nowFollow.setVisibility(View.GONE);
-        }else {
+        } else {
             nowFollow.setVisibility(View.VISIBLE);
         }
         mTabLayout.setupWithViewPager(mViewPager);

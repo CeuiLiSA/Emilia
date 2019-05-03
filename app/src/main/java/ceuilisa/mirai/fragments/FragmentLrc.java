@@ -6,10 +6,8 @@ import android.view.View;
 
 import java.util.Objects;
 
-import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.MusicActivity;
-import ceuilisa.mirai.network.MusicChannel;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.LrcResponse;
 import ceuilisa.mirai.utils.Common;
@@ -21,9 +19,9 @@ import me.wcy.lrcview.LrcView;
 
 public class FragmentLrc extends BaseFragment {
 
+    public LrcView mLrcView;
     private int index;
     private boolean hasLyric;
-    public LrcView mLrcView;
 
     @Override
     void initLayout() {

@@ -36,7 +36,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-
     abstract void initLayout();
 
     abstract void initView();

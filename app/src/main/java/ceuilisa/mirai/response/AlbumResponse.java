@@ -3,7 +3,6 @@ package ceuilisa.mirai.response;
 import java.util.List;
 
 import ceuilisa.mirai.nodejs.AlbumBean;
-import ceuilisa.mirai.nodejs.ArtistBean;
 
 public class AlbumResponse {
 

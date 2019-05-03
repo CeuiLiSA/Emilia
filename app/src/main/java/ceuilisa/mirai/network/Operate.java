@@ -2,11 +2,6 @@ package ceuilisa.mirai.network;
 
 import org.greenrobot.eventbus.EventBus;
 
-import ceuilisa.mirai.fragments.FragmentFollow;
-import ceuilisa.mirai.fragments.FragmentFollowers;
-import ceuilisa.mirai.fragments.FragmentMyPlayList;
-import ceuilisa.mirai.interf.OnPrepare;
-import ceuilisa.mirai.interf.OnPrepared;
 import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.response.BaseResponse;
 import ceuilisa.mirai.response.LikeSongResponse;
@@ -26,14 +21,14 @@ public class Operate {
      * @param id
      * @param isLike
      */
-    public static void likeSong(long id, boolean isLike){
+    public static void likeSong(long id, boolean isLike) {
         RetrofitUtil.getNodeApi().likeSong(id, isLike)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Listen<LikeSongResponse>() {
                     @Override
                     void success(LikeSongResponse baseResponse) {
-                        if(baseResponse.getCode() == 200){
+                        if (baseResponse.getCode() == 200) {
                             Common.showToast(isLike ? "收藏成功" : "取消收藏");
                             Channel channel = new Channel();
                             LoginResponse user = Local.getUser();
@@ -52,10 +47,11 @@ public class Operate {
 
     /**
      * 收藏一个歌单
+     *
      * @param id
      * @param isLike
      */
-    public static void starPlaylist(long id, boolean isLike){
+    public static void starPlaylist(long id, boolean isLike) {
         RetrofitUtil.getNodeApi().starPlaylist(isLike ? "1" : "2", id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -67,8 +63,8 @@ public class Operate {
 
                     @Override
                     public void onNext(BaseResponse baseResponse) {
-                        if(baseResponse != null){
-                            if(baseResponse.getCode() == 200){
+                        if (baseResponse != null) {
+                            if (baseResponse.getCode() == 200) {
                                 Common.showToast(isLike ? "收藏成功" : "取消收藏");
                                 Channel channel = new Channel();
                                 channel.setReceiver("FragmentMyPlayList");
@@ -93,10 +89,11 @@ public class Operate {
 
     /**
      * 关注一个用户
+     *
      * @param id
      * @param isLike
      */
-    public static void starUser(long id, boolean isLike){
+    public static void starUser(long id, boolean isLike) {
         RetrofitUtil.getNodeApi().starUser(isLike ? "1" : "2", id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -108,8 +105,8 @@ public class Operate {
 
                     @Override
                     public void onNext(BaseResponse baseResponse) {
-                        if(baseResponse != null){
-                            if(baseResponse.getCode() == 200){
+                        if (baseResponse != null) {
+                            if (baseResponse.getCode() == 200) {
                                 Common.showToast(isLike ? "关注成功" : "取消关注");
 
                                 //通知关注列表页面刷新
@@ -144,7 +141,7 @@ public class Operate {
      *
      * @param id
      */
-    public static void scrobble(long id, long sourceID){
+    public static void scrobble(long id, long sourceID) {
         RetrofitUtil.getNodeApi().scrobble(id, sourceID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -156,8 +153,8 @@ public class Operate {
 
                     @Override
                     public void onNext(BaseResponse baseResponse) {
-                        if(baseResponse != null){
-                            if(baseResponse.getCode() == 200){
+                        if (baseResponse != null) {
+                            if (baseResponse.getCode() == 200) {
                             }
                         }
                     }

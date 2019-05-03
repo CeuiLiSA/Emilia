@@ -42,6 +42,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 public class MusicActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
     public int index;
+    public Handler mHandler = new Handler();
     private Toolbar mToolbar;
     private FloatingActionButton mFloatingActionButton;
     private TextView mTextView, mTextView2, mTextView3, mTextView4;
@@ -54,7 +55,6 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
     private SeekBar mSeekBar;
     private FragmentCover mFragmentCover;
     private FragmentLrc mFragmentLrc;
-    public Handler mHandler = new Handler();
     private MyRunnable mMyRunnable = new MyRunnable();
     private SimpleDateFormat mTime = new SimpleDateFormat("mm: ss");
 
@@ -68,7 +68,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
 
     @Override
     void initView() {
-        if(mChannel.getMusicList() != null && mChannel.getMusicList().size() != 0) {
+        if (mChannel.getMusicList() != null && mChannel.getMusicList().size() != 0) {
             Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim_about_card_show);
             ConstraintLayout constraintLayout = findViewById(R.id.top_parent);
             constraintLayout.startAnimation(animation);
@@ -187,7 +187,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
     @Override
     void initData() {
         index = getIntent().getIntExtra("index", 0);
-        if(mChannel.getMusicList() != null && mChannel.getMusicList().size() != 0) {
+        if (mChannel.getMusicList() != null && mChannel.getMusicList().size() != 0) {
             mTracksBean = mChannel.getMusicList().get(index);
             if (MusicService.get().getOnPlayComplete() == null) {
                 MusicService.get().setOnPlayComplete(new OnPlayComplete() {
@@ -210,7 +210,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
     }
 
     private void refreshLayout() {
-        if(mChannel.getMusicList() != null && mChannel.getMusicList().size() != 0) {
+        if (mChannel.getMusicList() != null && mChannel.getMusicList().size() != 0) {
             mTracksBean = mChannel.getMusicList().get(index);
             if (!isDestroyed()) {
                 Glide.with(mContext).load(mTracksBean.getAl().getPicUrl())
@@ -253,7 +253,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
         }
     }
 
-    private void nextSong(){
+    private void nextSong() {
         if (index == mChannel.getMusicList().size() - 1) {
             Common.showToast(mContext, "这已经是最后一首歌了");
         } else {
@@ -265,7 +265,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
         }
     }
 
-    private void lastSong(){
+    private void lastSong() {
         if (index == 0) {
             Common.showToast(mContext, "这已经是第一首歌了");
         } else {
@@ -276,7 +276,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
         }
     }
 
-    private void stopOrPlay(){
+    private void stopOrPlay() {
         if (MusicService.get().isPlayingMusic()) {
             mFragmentCover.pauseAnimation();
             mHandler.removeCallbacksAndMessages(null);

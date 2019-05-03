@@ -1,4 +1,5 @@
 package ceuilisa.mirai.utils;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.BlurMaskFilter;

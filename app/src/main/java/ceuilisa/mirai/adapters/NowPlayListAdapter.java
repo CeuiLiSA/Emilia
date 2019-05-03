@@ -41,11 +41,11 @@ public class NowPlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName());
         ((TagHolder) holder).mTextView2.setText(" - " + allIllust.get(position).getFullArtistName());
-        if(position == MusicService.get().getNowPlayIndex()){
+        if (position == MusicService.get().getNowPlayIndex()) {
             ((TagHolder) holder).mTextView.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
             ((TagHolder) holder).mTextView2.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
             ((TagHolder) holder).mImageView.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             ((TagHolder) holder).mTextView.setTextColor(mContext.getResources().getColor(R.color.dark_text));
             ((TagHolder) holder).mTextView2.setTextColor(mContext.getResources().getColor(R.color.defaut_text));
             ((TagHolder) holder).mImageView.setVisibility(View.GONE);

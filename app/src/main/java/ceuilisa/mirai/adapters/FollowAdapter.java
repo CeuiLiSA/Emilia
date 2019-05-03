@@ -16,7 +16,6 @@ import java.util.List;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.nodejs.FollowedsBean;
-import ceuilisa.mirai.nodejs.UserprofilesBean;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**

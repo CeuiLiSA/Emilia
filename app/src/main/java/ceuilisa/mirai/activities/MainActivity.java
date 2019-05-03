@@ -1,26 +1,18 @@
 package ceuilisa.mirai.activities;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,25 +23,20 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.fragments.BaseFragment;
-import ceuilisa.mirai.fragments.FragmentCenter;
 import ceuilisa.mirai.fragments.FragmentLeft;
 import ceuilisa.mirai.fragments.FragmentMvNew;
-import ceuilisa.mirai.fragments.FragmentMvRank;
-import ceuilisa.mirai.fragments.FragmentRight;
 import ceuilisa.mirai.interf.OnPrepared;
 import ceuilisa.mirai.nodejs.LoginResponse;
-import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Common;
-import ceuilisa.mirai.utils.Constant;
 import ceuilisa.mirai.utils.Local;
 
 public class MainActivity extends WithPanelActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String[] TITLES = new String[]{"音乐", "视频"};
     public DrawerLayout mDrawerLayout;
     private TextView userName, email;
     private ViewPager mViewPager;
     private BaseFragment[] mBaseFragments;
-    public static final String[] TITLES = new String[]{"音乐", "视频"};
 
     @Override
     boolean hasImage() {
@@ -81,7 +68,7 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(MainActivity.this);
         checkPermission(object -> {
             LoginResponse mUserBean = Local.getUser();
-            if(mUserBean != null && mUserBean.isLogin()){
+            if (mUserBean != null && mUserBean.isLogin()) {
                 Glide.with(mContext).load(mUserBean.getProfile().getAvatarUrl()).into(userHead);
                 Glide.with(mContext).load(mUserBean.getProfile().getBackgroundUrl()).into(userBG);
                 userBG.setOnClickListener(v -> {
@@ -90,7 +77,7 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
                     startActivity(intent);
                 });
                 initFragments();
-            }else {
+            } else {
                 Intent intent = new Intent(mContext, LoginActivity.class);
                 startActivity(intent);
                 finish();
@@ -99,7 +86,7 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
     }
 
 
-    private void checkPermission(OnPrepared<Object> onPrepared){
+    private void checkPermission(OnPrepared<Object> onPrepared) {
         final RxPermissions rxPermissions = new RxPermissions(this);
         rxPermissions
                 .requestEachCombined(Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -201,7 +188,7 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
     protected void onResume() {
         super.onResume();
         LoginResponse userBean = Local.getUser();
-        if(userBean != null && userBean.getProfile() != null) {
+        if (userBean != null && userBean.getProfile() != null) {
             userName.setText(userBean.getProfile().getNickname());
         }
     }

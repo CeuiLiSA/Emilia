@@ -14,6 +14,8 @@ public class ArtistResponse {
     private int code;
     private ArtistBean artist;
     private boolean more;
+    private List<TracksBean> hotSongs;
+
     public List<TracksBean> getHotSongs() {
         return hotSongs;
     }
@@ -21,8 +23,6 @@ public class ArtistResponse {
     public void setHotSongs(List<TracksBean> hotSongs) {
         this.hotSongs = hotSongs;
     }
-
-    private List<TracksBean> hotSongs;
 
     public int getCode() {
         return code;
@@ -58,7 +58,7 @@ public class ArtistResponse {
          * picUrl : https://p3.music.126.net/dMh3-v4lIHTN15pgTIsbig==/1379887108659654.jpg
          * trans :
          * briefDesc : 阿保刚(あぼ たけし)是一位出身日本的游戏音乐作曲家。
-         原本在KID公司为该公司的恋爱冒险游戏制作各项音乐及效果配乐。在2006年12月该公司倒闭后, 加盟5pb.公司。音乐方面, 他跟多数的日本作曲家一样, 是麦金塔电脑的爱好者, 甚至在他的个人网页上还有“Intel outside ! Microsoft outside ! Windows outside !”之类的字句。 不过现在他使用PC机, 个人网站上也早没有这样的语句, 并且表示很喜欢这样的升级。
+         * 原本在KID公司为该公司的恋爱冒险游戏制作各项音乐及效果配乐。在2006年12月该公司倒闭后, 加盟5pb.公司。音乐方面, 他跟多数的日本作曲家一样, 是麦金塔电脑的爱好者, 甚至在他的个人网页上还有“Intel outside ! Microsoft outside ! Windows outside !”之类的字句。 不过现在他使用PC机, 个人网站上也早没有这样的语句, 并且表示很喜欢这样的升级。
          * musicSize : 1689
          * picId : 1379887108659654
          * name : 阿保剛

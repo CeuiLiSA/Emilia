@@ -12,14 +12,14 @@ import com.just.agentweb.WebViewClient;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.utils.Common;
 
-public class FragmentWebView extends BaseFragment{
+public class FragmentWebView extends BaseFragment {
 
     private String title;
     private String url;
     private AgentWeb mAgentWeb;
     private RelativeLayout webViewParent;
 
-    public static FragmentWebView newInstance(String title, String url){
+    public static FragmentWebView newInstance(String title, String url) {
         FragmentWebView fragmentWebView = new FragmentWebView();
         fragmentWebView.title = title;
         fragmentWebView.url = url;

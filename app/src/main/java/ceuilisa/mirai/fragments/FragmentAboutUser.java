@@ -1,13 +1,10 @@
 package ceuilisa.mirai.fragments;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.nodejs.UserDetailResponse;
-import ceuilisa.mirai.utils.Common;
 
 public class FragmentAboutUser extends BaseFragment {
 
@@ -36,12 +33,12 @@ public class FragmentAboutUser extends BaseFragment {
 
     @Override
     void initData() {
-        if(mUserDetail != null) {
+        if (mUserDetail != null) {
             level.setText("等级：" + mUserDetail.getLevel());
             sex.setText("性别：" + (mUserDetail.getProfile().getGender() == 1 ? "男" : "女"));
-            if(mUserDetail.getProfile().getSignature() != null && mUserDetail.getProfile().getSignature().length() != 0) {
+            if (mUserDetail.getProfile().getSignature() != null && mUserDetail.getProfile().getSignature().length() != 0) {
                 description.setText(mUserDetail.getProfile().getSignature());
-            }else {
+            } else {
                 description.setText("暂无介绍");
             }
         }

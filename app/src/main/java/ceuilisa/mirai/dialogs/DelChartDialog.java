@@ -12,18 +12,13 @@ import ceuilisa.mirai.utils.Common;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class DelChartDialog extends BaseDialog{
+public class DelChartDialog extends BaseDialog {
 
     private View.OnClickListener positiveClick;
     private long pid, trackId;
     private int index;
 
-    @Override
-    void initLayout() {
-
-    }
-
-    public static DelChartDialog newInstance(long pid, long trackId, int index){
+    public static DelChartDialog newInstance(long pid, long trackId, int index) {
         DelChartDialog dialog = new DelChartDialog();
         dialog.pid = pid;
         dialog.trackId = trackId;
@@ -32,10 +27,15 @@ public class DelChartDialog extends BaseDialog{
     }
 
     @Override
+    void initLayout() {
+
+    }
+
+    @Override
     void initView(View v) {
         title.setText("提示：");
         content.setText("确定从歌单中删除这首歌？");
-        if(positiveClick != null) {
+        if (positiveClick != null) {
             sure.setOnClickListener(positiveClick);
         }
         sure.setOnClickListener(new View.OnClickListener() {
@@ -46,16 +46,16 @@ public class DelChartDialog extends BaseDialog{
         });
     }
 
-    public void setPositiveClick(View.OnClickListener onClickListener){
+    public void setPositiveClick(View.OnClickListener onClickListener) {
         positiveClick = onClickListener;
     }
 
 
-    private void delSongFromPlaylist(long pid, long trackID){
+    private void delSongFromPlaylist(long pid, long trackID) {
         RetrofitUtil.getNodeApi().delFromChart(pid, trackID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new ObjListen<BaseResponse>(){
+                .subscribe(new ObjListen<BaseResponse>() {
                     @Override
                     public void success(BaseResponse baseResponse) {
                         Channel<Integer> integerChannel = new Channel<>();

@@ -36,14 +36,12 @@ public interface AppApi {
     Observable<LrcResponse> getLrc(@Query("id") String id);
 
 
-
     @GET("nm/playlist/{playlistID}")
     Observable<PlayListDetailResponse> getPlayListDetail(@Path("playlistID") String playlistID);
 
 
     @GET("cloudmusic/?type=playlist")
     Observable<PlayListDetailResponse> getPlayListDetail22(@Query("id") String id);
-
 
 
     @GET("id_delete")
@@ -129,7 +127,6 @@ public interface AppApi {
     Observable<PlayListTitleResponse> searchUser(@Query("s") String s,
                                                  @Query("limit") int limit,
                                                  @Query("offset") int offset);
-
 
 
     //https://v1.hitokoto.cn/nm/record/113568254?weekly=false

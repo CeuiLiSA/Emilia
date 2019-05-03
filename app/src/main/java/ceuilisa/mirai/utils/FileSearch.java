@@ -1,11 +1,6 @@
 package ceuilisa.mirai.utils;
 
-import android.view.View;
-
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.LineNumberReader;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
@@ -41,8 +36,8 @@ public class FileSearch {
                         traverseFolder(file2.getAbsolutePath());
                     } else {
                         Common.showLog(file2.getName());
-                        if(file2.getName().substring(0, file2.getName().length()-3).equals(".mp3") ||
-                                file2.getName().substring(0, file2.getName().length()-3).equals(".MP3")) {
+                        if (file2.getName().substring(0, file2.getName().length() - 3).equals(".mp3") ||
+                                file2.getName().substring(0, file2.getName().length() - 3).equals(".MP3")) {
                             Common.showLog("********************************");
                             Common.showLog("文件名:" + file2.getName());
                         }
@@ -54,7 +49,7 @@ public class FileSearch {
         }
     }
 
-    private void rx(){
+    private void rx() {
         Observable.create((ObservableOnSubscribe<Integer>) e -> {
             e.onNext(1);
             Translate.translateMusic(null);

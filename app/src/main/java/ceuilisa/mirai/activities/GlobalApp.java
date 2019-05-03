@@ -23,18 +23,17 @@ public class GlobalApp extends Application {
                 new ClassicsFooter(context).setDrawableSize(20));
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        sContext = this;
-    }
-
-
     public static Context getContext() {
         return sContext;
     }
 
     public static void setContext(Context context) {
         sContext = context;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        sContext = this;
     }
 }

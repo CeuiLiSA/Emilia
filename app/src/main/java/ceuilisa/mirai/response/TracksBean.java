@@ -1,13 +1,7 @@
 package ceuilisa.mirai.response;
 
-import android.graphics.Color;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
-
 import java.util.List;
 
-import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.nodejs.AlbumBean;
 import ceuilisa.mirai.nodejs.ArtistBean;
 
@@ -69,6 +63,18 @@ public class TracksBean {
     private int ftype;
     private int djId;
     private int copyright;
+    private String localPath;
+    private int s_id;
+    private int rtype;
+    private Object rurl;
+    private int mst;
+    private int cp;
+    private int mv;
+    private long publishTime;
+    private List<ArtistBean> ar, artists;
+    private List<String> alia;
+    private List<?> rtUrls;
+    private H h;
 
     public String getLocalPath() {
         return localPath;
@@ -77,8 +83,6 @@ public class TracksBean {
     public void setLocalPath(String localPath) {
         this.localPath = localPath;
     }
-
-    private String localPath;
 
     public boolean isLiked() {
         return isLiked;
@@ -103,31 +107,6 @@ public class TracksBean {
     public void setArtists(List<ArtistBean> artists) {
         this.artists = artists;
     }
-
-    private int s_id;
-    private int rtype;
-    private Object rurl;
-    private int mst;
-    private int cp;
-    private int mv;
-    private long publishTime;
-    private List<ArtistBean> ar, artists;
-    private List<String> alia;
-    private List<?> rtUrls;
-
-    public static class H{
-        private long size;
-
-        public long getSize() {
-            return size;
-        }
-
-        public void setSize(long size) {
-            this.size = size;
-        }
-    }
-
-    private H h;
 
     public H getH() {
         return h;
@@ -226,10 +205,10 @@ public class TracksBean {
     }
 
     public AlbumBean getAl() {
-        if(al != null) {
+        if (al != null) {
             return al;
         }
-        if(album != null){
+        if (album != null) {
             return album;
         }
         return null;
@@ -246,7 +225,6 @@ public class TracksBean {
     public void setDt(int dt) {
         this.dt = dt;
     }
-
 
     public Object getA() {
         return a;
@@ -361,10 +339,10 @@ public class TracksBean {
     }
 
     public List<ArtistBean> getAr() {
-        if(ar != null) {
+        if (ar != null) {
             return ar;
         }
-        if(artists != null){
+        if (artists != null) {
             return artists;
         }
         return null;
@@ -390,7 +368,7 @@ public class TracksBean {
         this.rtUrls = rtUrls;
     }
 
-    public String getFullSongName(){
+    public String getFullSongName() {
         if (getAlia() != null && getAlia().size() != 0) {
             String spannableString = String.format("%s (%s)",
                     getName(), getAlia().get(0));
@@ -401,16 +379,28 @@ public class TracksBean {
         }
     }
 
-    public String getFullArtistName(){
+    public String getFullArtistName() {
         List<ArtistBean> artistBeanList = getAr();
-        if(artistBeanList != null){
+        if (artistBeanList != null) {
             String before = "";
             for (int i = 0; i < artistBeanList.size(); i++) {
                 before = before + artistBeanList.get(i).getName() + "/";
             }
             return before.substring(0, before.length() - 1);
-        }else {
+        } else {
             return "未知艺术家";
+        }
+    }
+
+    public static class H {
+        private long size;
+
+        public long getSize() {
+            return size;
+        }
+
+        public void setSize(long size) {
+            this.size = size;
         }
     }
 }

@@ -8,12 +8,12 @@ import ceuilisa.mirai.R;
 
 public abstract class NetWorkControlActivity extends BaseActivity {
 
+    protected ImageView mImageView;
+    protected ProgressBar loadProgress;
+
     abstract boolean hasImage();
 
     abstract boolean hasProgress();
-
-    protected ImageView mImageView;
-    protected ProgressBar loadProgress;
 
     @Override
     void initLayout() {

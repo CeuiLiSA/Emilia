@@ -6,11 +6,8 @@ import ceuilisa.mirai.adapters.EventAdapter;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.EventResponse;
 import ceuilisa.mirai.nodejs.EventsBean;
-import ceuilisa.mirai.nodejs.LoginResponse;
-import ceuilisa.mirai.nodejs.UserDetailResponse;
 import ceuilisa.mirai.utils.DensityUtil;
 import ceuilisa.mirai.utils.LinearItemDecoration;
-import ceuilisa.mirai.utils.Local;
 import io.reactivex.Observable;
 
 public class FragmentEvents extends BaseListFragment<EventResponse, EventAdapter, EventsBean> {

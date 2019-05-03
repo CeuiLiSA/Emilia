@@ -15,7 +15,7 @@ public class FragmentSearchArtist extends BaseListFragment<SearchArtistResponse,
 
     private String keyword;
 
-    public static FragmentSearchArtist newInstance(String key){
+    public static FragmentSearchArtist newInstance(String key) {
         FragmentSearchArtist fragmentSearchArtist = new FragmentSearchArtist();
         fragmentSearchArtist.keyword = key;
         return fragmentSearchArtist;

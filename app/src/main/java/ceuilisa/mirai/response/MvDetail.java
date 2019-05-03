@@ -1,10 +1,5 @@
 package ceuilisa.mirai.response;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
-
-import ceuilisa.mirai.nodejs.ArtistBean;
 import ceuilisa.mirai.nodejs.MvBean;
 
 public class MvDetail {

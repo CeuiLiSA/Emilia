@@ -3,7 +3,6 @@ package ceuilisa.mirai.nodejs;
 import java.util.List;
 
 import ceuilisa.mirai.interf.ListShow;
-import ceuilisa.mirai.response.BaseResponse;
 
 public class EventResponse implements ListShow<EventsBean> {
 

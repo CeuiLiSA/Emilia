@@ -6,8 +6,8 @@ import ceuilisa.mirai.nodejs.EventResponse;
 import ceuilisa.mirai.nodejs.FollowResponse;
 import ceuilisa.mirai.nodejs.FollowerResponse;
 import ceuilisa.mirai.nodejs.LoginResponse;
-import ceuilisa.mirai.nodejs.MvPlayUrlResponse;
 import ceuilisa.mirai.nodejs.MvListResponse;
+import ceuilisa.mirai.nodejs.MvPlayUrlResponse;
 import ceuilisa.mirai.nodejs.PlayListResponse;
 import ceuilisa.mirai.nodejs.RecmPlayListResponse;
 import ceuilisa.mirai.nodejs.RecmdMvResponse;
@@ -33,12 +33,11 @@ public interface NodeApi {
 
     @GET("/login/cellphone")
     Observable<LoginResponse> loginByPhone(@Query("phone") String phone,
-                                         @Query("password") String password);
+                                           @Query("password") String password);
 
     @GET("/login")
     Observable<LoginResponse> loginByEmail(@Query("email") String email,
                                            @Query("password") String password);
-
 
 
     @GET("/user/playlist")
@@ -58,7 +57,6 @@ public interface NodeApi {
 
     @GET("/recommend/songs")
     Observable<DayRecommend> getDayRecommend();
-
 
 
     @GET("/comment/music")
@@ -111,8 +109,6 @@ public interface NodeApi {
                                            @Query("offset") int offset);
 
 
-
-
     /**
      * 最新mv
      *
@@ -123,8 +119,6 @@ public interface NodeApi {
     @GET("/mv/first")
     Observable<MvListResponse> getMvFirst(@Query("limit") int limit,
                                           @Query("offset") int offset);
-
-
 
 
     @GET("/mv/detail")
@@ -151,7 +145,6 @@ public interface NodeApi {
     Observable<PlayListDetailResponse> getPlayListDetail(@Query("id") long id);
 
 
-
     @GET("/playlist/create")
     Observable<BaseResponse> createPlaylist(@Query("name") String name);
 
@@ -165,7 +158,7 @@ public interface NodeApi {
      */
     @GET("/playlist/subscribe")
     Observable<BaseResponse> starPlaylist(@Query("t") String t,
-                                            @Query("id") long id);
+                                          @Query("id") long id);
 
 
     /**
@@ -177,7 +170,7 @@ public interface NodeApi {
      */
     @GET("/follow")
     Observable<BaseResponse> starUser(@Query("t") String t,
-                                          @Query("id") long id);
+                                      @Query("id") long id);
 
 
     /**
@@ -189,7 +182,7 @@ public interface NodeApi {
      */
     @GET("/playlist/tracks?op=add")
     Observable<BaseResponse> addChart(@Query("pid") long pid,
-                                          @Query("tracks") long tracks);
+                                      @Query("tracks") long tracks);
 
 
     /**
@@ -201,7 +194,7 @@ public interface NodeApi {
      */
     @GET("/playlist/tracks?op=del")
     Observable<BaseResponse> delFromChart(@Query("pid") long pid,
-                                      @Query("tracks") long tracks);
+                                          @Query("tracks") long tracks);
 
 
     /**
@@ -211,7 +204,6 @@ public interface NodeApi {
      */
     @GET("/top/song")
     Observable<NewSongResponse> newSong(@Query("type") int type);
-
 
 
     /**
@@ -271,7 +263,6 @@ public interface NodeApi {
                                               @Query("offset") int offset);
 
 
-
     /**
      * 获取关注列表
      *
@@ -288,7 +279,7 @@ public interface NodeApi {
 
     @GET("/scrobble")
     Observable<BaseResponse> scrobble(@Query("id") long id,
-                                         @Query("sourceid") long sourceid);
+                                      @Query("sourceid") long sourceid);
 
 
     @GET("/song/url?br=320000")

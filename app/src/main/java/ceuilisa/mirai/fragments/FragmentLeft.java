@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import ceuilisa.mirai.R;
-import ceuilisa.mirai.activities.ViewPagerActivity;
 import ceuilisa.mirai.activities.TemplateFragmentActivity;
+import ceuilisa.mirai.activities.ViewPagerActivity;
 
 public class FragmentLeft extends BaseFragment {
 

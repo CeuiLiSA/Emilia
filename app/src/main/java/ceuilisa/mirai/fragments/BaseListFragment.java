@@ -1,6 +1,5 @@
 package ceuilisa.mirai.fragments;
 
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -11,17 +10,11 @@ import android.widget.ProgressBar;
 import com.scwang.smartrefresh.header.DeliveryHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
-import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 
 import ceuilisa.mirai.R;
-import ceuilisa.mirai.adapters.PlayListAdapter;
-import ceuilisa.mirai.fragments.BaseFragment;
 import ceuilisa.mirai.interf.ListShow;
-import ceuilisa.mirai.response.BaseResponse;
-import ceuilisa.mirai.response.CommentResponse;
-import ceuilisa.mirai.response.PlayListTitleResponse;
 import ceuilisa.mirai.utils.Common;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -89,7 +82,7 @@ import io.reactivex.schedulers.Schedulers;
  *
  * @param <Response> json解析累
  * @param <Adapter>  列表适配器
- * @param <ListItem>     列表数据元素
+ * @param <ListItem> 列表数据元素
  */
 public abstract class BaseListFragment<Response extends ListShow<ListItem>,
         Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>,
@@ -113,10 +106,10 @@ public abstract class BaseListFragment<Response extends ListShow<ListItem>,
     @Override
     View initView(View v) {
         mToolbar = v.findViewById(R.id.toolbar);
-        if(showToolbar()){
+        if (showToolbar()) {
             mToolbar.setNavigationOnClickListener(view -> getActivity().finish());
             mToolbar.setTitle(getToolbarTitle());
-        }else {
+        } else {
             mToolbar.setVisibility(View.GONE);
         }
         mProgressBar = v.findViewById(R.id.progress);
@@ -140,7 +133,7 @@ public abstract class BaseListFragment<Response extends ListShow<ListItem>,
         return v;
     }
 
-    String getToolbarTitle(){
+    String getToolbarTitle() {
         return " ";
     }
 
@@ -165,7 +158,6 @@ public abstract class BaseListFragment<Response extends ListShow<ListItem>,
 
     /**
      * the callback after getting the first page of data
-     *
      */
     abstract void initAdapter();
 
@@ -189,7 +181,7 @@ public abstract class BaseListFragment<Response extends ListShow<ListItem>,
                         @Override
                         public void onNext(Response response) {
                             if (response != null) {
-                                if(response.getList().size() != 0) {
+                                if (response.getList().size() != 0) {
                                     allItems.clear();
                                     allItems.addAll(response.getList());
                                     initAdapter();
@@ -242,7 +234,7 @@ public abstract class BaseListFragment<Response extends ListShow<ListItem>,
                             if (response != null) {
                                 allItems.addAll(response.getList());
                                 mRefreshLayout.finishLoadMore(true);
-                                if(mAdapter != null) {
+                                if (mAdapter != null) {
                                     mAdapter.notifyDataSetChanged();
                                 }
                             } else {

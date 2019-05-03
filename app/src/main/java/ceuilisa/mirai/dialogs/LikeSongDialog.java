@@ -17,26 +17,26 @@ import me.shaohui.bottomdialog.BaseBottomDialog;
  */
 public class LikeSongDialog extends BaseBottomDialog {
 
-    public static LikeSongDialog newInstance(TracksBean tracksBean){
-        LikeSongDialog dialog = new LikeSongDialog();
-        dialog.mTracksBean = tracksBean;
-        return dialog;
-    }
-
-    public static LikeSongDialog newInstance(TracksBean tracksBean, long pid, int index){
-        LikeSongDialog dialog = new LikeSongDialog();
-        dialog.mTracksBean = tracksBean;
-        dialog.pid = pid;
-        dialog.index = index;
-        return dialog;
-    }
-
     private Context mContext;
     private TracksBean mTracksBean;
     private long pid = 0L;
     private int index;
     private TextView songName, addToPlaylist, download,
             comment, artist, album, delete;
+
+    public static LikeSongDialog newInstance(TracksBean tracksBean) {
+        LikeSongDialog dialog = new LikeSongDialog();
+        dialog.mTracksBean = tracksBean;
+        return dialog;
+    }
+
+    public static LikeSongDialog newInstance(TracksBean tracksBean, long pid, int index) {
+        LikeSongDialog dialog = new LikeSongDialog();
+        dialog.mTracksBean = tracksBean;
+        dialog.pid = pid;
+        dialog.index = index;
+        return dialog;
+    }
 
     @Override
     public int getLayoutRes() {
@@ -109,8 +109,7 @@ public class LikeSongDialog extends BaseBottomDialog {
         });
 
 
-
-        if(pid != 0L){
+        if (pid != 0L) {
             delete.setVisibility(View.VISIBLE);
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -120,7 +119,7 @@ public class LikeSongDialog extends BaseBottomDialog {
                     dismiss();
                 }
             });
-        }else {
+        } else {
             delete.setVisibility(View.GONE);
         }
     }

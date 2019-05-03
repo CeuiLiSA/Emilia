@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-
 import java.util.List;
 
 import ceuilisa.mirai.R;
@@ -20,6 +19,14 @@ public class FragmentViewPager extends BaseFragment {
     private String[] mTitles;
     private List<BaseFragment> mFragments;
     private String mToolbarTitle;
+
+    public static FragmentViewPager newInstance(List<BaseFragment> fragments, String[] titles, String toolbarTitle) {
+        FragmentViewPager fragmentViewPager = new FragmentViewPager();
+        fragmentViewPager.setFragments(fragments);
+        fragmentViewPager.setTitles(titles);
+        fragmentViewPager.setToolbarTitle(toolbarTitle);
+        return fragmentViewPager;
+    }
 
     @Override
     protected void initLayout() {
@@ -53,15 +60,6 @@ public class FragmentViewPager extends BaseFragment {
         mTabLayout.setupWithViewPager(mViewPager);
         return v;
     }
-
-    public static FragmentViewPager newInstance(List<BaseFragment> fragments, String[] titles, String toolbarTitle){
-        FragmentViewPager fragmentViewPager = new FragmentViewPager();
-        fragmentViewPager.setFragments(fragments);
-        fragmentViewPager.setTitles(titles);
-        fragmentViewPager.setToolbarTitle(toolbarTitle);
-        return fragmentViewPager;
-    }
-
 
     @Override
     void initData() {

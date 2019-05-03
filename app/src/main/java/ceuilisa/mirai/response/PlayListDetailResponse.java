@@ -15,6 +15,7 @@ public class PlayListDetailResponse implements ListShow<TracksBean> {
      */
 
     private PlaylistBean playlist;
+
     public PlaylistBean getPlaylist() {
         return playlist;
     }
@@ -25,10 +26,9 @@ public class PlayListDetailResponse implements ListShow<TracksBean> {
 
     @Override
     public List<TracksBean> getList() {
-        if(playlist != null) {
+        if (playlist != null) {
             return playlist.tracks;
-        }
-        else {
+        } else {
             return new ArrayList<>();
         }
     }

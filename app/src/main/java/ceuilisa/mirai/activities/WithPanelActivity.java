@@ -17,7 +17,7 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.dialogs.PlayListDialog;
 import ceuilisa.mirai.utils.Common;
 
-public abstract class WithPanelActivity extends NetWorkControlActivity{
+public abstract class WithPanelActivity extends NetWorkControlActivity {
 
     public Handler mHandler = new Handler();
     private MyRunnable mMyRunnable = new MyRunnable();
@@ -40,11 +40,11 @@ public abstract class WithPanelActivity extends NetWorkControlActivity{
         playPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mChannel != null && mChannel.getMusicList().size() != 0) {
+                if (mChannel != null && mChannel.getMusicList().size() != 0) {
                     if (MusicService.get().isPlayingMusic()) {
                         playPause.setImageResource(R.drawable.ic_play_arrow_black_24dp);
                         mHandler.removeCallbacksAndMessages(null);
-                    }else {
+                    } else {
                         playPause.setImageResource(R.drawable.ic_pause_black_24dp);
                         mHandler.post(mMyRunnable);
                     }
@@ -56,9 +56,9 @@ public abstract class WithPanelActivity extends NetWorkControlActivity{
         playList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mChannel != null && mChannel.getMusicList().size() != 0){
+                if (mChannel != null && mChannel.getMusicList().size() != 0) {
                     new PlayListDialog().show(getSupportFragmentManager());
-                }else {
+                } else {
                     Common.showToast(mContext, "无正在播放列表");
                 }
             }
@@ -83,12 +83,12 @@ public abstract class WithPanelActivity extends NetWorkControlActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        if(mChannel != null && mChannel.getMusicList().size() != 0) {
+        if (mChannel != null && mChannel.getMusicList().size() != 0) {
             mTracksBean = mChannel.getMusicList().get(MusicService.get().getNowPlayIndex());
             if (MusicService.get().isPlayingMusic()) {
                 mHandler.post(mMyRunnable);
                 playPause.setImageResource(R.drawable.ic_pause_black_24dp);
-            }else {
+            } else {
                 playPause.setImageResource(R.drawable.ic_play_arrow_black_24dp);
             }
             Glide.with(mContext).load(mTracksBean.getAl().getPicUrl()).into(mNiceImageView);

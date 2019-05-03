@@ -1,10 +1,8 @@
 package ceuilisa.mirai.activities;
 
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 
 import ceuilisa.mirai.R;
 
@@ -33,7 +31,7 @@ public abstract class FragmentActivity extends BaseActivity {
 
         if (fragment == null) {
             fragment = createNewFragment();
-            if(fragment != null) {
+            if (fragment != null) {
                 fragmentManager.beginTransaction()
                         .add(R.id.fragment_container, fragment)
                         .commit();

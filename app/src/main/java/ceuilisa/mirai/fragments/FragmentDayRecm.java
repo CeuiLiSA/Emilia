@@ -3,7 +3,6 @@ package ceuilisa.mirai.fragments;
 import android.content.Intent;
 import android.view.View;
 
-import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.adapters.RecmSongAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
@@ -12,7 +11,7 @@ import ceuilisa.mirai.nodejs.DayRecommend;
 import ceuilisa.mirai.response.TracksBean;
 import io.reactivex.Observable;
 
-public class FragmentDayRecm extends BaseListFragment<DayRecommend, RecmSongAdapter, TracksBean>{
+public class FragmentDayRecm extends BaseListFragment<DayRecommend, RecmSongAdapter, TracksBean> {
 
     @Override
     boolean hasNext() {

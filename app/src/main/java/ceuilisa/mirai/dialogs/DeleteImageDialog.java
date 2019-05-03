@@ -4,37 +4,16 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.liulishuo.okdownload.DownloadTask;
-import com.liulishuo.okdownload.core.cause.EndCause;
-import com.liulishuo.okdownload.core.cause.ResumeFailedCause;
-import com.liulishuo.okdownload.core.listener.DownloadListener1;
-import com.liulishuo.okdownload.core.listener.assist.Listener1Assist;
-
-import java.io.File;
-
-import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnPrepare;
-import ceuilisa.mirai.network.RetrofitUtil;
-import ceuilisa.mirai.response.DeleteImageResponse;
-import ceuilisa.mirai.utils.Common;
-import ceuilisa.mirai.utils.FileUtil;
-import es.dmoral.toasty.Toasty;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
-public class DeleteImageDialog extends DialogFragment{
+public class DeleteImageDialog extends DialogFragment {
 
     private AlertDialog mAlertDialog;
     private OnPrepare mOnPrepare;
@@ -46,7 +25,7 @@ public class DeleteImageDialog extends DialogFragment{
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         mContext = getActivity();
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        View view= LayoutInflater.from(getActivity()).inflate(R.layout.dialog_delete_image, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_delete_image, null);
         TextView textView = view.findViewById(R.id.song_size);
         textView.setText(String.format("这将会删除图片%s，是否继续？", name));
         //view.findViewById(R.id.download_now).setOnClickListener(v -> deleteNow());
@@ -55,8 +34,6 @@ public class DeleteImageDialog extends DialogFragment{
         mAlertDialog = builder.create();
         return mAlertDialog;
     }
-
-
 
 
 //    public void deleteNow(){

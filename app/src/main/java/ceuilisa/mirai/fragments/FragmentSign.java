@@ -1,9 +1,7 @@
 package ceuilisa.mirai.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.animation.Animation;
@@ -15,19 +13,9 @@ import android.widget.TextView;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.LoginActivity;
-import ceuilisa.mirai.activities.MainActivity;
-import ceuilisa.mirai.interf.OnPrepared;
-import ceuilisa.mirai.network.RetrofitUtil;
-import ceuilisa.mirai.response.BackResponse;
-import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Common;
-import ceuilisa.mirai.utils.Local;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
-public class FragmentSign extends BaseFragment{
+public class FragmentSign extends BaseFragment {
 
     private ProgressBar mProgressBar;
     private EditText userName, password;
@@ -55,13 +43,13 @@ public class FragmentSign extends BaseFragment{
         sign = v.findViewById(R.id.sign);
         sign.setOnClickListener(view -> {
             Common.hideKeyboard(mActivity);
-            if(userName.getText().toString().trim().length() != 0){
-                if(password.getText().toString().trim().length() != 0){
+            if (userName.getText().toString().trim().length() != 0) {
+                if (password.getText().toString().trim().length() != 0) {
                     //sign();
-                }else {
+                } else {
                     Common.showToast("请输入密码");
                 }
-            }else {
+            } else {
                 Common.showToast("请输入用户名");
             }
         });
@@ -135,7 +123,7 @@ public class FragmentSign extends BaseFragment{
     void initData() {
     }
 
-    public void showAnimate(){
+    public void showAnimate() {
         Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim_about_card_show);
         RelativeLayout relativeLayout = rootView.findViewById(R.id.root_view);
         relativeLayout.startAnimation(animation);

@@ -15,9 +15,7 @@ import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.nodejs.AlbumBean;
 import ceuilisa.mirai.nodejs.MvBean;
-import ceuilisa.mirai.utils.Common;
 
 
 public class MvListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

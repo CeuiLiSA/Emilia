@@ -3,8 +3,6 @@ package ceuilisa.mirai.nodejs;
 import java.io.Serializable;
 import java.util.List;
 
-import ceuilisa.mirai.response.MvDetail;
-
 public class MvBean implements Serializable {
     /**
      * id : 10848831
@@ -26,15 +24,6 @@ public class MvBean implements Serializable {
 
     private int id;
     private String cover;
-
-    public String getPicUrl() {
-        return picUrl;
-    }
-
-    public void setPicUrl(String picUrl) {
-        this.picUrl = picUrl;
-    }
-
     private String picUrl;
     private String name;
     private int playCount;
@@ -55,6 +44,17 @@ public class MvBean implements Serializable {
     private int likeCount;
     private int commentCount;
     private int nType;
+    private String publishTime;
+    private boolean isReward;
+    private String commentThreadId;
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
 
     public long getCoverId() {
         return coverId;
@@ -128,10 +128,6 @@ public class MvBean implements Serializable {
         this.commentThreadId = commentThreadId;
     }
 
-    private String publishTime;
-    private boolean isReward;
-    private String commentThreadId;
-
     public int getId() {
         return id;
     }
@@ -141,10 +137,10 @@ public class MvBean implements Serializable {
     }
 
     public String getCover() {
-        if(cover != null && cover.length() != 0) {
+        if (cover != null && cover.length() != 0) {
             return cover;
         }
-        if(picUrl != null && picUrl.length() != 0) {
+        if (picUrl != null && picUrl.length() != 0) {
             return picUrl;
         }
         return null;

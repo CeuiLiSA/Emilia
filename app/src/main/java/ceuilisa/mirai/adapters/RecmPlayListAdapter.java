@@ -15,7 +15,6 @@ import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.nodejs.PlaylistBean;
 import ceuilisa.mirai.nodejs.RecommendPlaylistBean;
 
 /**
@@ -46,9 +45,9 @@ public class RecmPlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName());
         ((TagHolder) holder).mTextView2.setText(String.format("共%s首歌曲，播放%s次",
                 allIllust.get(position).getTrackCount(), allIllust.get(position).getPlaycount()));
-        if(allIllust.get(position).getPicUrl() == null || allIllust.get(position).getPicUrl().length() == 0){
+        if (allIllust.get(position).getPicUrl() == null || allIllust.get(position).getPicUrl().length() == 0) {
             Glide.with(mContext).load(R.mipmap.default_playlist_cover).into(((TagHolder) holder).mNiceImageView);
-        }else {
+        } else {
             Glide.with(mContext).load(allIllust.get(position).getPicUrl()).into(((TagHolder) holder).mNiceImageView);
         }
         if (mOnItemClickListener != null) {

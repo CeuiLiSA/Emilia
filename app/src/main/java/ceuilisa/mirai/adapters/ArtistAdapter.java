@@ -16,7 +16,6 @@ import java.util.List;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.nodejs.ArtistBean;
-import ceuilisa.mirai.nodejs.PlaylistBean;
 
 /**
  * 搜索歌手列表
@@ -44,13 +43,13 @@ public class ArtistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         String artistName = allIllust.get(position).getName();
-        if(allIllust.get(position).getAlias() != null && allIllust.get(position).getAlias().size() != 0){
-            artistName = artistName + " (" + allIllust.get(position).getAlias().get(0)  + ")";
+        if (allIllust.get(position).getAlias() != null && allIllust.get(position).getAlias().size() != 0) {
+            artistName = artistName + " (" + allIllust.get(position).getAlias().get(0) + ")";
         }
         ((TagHolder) holder).mTextView.setText(artistName);
-        if(allIllust.get(position).getImg1v1Url() == null || allIllust.get(position).getImg1v1Url().length() == 0){
+        if (allIllust.get(position).getImg1v1Url() == null || allIllust.get(position).getImg1v1Url().length() == 0) {
             Glide.with(mContext).load(R.mipmap.default_playlist_cover).into(((TagHolder) holder).mNiceImageView);
-        }else {
+        } else {
             Glide.with(mContext).load(allIllust.get(position).getImg1v1Url()).into(((TagHolder) holder).mNiceImageView);
         }
         if (mOnItemClickListener != null) {

@@ -1,11 +1,8 @@
 package ceuilisa.mirai.response;
 
-import java.util.List;
+public class BaseResponse {
 
-import ceuilisa.mirai.interf.ListShow;
-
-public class BaseResponse{
-
+    public int code;
     /**
      * message : success
      */
@@ -19,8 +16,6 @@ public class BaseResponse{
     public void setCode(int code) {
         this.code = code;
     }
-
-    public int code;
 
     public String getMessage() {
         return message;

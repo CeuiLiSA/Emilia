@@ -3,7 +3,7 @@ package ceuilisa.mirai.nodejs;
 /**
  * 推荐歌单
  */
-public  class RecommendPlaylistBean {
+public class RecommendPlaylistBean {
     /**
      * id : 70741032
      * type : 1

@@ -10,14 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.othershe.library.NiceImageView;
 
 import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.nodejs.ArtistBean;
-import ceuilisa.mirai.nodejs.SearchUserResponse;
 import ceuilisa.mirai.nodejs.UserprofilesBean;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -47,10 +44,10 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((TagHolder) holder).mTextView.setText(allIllust.get(position).getNickname());
-        if(allIllust.get(position).getSignature() != null && allIllust.get(position).getSignature().length() != 0) {
+        if (allIllust.get(position).getSignature() != null && allIllust.get(position).getSignature().length() != 0) {
             ((TagHolder) holder).mTextView2.setText(allIllust.get(position).getSignature());
             ((TagHolder) holder).mTextView2.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             ((TagHolder) holder).mTextView2.setVisibility(View.GONE);
         }
         Glide.with(mContext).load(allIllust.get(position).getBackgroundUrl()).into(((TagHolder) holder).mImageView);

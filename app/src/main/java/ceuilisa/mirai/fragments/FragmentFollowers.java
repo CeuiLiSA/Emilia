@@ -10,13 +10,10 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import ceuilisa.mirai.activities.UserDetailActivity;
 import ceuilisa.mirai.adapters.FollowAdapter;
-import ceuilisa.mirai.adapters.UserAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.FollowedsBean;
 import ceuilisa.mirai.nodejs.FollowerResponse;
-import ceuilisa.mirai.nodejs.SearchUserResponse;
-import ceuilisa.mirai.nodejs.UserprofilesBean;
 import ceuilisa.mirai.utils.Channel;
 import ceuilisa.mirai.utils.DensityUtil;
 import ceuilisa.mirai.utils.LinearItemDecoration;
@@ -29,7 +26,7 @@ public class FragmentFollowers extends BaseListFragment<FollowerResponse, Follow
 
     private long uid;
 
-    public static FragmentFollowers newInstance(long key){
+    public static FragmentFollowers newInstance(long key) {
         FragmentFollowers fragmentSearchArtist = new FragmentFollowers();
         fragmentSearchArtist.uid = key;
         return fragmentSearchArtist;
@@ -80,7 +77,7 @@ public class FragmentFollowers extends BaseListFragment<FollowerResponse, Follow
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(Channel channel) {
-        if(channel.getReceiver().equals(className)){
+        if (channel.getReceiver().equals(className)) {
             getFirstData();
         }
     }

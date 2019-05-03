@@ -20,10 +20,8 @@ import ceuilisa.mirai.adapters.PlayListAdapter;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.PlaylistBean;
 import ceuilisa.mirai.response.PlayListTitleResponse;
-import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Constant;
-import ceuilisa.mirai.utils.Local;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -31,6 +29,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class PlayListActivity extends WithPanelActivity {
 
+    public static boolean isNeedFresh = false;
     private String dataType, key;
     private int nowIndex;
     private RecyclerView mRecyclerView;
@@ -38,8 +37,6 @@ public class PlayListActivity extends WithPanelActivity {
     private PlayListAdapter mAdapter;
     private Toolbar mToolbar;
     private List<PlaylistBean> allPlaylist = new ArrayList<>();
-    public static boolean isNeedFresh = false;
-
 
     @Override
     boolean hasImage() {
@@ -240,7 +237,7 @@ public class PlayListActivity extends WithPanelActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(isNeedFresh){
+        if (isNeedFresh) {
             //getMyPlaylist();
             isNeedFresh = false;
         }

@@ -8,7 +8,6 @@ import ceuilisa.mirai.adapters.MvListAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.MvBean;
-import ceuilisa.mirai.nodejs.MvListResponse;
 import ceuilisa.mirai.nodejs.RecmdMvResponse;
 import io.reactivex.Observable;
 

@@ -10,7 +10,6 @@ import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.response.HistorySongBean;
 import ceuilisa.mirai.response.PlayAllHistoryResponse;
-import ceuilisa.mirai.response.PlayWeekHistoryResponse;
 import ceuilisa.mirai.utils.Local;
 import ceuilisa.mirai.utils.Translate;
 import io.reactivex.Observable;

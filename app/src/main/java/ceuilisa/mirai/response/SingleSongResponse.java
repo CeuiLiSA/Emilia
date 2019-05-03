@@ -2,7 +2,7 @@ package ceuilisa.mirai.response;
 
 import java.util.List;
 
-public class SingleSongResponse extends BaseResponse{
+public class SingleSongResponse extends BaseResponse {
 
 
     /**

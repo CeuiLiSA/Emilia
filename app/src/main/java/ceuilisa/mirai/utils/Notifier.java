@@ -30,24 +30,20 @@ public class Notifier {
     private MusicService playService;
     private NotificationManager notificationManager;
 
+    private Notifier() {
+    }
+
     public static Notifier get() {
         return SingletonHolder.instance;
-    }
-
-    private static class SingletonHolder {
-        private static Notifier instance = new Notifier();
-    }
-
-    private Notifier() {
     }
 
     public void init(MusicService playService) {
         this.playService = playService;
         Common.showLog("Notifier init");
-        if(playService != null) {
+        if (playService != null) {
             Common.showLog("Notifier playService不为空");
             notificationManager = (NotificationManager) playService.getSystemService(Context.NOTIFICATION_SERVICE);
-        }else {
+        } else {
             Common.showLog("Notifier playService为空");
         }
     }
@@ -200,5 +196,9 @@ public class Notifier {
         int baseBlue = Color.blue(simpleBaseColor) - Color.blue(simpleColor);
         double value = Math.sqrt(baseRed * baseRed + baseGreen * baseGreen + baseBlue * baseBlue);
         return value < 180.0;
+    }
+
+    private static class SingletonHolder {
+        private static Notifier instance = new Notifier();
     }
 }

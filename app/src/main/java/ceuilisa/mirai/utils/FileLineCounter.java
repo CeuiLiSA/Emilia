@@ -17,7 +17,7 @@ public class FileLineCounter {
     public void run() {
         System.out.println("开始文件检索：");
         traverseFolder(mFolderPath);
-        System.out.println("一共有：" + String.valueOf(mLineCount) + "行代码");
+        System.out.println("一共有：" + mLineCount + "行代码");
     }
 
 

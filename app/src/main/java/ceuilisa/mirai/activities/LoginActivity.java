@@ -5,13 +5,11 @@ import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.github.ybq.android.spinkit.style.CubeGrid;
@@ -22,19 +20,7 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.fragments.BaseFragment;
 import ceuilisa.mirai.fragments.FragmentLogin;
 import ceuilisa.mirai.fragments.FragmentSign;
-import ceuilisa.mirai.interf.OnPrepared;
-import ceuilisa.mirai.network.RetrofitUtil;
-import ceuilisa.mirai.response.BackResponse;
-import ceuilisa.mirai.response.PlayListTitleResponse;
-import ceuilisa.mirai.response.UserBean;
-import ceuilisa.mirai.utils.Common;
-import ceuilisa.mirai.utils.Constant;
 import ceuilisa.mirai.utils.FixedSpeedScroller;
-import ceuilisa.mirai.utils.Local;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class LoginActivity extends BaseActivity {
 

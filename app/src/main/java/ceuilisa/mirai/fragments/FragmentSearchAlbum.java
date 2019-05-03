@@ -3,25 +3,19 @@ package ceuilisa.mirai.fragments;
 import android.content.Intent;
 import android.view.View;
 
-import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.activities.PlayListDetailActivity;
-import ceuilisa.mirai.activities.VideoPlayActivity;
 import ceuilisa.mirai.adapters.AlbumListAdapter;
-import ceuilisa.mirai.adapters.PlayListDetailAdapter;
-import ceuilisa.mirai.dialogs.LikeSongDialog;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.AlbumBean;
-import ceuilisa.mirai.nodejs.SearchSongResponse;
 import ceuilisa.mirai.response.SearchAlbumResponse;
-import ceuilisa.mirai.response.TracksBean;
 import io.reactivex.Observable;
 
 public class FragmentSearchAlbum extends BaseListFragment<SearchAlbumResponse, AlbumListAdapter, AlbumBean> {
 
     private String keyword;
 
-    public static FragmentSearchAlbum newInstance(String key){
+    public static FragmentSearchAlbum newInstance(String key) {
         FragmentSearchAlbum fragmentSearchArtist = new FragmentSearchAlbum();
         fragmentSearchArtist.keyword = key;
         return fragmentSearchArtist;

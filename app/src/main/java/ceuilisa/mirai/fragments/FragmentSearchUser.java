@@ -3,16 +3,12 @@ package ceuilisa.mirai.fragments;
 import android.content.Intent;
 import android.view.View;
 
-import ceuilisa.mirai.activities.ArtistActivity;
 import ceuilisa.mirai.activities.UserDetailActivity;
-import ceuilisa.mirai.adapters.ArtistAdapter;
 import ceuilisa.mirai.adapters.UserAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
-import ceuilisa.mirai.nodejs.ArtistBean;
 import ceuilisa.mirai.nodejs.SearchUserResponse;
 import ceuilisa.mirai.nodejs.UserprofilesBean;
-import ceuilisa.mirai.response.SearchArtistResponse;
 import ceuilisa.mirai.utils.DensityUtil;
 import ceuilisa.mirai.utils.LinearItemDecoration;
 import io.reactivex.Observable;
@@ -21,7 +17,7 @@ public class FragmentSearchUser extends BaseListFragment<SearchUserResponse, Use
 
     private String keyword;
 
-    public static FragmentSearchUser newInstance(String key){
+    public static FragmentSearchUser newInstance(String key) {
         FragmentSearchUser fragmentSearchArtist = new FragmentSearchUser();
         fragmentSearchArtist.keyword = key;
         return fragmentSearchArtist;

@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-
 import com.liulishuo.okdownload.DownloadTask;
 import com.liulishuo.okdownload.core.cause.EndCause;
 import com.liulishuo.okdownload.core.cause.ResumeFailedCause;
@@ -20,15 +19,12 @@ import com.liulishuo.okdownload.core.listener.assist.Listener1Assist;
 
 import java.io.File;
 
-import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
-import ceuilisa.mirai.network.MusicChannel;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.SingleSongResponse;
 import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.FileUtil;
-import ceuilisa.mirai.utils.Translate;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -37,15 +33,15 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * 歌曲播放页面，确认下载歌曲对话框
  */
-public class DownloadDialog extends DialogFragment{
+public class DownloadDialog extends DialogFragment {
 
+    public static final String FILE_PATH = "/storage/emulated/0/EmiliaSongs";
     private AlertDialog mAlertDialog;
     private ProgressBar mProgressBar;
     private int index;
-    public static final String FILE_PATH = "/storage/emulated/0/EmiliaSongs";
     private TracksBean mTracksBean;
 
-    public static DownloadDialog newInstance(TracksBean tracksBean){
+    public static DownloadDialog newInstance(TracksBean tracksBean) {
         DownloadDialog downloadDialog = new DownloadDialog();
         downloadDialog.mTracksBean = tracksBean;
         return downloadDialog;
@@ -55,7 +51,7 @@ public class DownloadDialog extends DialogFragment{
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view= LayoutInflater.from(getActivity()).inflate(R.layout.dialog_download, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_download, null);
         mProgressBar = view.findViewById(R.id.progress);
         TextView textView = view.findViewById(R.id.song_size);
         textView.setText(String.format("这将会占用%s的存储空间，是否继续？", FileUtil.convertFileSize(
@@ -67,12 +63,12 @@ public class DownloadDialog extends DialogFragment{
         return mAlertDialog;
     }
 
-    public void startDownload(){
+    public void startDownload() {
         File file = new File(FILE_PATH, mTracksBean.getName() + ".mp3");
-        if(file.exists()){
+        if (file.exists()) {
             mAlertDialog.dismiss();
             Common.showToast(getContext(), "该文件已存在");
-        }else {
+        } else {
             RetrofitUtil.getImjadApi().getSingleSong(mTracksBean.getId())
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -84,8 +80,8 @@ public class DownloadDialog extends DialogFragment{
 
                         @Override
                         public void onNext(SingleSongResponse singleSongResponse) {
-                            if(singleSongResponse != null){
-                                if(singleSongResponse.getData() != null){
+                            if (singleSongResponse != null) {
+                                if (singleSongResponse.getData() != null) {
                                     DownloadTask downloadTask = new DownloadTask.Builder(
                                             singleSongResponse.getData().get(0).getUrl(),
                                             new File(FILE_PATH))
@@ -125,7 +121,7 @@ public class DownloadDialog extends DialogFragment{
                                 } else {
                                     Common.showToast("暂无版权");
                                 }
-                            }else {
+                            } else {
                                 Common.showToast("请检查网络连接");
                             }
                         }

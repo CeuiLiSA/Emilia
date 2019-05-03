@@ -1,7 +1,6 @@
 package ceuilisa.mirai.network;
 
 import ceuilisa.mirai.interf.ListShow;
-import ceuilisa.mirai.response.BaseResponse;
 import ceuilisa.mirai.utils.Common;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;

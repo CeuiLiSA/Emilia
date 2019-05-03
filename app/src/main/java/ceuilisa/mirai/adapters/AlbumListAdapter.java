@@ -16,8 +16,6 @@ import java.util.List;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.nodejs.AlbumBean;
-import ceuilisa.mirai.response.PlayListTitleResponse;
-import ceuilisa.mirai.response.SearchAlbumResponse;
 import ceuilisa.mirai.utils.Common;
 
 

@@ -16,7 +16,6 @@ import java.util.List;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.nodejs.PlaylistBean;
-import ceuilisa.mirai.response.PlayListTitleResponse;
 
 /**
  * 歌单列表（不是歌曲列表)
@@ -46,9 +45,9 @@ public class PlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName());
         ((TagHolder) holder).mTextView2.setText(String.format("共%s首歌曲，播放%s次",
                 allIllust.get(position).getTrackCount(), allIllust.get(position).getPlayCount()));
-        if(allIllust.get(position).getCoverImgUrl() == null || allIllust.get(position).getCoverImgUrl().length() == 0){
+        if (allIllust.get(position).getCoverImgUrl() == null || allIllust.get(position).getCoverImgUrl().length() == 0) {
             Glide.with(mContext).load(R.mipmap.default_playlist_cover).into(((TagHolder) holder).mNiceImageView);
-        }else {
+        } else {
             Glide.with(mContext).load(allIllust.get(position).getCoverImgUrl()).into(((TagHolder) holder).mNiceImageView);
         }
         if (mOnItemClickListener != null) {

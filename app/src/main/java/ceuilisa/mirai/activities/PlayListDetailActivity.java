@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,25 +21,17 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.dialogs.LikeSongDialog;
-import ceuilisa.mirai.network.MusicChannel;
 import ceuilisa.mirai.network.Operate;
 import ceuilisa.mirai.network.RetrofitUtil;
-import ceuilisa.mirai.nodejs.EventsBean;
-import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.response.AlbumResponse;
 import ceuilisa.mirai.response.PlayListDetailResponse;
 import ceuilisa.mirai.response.TracksBean;
-import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Channel;
 import ceuilisa.mirai.utils.Common;
-import ceuilisa.mirai.utils.Constant;
-import ceuilisa.mirai.utils.DensityUtil;
 import ceuilisa.mirai.utils.Local;
-import ceuilisa.mirai.utils.Notifier;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -101,10 +91,10 @@ public class PlayListDetailActivity extends WithPanelActivity {
         starPlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(starPlaylistTv.getText().toString().equals("取消收藏")) {
+                if (starPlaylistTv.getText().toString().equals("取消收藏")) {
                     Operate.starPlaylist(id, false);
                     starPlaylistTv.setText("收藏");
-                }else {
+                } else {
                     Operate.starPlaylist(id, true);
                     starPlaylistTv.setText("取消收藏");
                 }
@@ -124,21 +114,21 @@ public class PlayListDetailActivity extends WithPanelActivity {
         author = getIntent().getStringExtra("author");
         dataType = getIntent().getStringExtra("dataType");
 
-        if(coverImg != null && coverImg.length() != 0) {
+        if (coverImg != null && coverImg.length() != 0) {
             Glide.with(mContext).load(coverImg).bitmapTransform(
                     new BlurTransformation(mContext, 20, 2)).into(mImageView);
             Glide.with(mContext).load(coverImg).into(mImageView2);
-        }else {
+        } else {
             Glide.with(mContext).load(R.mipmap.default_playlist_cover).into(mImageView2);
         }
         mTextView.setText(name);
         mTextView2.setText(author);
         mToolbar.setTitle(dataType);
-        if(dataType.equals("歌单")){
+        if (dataType.equals("歌单")) {
             getPlaylist();
-        }else if(dataType.equals("我的收藏")){
+        } else if (dataType.equals("我的收藏")) {
             //getMyFavor();
-        }else if(dataType.equals("专辑")){
+        } else if (dataType.equals("专辑")) {
             getAlbum();
         }
     }
@@ -147,16 +137,16 @@ public class PlayListDetailActivity extends WithPanelActivity {
     protected void onResume() {
         super.onResume();
 
-        if(showProgress){
+        if (showProgress) {
             Common.showLog("必须出现");
             loadProgress.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             Common.showLog("必须消失");
             loadProgress.setVisibility(View.INVISIBLE);
         }
     }
 
-    private void getPlaylist(){
+    private void getPlaylist() {
         RetrofitUtil.getNodeApi().getPlayListDetail(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -168,17 +158,17 @@ public class PlayListDetailActivity extends WithPanelActivity {
 
                     @Override
                     public void onNext(PlayListDetailResponse playListTitleResponse) {
-                        if(playListTitleResponse != null &&
+                        if (playListTitleResponse != null &&
                                 playListTitleResponse.getPlaylist() != null) {
 
-                            if(playListTitleResponse.getPlaylist().getTracks() != null &&
+                            if (playListTitleResponse.getPlaylist().getTracks() != null &&
                                     playListTitleResponse.getPlaylist().getTracks().size() > 0) {
 
                                 allDatas.clear();
                                 allDatas.addAll(playListTitleResponse.getPlaylist().getTracks());
-                                if(playListTitleResponse.getPlaylist().isSubscribed()){
+                                if (playListTitleResponse.getPlaylist().isSubscribed()) {
                                     starPlaylistTv.setText("取消收藏");
-                                }else {
+                                } else {
                                     starPlaylistTv.setText("收藏");
                                 }
                                 mAdapter = new PlayListDetailAdapter(allDatas, mContext);
@@ -194,15 +184,15 @@ public class PlayListDetailActivity extends WithPanelActivity {
                                         startActivity(intent);
                                     } else if (viewType == 2) {
                                         //如果歌单创建者是自己，则可以删除歌单中的歌曲
-                                        if(playListTitleResponse.getPlaylist().getCreator().getUserId() ==
-                                                Local.getUser().getProfile().getUserId()){
+                                        if (playListTitleResponse.getPlaylist().getCreator().getUserId() ==
+                                                Local.getUser().getProfile().getUserId()) {
                                             //支持删除歌曲的LikeSongDialog
                                             LikeSongDialog dialog = LikeSongDialog.newInstance(
                                                     allDatas.get(position),
                                                     playListTitleResponse.getPlaylist().getId(),
                                                     position);
                                             dialog.show(getSupportFragmentManager());
-                                        }else {
+                                        } else {
                                             //不支持删除歌曲的LikeSongDialog
                                             LikeSongDialog dialog = LikeSongDialog.newInstance(
                                                     allDatas.get(position));
@@ -235,12 +225,12 @@ public class PlayListDetailActivity extends WithPanelActivity {
                                 loadProgress.setVisibility(View.GONE);
                                 mRecyclerView.setAdapter(new ScaleInAnimationAdapter(mAdapter));
                                 showProgress = false;
-                            }else {
+                            } else {
                                 Common.showToast("暂无歌曲");
                                 loadProgress.setVisibility(View.GONE);
                                 showProgress = false;
                             }
-                        }else {
+                        } else {
                             loadProgress.setVisibility(View.INVISIBLE);
                             Common.showToast("加载失败");
                         }
@@ -258,7 +248,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
                 });
     }
 
-    private void getAlbum(){
+    private void getAlbum() {
         RetrofitUtil.getImjadApi().getAlbum(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -308,8 +298,6 @@ public class PlayListDetailActivity extends WithPanelActivity {
                     }
                 });
     }
-
-
 
 
 //    private void getMyFavor(){
@@ -384,7 +372,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
         String receiver = user.getProfile().getNickname() + "喜欢的音乐";
 
         Common.showLog("PlayListDetailActivity " + receiver);
-        if(channel.getReceiver().equals(receiver)){
+        if (channel.getReceiver().equals(receiver)) {
             getPlaylist();
             Common.showLog("PlayListDetailActivity 里面的");
         }
@@ -393,9 +381,9 @@ public class PlayListDetailActivity extends WithPanelActivity {
         /**
          * 歌单详情页面，删除了一首歌，通知详情列表移除这首歌
          */
-        if(channel.getReceiver().equals(getString(R.string.playlist_remove_item))){
-            if(mAdapter != null) {
-                allDatas.remove((int)channel.getObject());
+        if (channel.getReceiver().equals(getString(R.string.playlist_remove_item))) {
+            if (mAdapter != null) {
+                allDatas.remove((int) channel.getObject());
                 mAdapter.notifyItemRemoved(channel.getObject());
                 mAdapter.notifyItemRangeChanged(channel.getObject(), mAdapter.getItemCount());
                 Common.showLog("PlayListDetailActivity 删除了一个item");

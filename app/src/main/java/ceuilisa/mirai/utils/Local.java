@@ -3,23 +3,18 @@ package ceuilisa.mirai.utils;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 
 import ceuilisa.mirai.activities.GlobalApp;
-import ceuilisa.mirai.interf.OnPrepare;
 import ceuilisa.mirai.interf.OnPrepared;
 import ceuilisa.mirai.nodejs.LoginResponse;
-import ceuilisa.mirai.response.UserBean;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class Local {
 
-    private static SharedPreferences sp;
     private static final String USER = "user";
     private static final String DEFAULT_USER = "";
+    private static SharedPreferences sp;
 
     public Local() {
 
@@ -62,7 +57,7 @@ public class Local {
         SharedPreferences.Editor editor = sp.edit();
         editor.clear();
         editor.apply();
-        if(onPrepared != null) {
+        if (onPrepared != null) {
             onPrepared.doSomething(null);
         }
     }

@@ -10,22 +10,16 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import org.greenrobot.eventbus.EventBus;
 
 import ceuilisa.mirai.R;
-import ceuilisa.mirai.network.Listen;
 import ceuilisa.mirai.network.RetrofitUtil;
-import ceuilisa.mirai.nodejs.LoginResponse;
-import ceuilisa.mirai.response.BackResponse;
 import ceuilisa.mirai.response.BaseResponse;
-import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Channel;
 import ceuilisa.mirai.utils.Common;
-import ceuilisa.mirai.utils.Constant;
-import ceuilisa.mirai.utils.Local;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class AddPlayListActivity extends BaseActivity{
+public class AddPlayListActivity extends BaseActivity {
 
     private ProgressBar mProgressBar;
     private MaterialEditText playlistName, playlistInfo;
@@ -45,9 +39,9 @@ public class AddPlayListActivity extends BaseActivity{
         playlistInfo = findViewById(R.id.password);
         submit = findViewById(R.id.login);
         submit.setOnClickListener(v -> {
-            if(playlistName.getText().toString().trim().length() == 0){
+            if (playlistName.getText().toString().trim().length() == 0) {
                 Common.showToast("请输入歌单名称");
-            }else {
+            } else {
                 addPlaylist();
             }
         });
@@ -58,7 +52,7 @@ public class AddPlayListActivity extends BaseActivity{
 
     }
 
-    private void addPlaylist(){
+    private void addPlaylist() {
         mProgressBar.setVisibility(View.VISIBLE);
         RetrofitUtil.getNodeApi().createPlaylist(playlistName.getText().toString().trim())
                 .subscribeOn(Schedulers.newThread())
@@ -71,7 +65,7 @@ public class AddPlayListActivity extends BaseActivity{
 
                     @Override
                     public void onNext(BaseResponse baseResponse) {
-                        if(baseResponse != null){
+                        if (baseResponse != null) {
 
                         }
                         mProgressBar.setVisibility(View.INVISIBLE);

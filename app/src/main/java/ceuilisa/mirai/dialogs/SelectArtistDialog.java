@@ -5,43 +5,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.liulishuo.okdownload.DownloadTask;
-import com.liulishuo.okdownload.core.cause.EndCause;
-import com.liulishuo.okdownload.core.cause.ResumeFailedCause;
-import com.liulishuo.okdownload.core.listener.DownloadListener1;
-import com.liulishuo.okdownload.core.listener.assist.Listener1Assist;
-import com.othershe.library.NiceImageView;
-
-import java.io.File;
-
-import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.ArtistActivity;
-import ceuilisa.mirai.network.MusicChannel;
 import ceuilisa.mirai.response.TracksBean;
-import ceuilisa.mirai.utils.Common;
-import ceuilisa.mirai.utils.FileUtil;
 
 /**
  * 歌曲播放页面若有多个演唱者，选其中一个歌手进去查看他的详情
  */
-public class SelectArtistDialog extends DialogFragment{
+public class SelectArtistDialog extends DialogFragment {
 
     private AlertDialog mAlertDialog;
     private Context mContext;
     private TracksBean mTracksBean;
 
-    public static SelectArtistDialog newInstance(TracksBean tracksBean){
+    public static SelectArtistDialog newInstance(TracksBean tracksBean) {
         SelectArtistDialog dialog = new SelectArtistDialog();
         dialog.mTracksBean = tracksBean;
         return dialog;
@@ -52,11 +36,11 @@ public class SelectArtistDialog extends DialogFragment{
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         mContext = getActivity();
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        View view= LayoutInflater.from(mContext).inflate(R.layout.dialog_select_artist, null);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_select_artist, null);
         LinearLayout linearLayout = view.findViewById(R.id.root_view);
         for (int i = 0; i < mTracksBean.getAr().size(); i++) {
             final int position = i;
-            View artist= LayoutInflater.from(mContext).inflate(R.layout.item_artist, null);
+            View artist = LayoutInflater.from(mContext).inflate(R.layout.item_artist, null);
             TextView textView = artist.findViewById(R.id.song_name);
             textView.setText(mTracksBean.getAr().get(i).getName());
             artist.setOnClickListener(v -> {

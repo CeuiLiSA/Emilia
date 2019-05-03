@@ -7,31 +7,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import java.util.List;
-
 import ceuilisa.mirai.R;
-import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.activities.PlayListActivity;
-import ceuilisa.mirai.adapters.PlayAllHistoryAdapter;
-import ceuilisa.mirai.adapters.PlayListAdapter;
-import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.adapters.PlayListTypeAdapter;
-import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.network.RetrofitUtil;
-import ceuilisa.mirai.response.ArtistResponse;
-import ceuilisa.mirai.response.PlayAllHistoryResponse;
-import ceuilisa.mirai.response.PlayWeekHistoryResponse;
-import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.utils.ChatDetailItemDecoration;
 import ceuilisa.mirai.utils.Constant;
 import ceuilisa.mirai.utils.DensityUtil;
-import ceuilisa.mirai.utils.Translate;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class FragmentSingleRecy extends BaseFragment {
+
+    private int index;
+    private String dataType;
+    private ProgressBar mProgressBar;
+    private RecyclerView mRecyclerView;
 
     public static FragmentSingleRecy newInstance(int index, String dataType) {
         Bundle args = new Bundle();
@@ -41,11 +29,6 @@ public class FragmentSingleRecy extends BaseFragment {
         fragment.setArguments(args);
         return fragment;
     }
-
-    private int index;
-    private String dataType;
-    private ProgressBar mProgressBar;
-    private RecyclerView mRecyclerView;
 
     @Override
     void initLayout() {
@@ -109,17 +92,17 @@ public class FragmentSingleRecy extends BaseFragment {
         mRecyclerView.setAdapter(adapter);
     }
 
-    private void getSearchResult(){
+    private void getSearchResult() {
         int searchType = 0;
-        if(index == 0){
+        if (index == 0) {
             searchType = Constant.SEARCH_SONG;
-        }else if(index == 1){
+        } else if (index == 1) {
             searchType = Constant.SEARCH_ALBUM;
-        }else if(index == 2){
+        } else if (index == 2) {
             searchType = Constant.SEARCH_SINGER;
-        }else if(index == 3){
+        } else if (index == 3) {
             searchType = Constant.SEARCH_PLAYLIST;
-        }else if(index == 4){
+        } else if (index == 4) {
             searchType = Constant.SEARCH_USER;
         }
     }

@@ -15,7 +15,6 @@ import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.FullClickListener;
-import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.response.ItemResponse;
 
 

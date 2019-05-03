@@ -18,7 +18,7 @@ public class FragmentMvDetail extends BaseFragment {
     private int mvID;
     private TextView name, playCount, duration, desc, artistInfo;
 
-    public static FragmentMvDetail newInstance(int mvID){
+    public static FragmentMvDetail newInstance(int mvID) {
         FragmentMvDetail fragmentMvDetail = new FragmentMvDetail();
         fragmentMvDetail.mvID = mvID;
         return fragmentMvDetail;
@@ -44,7 +44,7 @@ public class FragmentMvDetail extends BaseFragment {
         getMvDetail();
     }
 
-    private void setData(MvBean mvBean){
+    private void setData(MvBean mvBean) {
         name.setText(mvBean.getName());
         playCount.setText("播放：" + mvBean.getPlayCount());
         duration.setText("发布：" + mvBean.getPublishTime());
@@ -52,7 +52,7 @@ public class FragmentMvDetail extends BaseFragment {
         artistInfo.setText(mvBean.getArtistName());
     }
 
-    private void getMvDetail(){
+    private void getMvDetail() {
         RetrofitUtil.getNodeApi().getMvDetail(mvID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -64,9 +64,9 @@ public class FragmentMvDetail extends BaseFragment {
 
                     @Override
                     public void onNext(MvDetail mvDetail) {
-                        if(mvDetail != null){
+                        if (mvDetail != null) {
                             setData(mvDetail.getData());
-                        }else {
+                        } else {
                             Common.showToast("加载失败");
                         }
                     }

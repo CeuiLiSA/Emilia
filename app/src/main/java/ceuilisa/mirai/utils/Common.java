@@ -24,14 +24,13 @@ import ceuilisa.mirai.response.TracksBean;
 
 public class Common {
 
+    private static Toast toast = null;
+
     public static <T> void showLog(T t) {
-        if(BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             Log.d("a line of my log", String.valueOf(t));
         }
     }
-
-    private static Toast toast = null;
-
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -105,12 +104,12 @@ public class Common {
         }
     }
 
-    public static String getArtistList(List<ArtistBean> artistBeans){
+    public static String getArtistList(List<ArtistBean> artistBeans) {
         String temp = "";
-        if(artistBeans == null){
+        if (artistBeans == null) {
             return temp;
         }
-        if(artistBeans.size() == 0){
+        if (artistBeans.size() == 0) {
             return temp;
         }
 
@@ -121,15 +120,6 @@ public class Common {
         return after;
     }
 
-    private void shareMusic(TracksBean music, Context context) {
-        File file = new File(music.getLocalPath());
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("audio/*");
-        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-        context.startActivity(Intent.createChooser(intent, "分享歌曲"));
-    }
-
-
     public static void openUrl(String url, Context context) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
@@ -139,5 +129,13 @@ public class Common {
     public static void sendAlbumBroadcast(Context context, File file) {
         context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                 Uri.fromFile(file)));
+    }
+
+    private void shareMusic(TracksBean music, Context context) {
+        File file = new File(music.getLocalPath());
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("audio/*");
+        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+        context.startActivity(Intent.createChooser(intent, "分享歌曲"));
     }
 }

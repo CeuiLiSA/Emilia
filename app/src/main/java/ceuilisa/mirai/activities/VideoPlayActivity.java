@@ -9,12 +9,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.bumptech.glide.Glide;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
@@ -23,18 +20,16 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.fragments.FragmentMvDetail;
 import ceuilisa.mirai.fragments.FragmentRelatedMv;
 import ceuilisa.mirai.network.RetrofitUtil;
-import ceuilisa.mirai.nodejs.MvBean;
 import ceuilisa.mirai.nodejs.MvPlayUrlResponse;
-import ceuilisa.mirai.nodejs.UserDetailResponse;
-import ceuilisa.mirai.response.MvDetail;
 import ceuilisa.mirai.utils.Common;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class VideoPlayActivity extends BaseActivity{
+public class VideoPlayActivity extends BaseActivity {
 
+    private static final String[] TITLES = new String[]{"详情", "相关视频"};
     StandardGSYVideoPlayer videoPlayer;
     OrientationUtils orientationUtils;
     private Toolbar mToolbar;
@@ -43,7 +38,6 @@ public class VideoPlayActivity extends BaseActivity{
     private int mvID;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
-    private static final String[] TITLES = new String[]{"详情", "相关视频"};
 
     @Override
     void initLayout() {
@@ -95,9 +89,9 @@ public class VideoPlayActivity extends BaseActivity{
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
-                if(i == 0) {
+                if (i == 0) {
                     return FragmentMvDetail.newInstance(mvID);
-                }else {
+                } else {
                     return FragmentRelatedMv.newInstance(mvID);
                 }
             }
@@ -118,10 +112,10 @@ public class VideoPlayActivity extends BaseActivity{
 
     @Override
     void initData() {
-         getMvUrl(mvID);
+        getMvUrl(mvID);
     }
 
-    private void getMvUrl(int id){
+    private void getMvUrl(int id) {
         RetrofitUtil.getNodeApi().getMvPlayUrl(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -133,7 +127,7 @@ public class VideoPlayActivity extends BaseActivity{
 
                     @Override
                     public void onNext(MvPlayUrlResponse mvPlayUrlResponse) {
-                        if(mvPlayUrlResponse != null){
+                        if (mvPlayUrlResponse != null) {
                             videoPlayer.setUp(mvPlayUrlResponse.getData().getUrl(),
                                     true, " ");
                             //Glide.with(mContext).load(mMvBean.getCover()).into(cover);

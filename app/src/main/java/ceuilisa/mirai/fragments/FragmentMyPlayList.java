@@ -44,7 +44,7 @@ public class FragmentMyPlayList extends BaseListFragment<PlayListResponse, PlayL
     @Override
     View initView(View v) {
         super.initView(v);
-        ((TemplateFragmentActivity)getActivity()).setSupportActionBar(mToolbar);
+        ((TemplateFragmentActivity) getActivity()).setSupportActionBar(mToolbar);
         mToolbar.setNavigationOnClickListener(view -> getActivity().finish());
         return v;
     }
@@ -81,7 +81,7 @@ public class FragmentMyPlayList extends BaseListFragment<PlayListResponse, PlayL
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(Channel channel) {
-        if(channel.getReceiver().equals(className)){
+        if (channel.getReceiver().equals(className)) {
             getFirstData();
         }
     }

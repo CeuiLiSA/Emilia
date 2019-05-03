@@ -4,6 +4,7 @@ import ceuilisa.mirai.response.TracksBean;
 
 public class TempJson {
     private String msg;
+    private TracksBean song;
 
     public String getMsg() {
         return msg;
@@ -12,8 +13,6 @@ public class TempJson {
     public void setMsg(String msg) {
         this.msg = msg;
     }
-
-    private TracksBean song;
 
     public TracksBean getSong() {
         return song;

@@ -3,7 +3,6 @@ package ceuilisa.mirai.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,8 +18,6 @@ import ceuilisa.mirai.activities.MainActivity;
 import ceuilisa.mirai.interf.OnPrepared;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.LoginResponse;
-import ceuilisa.mirai.response.BackResponse;
-import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Local;
 import io.reactivex.Observer;
@@ -28,7 +25,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class FragmentLogin extends BaseFragment{
+public class FragmentLogin extends BaseFragment {
 
     private ProgressBar mProgressBar;
     private EditText userName, password;
@@ -54,13 +51,13 @@ public class FragmentLogin extends BaseFragment{
         login = v.findViewById(R.id.login);
         login.setOnClickListener(view -> {
             Common.hideKeyboard(mActivity);
-            if(userName.getText().toString().trim().length() != 0){
-                if(password.getText().toString().trim().length() != 0){
+            if (userName.getText().toString().trim().length() != 0) {
+                if (password.getText().toString().trim().length() != 0) {
                     login();
-                }else {
+                } else {
                     Common.showToast("请输入密码");
                 }
-            }else {
+            } else {
                 Common.showToast("请输入用户名");
             }
         });
@@ -76,7 +73,7 @@ public class FragmentLogin extends BaseFragment{
         mProgressBar = ((LoginActivity) getActivity()).getProgressBar();
     }
 
-    private void login(){
+    private void login() {
         mProgressBar.setVisibility(View.VISIBLE);
         RetrofitUtil.getNodeApi().loginByPhone(userName.getText().toString().trim(),
                 password.getText().toString().trim())
@@ -90,8 +87,8 @@ public class FragmentLogin extends BaseFragment{
 
                     @Override
                     public void onNext(LoginResponse loginResponse) {
-                        if(loginResponse != null){
-                            if(loginResponse.getAccount() != null) {
+                        if (loginResponse != null) {
+                            if (loginResponse.getAccount() != null) {
                                 loginResponse.setUserName(userName.getText().toString().trim());
                                 loginResponse.setPassword(password.getText().toString().trim());
                                 Local.saveUser(loginResponse, new OnPrepared<Object>() {
@@ -104,14 +101,14 @@ public class FragmentLogin extends BaseFragment{
                                         getActivity().finish();
                                     }
                                 });
-                            }else {
-                                if(loginResponse.getMsg() != null && loginResponse.getMsg().length() != 0){
+                            } else {
+                                if (loginResponse.getMsg() != null && loginResponse.getMsg().length() != 0) {
                                     Common.showToast(loginResponse.getMsg());
-                                }else {
+                                } else {
                                     Common.showToast("登录失败");
                                 }
                             }
-                        }else {
+                        } else {
                             Common.showToast("登录失败");
                             mProgressBar.setVisibility(View.INVISIBLE);
                         }
@@ -134,15 +131,15 @@ public class FragmentLogin extends BaseFragment{
     @Override
     void initData() {
         LoginResponse userBean = Local.getUser();
-        if(userBean != null && userBean.getUserName() != null && userBean.getUserName().length() != 0){
+        if (userBean != null && userBean.getUserName() != null && userBean.getUserName().length() != 0) {
             userName.setText(userBean.getUserName());
         }
-        if(userBean != null && userBean.getPassword() != null && userBean.getPassword().length() != 0){
+        if (userBean != null && userBean.getPassword() != null && userBean.getPassword().length() != 0) {
             password.setText(userBean.getPassword());
         }
     }
 
-    public void showAnimate(){
+    public void showAnimate() {
         Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim_about_card_show);
         RelativeLayout relativeLayout = rootView.findViewById(R.id.root_view);
         relativeLayout.startAnimation(animation);

@@ -74,9 +74,9 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         //歌曲位置标号
         ((TagHolder) holder).mTextView2.setText(String.valueOf(position + 1));
 
-        if(allIllust.get(position).getMv() != 0){
+        if (allIllust.get(position).getMv() != 0) {
             ((TagHolder) holder).mView.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             ((TagHolder) holder).mView.setVisibility(View.GONE);
         }
 
@@ -103,6 +103,7 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public class TagHolder extends RecyclerView.ViewHolder {
         private TextView mTextView, mTextView2, mTextView3;
         private ImageView mView, more;
+
         TagHolder(View itemView) {
             super(itemView);
 

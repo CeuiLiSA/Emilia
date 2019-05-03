@@ -1,10 +1,8 @@
 package ceuilisa.mirai.utils;
 
-import java.io.File;
-
 public class FileUtil {
 
-    public  static String convertFileSize(long size) {
+    public static String convertFileSize(long size) {
         final long kb = 1024;
         final long mb = kb * 1024;
         final long gb = mb * 1024;

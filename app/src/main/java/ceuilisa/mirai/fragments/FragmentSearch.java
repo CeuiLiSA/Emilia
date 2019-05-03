@@ -70,13 +70,13 @@ public class FragmentSearch extends BaseFragment {
     }
 
 
-    private void searchNow(){
+    private void searchNow() {
         mProgressBar.setVisibility(View.VISIBLE);
-        if(index == 0){
+        if (index == 0) {
 
-        }else if(index == 1){
+        } else if (index == 1) {
 
-        }else if(index == 2){
+        } else if (index == 2) {
             RetrofitUtil.getImjadApi().searchAlbum(keyWord, Constant.LIMIT, nowIndex)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -117,7 +117,7 @@ public class FragmentSearch extends BaseFragment {
                         public void onComplete() {
                         }
                     });
-        }else if(index == 3){
+        } else if (index == 3) {
             RetrofitUtil.getImjadApi().searchPlaylist(keyWord, Constant.LIMIT, nowIndex)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -160,9 +160,9 @@ public class FragmentSearch extends BaseFragment {
                         public void onComplete() {
                         }
                     });
-        }else if(index == 4){
+        } else if (index == 4) {
 
-        }else{
+        } else {
             Common.showToast(mContext, "搜索类型有误");
         }
     }

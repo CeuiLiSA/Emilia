@@ -17,7 +17,6 @@ import java.util.List;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.response.HistorySongBean;
-import ceuilisa.mirai.response.PlayAllHistoryResponse;
 
 
 public class PlayAllHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

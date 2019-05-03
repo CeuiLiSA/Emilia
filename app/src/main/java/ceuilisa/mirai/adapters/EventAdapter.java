@@ -57,13 +57,13 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         currentOne.date.setText(Common.timeStamp2Date(String.valueOf(allIllust.get(position).getEventTime())));
         Gson gson = new Gson();
         TempJson tempJson = gson.fromJson(allIllust.get(position).getJson(), TempJson.class);
-        if(tempJson.getMsg() != null && tempJson.getMsg().length() != 0) {
+        if (tempJson.getMsg() != null && tempJson.getMsg().length() != 0) {
             currentOne.content.setText(tempJson.getMsg());
             currentOne.content.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             currentOne.content.setVisibility(View.GONE);
         }
-        if(tempJson.getSong() != null) {
+        if (tempJson.getSong() != null) {
             currentOne.songName.setText(tempJson.getSong().getName());
             currentOne.artistName.setText(Common.getArtistList(tempJson.getSong().getArtists()));
             Glide.with(mContext).load(tempJson.getSong().getAlbum().getPicUrl()).into(currentOne.songImage);

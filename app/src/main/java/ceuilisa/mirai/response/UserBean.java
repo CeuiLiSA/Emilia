@@ -1,7 +1,5 @@
 package ceuilisa.mirai.response;
 
-import java.sql.Timestamp;
-
 public class UserBean {
 
     private String userName;
@@ -12,6 +10,7 @@ public class UserBean {
     private String phoneNumber;
     private String createDate;
     private String selfIntro;
+    private boolean isLogin;
 
     public String getUserID() {
         return userID;
@@ -60,9 +59,6 @@ public class UserBean {
     public void setLogin(boolean login) {
         isLogin = login;
     }
-
-    private boolean isLogin;
-
 
     public String getUserName() {
         return userName;

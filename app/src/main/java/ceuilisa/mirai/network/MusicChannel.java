@@ -11,11 +11,10 @@ import ceuilisa.mirai.utils.Common;
  */
 public class MusicChannel {
 
+    private volatile static MusicChannel instance = null;
+    private List<TracksBean> musicList = new ArrayList<>();
     private MusicChannel() {
     }
-
-    private List<TracksBean> musicList = new ArrayList<>();
-    private volatile static MusicChannel instance = null;
 
     public static MusicChannel get() {
         if (instance == null) {

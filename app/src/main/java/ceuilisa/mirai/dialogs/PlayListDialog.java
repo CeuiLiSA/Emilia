@@ -44,9 +44,9 @@ public class PlayListDialog extends BaseBottomDialog {
         });
         nowPlayList.setAdapter(adapter);
         int tempPosition = MusicService.get().getNowPlayIndex() - 2;
-        if(tempPosition >= 0) {
+        if (tempPosition >= 0) {
             nowPlayList.scrollToPosition(tempPosition);
-        }else {
+        } else {
             nowPlayList.scrollToPosition(MusicService.get().getNowPlayIndex());
         }
     }

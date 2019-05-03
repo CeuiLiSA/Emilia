@@ -52,7 +52,7 @@ public class ViewPagerActivity extends WithPanelActivity {
     @Override
     void initData() {
         String dataType = getIntent().getStringExtra("dataType");
-        if(dataType.equals("听歌记录")){
+        if (dataType.equals("听歌记录")) {
             data = Constant.PLAY_HISTORY;
             mToolbar.setTitle("播放记录");
             BaseFragment[] baseFragments = new BaseFragment[]{new FragmentPlayWeekHistory(), new FragmentPlayAllHistory()};
@@ -72,7 +72,7 @@ public class ViewPagerActivity extends WithPanelActivity {
                     return data[position];
                 }
             });
-        }else if(dataType.equals("歌单分类")){
+        } else if (dataType.equals("歌单分类")) {
             data = Constant.PLAYLIST_TYPE;
             mToolbar.setTitle("歌单分类");
             mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
@@ -91,7 +91,7 @@ public class ViewPagerActivity extends WithPanelActivity {
                     return data[position];
                 }
             });
-        }else if(dataType.equals("新歌速递")){
+        } else if (dataType.equals("新歌速递")) {
             data = Constant.PLAYLIST_NEW_SONG;
             mToolbar.setTitle("新歌速递");
             mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
@@ -110,16 +110,16 @@ public class ViewPagerActivity extends WithPanelActivity {
                     return data[position];
                 }
             });
-        }else if(dataType.equals("关注与粉丝")){
+        } else if (dataType.equals("关注与粉丝")) {
             data = Constant.FOLLOW_AND_FOLLOWERS;
             int uid = getIntent().getIntExtra("uid", 0);
             mToolbar.setTitle("TA的好友");
             mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
                 @Override
                 public Fragment getItem(int i) {
-                    if(i == 0){
+                    if (i == 0) {
                         return FragmentFollow.newInstance(uid);
-                    }else {
+                    } else {
                         return FragmentFollowers.newInstance(uid);
                     }
                 }
@@ -136,15 +136,15 @@ public class ViewPagerActivity extends WithPanelActivity {
             });
             int currentPage = getIntent().getIntExtra("currentPage", 0);
             mViewPager.setCurrentItem(currentPage);
-        } else if(dataType.equals("推荐mv")){
+        } else if (dataType.equals("推荐mv")) {
             data = Constant.FOLLOW_HOT_MV;
             mToolbar.setTitle("MV");
             mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
                 @Override
                 public Fragment getItem(int i) {
-                    if(i == 0){
+                    if (i == 0) {
                         return new FragmentMvRecmd();
-                    }else {
+                    } else {
                         return new FragmentMvRank();
                     }
                 }
