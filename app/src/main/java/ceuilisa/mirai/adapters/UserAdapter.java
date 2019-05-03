@@ -47,7 +47,12 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((TagHolder) holder).mTextView.setText(allIllust.get(position).getNickname());
-        ((TagHolder) holder).mTextView2.setText(allIllust.get(position).getSignature());
+        if(allIllust.get(position).getSignature() != null && allIllust.get(position).getSignature().length() != 0) {
+            ((TagHolder) holder).mTextView2.setText(allIllust.get(position).getSignature());
+            ((TagHolder) holder).mTextView2.setVisibility(View.VISIBLE);
+        }else {
+            ((TagHolder) holder).mTextView2.setVisibility(View.GONE);
+        }
         Glide.with(mContext).load(allIllust.get(position).getBackgroundUrl()).into(((TagHolder) holder).mImageView);
         Glide.with(mContext).load(allIllust.get(position).getAvatarUrl()).into(((TagHolder) holder).mNiceImageView);
         if (mOnItemClickListener != null) {

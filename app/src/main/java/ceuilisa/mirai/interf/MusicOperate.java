@@ -1,7 +1,8 @@
 package ceuilisa.mirai.interf;
 
 public interface MusicOperate {
-    void playMusic(int id, OnPrepare onPrepare);
+
+    void playMusic(long id, OnPrepare onPrepare);
 
     void stopOrPlay();
 

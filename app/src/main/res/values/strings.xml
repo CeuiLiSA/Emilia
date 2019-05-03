@@ -116,4 +116,5 @@
     <string name="unknown_artist">未知艺术家</string>
     <string name="toolbar_search">搜索</string>
     <string name="now_playing">正在播放</string>
+    <string name="playlist_remove_item">PlayListDetailActivity remove item</string>
 </resources>

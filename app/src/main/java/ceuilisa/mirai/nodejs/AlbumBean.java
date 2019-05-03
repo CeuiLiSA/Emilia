@@ -31,7 +31,7 @@ public class AlbumBean {
      */
 
     private String name;
-    private int id;
+    private long id;
     private String type;
     private int size;
     private long picId;
@@ -63,11 +63,11 @@ public class AlbumBean {
         this.name = name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

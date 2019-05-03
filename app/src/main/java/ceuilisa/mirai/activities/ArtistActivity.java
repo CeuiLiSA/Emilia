@@ -87,7 +87,7 @@ public class ArtistActivity extends WithPanelActivity {
         id = getIntent().getIntExtra("id", 0);
         name = getIntent().getStringExtra("name");
         fragmentHotSongs = new FragmentHotSongs();
-        mFragmentArtistAlbum = FragmentArtistAlbum.newInstance(Integer.valueOf(id));
+        mFragmentArtistAlbum = FragmentArtistAlbum.newInstance(id);
         fragmentArtistInfo = new FragmentArtistInfo();
         mFragments = new BaseFragment[]{fragmentHotSongs, mFragmentArtistAlbum, fragmentArtistInfo};
         mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {

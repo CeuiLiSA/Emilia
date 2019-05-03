@@ -50,7 +50,7 @@ public class TracksBean {
 
     private String name;
     private boolean isLiked = false;
-    private int id;
+    private long id;
     private int pst;
     private int t;
     private int pop;
@@ -69,6 +69,16 @@ public class TracksBean {
     private int ftype;
     private int djId;
     private int copyright;
+
+    public String getLocalPath() {
+        return localPath;
+    }
+
+    public void setLocalPath(String localPath) {
+        this.localPath = localPath;
+    }
+
+    private String localPath;
 
     public boolean isLiked() {
         return isLiked;
@@ -135,11 +145,11 @@ public class TracksBean {
         this.name = name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -388,6 +398,19 @@ public class TracksBean {
         } else {
             //若歌曲Alia为空，查找歌曲tns
             return getName();
+        }
+    }
+
+    public String getFullArtistName(){
+        List<ArtistBean> artistBeanList = getAr();
+        if(artistBeanList != null){
+            String before = "";
+            for (int i = 0; i < artistBeanList.size(); i++) {
+                before = before + artistBeanList.get(i).getName() + "/";
+            }
+            return before.substring(0, before.length() - 1);
+        }else {
+            return "未知艺术家";
         }
     }
 }

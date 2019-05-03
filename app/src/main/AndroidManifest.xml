@@ -9,6 +9,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
+
+
+
     <application
         android:name=".activities.GlobalApp"
         android:allowBackup="true"
@@ -17,10 +20,31 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+
+
         <activity
             android:name=".activities.ArtistActivity"
             android:label="@string/title_activity_artist"
             android:theme="@style/AppTheme"></activity>
+
+
+        <receiver android:name=".utils.StatusBarReceiver">
+            <intent-filter>
+                <action android:name="me.wcy.music.STATUS_BAR_ACTIONS" />
+            </intent-filter>
+        </receiver>
+
 
 
         <service
@@ -42,25 +66,17 @@
         </activity>
         <activity android:name=".activities.MusicActivity" />
         <activity android:name=".activities.CoverDetailActivity" />
-        <activity android:name=".activities.PlayHistoryActivity" />
+        <activity android:name=".activities.ViewPagerActivity" />
         <activity android:name=".activities.CommentActivity" />
-        <activity android:name=".activities.DownloadActivity" />
-        <activity android:name=".activities.UploadImageActivity" />
-        <activity android:name=".activities.TestActivity" />
         <activity android:name=".activities.SearchActivity" />
-        <activity android:name=".activities.SingleFragmentActivity" />
-        <activity android:name=".activities.SearchUserActivity" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.TempActivity" />
         <activity android:name=".activities.AddPlayListActivity" />
-        <activity android:name=".activities.CommentListActivity" />
         <activity android:name=".activities.UserDetailActivity" />
         <activity android:name=".activities.TemplateFragmentActivity" />
         <activity android:name=".activities.VideoPlayActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".activities.ViewPagerActivty" />
     </application>
 
 </manifest>

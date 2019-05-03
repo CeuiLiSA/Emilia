@@ -168,7 +168,9 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            Intent intent = new Intent(mContext, ViewPagerActivity.class);
+            intent.putExtra("dataType", "听歌记录");
+            mContext.startActivity(intent);
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -179,7 +181,11 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
-
+            Intent intent = new Intent(mContext, TemplateFragmentActivity.class);
+            intent.putExtra("dataType", "项目主页");
+            intent.putExtra("title", "项目主页");
+            intent.putExtra("url", "https://github.com/CeuiLiSA/Emilia");
+            mContext.startActivity(intent);
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);

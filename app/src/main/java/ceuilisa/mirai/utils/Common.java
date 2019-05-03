@@ -3,6 +3,7 @@ package ceuilisa.mirai.utils;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,6 +20,7 @@ import java.util.List;
 import ceuilisa.mirai.BuildConfig;
 import ceuilisa.mirai.activities.GlobalApp;
 import ceuilisa.mirai.nodejs.ArtistBean;
+import ceuilisa.mirai.response.TracksBean;
 
 public class Common {
 
@@ -116,5 +119,13 @@ public class Common {
         }
         String after = temp.substring(0, temp.length() - 1);
         return after;
+    }
+
+    private void shareMusic(TracksBean music, Context context) {
+        File file = new File(music.getLocalPath());
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("audio/*");
+        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+        context.startActivity(Intent.createChooser(intent, "分享歌曲"));
     }
 }

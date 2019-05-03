@@ -2,6 +2,8 @@ package ceuilisa.mirai.network;
 
 import org.greenrobot.eventbus.EventBus;
 
+import ceuilisa.mirai.fragments.FragmentFollow;
+import ceuilisa.mirai.fragments.FragmentFollowers;
 import ceuilisa.mirai.fragments.FragmentMyPlayList;
 import ceuilisa.mirai.interf.OnPrepare;
 import ceuilisa.mirai.interf.OnPrepared;
@@ -24,7 +26,7 @@ public class Operate {
      * @param id
      * @param isLike
      */
-    public static void likeSong(int id, boolean isLike){
+    public static void likeSong(long id, boolean isLike){
         RetrofitUtil.getNodeApi().likeSong(id, isLike)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -71,6 +73,91 @@ public class Operate {
                                 Channel channel = new Channel();
                                 channel.setReceiver("FragmentMyPlayList");
                                 EventBus.getDefault().post(channel);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        Common.showToast(e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
+    /**
+     * 关注一个用户
+     * @param id
+     * @param isLike
+     */
+    public static void starUser(long id, boolean isLike){
+        RetrofitUtil.getNodeApi().starUser(isLike ? "1" : "2", id)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        if(baseResponse != null){
+                            if(baseResponse.getCode() == 200){
+                                Common.showToast(isLike ? "关注成功" : "取消关注");
+
+                                //通知关注列表页面刷新
+                                Channel channel = new Channel();
+                                channel.setReceiver("FragmentFollow");
+                                EventBus.getDefault().post(channel);
+
+                                //通知粉丝列表页面刷新
+                                Channel channel2 = new Channel();
+                                channel2.setReceiver("FragmentFollowers");
+                                EventBus.getDefault().post(channel2);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        Common.showToast(e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
+    /**
+     * 听歌打卡，如果在一个歌单里听了一首歌，调用这个接口之后，这个歌单的这首歌播放次数加1
+     *
+     * @param id
+     */
+    public static void scrobble(long id, long sourceID){
+        RetrofitUtil.getNodeApi().scrobble(id, sourceID)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        if(baseResponse != null){
+                            if(baseResponse.getCode() == 200){
                             }
                         }
                     }

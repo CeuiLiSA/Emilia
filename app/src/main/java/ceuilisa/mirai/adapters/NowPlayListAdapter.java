@@ -9,17 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.othershe.library.NiceImageView;
-
 import java.util.List;
 
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.response.SearchAlbumResponse;
 import ceuilisa.mirai.response.TracksBean;
-import ceuilisa.mirai.utils.Common;
 
 
 public class NowPlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -28,13 +23,11 @@ public class NowPlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private LayoutInflater mLayoutInflater;
     private OnItemClickListener mOnItemClickListener;
     private List<TracksBean> allIllust;
-    private int nowPlayIndex;
 
     public NowPlayListAdapter(List<TracksBean> list, Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(mContext);
         allIllust = list;
-        nowPlayIndex = MusicService.getInstance().getNowPlayIndex();
     }
 
     @NonNull
@@ -47,10 +40,14 @@ public class NowPlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName());
-        if(position == nowPlayIndex){
+        ((TagHolder) holder).mTextView2.setText(" - " + allIllust.get(position).getFullArtistName());
+        if(position == MusicService.get().getNowPlayIndex()){
             ((TagHolder) holder).mTextView.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
+            ((TagHolder) holder).mTextView2.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
             ((TagHolder) holder).mImageView.setVisibility(View.VISIBLE);
         }else {
+            ((TagHolder) holder).mTextView.setTextColor(mContext.getResources().getColor(R.color.dark_text));
+            ((TagHolder) holder).mTextView2.setTextColor(mContext.getResources().getColor(R.color.defaut_text));
             ((TagHolder) holder).mImageView.setVisibility(View.GONE);
         }
         if (mOnItemClickListener != null) {
@@ -69,13 +66,14 @@ public class NowPlayListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public class TagHolder extends RecyclerView.ViewHolder {
-        private TextView mTextView;
+        private TextView mTextView, mTextView2;
         private ImageView mImageView;
 
         TagHolder(View itemView) {
             super(itemView);
 
             mTextView = itemView.findViewById(R.id.song_name);
+            mTextView2 = itemView.findViewById(R.id.artist_info);
             mImageView = itemView.findViewById(R.id.is_playing);
         }
     }

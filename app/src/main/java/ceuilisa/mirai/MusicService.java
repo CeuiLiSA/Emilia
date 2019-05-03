@@ -7,8 +7,6 @@ import android.media.MediaPlayer;
 import android.os.IBinder;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import ceuilisa.mirai.interf.MusicOperate;
 import ceuilisa.mirai.interf.OnPlayComplete;
@@ -16,8 +14,8 @@ import ceuilisa.mirai.interf.OnPrepare;
 import ceuilisa.mirai.network.MusicChannel;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.SingleSongResponse;
-import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.utils.Common;
+import ceuilisa.mirai.utils.Notifier;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -32,7 +30,7 @@ public class MusicService extends Service implements MusicOperate {
     private boolean isPlaying = false;
     private OnPlayComplete mOnPlayComplete;
     private static volatile MusicService instance = null;
-    private MusicChannel mChannel = MusicChannel.getInstance();
+    private MusicChannel mChannel = MusicChannel.get();
 
     public MusicService() {
         mPlayer = new MediaPlayer();
@@ -68,7 +66,7 @@ public class MusicService extends Service implements MusicOperate {
         Common.showLog("关闭了这个服务");
     }
 
-    public static MusicService getInstance() {
+    public static MusicService get() {
         if (instance == null) {
             synchronized (MusicService.class) {
                 if (instance == null) {
@@ -87,37 +85,102 @@ public class MusicService extends Service implements MusicOperate {
     }
 
     @Override
-    public void playMusic(int id, OnPrepare onPrepare) {
+    public void playMusic(long id, OnPrepare onPrepare) {
         mPlayer.stop();
-        RetrofitUtil.getImjadApi().getSingleSong(id)
+        Common.showLog("MusicService playMusic");
+//        RetrofitUtil.getImjadApi().getSingleSong(id)
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<SingleSongResponse>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//                        Common.showLog("MusicService onSubscribe");
+//                    }
+//
+//                    @Override
+//                    public void onNext(SingleSongResponse playListTitleResponse) {
+//                        Common.showLog("MusicService try");
+//                        try {
+//                            Common.showLog("MusicService onNext");
+//                            mSingleSong = playListTitleResponse;
+//                            mPlayer.reset();
+//                            if (mSingleSong.getData() != null &&
+//                                    mSingleSong.getData().get(0).getUrl() != null) {
+//                                mPlayer.setDataSource(mSingleSong.getData().get(0).getUrl());
+//                                mPlayer.prepareAsync();
+//                                mPlayer.setOnPreparedListener(mp -> {
+//                                    isPlaying = true;
+//                                    if (onPrepare != null) {
+//                                        onPrepare.updateUI();
+//                                    }
+//                                    mPlayer.start();
+//                                    Common.showLog("MusicService mPlayer.start");
+//                                    //Notifier.get().showPlay(mChannel.getMusicList().get(nowPlayIndex));
+//                                });
+//                            } else {
+//                                isPlaying = false;
+//                                Common.showToast(mContext, "歌曲链接不存在");
+//                                Common.showLog("MusicService mPlayer.not start");
+//                            }
+//                        } catch (IOException e) {
+//                            Common.showLog("MusicService 歌曲加载失败");
+//                            e.printStackTrace();
+//                            Common.showToast("歌曲加载失败");
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        e.printStackTrace();
+//                        Common.showLog("MusicService onError");
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                    }
+//                });
+        RetrofitUtil.getNodeApi().getSongUrl(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<SingleSongResponse>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+                        Common.showLog("MusicService onSubscribe");
                     }
 
                     @Override
                     public void onNext(SingleSongResponse playListTitleResponse) {
+                        Common.showLog("MusicService try");
                         try {
+
+                            Notifier.get().init(get());
+                            Notifier.get().showPlay(mChannel.getMusicList().get(nowPlayIndex));
+                            Common.showLog("MusicService onNext");
                             mSingleSong = playListTitleResponse;
                             mPlayer.reset();
                             if (mSingleSong.getData() != null &&
                                     mSingleSong.getData().get(0).getUrl() != null) {
                                 mPlayer.setDataSource(mSingleSong.getData().get(0).getUrl());
+                                Common.showLog("MusicService " + mSingleSong.getData().get(0).getUrl());
+                                //mPlayer.setDisplay();
                                 mPlayer.prepareAsync();
                                 mPlayer.setOnPreparedListener(mp -> {
+                                    Common.showLog("MusicService setOnPreparedListener");
                                     isPlaying = true;
                                     if (onPrepare != null) {
                                         onPrepare.updateUI();
                                     }
-                                    mPlayer.start();
+                                    mp.start();
+                                    Common.showLog("MusicService mPlayer.start");
+                                    //
                                 });
                             } else {
                                 isPlaying = false;
                                 Common.showToast(mContext, "歌曲链接不存在");
+                                Common.showLog("MusicService mPlayer.not start");
                             }
                         } catch (IOException e) {
+                            Common.showLog("MusicService 歌曲加载失败");
                             e.printStackTrace();
                             Common.showToast("歌曲加载失败");
                         }
@@ -125,6 +188,8 @@ public class MusicService extends Service implements MusicOperate {
 
                     @Override
                     public void onError(Throwable e) {
+                        e.printStackTrace();
+                        Common.showLog("MusicService onError");
                     }
 
                     @Override

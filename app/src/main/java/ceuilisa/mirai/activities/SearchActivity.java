@@ -98,34 +98,31 @@ public class SearchActivity extends WithPanelActivity implements MaterialSearchB
 
     @Override
     public void onSearchConfirmed(CharSequence text) {
-        if(searchBar.getText().trim().length() == 0){
+        if (searchBar.getText().trim().length() == 0) {
             Common.showToast(mContext, "请输入搜索关键字");
-        }else {
+        } else {
             Common.hideKeyboard(mActivity);
-            if(searchType == 0){//搜单曲
-                Intent intent = new Intent(mContext, SingleFragmentActivity.class);
+            if (searchType == 0) {//搜歌曲
+                Intent intent = new Intent(mContext, TemplateFragmentActivity.class);
                 intent.putExtra("key", searchBar.getText().trim());
-                intent.putExtra("title", "搜索专辑 " + searchBar.getText().trim());
+                intent.putExtra("dataType", "搜索歌曲");
                 startActivity(intent);
-            }
-            else if(searchType == 1){//搜歌手
+            } else if (searchType == 1) {//搜歌手
                 Intent intent = new Intent(mContext, TemplateFragmentActivity.class);
                 intent.putExtra("key", searchBar.getText().trim());
                 intent.putExtra("dataType", "搜索歌手");
                 startActivity(intent);
-            }
-            else if(searchType == 2){//搜专辑 done
-                Intent intent = new Intent(mContext, TempActivity.class);
+            } else if (searchType == 2) {//搜专辑 done
+                Intent intent = new Intent(mContext, TemplateFragmentActivity.class);
                 intent.putExtra("key", searchBar.getText().trim());
-                intent.putExtra("title", "搜索专辑");
+                intent.putExtra("dataType", "搜索专辑");
                 startActivity(intent);
-            }
-            else if(searchType == 3){//搜歌单 done
+            } else if (searchType == 3) {//搜歌单 done
                 Intent intent = new Intent(mContext, PlayListActivity.class);
                 intent.putExtra("dataType", "根据类型搜索歌单");
                 intent.putExtra("key", searchBar.getText().trim());
                 startActivity(intent);
-            }else if(searchType == 4){//搜用户
+            } else if (searchType == 4) {//搜用户
                 Intent intent = new Intent(mContext, TemplateFragmentActivity.class);
                 intent.putExtra("key", searchBar.getText().trim());
                 intent.putExtra("dataType", "搜索用户");

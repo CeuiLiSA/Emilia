@@ -17,7 +17,7 @@ public class MusicChannel {
     private List<TracksBean> musicList = new ArrayList<>();
     private volatile static MusicChannel instance = null;
 
-    public static MusicChannel getInstance() {
+    public static MusicChannel get() {
         if (instance == null) {
             synchronized (MusicChannel.class) {
                 if (instance == null) {

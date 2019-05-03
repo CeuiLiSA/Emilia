@@ -18,7 +18,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 
@@ -28,30 +27,16 @@ import java.text.SimpleDateFormat;
 
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
-import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.dialogs.DownloadDialog;
 import ceuilisa.mirai.dialogs.SelectArtistDialog;
 import ceuilisa.mirai.fragments.BaseFragment;
 import ceuilisa.mirai.fragments.FragmentCover;
 import ceuilisa.mirai.fragments.FragmentLrc;
 import ceuilisa.mirai.interf.OnPlayComplete;
-import ceuilisa.mirai.network.MusicChannel;
 import ceuilisa.mirai.network.Operate;
-import ceuilisa.mirai.network.RetrofitUtil;
-import ceuilisa.mirai.response.BackResponse;
-import ceuilisa.mirai.response.PlayListDetailResponse;
-import ceuilisa.mirai.response.TracksBean;
-import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Common;
-import ceuilisa.mirai.utils.Constant;
 import ceuilisa.mirai.utils.IndicatorLayout;
-import ceuilisa.mirai.utils.Local;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import jp.wasabeef.glide.transformations.BlurTransformation;
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 
 public class MusicActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
@@ -171,10 +156,10 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
 
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
-                    if (MusicService.getInstance().isPlayingMusic()) {
+                    if (MusicService.get().isPlayingMusic()) {
                         mHandler.post(mMyRunnable);
                     }
-                    MusicService.getInstance().getPlayer().seekTo(mSeekBar.getProgress());
+                    MusicService.get().getPlayer().seekTo(mSeekBar.getProgress());
                 }
             };
             mSeekBar.setOnSeekBarChangeListener(sbLis);
@@ -204,8 +189,8 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
         index = getIntent().getIntExtra("index", 0);
         if(mChannel.getMusicList() != null && mChannel.getMusicList().size() != 0) {
             mTracksBean = mChannel.getMusicList().get(index);
-            if (MusicService.getInstance().getOnPlayComplete() == null) {
-                MusicService.getInstance().setOnPlayComplete(new OnPlayComplete() {
+            if (MusicService.get().getOnPlayComplete() == null) {
+                MusicService.get().setOnPlayComplete(new OnPlayComplete() {
                     @Override
                     public void nextSong() {
                         nextSong.performClick();
@@ -216,7 +201,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
                         mFragmentCover.pauseAnimation();
                         mHandler.removeCallbacksAndMessages(null);
                         mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
-                        MusicService.getInstance().setPlaying(false);
+                        MusicService.get().setPlaying(false);
                     }
                 });
             }
@@ -245,25 +230,25 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
                 mSeekBar.setMax(mTracksBean.getDt());
             }
             mLikeButton.setLiked(mTracksBean.isLiked());
-            if (index != MusicService.getInstance().getNowPlayIndex()) {
+            if (index != MusicService.get().getNowPlayIndex()) {
                 mHandler.removeCallbacksAndMessages(null);
                 mSeekBar.setProgress(0);
                 mTextView3.setText("00: 00");
-                MusicService.getInstance().setPlaying(true);
-                MusicService.getInstance().playMusic(mTracksBean.getId(), () -> {
+                MusicService.get().setPlaying(true);
+                MusicService.get().playMusic(mTracksBean.getId(), () -> {
                     mFragmentCover.resumeAnimation();
                     mHandler.post(mMyRunnable);
                 });
-                MusicService.getInstance().setNowPlayIndex(index);
+                MusicService.get().setNowPlayIndex(index);
             } else {
-                if (MusicService.getInstance().isPlayingMusic()) {
+                if (MusicService.get().isPlayingMusic()) {
                     mHandler.post(mMyRunnable);
                 } else {
-                    mSeekBar.setProgress(MusicService.getInstance().getPlayer().getCurrentPosition());
-                    mTextView3.setText(mTime.format(MusicService.getInstance().getPlayer().getCurrentPosition()));
+                    mSeekBar.setProgress(MusicService.get().getPlayer().getCurrentPosition());
+                    mTextView3.setText(mTime.format(MusicService.get().getPlayer().getCurrentPosition()));
                 }
             }
-            mFloatingActionButton.setImageResource(MusicService.getInstance().isPlayingMusic() ?
+            mFloatingActionButton.setImageResource(MusicService.get().isPlayingMusic() ?
                     R.drawable.ic_pause_black_24dp : R.drawable.ic_play_arrow_black_24dp);
         }
     }
@@ -292,7 +277,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
     }
 
     private void stopOrPlay(){
-        if (MusicService.getInstance().isPlayingMusic()) {
+        if (MusicService.get().isPlayingMusic()) {
             mFragmentCover.pauseAnimation();
             mHandler.removeCallbacksAndMessages(null);
             mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
@@ -301,7 +286,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
             mHandler.post(mMyRunnable);
             mFloatingActionButton.setImageResource(R.drawable.ic_pause_black_24dp);
         }
-        MusicService.getInstance().stopOrPlay();
+        MusicService.get().stopOrPlay();
     }
 
     @Override
@@ -328,7 +313,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
     private class MyRunnable implements Runnable {
         @Override
         public void run() {
-            int position = MusicService.getInstance().getPlayer().getCurrentPosition();
+            int position = MusicService.get().getPlayer().getCurrentPosition();
             mSeekBar.setProgress(position);
             mTextView3.setText(mTime.format(position));
             if (mFragmentLrc.isHasLyric()) {

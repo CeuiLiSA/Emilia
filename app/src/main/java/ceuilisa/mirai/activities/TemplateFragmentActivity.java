@@ -5,10 +5,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import ceuilisa.mirai.fragments.FragmentDayRecm;
+import ceuilisa.mirai.fragments.FragmentLocalMusic;
 import ceuilisa.mirai.fragments.FragmentMyPlayList;
 import ceuilisa.mirai.fragments.FragmentRecmPlaylist;
+import ceuilisa.mirai.fragments.FragmentSearchAlbum;
 import ceuilisa.mirai.fragments.FragmentSearchArtist;
+import ceuilisa.mirai.fragments.FragmentSearchSong;
 import ceuilisa.mirai.fragments.FragmentSearchUser;
+import ceuilisa.mirai.fragments.FragmentWebView;
 
 public class TemplateFragmentActivity extends FragmentActivity {
 
@@ -29,6 +33,18 @@ public class TemplateFragmentActivity extends FragmentActivity {
             }else if (dataType.equals("搜索用户")) {
                 String key = getIntent().getStringExtra("key");
                 return FragmentSearchUser.newInstance(key);
+            }else if (dataType.equals("搜索歌曲")) {
+                String key = getIntent().getStringExtra("key");
+                return FragmentSearchSong.newInstance(key);
+            }else if (dataType.equals("搜索专辑")) {
+                String key = getIntent().getStringExtra("key");
+                return FragmentSearchAlbum.newInstance(key);
+            }else if (dataType.equals("本地音乐")) {
+                return new FragmentLocalMusic();
+            }else if (dataType.equals("项目主页")) {
+                String title = getIntent().getStringExtra("title");
+                String url = getIntent().getStringExtra("url");
+                return FragmentWebView.newInstance(title, url);
             }
         }
 

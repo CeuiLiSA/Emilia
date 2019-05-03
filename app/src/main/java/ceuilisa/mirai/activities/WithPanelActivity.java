@@ -1,10 +1,7 @@
 package ceuilisa.mirai.activities;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -44,14 +41,14 @@ public abstract class WithPanelActivity extends NetWorkControlActivity{
             @Override
             public void onClick(View v) {
                 if(mChannel != null && mChannel.getMusicList().size() != 0) {
-                    if (MusicService.getInstance().isPlayingMusic()) {
+                    if (MusicService.get().isPlayingMusic()) {
                         playPause.setImageResource(R.drawable.ic_play_arrow_black_24dp);
                         mHandler.removeCallbacksAndMessages(null);
                     }else {
                         playPause.setImageResource(R.drawable.ic_pause_black_24dp);
                         mHandler.post(mMyRunnable);
                     }
-                    MusicService.getInstance().stopOrPlay();
+                    MusicService.get().stopOrPlay();
                 }
             }
         });
@@ -72,7 +69,7 @@ public abstract class WithPanelActivity extends NetWorkControlActivity{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, MusicActivity.class);
-                intent.putExtra("index", MusicService.getInstance().getNowPlayIndex());
+                intent.putExtra("index", MusicService.get().getNowPlayIndex());
                 startActivity(intent);
             }
         });
@@ -87,8 +84,8 @@ public abstract class WithPanelActivity extends NetWorkControlActivity{
     protected void onResume() {
         super.onResume();
         if(mChannel != null && mChannel.getMusicList().size() != 0) {
-            mTracksBean = mChannel.getMusicList().get(MusicService.getInstance().getNowPlayIndex());
-            if (MusicService.getInstance().isPlayingMusic()) {
+            mTracksBean = mChannel.getMusicList().get(MusicService.get().getNowPlayIndex());
+            if (MusicService.get().isPlayingMusic()) {
                 mHandler.post(mMyRunnable);
                 playPause.setImageResource(R.drawable.ic_pause_black_24dp);
             }else {
@@ -111,8 +108,8 @@ public abstract class WithPanelActivity extends NetWorkControlActivity{
         @Override
         public void run() {
             mHandler.postDelayed(this, 1000);
-            timeProgress.setProgress(MusicService.getInstance().getPlayer().getCurrentPosition());
-            Common.showLog("progress : " + MusicService.getInstance().getPlayer().getCurrentPosition());
+            timeProgress.setProgress(MusicService.get().getPlayer().getCurrentPosition());
+            Common.showLog("progress : " + MusicService.get().getPlayer().getCurrentPosition());
             Log.d("+++++++", "_______");
         }
     }

@@ -20,6 +20,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
@@ -31,12 +34,14 @@ import ceuilisa.mirai.nodejs.EventsBean;
 import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.response.AlbumResponse;
 import ceuilisa.mirai.response.PlayListDetailResponse;
+import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.response.UserBean;
 import ceuilisa.mirai.utils.Channel;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Constant;
 import ceuilisa.mirai.utils.DensityUtil;
 import ceuilisa.mirai.utils.Local;
+import ceuilisa.mirai.utils.Notifier;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -57,6 +62,8 @@ public class PlayListDetailActivity extends WithPanelActivity {
     private NiceImageView mImageView2;
     private CircleImageView mCircleImageView;
     private boolean showProgress = true;
+    private PlayListDetailAdapter mAdapter;
+    private List<TracksBean> allDatas = new ArrayList<>();
 
     @Override
     boolean hasImage() {
@@ -167,27 +174,38 @@ public class PlayListDetailActivity extends WithPanelActivity {
                             if(playListTitleResponse.getPlaylist().getTracks() != null &&
                                     playListTitleResponse.getPlaylist().getTracks().size() > 0) {
 
+                                allDatas.clear();
+                                allDatas.addAll(playListTitleResponse.getPlaylist().getTracks());
                                 if(playListTitleResponse.getPlaylist().isSubscribed()){
                                     starPlaylistTv.setText("取消收藏");
                                 }else {
                                     starPlaylistTv.setText("收藏");
                                 }
-                                PlayListDetailAdapter adapter = new PlayListDetailAdapter(
-                                        playListTitleResponse.getPlaylist().getTracks(), mContext);
-                                adapter.setOnItemClickListener((view, position, viewType) -> {
+                                mAdapter = new PlayListDetailAdapter(allDatas, mContext);
+                                mAdapter.setOnItemClickListener((view, position, viewType) -> {
                                     if (viewType == 0) {
-                                        mChannel.setMusicList(playListTitleResponse.getPlaylist().getTracks());
+                                        mChannel.setMusicList(allDatas);
                                         Intent intent = new Intent(mContext, MusicActivity.class);
                                         intent.putExtra("index", position);
                                         startActivity(intent);
                                     } else if (viewType == 1) {
                                         Intent intent = new Intent(mContext, VideoPlayActivity.class);
-                                        intent.putExtra("mv id", playListTitleResponse.getList().get(position).getMv());
+                                        intent.putExtra("mv id", allDatas.get(position).getMv());
                                         startActivity(intent);
                                     } else if (viewType == 2) {
-                                        LikeSongDialog dialog = LikeSongDialog.newInstance(
-                                                playListTitleResponse.getPlaylist().getTracks().get(position));
-                                        dialog.show(getSupportFragmentManager());
+                                        //如果歌单创建者是自己，则可以删除歌单中的歌曲
+                                        if(playListTitleResponse.getPlaylist().getCreator().getUserId() ==
+                                                Local.getUser().getProfile().getUserId()){
+                                            LikeSongDialog dialog = LikeSongDialog.newInstance(
+                                                    allDatas.get(position),
+                                                    playListTitleResponse.getPlaylist().getId(),
+                                                    position);
+                                            dialog.show(getSupportFragmentManager());
+                                        }else {
+                                            LikeSongDialog dialog = LikeSongDialog.newInstance(
+                                                    allDatas.get(position));
+                                            dialog.show(getSupportFragmentManager());
+                                        }
                                     }
                                 });
                                 mCircleImageView.setOnClickListener(new View.OnClickListener() {
@@ -213,7 +231,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
                                             getAvatarUrl()).into(mCircleImageView);
                                 }
                                 loadProgress.setVisibility(View.GONE);
-                                mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
+                                mRecyclerView.setAdapter(new ScaleInAnimationAdapter(mAdapter));
                                 showProgress = false;
                             }else {
                                 Common.showToast("暂无歌曲");
@@ -249,21 +267,22 @@ public class PlayListDetailActivity extends WithPanelActivity {
 
                     @Override
                     public void onNext(AlbumResponse playListTitleResponse) {
-                        PlayListDetailAdapter adapter = new PlayListDetailAdapter(
-                                playListTitleResponse.getSongs(), mContext);
-                        adapter.setOnItemClickListener((view, position, viewType) -> {
+                        allDatas.clear();
+                        allDatas.addAll(playListTitleResponse.getSongs());
+                        mAdapter = new PlayListDetailAdapter(allDatas, mContext);
+                        mAdapter.setOnItemClickListener((view, position, viewType) -> {
                             if (viewType == 0) {
-                                mChannel.setMusicList(playListTitleResponse.getSongs());
+                                mChannel.setMusicList(allDatas);
                                 Intent intent = new Intent(mContext, MusicActivity.class);
                                 intent.putExtra("index", position);
                                 startActivity(intent);
                             } else if (viewType == 1) {
                                 Intent intent = new Intent(mContext, VideoPlayActivity.class);
-                                intent.putExtra("mv id", playListTitleResponse.getSongs().get(position).getMv());
+                                intent.putExtra("mv id", allDatas.get(position).getMv());
                                 startActivity(intent);
                             } else if (viewType == 2) {
                                 LikeSongDialog dialog = LikeSongDialog.newInstance(
-                                        playListTitleResponse.getSongs().get(position));
+                                        allDatas.get(position));
                                 dialog.show(getSupportFragmentManager());
                             }
                         });
@@ -273,7 +292,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
                                     .getArtist().getPicUrl()).into(mCircleImageView);
                         }
                         loadProgress.setVisibility(View.GONE);
-                        mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
+                        mRecyclerView.setAdapter(new ScaleInAnimationAdapter(mAdapter));
                         showProgress = false;
                     }
 
@@ -357,7 +376,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(Channel channel) {
+    public void onMessageEvent(Channel<Integer> channel) {
 
 
         String receiver = user.getProfile().getNickname() + "喜欢的音乐";
@@ -366,6 +385,19 @@ public class PlayListDetailActivity extends WithPanelActivity {
         if(channel.getReceiver().equals(receiver)){
             getPlaylist();
             Common.showLog("PlayListDetailActivity 里面的");
+        }
+
+
+        /**
+         * 歌单详情页面，删除了一首歌，通知详情列表移除这首歌
+         */
+        if(channel.getReceiver().equals(getString(R.string.playlist_remove_item))){
+            if(mAdapter != null) {
+                allDatas.remove((int)channel.getObject());
+                mAdapter.notifyItemRemoved(channel.getObject());
+                mAdapter.notifyItemRangeChanged(channel.getObject(), mAdapter.getItemCount());
+                Common.showLog("PlayListDetailActivity 删除了一个item");
+            }
         }
     }
 }

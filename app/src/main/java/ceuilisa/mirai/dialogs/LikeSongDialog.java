@@ -23,8 +23,18 @@ public class LikeSongDialog extends BaseBottomDialog {
         return dialog;
     }
 
+    public static LikeSongDialog newInstance(TracksBean tracksBean, long pid, int index){
+        LikeSongDialog dialog = new LikeSongDialog();
+        dialog.mTracksBean = tracksBean;
+        dialog.pid = pid;
+        dialog.index = index;
+        return dialog;
+    }
+
     private Context mContext;
     private TracksBean mTracksBean;
+    private long pid = 0L;
+    private int index;
     private TextView songName, addToPlaylist, download,
             comment, artist, album, delete;
 
@@ -97,5 +107,21 @@ public class LikeSongDialog extends BaseBottomDialog {
             startActivity(intent);
             dismiss();
         });
+
+
+
+        if(pid != 0L){
+            delete.setVisibility(View.VISIBLE);
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DelChartDialog dialog = DelChartDialog.newInstance(pid, mTracksBean.getId(), index);
+                    dialog.show(getActivity().getSupportFragmentManager(), "DelChartDialog");
+                    dismiss();
+                }
+            });
+        }else {
+            delete.setVisibility(View.GONE);
+        }
     }
 }

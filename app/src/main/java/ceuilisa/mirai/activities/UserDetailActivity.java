@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -18,17 +17,16 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import ceuilisa.mirai.R;
-import ceuilisa.mirai.adapters.PlayListAdapter;
 import ceuilisa.mirai.fragments.BaseFragment;
 import ceuilisa.mirai.fragments.FragmentAboutUser;
 import ceuilisa.mirai.fragments.FragmentEvents;
 import ceuilisa.mirai.fragments.FragmentUserPlayList;
+import ceuilisa.mirai.network.Operate;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.UserDetailResponse;
-import ceuilisa.mirai.response.PlayListTitleResponse;
 import ceuilisa.mirai.utils.AppBarStateChangeListener;
 import ceuilisa.mirai.utils.Common;
-import ceuilisa.mirai.utils.Constant;
+import ceuilisa.mirai.utils.Local;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -41,7 +39,7 @@ public class UserDetailActivity extends BaseActivity {
     private ImageView background;
     private TabLayout mTabLayout;
     private CircleImageView userHead;
-    private TextView userName, follow, fans;
+    private TextView userName, follow, fans, nowFollow;
     private ViewPager mViewPager;
     private UserDetailResponse mUserDetailResponse;
     private static final String[] TITLES = new String[]{"音乐", "动态", "关于"};
@@ -64,6 +62,19 @@ public class UserDetailActivity extends BaseActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_help);
         toolbar.setNavigationOnClickListener(v -> finish());
         fans = findViewById(R.id.follow_user);
+        nowFollow = findViewById(R.id.follow);
+        nowFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mUserDetailResponse.getProfile().isFollowed()){
+                    Operate.starUser(mUserDetailResponse.getProfile().getUserId(), false);
+                    nowFollow.setText("+ 关 注");
+                }else {
+                    Operate.starUser(mUserDetailResponse.getProfile().getUserId(), true);
+                    nowFollow.setText("取消关注");
+                }
+            }
+        });
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
         AppBarLayout appBarLayout = findViewById(R.id.app_bar);
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
@@ -84,7 +95,7 @@ public class UserDetailActivity extends BaseActivity {
         follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, PlayHistoryActivity.class);
+                Intent intent = new Intent(mContext, ViewPagerActivity.class);
                 intent.putExtra("dataType", "关注与粉丝");
                 intent.putExtra("uid", mUserDetailResponse.getProfile().getUserId());
                 startActivity(intent);
@@ -93,7 +104,7 @@ public class UserDetailActivity extends BaseActivity {
         fans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, PlayHistoryActivity.class);
+                Intent intent = new Intent(mContext, ViewPagerActivity.class);
                 intent.putExtra("dataType", "关注与粉丝");
                 intent.putExtra("uid", mUserDetailResponse.getProfile().getUserId());
                 intent.putExtra("currentPage", 1);
@@ -168,7 +179,12 @@ public class UserDetailActivity extends BaseActivity {
                 return TITLES[position];
             }
         });
-
+        nowFollow.setText(response.getProfile().isFollowed() ? "取消关注" : "+ 关 注");
+        if (response.getProfile().getUserId() == Local.getUser().getProfile().getUserId()) {
+            nowFollow.setVisibility(View.GONE);
+        }else {
+            nowFollow.setVisibility(View.VISIBLE);
+        }
         mTabLayout.setupWithViewPager(mViewPager);
     }
 }

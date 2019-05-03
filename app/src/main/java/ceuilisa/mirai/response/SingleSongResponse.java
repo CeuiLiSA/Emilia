@@ -2,23 +2,15 @@ package ceuilisa.mirai.response;
 
 import java.util.List;
 
-public class SingleSongResponse {
+public class SingleSongResponse extends BaseResponse{
+
 
     /**
-     * data : [{"id":28272052,"url":"http://m7.music.126.net/20181018122358/f1ec40ce56a820cb7387319ccf0beb92/ymusic/c6f2/772a/0c7f/1095df5f117e334b5c7bd845bf646708.mp3","br":320000,"size":11573332,"md5":"1095df5f117e334b5c7bd845bf646708","code":200,"expi":1200,"type":"mp3","gain":-3.71,"fee":0,"uf":null,"payed":0,"flag":0,"canExtend":false}]
+     * data : [{"id":597134,"url":"http://m10.music.126.net/20190502214851/22f2f1dcdf3b6ca7b2dfc4346b6cf083/ymusic/fd0a/74e0/6af6/010f5363d83472105f43ae660b8e461b.mp3","br":320000,"size":9848206,"md5":"010f5363d83472105f43ae660b8e461b","code":200,"expi":1200,"type":"mp3","gain":-2.8599,"fee":0,"uf":null,"payed":0,"flag":0,"canExtend":false,"freeTrialInfo":null,"level":"exhigh","encodeType":"mp3"}]
      * code : 200
      */
 
-    private int code;
     private List<DataBean> data;
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
 
     public List<DataBean> getData() {
         return data;
@@ -30,20 +22,23 @@ public class SingleSongResponse {
 
     public static class DataBean {
         /**
-         * id : 28272052
-         * url : http://m7.music.126.net/20181018122358/f1ec40ce56a820cb7387319ccf0beb92/ymusic/c6f2/772a/0c7f/1095df5f117e334b5c7bd845bf646708.mp3
+         * id : 597134
+         * url : http://m10.music.126.net/20190502214851/22f2f1dcdf3b6ca7b2dfc4346b6cf083/ymusic/fd0a/74e0/6af6/010f5363d83472105f43ae660b8e461b.mp3
          * br : 320000
-         * size : 11573332
-         * md5 : 1095df5f117e334b5c7bd845bf646708
+         * size : 9848206
+         * md5 : 010f5363d83472105f43ae660b8e461b
          * code : 200
          * expi : 1200
          * type : mp3
-         * gain : -3.71
+         * gain : -2.8599
          * fee : 0
          * uf : null
          * payed : 0
          * flag : 0
          * canExtend : false
+         * freeTrialInfo : null
+         * level : exhigh
+         * encodeType : mp3
          */
 
         private int id;
@@ -60,6 +55,9 @@ public class SingleSongResponse {
         private int payed;
         private int flag;
         private boolean canExtend;
+        private Object freeTrialInfo;
+        private String level;
+        private String encodeType;
 
         public int getId() {
             return id;
@@ -171,6 +169,30 @@ public class SingleSongResponse {
 
         public void setCanExtend(boolean canExtend) {
             this.canExtend = canExtend;
+        }
+
+        public Object getFreeTrialInfo() {
+            return freeTrialInfo;
+        }
+
+        public void setFreeTrialInfo(Object freeTrialInfo) {
+            this.freeTrialInfo = freeTrialInfo;
+        }
+
+        public String getLevel() {
+            return level;
+        }
+
+        public void setLevel(String level) {
+            this.level = level;
+        }
+
+        public String getEncodeType() {
+            return encodeType;
+        }
+
+        public void setEncodeType(String encodeType) {
+            this.encodeType = encodeType;
         }
     }
 }

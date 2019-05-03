@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -41,7 +40,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mContext = context;
         mLayoutInflater = LayoutInflater.from(mContext);
         allIllust = list;
-        nowPlayIndex = MusicService.getInstance().getNowPlayIndex();
+        nowPlayIndex = MusicService.get().getNowPlayIndex();
     }
 
     @NonNull
@@ -76,10 +75,10 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 TracksBean tracksBean = tempJson.getSong();
                 tracksBean.setAr(tempJson.getSong().getArtists());
                 tracksBean.setAl(tempJson.getSong().getAlbum());
-                MusicChannel.getInstance().getMusicList().add(tracksBean);
+                MusicChannel.get().getMusicList().add(tracksBean);
                 Intent intent = new Intent(mContext, MusicActivity.class);
                 intent.putExtra("index",
-                        MusicChannel.getInstance().getMusicList().size() - 1);
+                        MusicChannel.get().getMusicList().size() - 1);
                 mContext.startActivity(intent);
             }
         });

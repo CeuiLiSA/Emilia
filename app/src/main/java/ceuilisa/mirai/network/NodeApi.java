@@ -10,6 +10,7 @@ import ceuilisa.mirai.nodejs.MvPlayUrlResponse;
 import ceuilisa.mirai.nodejs.MvRankResponse;
 import ceuilisa.mirai.nodejs.PlayListResponse;
 import ceuilisa.mirai.nodejs.RecmPlayListResponse;
+import ceuilisa.mirai.nodejs.SearchSongResponse;
 import ceuilisa.mirai.nodejs.SearchUserResponse;
 import ceuilisa.mirai.nodejs.UserDetailResponse;
 import ceuilisa.mirai.response.BaseResponse;
@@ -18,8 +19,9 @@ import ceuilisa.mirai.response.LikeSongResponse;
 import ceuilisa.mirai.response.MvDetail;
 import ceuilisa.mirai.response.NewSongResponse;
 import ceuilisa.mirai.response.PlayListDetailResponse;
-import ceuilisa.mirai.response.PlayListTitleResponse;
+import ceuilisa.mirai.response.SearchAlbumResponse;
 import ceuilisa.mirai.response.SearchArtistResponse;
+import ceuilisa.mirai.response.SingleSongResponse;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -104,7 +106,7 @@ public interface NodeApi {
      * @return
      */
     @GET("/like")
-    Observable<LikeSongResponse> likeSong(@Query("id") int id,
+    Observable<LikeSongResponse> likeSong(@Query("id") long id,
                                           @Query("like") boolean like);
 
 
@@ -118,7 +120,7 @@ public interface NodeApi {
 
 
     /**
-     * 收藏或取消收藏 歌单
+     * 收藏或取消收藏 歌单 t=1 关注，2取消关注
      *
      * @param t
      * @param id
@@ -127,6 +129,18 @@ public interface NodeApi {
     @GET("/playlist/subscribe")
     Observable<BaseResponse> starPlaylist(@Query("t") String t,
                                             @Query("id") long id);
+
+
+    /**
+     * 关注用户 t=1 关注，2取消关注
+     *
+     * @param t
+     * @param id
+     * @return
+     */
+    @GET("/follow")
+    Observable<BaseResponse> starUser(@Query("t") String t,
+                                          @Query("id") long id);
 
 
     /**
@@ -139,6 +153,18 @@ public interface NodeApi {
     @GET("/playlist/tracks?op=add")
     Observable<BaseResponse> addChart(@Query("pid") long pid,
                                           @Query("tracks") long tracks);
+
+
+    /**
+     * 将一首歌从某歌单移除
+     *
+     * @param pid
+     * @param tracks
+     * @return
+     */
+    @GET("/playlist/tracks?op=del")
+    Observable<BaseResponse> delFromChart(@Query("pid") long pid,
+                                      @Query("tracks") long tracks);
 
 
     /**
@@ -172,6 +198,27 @@ public interface NodeApi {
                                               @Query("limit") int limit,
                                               @Query("offset") int offset);
 
+    /**
+     * 搜索单曲
+     *
+     * @return
+     */
+    @GET("/search?type=1")
+    Observable<SearchSongResponse> searchSong(@Query("keywords") String keywords,
+                                              @Query("limit") int limit,
+                                              @Query("offset") int offset);
+
+
+    /**
+     * 搜索单曲
+     *
+     * @return
+     */
+    @GET("/search?type=10")
+    Observable<SearchAlbumResponse> searchAlbum(@Query("keywords") String keywords,
+                                                @Query("limit") int limit,
+                                                @Query("offset") int offset);
+
 
     /**
      * 获取粉丝列表
@@ -200,4 +247,13 @@ public interface NodeApi {
     Observable<FollowResponse> getFollow(@Query("uid") int uid,
                                          @Query("limit") int limit,
                                          @Query("offset") int offset);
+
+
+    @GET("/scrobble")
+    Observable<BaseResponse> scrobble(@Query("id") long id,
+                                         @Query("sourceid") long sourceid);
+
+
+    @GET("/song/url?br=320000")
+    Observable<SingleSongResponse> getSongUrl(@Query("id") long id);
 }

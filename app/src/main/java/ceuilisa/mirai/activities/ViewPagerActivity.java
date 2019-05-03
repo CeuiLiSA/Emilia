@@ -16,7 +16,7 @@ import ceuilisa.mirai.fragments.FragmentPlayWeekHistory;
 import ceuilisa.mirai.fragments.FragmentSingleRecy;
 import ceuilisa.mirai.utils.Constant;
 
-public class PlayHistoryActivity extends WithPanelActivity {
+public class ViewPagerActivity extends WithPanelActivity {
 
     private String[] data;
     private Toolbar mToolbar;

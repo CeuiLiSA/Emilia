@@ -21,7 +21,7 @@ public abstract class BaseFragment extends Fragment {
     protected int mLayoutID;
     protected View parentView;
     protected TracksBean mTracksBean;
-    protected MusicChannel mChannel = MusicChannel.getInstance();
+    protected MusicChannel mChannel = MusicChannel.get();
 
     abstract void initLayout();
 

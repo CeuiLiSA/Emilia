@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#512DA8</color>
     <color name="colorAccent">#D81B60</color>
     <color name="back_ground">#e6e6e6</color>
+    <color name="dark_text">#333333</color>
+    <color name="defaut_text">#696969</color>
 
     <declare-styleable name="CircularSeekBar">
         <attr name="progress" format="integer"></attr>
