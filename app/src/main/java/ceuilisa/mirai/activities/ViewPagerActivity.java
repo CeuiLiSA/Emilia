@@ -10,6 +10,8 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.fragments.BaseFragment;
 import ceuilisa.mirai.fragments.FragmentFollow;
 import ceuilisa.mirai.fragments.FragmentFollowers;
+import ceuilisa.mirai.fragments.FragmentMvRank;
+import ceuilisa.mirai.fragments.FragmentMvRecmd;
 import ceuilisa.mirai.fragments.FragmentNewSong;
 import ceuilisa.mirai.fragments.FragmentPlayAllHistory;
 import ceuilisa.mirai.fragments.FragmentPlayWeekHistory;
@@ -119,6 +121,31 @@ public class ViewPagerActivity extends WithPanelActivity {
                         return FragmentFollow.newInstance(uid);
                     }else {
                         return FragmentFollowers.newInstance(uid);
+                    }
+                }
+
+                @Override
+                public int getCount() {
+                    return data.length;
+                }
+
+                @Override
+                public CharSequence getPageTitle(int position) {
+                    return data[position];
+                }
+            });
+            int currentPage = getIntent().getIntExtra("currentPage", 0);
+            mViewPager.setCurrentItem(currentPage);
+        } else if(dataType.equals("推荐mv")){
+            data = Constant.FOLLOW_HOT_MV;
+            mToolbar.setTitle("MV");
+            mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+                @Override
+                public Fragment getItem(int i) {
+                    if(i == 0){
+                        return new FragmentMvRecmd();
+                    }else {
+                        return new FragmentMvRank();
                     }
                 }
 

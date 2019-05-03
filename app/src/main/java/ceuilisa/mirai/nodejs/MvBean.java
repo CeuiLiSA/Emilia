@@ -26,6 +26,16 @@ public class MvBean implements Serializable {
 
     private int id;
     private String cover;
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    private String picUrl;
     private String name;
     private int playCount;
     private String briefDesc;
@@ -131,7 +141,13 @@ public class MvBean implements Serializable {
     }
 
     public String getCover() {
-        return cover;
+        if(cover != null && cover.length() != 0) {
+            return cover;
+        }
+        if(picUrl != null && picUrl.length() != 0) {
+            return picUrl;
+        }
+        return null;
     }
 
     public void setCover(String cover) {

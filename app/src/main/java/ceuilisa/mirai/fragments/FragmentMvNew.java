@@ -8,13 +8,16 @@ import ceuilisa.mirai.adapters.MvListAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.MvBean;
-import ceuilisa.mirai.nodejs.MvRankResponse;
+import ceuilisa.mirai.nodejs.MvListResponse;
 import io.reactivex.Observable;
 
-public class FragmentMvNew extends BaseListFragment<MvRankResponse, MvListAdapter, MvBean> {
+/**
+ * 最新mv
+ */
+public class FragmentMvNew extends BaseListFragment<MvListResponse, MvListAdapter, MvBean> {
 
     @Override
-    Observable<MvRankResponse> initApi() {
+    Observable<MvListResponse> initApi() {
         return RetrofitUtil.getNodeApi().getMvFirst(PAGE_SIZE, allItems.size());
     }
 

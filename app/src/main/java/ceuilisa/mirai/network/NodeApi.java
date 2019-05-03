@@ -6,11 +6,11 @@ import ceuilisa.mirai.nodejs.EventResponse;
 import ceuilisa.mirai.nodejs.FollowResponse;
 import ceuilisa.mirai.nodejs.FollowerResponse;
 import ceuilisa.mirai.nodejs.LoginResponse;
-import ceuilisa.mirai.nodejs.MvBean;
 import ceuilisa.mirai.nodejs.MvPlayUrlResponse;
-import ceuilisa.mirai.nodejs.MvRankResponse;
+import ceuilisa.mirai.nodejs.MvListResponse;
 import ceuilisa.mirai.nodejs.PlayListResponse;
 import ceuilisa.mirai.nodejs.RecmPlayListResponse;
+import ceuilisa.mirai.nodejs.RecmdMvResponse;
 import ceuilisa.mirai.nodejs.RelatedMvResponse;
 import ceuilisa.mirai.nodejs.SearchSongResponse;
 import ceuilisa.mirai.nodejs.SearchUserResponse;
@@ -95,8 +95,22 @@ public interface NodeApi {
      * @return
      */
     @GET("/top/mv")
-    Observable<MvRankResponse> getMvRank(@Query("limit") int limit,
+    Observable<MvListResponse> getMvRank(@Query("limit") int limit,
                                          @Query("offset") int offset);
+
+
+    /**
+     * 推荐mv
+     *
+     * @param limit
+     * @param offset
+     * @return
+     */
+    @GET("/personalized/mv")
+    Observable<RecmdMvResponse> getMvRecmd(@Query("limit") int limit,
+                                           @Query("offset") int offset);
+
+
 
 
     /**
@@ -107,8 +121,8 @@ public interface NodeApi {
      * @return
      */
     @GET("/mv/first")
-    Observable<MvRankResponse> getMvFirst(@Query("limit") int limit,
-                                         @Query("offset") int offset);
+    Observable<MvListResponse> getMvFirst(@Query("limit") int limit,
+                                          @Query("offset") int offset);
 
 
 

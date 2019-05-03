@@ -3,7 +3,6 @@ package ceuilisa.mirai.fragments;
 import ceuilisa.mirai.adapters.MvListAdapter;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.MvBean;
-import ceuilisa.mirai.nodejs.MvRankResponse;
 import ceuilisa.mirai.nodejs.RelatedMvResponse;
 import io.reactivex.Observable;
 

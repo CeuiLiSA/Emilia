@@ -5,7 +5,7 @@ import java.util.List;
 import ceuilisa.mirai.interf.ListShow;
 import ceuilisa.mirai.response.BaseResponse;
 
-public class MvRankResponse extends BaseResponse implements ListShow<MvBean> {
+public class MvListResponse extends BaseResponse implements ListShow<MvBean> {
 
 
     /**

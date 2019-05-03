@@ -1,20 +1,13 @@
 package ceuilisa.mirai.fragments;
 
-import android.content.Intent;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import ceuilisa.mirai.R;
-import ceuilisa.mirai.activities.VideoPlayActivity;
-import ceuilisa.mirai.adapters.MvListAdapter;
-import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.MvBean;
-import ceuilisa.mirai.nodejs.MvRankResponse;
 import ceuilisa.mirai.response.MvDetail;
 import ceuilisa.mirai.utils.Common;
-import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;

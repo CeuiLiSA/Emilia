@@ -9,16 +9,17 @@ import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.MvBean;
 import ceuilisa.mirai.nodejs.MvListResponse;
+import ceuilisa.mirai.nodejs.RecmdMvResponse;
 import io.reactivex.Observable;
 
 /**
- * mv排行榜
+ * 推荐mv
  */
-public class FragmentMvRank extends BaseListFragment<MvListResponse, MvListAdapter, MvBean> {
+public class FragmentMvRecmd extends BaseListFragment<RecmdMvResponse, MvListAdapter, MvBean> {
 
     @Override
-    Observable<MvListResponse> initApi() {
-        return RetrofitUtil.getNodeApi().getMvRank(PAGE_SIZE, allItems.size());
+    Observable<RecmdMvResponse> initApi() {
+        return RetrofitUtil.getNodeApi().getMvRecmd(PAGE_SIZE, allItems.size());
     }
 
     @Override

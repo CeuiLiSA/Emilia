@@ -175,7 +175,9 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
-
+            Intent intent = new Intent(mContext, ViewPagerActivity.class);
+            intent.putExtra("dataType", "推荐mv");
+            mContext.startActivity(intent);
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(mContext, SettingsActivity.class);
             startActivity(intent);
