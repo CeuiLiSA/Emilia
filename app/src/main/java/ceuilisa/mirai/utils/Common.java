@@ -16,9 +16,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import ceuilisa.mirai.BuildConfig;
 import ceuilisa.mirai.activities.GlobalApp;
+import ceuilisa.mirai.network.MusicChannel;
 import ceuilisa.mirai.nodejs.ArtistBean;
 import ceuilisa.mirai.response.TracksBean;
 
@@ -137,5 +139,13 @@ public class Common {
         intent.setType("audio/*");
         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
         context.startActivity(Intent.createChooser(intent, "分享歌曲"));
+    }
+
+    public static int getShuffleIndex(){
+        if(MusicChannel.get().getMusicList().size() == 0){
+            return 0;
+        }else {
+            return new Random().nextInt(MusicChannel.get().getMusicList().size());
+        }
     }
 }

@@ -10,7 +10,6 @@ import ceuilisa.mirai.fragments.FragmentSearchAlbum;
 import ceuilisa.mirai.fragments.FragmentSearchArtist;
 import ceuilisa.mirai.fragments.FragmentSearchSong;
 import ceuilisa.mirai.fragments.FragmentSearchUser;
-import ceuilisa.mirai.fragments.FragmentWebView;
 
 public class TemplateFragmentActivity extends FragmentActivity {
 
@@ -40,9 +39,9 @@ public class TemplateFragmentActivity extends FragmentActivity {
             } else if (dataType.equals("本地音乐")) {
                 return new FragmentLocalMusic();
             } else if (dataType.equals("项目主页")) {
-                String title = getIntent().getStringExtra("title");
-                String url = getIntent().getStringExtra("url");
-                return FragmentWebView.newInstance(title, url);
+                //String title = getIntent().getStringExtra("title");
+                //String url = getIntent().getStringExtra("url");
+                //return FragmentWebView.newInstance(title, url);
             }
         }
 

@@ -86,6 +86,7 @@
                     app:layout_constraintTop_toTopOf="@+id/circleImageView" />
 
                 <ImageView
+                    android:visibility="gone"
                     android:id="@+id/imageView7"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -98,6 +99,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
                 <ImageView
+                    android:visibility="gone"
                     android:id="@+id/imageView8"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -109,6 +111,7 @@
                     app:layout_constraintTop_toBottomOf="@id/imageView4" />
 
                 <ImageView
+                    android:visibility="gone"
                     android:id="@+id/imageView9"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -121,6 +124,7 @@
                     app:layout_constraintVertical_bias="1.0" />
 
                 <ImageView
+                    android:visibility="gone"
                     android:id="@+id/imageView10"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -133,6 +137,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/textView11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -146,6 +151,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/textView12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -159,6 +165,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/textView13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -172,6 +179,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -197,6 +205,33 @@
                     app:round_corner_top_left="@dimen/twelve_dp"
                     app:round_corner_top_right="@dimen/twelve_dp">
 
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="播放全部"
+                        android:textSize="16sp"
+                        android:id="@+id/play_this_playlist"
+                        android:drawablePadding="@dimen/twelve_dp"
+                        android:textColor="@color/dark_text"
+                        android:drawableStart="@drawable/ic_playlist_play_black_24dp"
+                        android:layout_marginStart="@dimen/sixteen_dp"
+                        android:layout_centerVertical="true"
+                        android:layout_height="wrap_content" />
+
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:text="+ 添加收藏"
+                        android:id="@+id/mark_playlist"
+                        android:textSize="16sp"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/twelve_dp"
+                        android:layout_alignParentEnd="true"
+                        android:paddingEnd="@dimen/twelve_dp"
+                        android:textColor="@android:color/white"
+                        android:layout_height="match_parent" />
+
                 </com.gcssloop.widget.RCRelativeLayout>
 
 
@@ -204,7 +239,7 @@
                     android:id="@+id/devider_7"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="50dp"
                     android:background="#e6e6e6"
                     app:layout_constraintTop_toTopOf="@+id/corner_rela" />
 

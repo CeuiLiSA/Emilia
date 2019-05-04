@@ -12,6 +12,7 @@ import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.adapters.NowPlayListAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.MusicChannel;
+import ceuilisa.mirai.utils.Common;
 import me.shaohui.bottomdialog.BaseBottomDialog;
 
 public class PlayListDialog extends BaseBottomDialog {
@@ -36,10 +37,8 @@ public class PlayListDialog extends BaseBottomDialog {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, int viewType) {
-                Intent intent = new Intent(mContext, MusicActivity.class);
-                intent.putExtra("index", position);
-                startActivity(intent);
-                dismiss();
+                MusicService.get().setPlaying(true);
+                MusicService.get().playMusic(position, () -> adapter.notifyDataSetChanged());
             }
         });
         nowPlayList.setAdapter(adapter);

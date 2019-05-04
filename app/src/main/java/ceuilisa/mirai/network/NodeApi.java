@@ -60,7 +60,7 @@ public interface NodeApi {
 
 
     @GET("/comment/music")
-    Observable<CommentResponse> getComments(@Query("id") int id,
+    Observable<CommentResponse> getComments(@Query("id") long id,
                                             @Query("limit") int limit,
                                             @Query("offset") int offset);
 
@@ -288,4 +288,25 @@ public interface NodeApi {
 
     @GET("/simi/mv")
     Observable<RelatedMvResponse> getRelatedMv(@Query("mvid") int mvid);
+
+
+    /**
+     * 注册
+     *
+     * @param phone 电话号码
+     * @param password 密码
+     * @param captcha 验证码
+     * @param nickname 昵称
+     * @return
+     */
+    @GET("/captch/register")
+    Observable<LoginResponse> signNetEasy(@Query("phone") String phone,
+                                              @Query("password") String password,
+                                              @Query("captcha") String captcha,
+                                              @Query("nickname") String nickname);
+
+
+
+    @GET("/captch/sent")
+    Observable<BaseResponse> getSignNumber(@Query("phone") String phone);
 }

@@ -130,13 +130,13 @@ public class FragmentLogin extends BaseFragment {
 
     @Override
     void initData() {
-        LoginResponse userBean = Local.getUser();
-        if (userBean != null && userBean.getUserName() != null && userBean.getUserName().length() != 0) {
-            userName.setText(userBean.getUserName());
-        }
-        if (userBean != null && userBean.getPassword() != null && userBean.getPassword().length() != 0) {
-            password.setText(userBean.getPassword());
-        }
+//        LoginResponse userBean = Local.getUser();
+//        if (userBean != null && userBean.getUserName() != null && userBean.getUserName().length() != 0) {
+//            userName.setText(userBean.getUserName());
+//        }
+//        if (userBean != null && userBean.getPassword() != null && userBean.getPassword().length() != 0) {
+//            password.setText(userBean.getPassword());
+//        }
     }
 
     public void showAnimate() {

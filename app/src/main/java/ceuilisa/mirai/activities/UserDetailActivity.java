@@ -33,7 +33,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class UserDetailActivity extends BaseActivity {
+public class UserDetailActivity extends WithPanelActivity {
 
     private static final String[] TITLES = new String[]{"音乐", "动态", "关于"};
     private int userID;
@@ -45,6 +45,16 @@ public class UserDetailActivity extends BaseActivity {
     private UserDetailResponse mUserDetailResponse;
 
     @Override
+    boolean hasImage() {
+        return false;
+    }
+
+    @Override
+    boolean hasProgress() {
+        return false;
+    }
+
+    @Override
     void initLayout() {
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
@@ -54,6 +64,7 @@ public class UserDetailActivity extends BaseActivity {
 
     @Override
     void initView() {
+        super.initView();
         background = findViewById(R.id.user_background);
         userHead = findViewById(R.id.user_head);
         userName = findViewById(R.id.user_name);

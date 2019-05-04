@@ -15,7 +15,7 @@ import ceuilisa.mirai.R;
  * website: https://github.com/CeuiLiSA
  * created at: 2019/3/24 8:54 PM
  */
-public abstract class FragmentActivity extends BaseActivity {
+public abstract class FragmentActivity extends WithPanelActivity {
 
     protected abstract Fragment createNewFragment();
 
@@ -26,6 +26,7 @@ public abstract class FragmentActivity extends BaseActivity {
 
     @Override
     void initView() {
+        super.initView();
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
 
@@ -37,6 +38,16 @@ public abstract class FragmentActivity extends BaseActivity {
                         .commit();
             }
         }
+    }
+
+    @Override
+    boolean hasImage() {
+        return false;
+    }
+
+    @Override
+    boolean hasProgress() {
+        return false;
     }
 
     @Override

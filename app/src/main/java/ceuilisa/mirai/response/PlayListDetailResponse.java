@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ceuilisa.mirai.interf.ListShow;
+import ceuilisa.mirai.nodejs.LoginResponse;
+import ceuilisa.mirai.utils.Local;
 
 public class PlayListDetailResponse implements ListShow<TracksBean> {
 
@@ -31,6 +33,11 @@ public class PlayListDetailResponse implements ListShow<TracksBean> {
         } else {
             return new ArrayList<>();
         }
+    }
+
+    public boolean isMyPlaylist(){
+        LoginResponse loginResponse = Local.getUser();
+        return playlist.creator.getUserId() == loginResponse.getProfile().getUserId();
     }
 
     public static class PlaylistBean {

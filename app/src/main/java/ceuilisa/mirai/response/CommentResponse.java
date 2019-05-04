@@ -20,7 +20,6 @@ public class CommentResponse extends BaseResponse {
     private boolean isMusician;
     private int userId;
     private boolean moreHot;
-    private int code;
     private int total;
     private boolean more;
     private List<?> topComments;
@@ -49,14 +48,6 @@ public class CommentResponse extends BaseResponse {
 
     public void setMoreHot(boolean moreHot) {
         this.moreHot = moreHot;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
     }
 
     public int getTotal() {

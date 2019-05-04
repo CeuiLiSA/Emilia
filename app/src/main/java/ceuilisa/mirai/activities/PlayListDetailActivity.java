@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gcssloop.widget.RCRelativeLayout;
 import com.othershe.library.NiceImageView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -21,6 +22,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.dialogs.LikeSongDialog;
@@ -46,7 +48,8 @@ public class PlayListDetailActivity extends WithPanelActivity {
     private String coverImg, name, author, dataType;
     private Toolbar mToolbar;
     private long id;
-    private TextView mTextView, mTextView2, starPlaylistTv;
+    private TextView mTextView, mTextView2, starPlaylistTv, markPlaylist;
+    private RCRelativeLayout cornerRela;
     private RecyclerView mRecyclerView;
     private ImageView mImageView, starPlaylist;
     private NiceImageView mImageView2;
@@ -85,6 +88,20 @@ public class PlayListDetailActivity extends WithPanelActivity {
         mRecyclerView = findViewById(R.id.recyclerView);
         mTextView = findViewById(R.id.textView10);
         mTextView2 = findViewById(R.id.textView9);
+        markPlaylist = findViewById(R.id.mark_playlist);
+        cornerRela = findViewById(R.id.corner_rela);
+        cornerRela.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(allDatas.size() != 0) {
+                    mChannel.setMusicList(allDatas);
+                    MusicService.get().setPlaying(true);
+                    MusicService.get().playMusic(0, () -> setData());
+                }else {
+                    Common.showToast("暂无播放列表");
+                }
+            }
+        });
         loadProgress.setVisibility(View.VISIBLE);
         mTextView = findViewById(R.id.textView10);
         starPlaylist = findViewById(R.id.imageView10);
@@ -97,6 +114,18 @@ public class PlayListDetailActivity extends WithPanelActivity {
                 } else {
                     Operate.starPlaylist(id, true);
                     starPlaylistTv.setText("取消收藏");
+                }
+            }
+        });
+        markPlaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (markPlaylist.getText().toString().equals("取消收藏")) {
+                    Operate.starPlaylist(id, false);
+                    markPlaylist.setText("+ 添加收藏");
+                } else {
+                    Operate.starPlaylist(id, true);
+                    markPlaylist.setText("取消收藏");
                 }
             }
         });
@@ -166,10 +195,18 @@ public class PlayListDetailActivity extends WithPanelActivity {
 
                                 allDatas.clear();
                                 allDatas.addAll(playListTitleResponse.getPlaylist().getTracks());
+
+
+
+                                if (playListTitleResponse.isMyPlaylist()) {
+                                    markPlaylist.setVisibility(View.GONE);
+                                }else {
+                                    markPlaylist.setVisibility(View.VISIBLE);
+                                }
                                 if (playListTitleResponse.getPlaylist().isSubscribed()) {
-                                    starPlaylistTv.setText("取消收藏");
+                                    markPlaylist.setText("取消收藏");
                                 } else {
-                                    starPlaylistTv.setText("收藏");
+                                    markPlaylist.setText("+ 添加收藏");
                                 }
                                 mAdapter = new PlayListDetailAdapter(allDatas, mContext);
                                 mAdapter.setOnItemClickListener((view, position, viewType) -> {

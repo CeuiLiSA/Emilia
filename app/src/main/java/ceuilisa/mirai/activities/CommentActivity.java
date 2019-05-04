@@ -25,7 +25,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class CommentActivity extends BaseActivity {
 
-    private int id;
+    private long id;
     private int nowIndex = 0;
     private Toolbar mToolbar;
     private CommentListAdapter mAdapter;
@@ -56,7 +56,7 @@ public class CommentActivity extends BaseActivity {
 
     @Override
     void initData() {
-        id = getIntent().getIntExtra("id", 0);
+        id = getIntent().getLongExtra("id", 0);
         fetchComment();
     }
 

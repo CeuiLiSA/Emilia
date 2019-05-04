@@ -174,7 +174,6 @@
                 android:layout_marginEnd="@dimen/sixteen_dp"
                 android:layout_toStartOf="@+id/previous"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                app:materialIcon="repeat_once"
                 android:scaleType="center"
                 app:materialIconColor="@android:color/black"
                 app:materialIconSize="35dp" />

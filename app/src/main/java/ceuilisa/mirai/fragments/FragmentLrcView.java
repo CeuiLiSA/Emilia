@@ -6,6 +6,7 @@ import android.view.View;
 
 import java.util.Objects;
 
+import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.network.RetrofitUtil;
@@ -17,7 +18,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import me.wcy.lrcview.LrcView;
 
-public class FragmentLrc extends BaseFragment {
+public class FragmentLrcView extends BaseFragment{
 
     public LrcView mLrcView;
     private int index;
@@ -25,12 +26,23 @@ public class FragmentLrc extends BaseFragment {
 
     @Override
     void initLayout() {
-        mLayoutID = R.layout.fragment_lrc;
+        mLayoutID = R.layout.fragment_lrc_view;
     }
 
     @Override
     View initView(View v) {
         mLrcView = v.findViewById(R.id.lrc_view_full);
+        mLrcView.setOnPlayClickListener(new LrcView.OnPlayClickListener() {
+            @Override
+            public boolean onPlayClick(long time) {
+                if(mChannel.getMusicList() != null && mChannel.getMusicList().size() != 0) {
+                    MusicService.get().getPlayer().seekTo((int) time);
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+        });
         return v;
     }
 
@@ -100,4 +112,5 @@ public class FragmentLrc extends BaseFragment {
     public void setHasLyric(boolean hasLyric) {
         this.hasLyric = hasLyric;
     }
+
 }

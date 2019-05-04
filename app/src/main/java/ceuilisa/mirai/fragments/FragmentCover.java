@@ -13,6 +13,7 @@ import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.CoverDetailActivity;
 import ceuilisa.mirai.activities.MusicActivity;
+import ceuilisa.mirai.utils.Common;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FragmentCover extends BaseFragment {
@@ -45,15 +46,40 @@ public class FragmentCover extends BaseFragment {
     }
 
     public void refreshAnimation() {
+        if(mAnimator == null){
+            mAnimator = ObjectAnimator.ofFloat(mCircleImageView, "rotation", 0f, 360.0f);
+            mAnimator.setDuration(50000);
+            mAnimator.setInterpolator(new LinearInterpolator());
+            mAnimator.setRepeatCount(-1);
+            Common.showLog("FragmentCover refreshAnimation 上面的");
+        }
+        Common.showLog("FragmentCover refreshAnimation 下面的");
         mAnimator.start();
         mAnimator.pause();
     }
 
     public void resumeAnimation() {
+        if(mAnimator == null){
+            mAnimator = ObjectAnimator.ofFloat(mCircleImageView, "rotation", 0f, 360.0f);
+            mAnimator.setDuration(50000);
+            mAnimator.setInterpolator(new LinearInterpolator());
+            mAnimator.setRepeatCount(-1);
+            Common.showLog("FragmentCover resumeAnimation 上面的");
+        }
+        Common.showLog("FragmentCover resumeAnimation 下面的");
         mAnimator.resume();
     }
 
     public void pauseAnimation() {
+        if(mAnimator == null){
+            mAnimator = ObjectAnimator.ofFloat(mCircleImageView, "rotation", 0f, 360.0f);
+            mAnimator.setDuration(50000);
+            mAnimator.setInterpolator(new LinearInterpolator());
+            mAnimator.setRepeatCount(-1);
+            mAnimator.start();
+            Common.showLog("FragmentCover pauseAnimation 上面的");
+        }
+        Common.showLog("FragmentCover pauseAnimation 下面的");
         mAnimator.pause();
     }
 
@@ -72,9 +98,15 @@ public class FragmentCover extends BaseFragment {
         if (getActivity() != null) {
             if (mChannel != null && mChannel.getMusicList().size() != 0) {
                 refreshAnimation();
-                int index = ((MusicActivity) getActivity()).index;
-                mTracksBean = mChannel.getMusicList().get(index);
-                Glide.with(getActivity()).load(mTracksBean.getAl().getPicUrl()).into(mCircleImageView);
+                Common.showLog(className + " loadcover");
+                mTracksBean = mChannel.getMusicList().get(MusicService.get().getNowPlayIndex());
+                Glide.with(getActivity())
+                        .load(mTracksBean.getAl().getPicUrl())
+                        //.placeholder(R.color.white)
+                        .into(mCircleImageView);
+                if(MusicService.get().isPlayingMusic()) {
+                    mAnimator.start();
+                }
             }
         }
     }

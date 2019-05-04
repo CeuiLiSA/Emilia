@@ -2,6 +2,7 @@ package ceuilisa.mirai.activities;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -64,6 +65,7 @@ public abstract class WithPanelActivity extends NetWorkControlActivity {
             }
         });
         songName = findViewById(R.id.song_name);
+        //songName.setMovementMethod(ScrollingMovementMethod.getInstance());
         artistName = findViewById(R.id.song_author);
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +85,10 @@ public abstract class WithPanelActivity extends NetWorkControlActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        setData();
+    }
+
+    public void setData(){
         if (mChannel != null && mChannel.getMusicList().size() != 0) {
             mTracksBean = mChannel.getMusicList().get(MusicService.get().getNowPlayIndex());
             if (MusicService.get().isPlayingMusic()) {

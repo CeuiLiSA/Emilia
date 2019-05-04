@@ -23,8 +23,12 @@
 
     <TextView
         android:id="@+id/song_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_toStartOf="@+id/play_pause"
+        android:layout_marginEnd="@dimen/eight_dp"
         android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textSize="14sp"
         android:layout_marginTop="@dimen/eight_dp"
         android:layout_toEndOf="@+id/now_play_image"

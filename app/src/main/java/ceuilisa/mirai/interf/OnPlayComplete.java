@@ -1,7 +1,11 @@
 package ceuilisa.mirai.interf;
 
 public interface OnPlayComplete {
-    void nextSong();
+    void playNextSong();
+
+    void singleLoop();
+
+    void shuffle();
 
     void stop();
 }
