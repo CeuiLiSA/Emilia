@@ -18,8 +18,8 @@ public class RetrofitUtil {
 
     private static final String IMJAD_BASE_URL = "https://api.imjad.cn/";
     private static final String TENKOA_BASE_URL = "https://v1.hitokoto.cn/";
-    //private static final String BASE_URL_2 = "http://192.168.0.112:3000/";
-    private static final String BASE_URL_2 = "http://192.168.0.101:3000/";
+    private static final String BASE_URL_2 = "http://192.168.0.112:3000/";
+    //private static final String BASE_URL_2 = "http://192.168.0.101:3000/";
     private static final String BASE_URL_3 = "http://65.49.235.124/";
     private static Retrofit nodeApi = null;
 

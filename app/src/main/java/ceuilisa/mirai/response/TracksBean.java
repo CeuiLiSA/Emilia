@@ -75,6 +75,25 @@ public class TracksBean {
     private List<String> alia;
     private List<?> rtUrls;
     private H h;
+    private String fileName;
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public long getFileSize() {
+        return fileSize;
+    }
+
+    public void setFileSize(long fileSize) {
+        this.fileSize = fileSize;
+    }
+
+    private long fileSize;
 
     public String getLocalPath() {
         return localPath;
@@ -99,6 +118,16 @@ public class TracksBean {
     public void setAlbum(AlbumBean album) {
         this.album = album;
     }
+
+    public String getAlbumName() {
+        return albumName;
+    }
+
+    public void setAlbumName(String albumName) {
+        this.albumName = albumName;
+    }
+
+    private String albumName;
 
     public List<ArtistBean> getArtists() {
         return artists;
@@ -352,6 +381,16 @@ public class TracksBean {
         this.ar = ar;
     }
 
+    public String getArtistName() {
+        return artistName;
+    }
+
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
+    }
+
+    private String artistName;
+
     public List<String> getAlia() {
         return alia;
     }
@@ -388,7 +427,11 @@ public class TracksBean {
             }
             return before.substring(0, before.length() - 1);
         } else {
-            return "未知艺术家";
+            if(artistName != null && artistName.length() != 0){
+                return artistName;
+            }else {
+                return "未知艺术家";
+            }
         }
     }
 

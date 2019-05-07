@@ -24,6 +24,7 @@ import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.response.SingleSongResponse;
 import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.utils.Common;
+import ceuilisa.mirai.utils.DownloadMusic;
 import ceuilisa.mirai.utils.FileUtil;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -35,7 +36,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class DownloadDialog extends DialogFragment {
 
-    public static final String FILE_PATH = "/storage/emulated/0/EmiliaSongs";
+    public static final String FILE_PATH = "/storage/emulated/0/EmiliaSongs/Music";
     private AlertDialog mAlertDialog;
     private ProgressBar mProgressBar;
     private int index;
@@ -82,42 +83,45 @@ public class DownloadDialog extends DialogFragment {
                         public void onNext(SingleSongResponse singleSongResponse) {
                             if (singleSongResponse != null) {
                                 if (singleSongResponse.getData() != null) {
-                                    DownloadTask downloadTask = new DownloadTask.Builder(
-                                            singleSongResponse.getData().get(0).getUrl(),
-                                            new File(FILE_PATH))
-                                            .setFilename(file.getName())
-                                            .setMinIntervalMillisCallbackProcess(100)
-                                            .setPassIfAlreadyCompleted(false)
-                                            .build();
-                                    downloadTask.enqueue(new DownloadListener1() {
-                                        @Override
-                                        public void taskStart(@NonNull DownloadTask task, @NonNull Listener1Assist.Listener1Model model) {
-                                            mProgressBar.setMax(singleSongResponse.getData().get(0).getSize());
-                                            mProgressBar.setVisibility(View.VISIBLE);
-                                        }
-
-                                        @Override
-                                        public void retry(@NonNull DownloadTask task, @NonNull ResumeFailedCause cause) {
-
-                                        }
-
-                                        @Override
-                                        public void connected(@NonNull DownloadTask task, int blockCount, long currentOffset, long totalLength) {
-
-                                        }
-
-                                        @Override
-                                        public void progress(@NonNull DownloadTask task, long currentOffset, long totalLength) {
-                                            mProgressBar.setProgress((int) currentOffset);
-                                        }
-
-                                        @Override
-                                        public void taskEnd(@NonNull DownloadTask task, @NonNull EndCause cause, @Nullable Exception realCause, @NonNull Listener1Assist.Listener1Model model) {
-                                            mProgressBar.setVisibility(View.INVISIBLE);
-                                            mAlertDialog.dismiss();
-                                            Common.showToast("下载完成");
-                                        }
-                                    });
+                                    Common.showToast("开始下载");
+                                    DownloadMusic.downloadMusic(file, singleSongResponse.getData().get(0).getUrl(), mTracksBean);
+                                    dismiss();
+//                                    DownloadTask downloadTask = new DownloadTask.Builder(
+//                                            singleSongResponse.getData().get(0).getUrl(),
+//                                            new File(FILE_PATH))
+//                                            .setFilename(file.getName())
+//                                            .setMinIntervalMillisCallbackProcess(100)
+//                                            .setPassIfAlreadyCompleted(false)
+//                                            .build();
+//                                    downloadTask.enqueue(new DownloadListener1() {
+//                                        @Override
+//                                        public void taskStart(@NonNull DownloadTask task, @NonNull Listener1Assist.Listener1Model model) {
+//                                            mProgressBar.setMax(singleSongResponse.getData().get(0).getSize());
+//                                            mProgressBar.setVisibility(View.VISIBLE);
+//                                        }
+//
+//                                        @Override
+//                                        public void retry(@NonNull DownloadTask task, @NonNull ResumeFailedCause cause) {
+//
+//                                        }
+//
+//                                        @Override
+//                                        public void connected(@NonNull DownloadTask task, int blockCount, long currentOffset, long totalLength) {
+//
+//                                        }
+//
+//                                        @Override
+//                                        public void progress(@NonNull DownloadTask task, long currentOffset, long totalLength) {
+//                                            mProgressBar.setProgress((int) currentOffset);
+//                                        }
+//
+//                                        @Override
+//                                        public void taskEnd(@NonNull DownloadTask task, @NonNull EndCause cause, @Nullable Exception realCause, @NonNull Listener1Assist.Listener1Model model) {
+//                                            mProgressBar.setVisibility(View.INVISIBLE);
+//                                            mAlertDialog.dismiss();
+//                                            Common.showToast("下载完成");
+//                                        }
+//                                    });
                                 } else {
                                     Common.showToast("暂无版权");
                                 }

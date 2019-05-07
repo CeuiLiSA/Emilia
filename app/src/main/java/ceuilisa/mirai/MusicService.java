@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
+import android.text.TextUtils;
 
 import java.io.IOException;
 
@@ -54,12 +55,6 @@ public class MusicService extends Service implements MusicOperate {
         });
     }
 
-
-    public static void main(){
-
-    }
-
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -94,58 +89,84 @@ public class MusicService extends Service implements MusicOperate {
 
     @Override
     public void playMusic(int index, OnPrepare onPrepare) {
-        if(index == nowPlayIndex && mSingleSong.getData().get(0).getId() == mChannel.getMusicList().get(nowPlayIndex).getId()){
-            return;
-        }else {
-            nowPlayIndex = index;
-            mPlayer.stop();
-            RetrofitUtil.getNodeApi().getSongUrl(mChannel.getMusicList().get(nowPlayIndex).getId())
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<SingleSongResponse>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-                        }
+        if(index == nowPlayIndex){
+            if(mSingleSong != null){
+                if(mSingleSong.getData().get(0).getId() == mChannel.getMusicList().get(nowPlayIndex).getId()){
+                    return;
+                }
+            }else {
+                    return;
+                }
+            }else {
+                nowPlayIndex = index;
+                mPlayer.stop();
 
-                        @Override
-                        public void onNext(SingleSongResponse playListTitleResponse) {
-                            try {
-                                mSingleSong = playListTitleResponse;
-                                mPlayer.reset();
-                                if (mSingleSong.getData() != null &&
-                                        mSingleSong.getData().get(0).getUrl() != null) {
-                                    mPlayer.setDataSource(mSingleSong.getData().get(0).getUrl());
-                                    Common.showLog("MusicService " + mSingleSong.getData().get(0).getUrl());
-                                    mPlayer.prepareAsync();
-                                    mPlayer.setOnPreparedListener(mp -> {
-                                        Common.showLog("MusicService setOnPreparedListener");
-                                        isPlaying = true;
-                                        if (onPrepare != null) {
-                                            onPrepare.updateUI();
-                                        }
-                                        mp.start();
-                                    });
-                                } else {
-                                    isPlaying = false;
-                                    Common.showToast(mContext, "歌曲链接不存在");
-                                }
-                            } catch (IOException e) {
-                                isPlaying = false;
-                                e.printStackTrace();
-                                Common.showToast(e.toString());
+
+                if (!TextUtils.isEmpty(mChannel.getMusicList().get(index).getLocalPath())) {
+                    try {
+                        mPlayer.setDataSource(mChannel.getMusicList().get(index).getLocalPath());
+                        mPlayer.prepareAsync();
+                        mPlayer.setOnPreparedListener(mp -> {
+                            Common.showLog("MusicService setOnPreparedListener");
+                            Common.showToast("播放本地音乐");
+                            isPlaying = true;
+                            if (onPrepare != null) {
+                                onPrepare.updateUI();
                             }
-                        }
+                            mp.start();
+                        });
+                    } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                RetrofitUtil.getNodeApi().getSongUrl(mChannel.getMusicList().get(nowPlayIndex).getId())
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<SingleSongResponse>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+                            }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            e.printStackTrace();
-                            Common.showLog("MusicService onError");
-                        }
+                            @Override
+                            public void onNext(SingleSongResponse playListTitleResponse) {
+                                try {
+                                    mSingleSong = playListTitleResponse;
+                                    mPlayer.reset();
+                                    if (mSingleSong.getData() != null &&
+                                            mSingleSong.getData().get(0).getUrl() != null) {
+                                        mPlayer.setDataSource(mSingleSong.getData().get(0).getUrl());
+                                        Common.showLog("MusicService " + mSingleSong.getData().get(0).getUrl());
+                                        mPlayer.prepareAsync();
+                                        mPlayer.setOnPreparedListener(mp -> {
+                                            Common.showLog("MusicService setOnPreparedListener");
+                                            isPlaying = true;
+                                            if (onPrepare != null) {
+                                                onPrepare.updateUI();
+                                            }
+                                            mp.start();
+                                        });
+                                    } else {
+                                        isPlaying = false;
+                                        Common.showToast(mContext, "歌曲链接不存在");
+                                    }
+                                } catch (IOException e) {
+                                    isPlaying = false;
+                                    e.printStackTrace();
+                                    Common.showToast(e.toString());
+                                }
+                            }
 
-                        @Override
-                        public void onComplete() {
-                        }
-                    });
+                            @Override
+                            public void onError(Throwable e) {
+                                e.printStackTrace();
+                                Common.showLog("MusicService onError");
+                            }
+
+                            @Override
+                            public void onComplete() {
+                            }
+                        });
+            }
         }
     }
 

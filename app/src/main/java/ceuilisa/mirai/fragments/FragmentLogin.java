@@ -63,7 +63,7 @@ public class FragmentLogin extends BaseFragment {
         });
         rootView = v;
         userName.setText("13990845246");
-        password.setText("merciskjl");
+        password.setText("Mercis09bv");
         return v;
     }
 

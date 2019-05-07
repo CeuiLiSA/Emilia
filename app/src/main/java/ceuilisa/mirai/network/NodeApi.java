@@ -14,6 +14,7 @@ import ceuilisa.mirai.nodejs.RecmdMvResponse;
 import ceuilisa.mirai.nodejs.RelatedMvResponse;
 import ceuilisa.mirai.nodejs.SearchSongResponse;
 import ceuilisa.mirai.nodejs.SearchUserResponse;
+import ceuilisa.mirai.nodejs.SongDetailResponse;
 import ceuilisa.mirai.nodejs.UserDetailResponse;
 import ceuilisa.mirai.response.BaseResponse;
 import ceuilisa.mirai.response.CommentResponse;
@@ -24,6 +25,7 @@ import ceuilisa.mirai.response.PlayListDetailResponse;
 import ceuilisa.mirai.response.SearchAlbumResponse;
 import ceuilisa.mirai.response.SearchArtistResponse;
 import ceuilisa.mirai.response.SingleSongResponse;
+import ceuilisa.mirai.response.TracksBean;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -309,4 +311,10 @@ public interface NodeApi {
 
     @GET("/captch/sent")
     Observable<BaseResponse> getSignNumber(@Query("phone") String phone);
+
+
+
+
+    @GET("/song/detail")
+    Observable<SongDetailResponse> getSongDetail(@Query("ids") String ids);
 }

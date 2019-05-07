@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import java.util.List;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.response.TracksBean;
+import ceuilisa.mirai.utils.Common;
 
 /**
  * 歌曲列表
@@ -45,18 +47,30 @@ public class PlayListDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         //展示歌手名
-        if (allIllust.get(position).getAr().size() == 1) {
-            ((TagHolder) holder).mTextView3.setText(String.format("%s - %s",
-                    allIllust.get(position).getAr().get(0).getName(),
-                    allIllust.get(position).getAl().getName()));
-        } else {
-            StringBuilder artist = new StringBuilder();
-            for (int i = 0; i < allIllust.get(position).getAr().size(); i++) {
-                artist.append(allIllust.get(position).getAr().get(i).getName()).append(" / ");
+        if(allIllust.get(position).getAr() != null) {
+            if (allIllust.get(position).getAr().size() == 1) {
+                ((TagHolder) holder).mTextView3.setText(String.format("%s - %s",
+                        allIllust.get(position).getAr().get(0).getName(),
+                        allIllust.get(position).getAl().getName()));
+            } else {
+                StringBuilder artist = new StringBuilder();
+                for (int i = 0; i < allIllust.get(position).getAr().size(); i++) {
+                    artist.append(allIllust.get(position).getAr().get(i).getName()).append(" / ");
+                }
+                ((TagHolder) holder).mTextView3.setText(String.format("%s - %s",
+                        artist.substring(0, artist.length() - 3),
+                        allIllust.get(position).getAl().getName()));
             }
-            ((TagHolder) holder).mTextView3.setText(String.format("%s - %s",
-                    artist.substring(0, artist.length() - 3),
-                    allIllust.get(position).getAl().getName()));
+        }else {
+            if (!TextUtils.isEmpty(allIllust.get(position).getArtistName())) {
+                ((TagHolder) holder).mTextView3.setText(String.format("%s - %s",
+                        allIllust.get(position).getArtistName(),
+                        allIllust.get(position).getAlbumName()));
+            }else {
+                ((TagHolder) holder).mTextView3.setText(String.format("%s - %s",
+                        "未知艺术家",
+                        allIllust.get(position).getAlbumName()));
+            }
         }
         //展示歌曲Alia
         if (allIllust.get(position).getAlia() != null && allIllust.get(position).getAlia().size() != 0) {

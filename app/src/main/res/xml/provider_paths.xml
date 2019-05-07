@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
     <!-- /storage/emulated/0/Download/${applicationId}/.beta/apk-->
+
+    <files-path
+        name="music_file_path"
+        path="EmiliaSongs/" />
+
+
     <external-path
         name="beta_external_path"
         path="Download/" />

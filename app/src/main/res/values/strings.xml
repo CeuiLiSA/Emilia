@@ -117,4 +117,5 @@
     <string name="toolbar_search">搜索</string>
     <string name="now_playing">正在播放</string>
     <string name="playlist_remove_item">PlayListDetailActivity remove item</string>
+    <string name="unknown" >未知</string>
 </resources>

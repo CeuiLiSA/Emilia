@@ -15,7 +15,7 @@ import ceuilisa.mirai.response.TracksBean;
 
 public abstract class BaseFragment extends Fragment {
 
-    protected String className = this.getClass().getSimpleName();
+    protected String className = this.getClass().getSimpleName() + " ";
     protected Context mContext;
     protected Activity mActivity;
     protected int mLayoutID;
