@@ -44,6 +44,50 @@ public class Operate {
                 });
     }
 
+    public static void likeArtist(long id, boolean isLike) {
+        Retro.getNodeApi().likeArtist(id, isLike ? "1" : "2")
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ObjListen<BaseResponse>(){
+
+                    @Override
+                    public void success(BaseResponse baseResponse) {
+                        if(isLike){
+                            Common.showToast("收藏成功");
+                        }else {
+                            Common.showToast("取消收藏");
+                        }
+                    }
+
+                    @Override
+                    public void error() {
+                        Common.showToast("操作失败");
+                    }
+                });
+    }
+
+    public static void likeAlbum(long id, boolean isLike) {
+        Retro.getNodeApi().likeAlbum(id, isLike ? "1" : "2")
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ObjListen<BaseResponse>(){
+
+                    @Override
+                    public void success(BaseResponse baseResponse) {
+                        if(isLike){
+                            Common.showToast("收藏成功");
+                        }else {
+                            Common.showToast("取消收藏");
+                        }
+                    }
+
+                    @Override
+                    public void error() {
+                        Common.showToast("操作失败");
+                    }
+                });
+    }
+
 
     /**
      * 收藏一个歌单

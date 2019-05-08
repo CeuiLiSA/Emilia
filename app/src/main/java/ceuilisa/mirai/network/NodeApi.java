@@ -18,6 +18,8 @@ import ceuilisa.mirai.nodejs.SearchSongResponse;
 import ceuilisa.mirai.nodejs.SearchUserResponse;
 import ceuilisa.mirai.nodejs.SongDetailResponse;
 import ceuilisa.mirai.nodejs.UserDetailResponse;
+import ceuilisa.mirai.response.AlbumResponse;
+import ceuilisa.mirai.response.ArtistResponse;
 import ceuilisa.mirai.response.BaseResponse;
 import ceuilisa.mirai.response.CommentResponse;
 import ceuilisa.mirai.response.LikeSongResponse;
@@ -144,6 +146,14 @@ public interface NodeApi {
     @GET("/like")
     Observable<LikeSongResponse> likeSong(@Query("id") long id,
                                           @Query("like") boolean like);
+
+    @GET("/artist/sub")
+    Observable<LikeSongResponse> likeArtist(@Query("id") long id,
+                                          @Query("t") String t);
+
+    @GET("/album/sub")
+    Observable<BaseResponse> likeAlbum(@Query("id") long id,
+                                            @Query("t") String t);
 
 
     @GET("/playlist/detail")
@@ -333,6 +343,17 @@ public interface NodeApi {
     Observable<FavorAlbumResponse> getFavorAlbum(@Query("limit") int limit,
                                                  @Query("offset") int offset,
                                                  @Query("timestamp") long timestamp);
+
+
+    @GET("/album")
+    Observable<AlbumResponse> getAlbumDetail(@Query("id") long id,
+                                              @Query("timestamp") long timestamp);
+
+
+
+    @GET("/artists")
+    Observable<ArtistResponse> getArtistDetail(@Query("id") int id,
+                                               @Query("timestamp") long timestamp);
 
 
 }

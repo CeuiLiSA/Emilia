@@ -25,6 +25,16 @@ public class ArtistBean implements Serializable {
     private String img1v1Url;
     private int albumSize;
     private String trans;
+
+    public boolean isFollowed() {
+        return followed;
+    }
+
+    public void setFollowed(boolean followed) {
+        this.followed = followed;
+    }
+
+    private boolean followed;
     private int musicSize;
     private List<String> alias;
 

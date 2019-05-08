@@ -50,7 +50,6 @@ public class ProfileBean {
     private String avatarUrl;
     private int province;
     private int djStatus;
-    private ExpertsBean experts;
     private long backgroundImgId;
     private int userType;
     private boolean mutual;
@@ -173,14 +172,6 @@ public class ProfileBean {
 
     public void setDjStatus(int djStatus) {
         this.djStatus = djStatus;
-    }
-
-    public ExpertsBean getExperts() {
-        return experts;
-    }
-
-    public void setExperts(ExpertsBean experts) {
-        this.experts = experts;
     }
 
     public long getBackgroundImgId() {
@@ -333,8 +324,5 @@ public class ProfileBean {
 
     public void setPlaylistBeSubscribedCount(int playlistBeSubscribedCount) {
         this.playlistBeSubscribedCount = playlistBeSubscribedCount;
-    }
-
-    public static class ExpertsBean {
     }
 }

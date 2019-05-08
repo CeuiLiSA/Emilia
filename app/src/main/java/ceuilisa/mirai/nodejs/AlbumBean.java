@@ -40,6 +40,16 @@ public class AlbumBean {
     private long pic;
     private String picUrl;
     private long publishTime;
+
+    public long getSubTime() {
+        return subTime;
+    }
+
+    public void setSubTime(long subTime) {
+        this.subTime = subTime;
+    }
+
+    private long subTime;
     private String description;
     private String tags;
     private String company;

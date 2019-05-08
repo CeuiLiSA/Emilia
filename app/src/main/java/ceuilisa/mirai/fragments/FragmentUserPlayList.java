@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 
 import ceuilisa.mirai.activities.PlayListDetailActivity;
-import ceuilisa.mirai.adapters.PlayListAdapter;
+import ceuilisa.mirai.adapters.SeparatePlaylistAdapter;
 import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.PlayListResponse;
 import ceuilisa.mirai.nodejs.PlaylistBean;
@@ -14,7 +14,9 @@ import io.reactivex.Observable;
 /**
  * 获取某个用户的歌单列表
  */
-public class FragmentUserPlayList extends BaseListFragment<PlayListResponse, PlayListAdapter, PlaylistBean> {
+public class FragmentUserPlayList extends BaseListFragment<PlayListResponse, SeparatePlaylistAdapter, PlaylistBean> {
+
+    private int userID;
 
     public static FragmentUserPlayList newInstance(int userID) {
         Bundle args = new Bundle();
@@ -26,7 +28,7 @@ public class FragmentUserPlayList extends BaseListFragment<PlayListResponse, Pla
 
     @Override
     Observable<PlayListResponse> initApi() {
-        int userID = (int) getArguments().getSerializable("user id");
+        userID = (int) getArguments().getSerializable("user id");
         return Retro.getNodeApi().getMyPlayList(userID, PAGE_SIZE, allItems.size(), System.currentTimeMillis());
     }
 
@@ -36,8 +38,13 @@ public class FragmentUserPlayList extends BaseListFragment<PlayListResponse, Pla
     }
 
     @Override
+    boolean hasNext() {
+        return false;
+    }
+
+    @Override
     void initAdapter() {
-        mAdapter = new PlayListAdapter(allItems, mContext);
+        mAdapter = new SeparatePlaylistAdapter(allItems, mContext, userID);
         mAdapter.setOnItemClickListener((view, position, viewType) -> {
             Intent intent = new Intent(mContext, PlayListDetailActivity.class);
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat

@@ -89,6 +89,7 @@ public class FragmentLrcView extends BaseFragment{
                                                         playListTitleResponse.getLrc().getLyric() +
                                                                 playListTitleResponse.getTlyric().getLyric()
                                                 ).toString();
+                                        Common.showLog("mergeLyric " + mergeLyric);
                                         mLrcView.loadLrc(mergeLyric);
                                     } else {
                                     }

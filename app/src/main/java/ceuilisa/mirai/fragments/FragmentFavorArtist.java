@@ -1,7 +1,12 @@
 package ceuilisa.mirai.fragments;
 
+import android.content.Intent;
+import android.view.View;
+
+import ceuilisa.mirai.activities.ArtistActivity;
 import ceuilisa.mirai.adapters.AlbumListAdapter;
 import ceuilisa.mirai.adapters.ArtistAdapter;
+import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.AlbumBean;
 import ceuilisa.mirai.nodejs.ArtistBean;
@@ -24,5 +29,14 @@ public class FragmentFavorArtist extends BaseListFragment<FavorArtistResponse, A
     @Override
     void initAdapter() {
         mAdapter = new ArtistAdapter(allItems, mContext);
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position, int viewType) {
+                Intent intent = new Intent(mContext, ArtistActivity.class);
+                intent.putExtra("id", allItems.get(position).getId());
+                intent.putExtra("name", allItems.get(position).getName());
+                mContext.startActivity(intent);
+            }
+        });
     }
 }

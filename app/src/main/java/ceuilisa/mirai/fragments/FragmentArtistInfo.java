@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import ceuilisa.mirai.R;
+import ceuilisa.mirai.nodejs.ArtistBean;
 import ceuilisa.mirai.response.ArtistResponse;
 
 public class FragmentArtistInfo extends BaseFragment {
@@ -26,7 +27,7 @@ public class FragmentArtistInfo extends BaseFragment {
     void initData() {
     }
 
-    public void showInfo(ArtistResponse.ArtistBean artistBean) {
+    public void showInfo(ArtistBean artistBean) {
         artistName.setText(String.format("%s简介", artistBean.getName()));
         if (artistBean.getBriefDesc() != null &&
                 artistBean.getBriefDesc().length() != 0) {

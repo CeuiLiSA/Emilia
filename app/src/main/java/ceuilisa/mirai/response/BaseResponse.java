@@ -7,7 +7,7 @@ public class BaseResponse {
      * message : success
      */
 
-    private String message;
+    public String message;
 
     public int getCode() {
         return code;

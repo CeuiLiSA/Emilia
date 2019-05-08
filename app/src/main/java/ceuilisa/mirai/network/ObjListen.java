@@ -29,7 +29,6 @@ public abstract class ObjListen<T extends BaseResponse> implements Observer<T> {
     public void onError(Throwable e) {
         e.printStackTrace();
         Common.showToast(e.toString());
-        error();
     }
 
     @Override

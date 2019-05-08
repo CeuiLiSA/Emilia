@@ -16,7 +16,7 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.AddPlayListActivity;
 import ceuilisa.mirai.activities.PlayListDetailActivity;
 import ceuilisa.mirai.activities.TemplateFragmentActivity;
-import ceuilisa.mirai.adapters.PlayListAdapter;
+import ceuilisa.mirai.adapters.SeparatePlaylistAdapter;
 import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.nodejs.PlayListResponse;
@@ -28,7 +28,7 @@ import io.reactivex.Observable;
 /**
  * 获取已登录用户自己的歌单（创建的+收藏的）
  */
-public class FragmentMyPlayList extends BaseListFragment<PlayListResponse, PlayListAdapter, PlaylistBean> {
+public class FragmentMyPlayList extends BaseListFragment<PlayListResponse, SeparatePlaylistAdapter, PlaylistBean> {
 
     @Override
     Observable<PlayListResponse> initApi() {
@@ -51,8 +51,13 @@ public class FragmentMyPlayList extends BaseListFragment<PlayListResponse, PlayL
     }
 
     @Override
+    boolean hasNext() {
+        return false;
+    }
+
+    @Override
     void initAdapter() {
-        mAdapter = new PlayListAdapter(allItems, mContext);
+        mAdapter = new SeparatePlaylistAdapter(allItems, mContext, Local.getUser().getProfile().getUserId());
         mAdapter.setOnItemClickListener((view, position, viewType) -> {
             Intent intent = new Intent(mContext, PlayListDetailActivity.class);
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat

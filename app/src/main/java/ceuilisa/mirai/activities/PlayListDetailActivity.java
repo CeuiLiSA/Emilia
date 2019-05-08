@@ -51,7 +51,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
     private TextView mTextView, mTextView2, starPlaylistTv, markPlaylist;
     private RCRelativeLayout cornerRela;
     private RecyclerView mRecyclerView;
-    private ImageView mImageView, starPlaylist;
+    private ImageView mImageView;
     private NiceImageView mImageView2;
     private CircleImageView mCircleImageView;
     private boolean showProgress = true;
@@ -104,31 +104,6 @@ public class PlayListDetailActivity extends WithPanelActivity {
         });
         loadProgress.setVisibility(View.VISIBLE);
         mTextView = findViewById(R.id.textView10);
-        starPlaylist = findViewById(R.id.imageView10);
-        starPlaylist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (starPlaylistTv.getText().toString().equals("取消收藏")) {
-                    Operate.starPlaylist(id, false);
-                    starPlaylistTv.setText("收藏");
-                } else {
-                    Operate.starPlaylist(id, true);
-                    starPlaylistTv.setText("取消收藏");
-                }
-            }
-        });
-        markPlaylist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (markPlaylist.getText().toString().equals("取消收藏")) {
-                    Operate.starPlaylist(id, false);
-                    markPlaylist.setText("+ 添加收藏");
-                } else {
-                    Operate.starPlaylist(id, true);
-                    markPlaylist.setText("取消收藏");
-                }
-            }
-        });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -155,8 +130,6 @@ public class PlayListDetailActivity extends WithPanelActivity {
         mToolbar.setTitle(dataType);
         if (dataType.equals("歌单")) {
             getPlaylist();
-        } else if (dataType.equals("我的收藏")) {
-            //getMyFavor();
         } else if (dataType.equals("专辑")) {
             getAlbum();
         }
@@ -208,6 +181,18 @@ public class PlayListDetailActivity extends WithPanelActivity {
                                 } else {
                                     markPlaylist.setText("+ 添加收藏");
                                 }
+                                markPlaylist.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        if (markPlaylist.getText().toString().equals("取消收藏")) {
+                                            Operate.starPlaylist(id, false);
+                                            markPlaylist.setText("+ 添加收藏");
+                                        } else {
+                                            Operate.starPlaylist(id, true);
+                                            markPlaylist.setText("取消收藏");
+                                        }
+                                    }
+                                });
                                 mAdapter = new PlayListDetailAdapter(allDatas, mContext);
                                 mAdapter.setOnItemClickListener((view, position, viewType) -> {
                                     if (viewType == 0) {
@@ -286,7 +271,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
     }
 
     private void getAlbum() {
-        Retro.getImjadApi().getAlbum(id)
+        Retro.getNodeApi().getAlbumDetail(id, System.currentTimeMillis())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<AlbumResponse>() {
@@ -295,9 +280,9 @@ public class PlayListDetailActivity extends WithPanelActivity {
                     }
 
                     @Override
-                    public void onNext(AlbumResponse playListTitleResponse) {
+                    public void onNext(AlbumResponse albumResponse) {
                         allDatas.clear();
-                        allDatas.addAll(playListTitleResponse.getSongs());
+                        allDatas.addAll(albumResponse.getSongs());
                         mAdapter = new PlayListDetailAdapter(allDatas, mContext);
                         mAdapter.setOnItemClickListener((view, position, viewType) -> {
                             if (viewType == 0) {
@@ -315,11 +300,47 @@ public class PlayListDetailActivity extends WithPanelActivity {
                                 dialog.show(getSupportFragmentManager());
                             }
                         });
-                        mTextView2.setText(playListTitleResponse.getAlbum().getArtist().getName());
+//                        if (albumResponse.getAlbum().isSubscribed()) {
+//                            markPlaylist.setText("取消收藏");
+//                        } else {
+//                            markPlaylist.setText("+ 添加收藏");
+//                        }
+                        markPlaylist.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (markPlaylist.getText().toString().equals("取消收藏")) {
+                                    Operate.likeAlbum(id, false);
+                                    markPlaylist.setText("+ 添加收藏");
+                                } else {
+                                    Operate.likeAlbum(id, true);
+                                    markPlaylist.setText("取消收藏");
+                                }
+                            }
+                        });
+                        mTextView2.setText(albumResponse.getAlbum().getArtist().getName());
                         if (!isDestroyed()) {
-                            Glide.with(mContext).load(playListTitleResponse.getAlbum()
+                            Glide.with(mContext).load(albumResponse.getAlbum()
                                     .getArtist().getPicUrl()).into(mCircleImageView);
                         }
+                        mCircleImageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(mContext, ArtistActivity.class);
+                                intent.putExtra("id", albumResponse.getAlbum().getArtist().getId());
+                                intent.putExtra("name", albumResponse.getAlbum().getArtist().getName());
+                                startActivity(intent);
+                            }
+                        });
+                        mTextView2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(mContext, ArtistActivity.class);
+                                intent.putExtra("id", albumResponse.getAlbum().getArtist().getId());
+                                intent.putExtra("name", albumResponse.getAlbum().getArtist().getName());
+                                startActivity(intent);
+                            }
+                        });
+
                         loadProgress.setVisibility(View.GONE);
                         mRecyclerView.setAdapter(new ScaleInAnimationAdapter(mAdapter));
                         showProgress = false;
@@ -335,60 +356,6 @@ public class PlayListDetailActivity extends WithPanelActivity {
                     }
                 });
     }
-
-
-//    private void getMyFavor(){
-//        UserBean userBean = Local.getUser();
-//        Retro.getTempApi().getMyFavor(userBean.getUserID())
-//                .subscribeOn(Schedulers.newThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<PlayListDetailResponse>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(PlayListDetailResponse playListTitleResponse) {
-//                        if(playListTitleResponse != null &&
-//                                playListTitleResponse.getPlaylist() != null &&
-//                                playListTitleResponse.getPlaylist().getTracks() != null &&
-//                                playListTitleResponse.getPlaylist().getTracks().size() > 0) {
-//                            PlayListDetailAdapter adapter = new PlayListDetailAdapter(
-//                                    playListTitleResponse.getPlaylist().getTracks(), mContext);
-//                            adapter.setOnItemClickListener((view, position, viewType) -> {
-//                                MusicService.allSongs = playListTitleResponse.getPlaylist().getTracks();
-//                                Intent intent = new Intent(mContext, MusicActivity.class);
-//                                intent.putExtra("index", position);
-//                                startActivity(intent);
-//                            });
-//                            if(!isDestroyed()) {
-//                                if(playListTitleResponse.getPlaylist().getCreator() != null) {
-//                                    Glide.with(mContext).load(playListTitleResponse.getPlaylist().getCreator().
-//                                            getAvatarUrl()).into(mCircleImageView);
-//                                }
-//                            }
-//                            loadProgress.setVisibility(View.GONE);
-//                            mRecyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
-//                            showProgress = false;
-//                        }else {
-//                            loadProgress.setVisibility(View.INVISIBLE);
-//                            Common.showToast("加载失败");
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        e.printStackTrace();
-//                        Common.showToast("加载失败");
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                    }
-//                });
-//    }
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -412,19 +379,6 @@ public class PlayListDetailActivity extends WithPanelActivity {
         if (channel.getReceiver().equals(receiver)) {
             getPlaylist();
             Common.showLog("PlayListDetailActivity 里面的");
-        }
-
-
-        /**
-         * 歌单详情页面，删除了一首歌，通知详情列表移除这首歌
-         */
-        if (channel.getReceiver().equals(getString(R.string.playlist_remove_item))) {
-            if (mAdapter != null) {
-                allDatas.remove((int) channel.getObject());
-                mAdapter.notifyItemRemoved(channel.getObject());
-                mAdapter.notifyItemRangeChanged(channel.getObject(), mAdapter.getItemCount());
-                Common.showLog("PlayListDetailActivity 删除了一个item");
-            }
         }
     }
 }

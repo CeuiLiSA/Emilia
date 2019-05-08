@@ -37,7 +37,8 @@ public class LyricsHandler
             if(!lhm.containsKey(m.group(1)))
                 lhm.put(m.group(1), m.group(2));
             else
-                lhm.put(m.group(1), lhm.get(m.group(1)) + "\n" + m.group(2));
+                //lhm.put(m.group(1), lhm.get(m.group(1)) + "\n" + m.group(2));
+                lhm.put(m.group(1), lhm.get(m.group(1)) +  " [" + m.group(2) + "]");
         }
 
         return this;
@@ -52,6 +53,8 @@ public class LyricsHandler
         {
             Map.Entry<String, String> entry = entries.next();
             str += entry.getKey() + entry.getValue() + "\n";
+            Common.showLog("entry.getKey() " + entry.getKey());
+            Common.showLog("entry.getValue() " + entry.getValue());
         }
         return str;
     }

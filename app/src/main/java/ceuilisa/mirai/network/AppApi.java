@@ -36,71 +36,9 @@ public interface AppApi {
     Observable<LrcResponse> getLrc(@Query("id") String id);
 
 
-    @GET("nm/playlist/{playlistID}")
-    Observable<PlayListDetailResponse> getPlayListDetail(@Path("playlistID") String playlistID);
 
 
-    @GET("cloudmusic/?type=playlist")
-    Observable<PlayListDetailResponse> getPlayListDetail22(@Query("id") String id);
 
-
-    @GET("id_delete")
-    Observable<DeleteImageResponse> deleteImage(@Query("id") String id);
-
-    @GET("piclist")
-    Observable<List<ItemResponse>> getAllItem();
-
-    @Multipart
-    @POST("uploadimg")
-    Call<DeleteImageResponse> changeHeadImg(@Part MultipartBody.Part photo);
-
-
-    // https://api.imjad.cn/cloudmusic/?type=comments&id=26196652&limit=10&offset=20
-    @GET("cloudmusic/?type=comments")
-    Observable<CommentResponse> getComment(@Query("id") String id,
-                                           @Query("limit") int limit,
-                                           @Query("offset") int offset);
-
-
-    /**
-     * 搜索单曲
-     *
-     * @param s      关键字
-     * @param limit  每页结果数量
-     * @param offset 偏移量
-     * @return Observable<PlayListTitleResponse>
-     */
-    @GET("cloudmusic/?type=search&search_type=1")
-    Observable<PlayListTitleResponse> searchSong(@Query("s") String s,
-                                                 @Query("limit") int limit,
-                                                 @Query("offset") int offset);
-
-    /**
-     * 搜索专辑
-     *
-     * @param s      关键字
-     * @param limit  每页结果数量
-     * @param offset 偏移量
-     * @return Observable<SearchAlbumResponse>
-     */
-    @GET("cloudmusic/?type=search&search_type=10")
-    Observable<SearchAlbumResponse> searchAlbum(@Query("s") String s,
-                                                @Query("limit") int limit,
-                                                @Query("offset") int offset);
-
-
-    /**
-     * 搜索歌手
-     *
-     * @param s      关键字
-     * @param limit  每页结果数量
-     * @param offset 偏移量
-     * @return Observable<PlayListTitleResponse>
-     */
-    @GET("cloudmusic/?type=search&search_type=100")
-    Observable<PlayListTitleResponse> searchSinger(@Query("s") String s,
-                                                   @Query("limit") int limit,
-                                                   @Query("offset") int offset);
 
     /**
      * 搜索歌单
@@ -115,18 +53,6 @@ public interface AppApi {
                                                      @Query("limit") int limit,
                                                      @Query("offset") int offset);
 
-    /**
-     * 搜索用户
-     *
-     * @param s      关键字
-     * @param limit  每页结果数量
-     * @param offset 偏移量
-     * @return Observable<PlayListTitleResponse>
-     */
-    @GET("cloudmusic/?type=search&search_type=1002")
-    Observable<PlayListTitleResponse> searchUser(@Query("s") String s,
-                                                 @Query("limit") int limit,
-                                                 @Query("offset") int offset);
 
 
     //https://v1.hitokoto.cn/nm/record/113568254?weekly=false
@@ -139,21 +65,5 @@ public interface AppApi {
     Observable<PlayWeekHistoryResponse> getWeekPlayHistory(@Query("id") int id,
                                                            @Query("period") int period);
 
-    /**
-     * 获取专辑详情
-     *
-     * @param id 专辑ID
-     * @return Observable<AlbumResponse>
-     */
-    @GET("cloudmusic/?type=album")
-    Observable<AlbumResponse> getAlbum(@Query("id") long id);
 
-    /**
-     * 获取歌手详情
-     *
-     * @param id 歌手ID
-     * @return Observable<ArtistResponse>
-     */
-    @GET("cloudmusic/?type=artist")
-    Observable<ArtistResponse> getArtist(@Query("id") int id);
 }

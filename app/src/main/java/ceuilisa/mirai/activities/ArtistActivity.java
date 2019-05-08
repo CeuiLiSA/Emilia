@@ -1,11 +1,14 @@
 package ceuilisa.mirai.activities;
 
+import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -14,6 +17,7 @@ import ceuilisa.mirai.fragments.BaseFragment;
 import ceuilisa.mirai.fragments.FragmentArtistAlbum;
 import ceuilisa.mirai.fragments.FragmentArtistInfo;
 import ceuilisa.mirai.fragments.FragmentHotSongs;
+import ceuilisa.mirai.network.Operate;
 import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.response.ArtistResponse;
 import ceuilisa.mirai.utils.Common;
@@ -35,6 +39,7 @@ public class ArtistActivity extends WithPanelActivity {
     private FragmentHotSongs fragmentHotSongs;
     private FragmentArtistInfo fragmentArtistInfo;
     private FragmentArtistAlbum mFragmentArtistAlbum;
+    private ArtistResponse mArtistResponse;
 
     @Override
     boolean hasImage() {
@@ -94,7 +99,7 @@ public class ArtistActivity extends WithPanelActivity {
     }
 
     private void getArtist() {
-        Retro.getImjadApi().getArtist(id)
+        Retro.getNodeApi().getArtistDetail(id, System.currentTimeMillis())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ArtistResponse>() {
@@ -105,10 +110,12 @@ public class ArtistActivity extends WithPanelActivity {
                     @Override
                     public void onNext(ArtistResponse playListTitleResponse) {
                         if (playListTitleResponse != null) {
+                            mArtistResponse = playListTitleResponse;
                             mToolbar.setTitle(playListTitleResponse.getArtist().getName());
                             mCollapsingToolbarLayout.setTitle(playListTitleResponse.getArtist().getName());
                             fragmentHotSongs.showHotSongs(playListTitleResponse.getHotSongs());
                             fragmentArtistInfo.showInfo(playListTitleResponse.getArtist());
+                            invalidateOptionsMenu();
                             loadProgress.setVisibility(View.INVISIBLE);
                         } else {
                             Common.showToast("加载失败");
@@ -123,5 +130,37 @@ public class ArtistActivity extends WithPanelActivity {
                     public void onComplete() {
                     }
                 });
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(mArtistResponse != null){
+            if(mArtistResponse.getArtist().isFollowed()){
+                getMenuInflater().inflate(R.menu.delete_artist_menu, menu);
+            }else {
+                getMenuInflater().inflate(R.menu.add_artist_menu, menu);
+            }
+        }else {
+            getMenuInflater().inflate(R.menu.add_artist_menu, menu);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_add_artist) {
+            if(mArtistResponse != null) {
+                Operate.likeArtist(mArtistResponse.getArtist().getId(), true);
+            }
+            return true;
+        }else if (id == R.id.action_delete_artist){
+            if(mArtistResponse != null) {
+                Operate.likeArtist(mArtistResponse.getArtist().getId(), false);
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

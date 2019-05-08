@@ -1,8 +1,12 @@
 package ceuilisa.mirai.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,9 +45,21 @@ public class AlbumListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName());
+        if (allIllust.get(position).getAlias() != null && allIllust.get(position).getAlias().size() != 0) {
+            SpannableString spannableString = new SpannableString(String.format("%s (%s)",
+                    allIllust.get(position).getName(),
+                    allIllust.get(position).getAlias().get(0)));
+            spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#999999")),
+                    allIllust.get(position).getName().length(), spannableString.length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ((TagHolder) holder).mTextView.setText(spannableString);
+        } else {
+            //若歌曲Alia为空，查找歌曲tns
+            ((TagHolder) holder).mTextView.setText(allIllust.get(position).getName());
+        }
+
         ((TagHolder) holder).mTextView2.setText(String.format(mContext.getString(R.string.album_info),
-                Common.timeStamp2Date(String.valueOf(allIllust.get(position).getPublishTime())),
+                Common.timeStamp2Date(String.valueOf(allIllust.get(position).getSubTime())),
                 allIllust.get(position).getSize()));
         Glide.with(mContext).load(allIllust.get(position).getPicUrl()).into(((TagHolder) holder).mNiceImageView);
         if (mOnItemClickListener != null) {

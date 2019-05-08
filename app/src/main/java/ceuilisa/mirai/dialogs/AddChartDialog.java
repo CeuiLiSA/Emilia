@@ -93,7 +93,12 @@ public class AddChartDialog extends DialogFragment {
                             if (playListResponse.getPlaylist() != null &&
                                     playListResponse.getPlaylist().size() != 0) {
                                 allItems.clear();
-                                allItems.addAll(playListResponse.getPlaylist());
+                                LoginResponse user = Local.getUser();
+                                for (int i = 0; i < playListResponse.getPlaylist().size(); i++) {
+                                    if(user.getProfile().getUserId() == playListResponse.getPlaylist().get(i).getUserId()){
+                                        allItems.add(playListResponse.getPlaylist().get(i));
+                                    }
+                                }
                                 PlayListSimpleAdapter adapter = new PlayListSimpleAdapter(allItems, mContext);
                                 adapter.setOnItemClickListener(new OnItemClickListener() {
                                     @Override
@@ -102,20 +107,16 @@ public class AddChartDialog extends DialogFragment {
                                     }
                                 });
                                 mRecyclerView.setAdapter(adapter);
-                                Common.showLog("PlayListResponse 111111");
                             } else {
                                 Common.showToast("暂无歌单");
-                                Common.showLog("PlayListResponse 222222");
                             }
                         } else {
-                            Common.showLog("PlayListResponse 333333");
                             Common.showToast("加载失败");
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Common.showLog("PlayListResponse 444444");
                         e.printStackTrace();
                         Common.showToast(e.toString());
                     }
