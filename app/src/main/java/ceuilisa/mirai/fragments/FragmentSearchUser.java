@@ -6,7 +6,7 @@ import android.view.View;
 import ceuilisa.mirai.activities.UserDetailActivity;
 import ceuilisa.mirai.adapters.UserAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.SearchUserResponse;
 import ceuilisa.mirai.nodejs.UserprofilesBean;
 import ceuilisa.mirai.utils.DensityUtil;
@@ -37,7 +37,7 @@ public class FragmentSearchUser extends BaseListFragment<SearchUserResponse, Use
 
     @Override
     Observable<SearchUserResponse> initApi() {
-        return RetrofitUtil.getNodeApi().searchUser(keyword, PAGE_SIZE, allItems.size());
+        return Retro.getNodeApi().searchUser(keyword, PAGE_SIZE, allItems.size());
     }
 
     @Override

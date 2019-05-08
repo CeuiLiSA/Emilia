@@ -5,7 +5,7 @@ import android.view.View;
 
 import ceuilisa.mirai.adapters.AlbumListAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.AlbumBean;
 import ceuilisa.mirai.nodejs.ArtistAlbumResponse;
 import io.reactivex.Observable;
@@ -25,7 +25,7 @@ public class FragmentArtistAlbum extends BaseListFragment<ArtistAlbumResponse, A
     @Override
     Observable<ArtistAlbumResponse> initApi() {
         int artistID = (int) getArguments().getSerializable("artist id");
-        return RetrofitUtil.getNodeApi().getArtistAlbum(artistID, PAGE_SIZE, allItems.size());
+        return Retro.getNodeApi().getArtistAlbum(artistID, PAGE_SIZE, allItems.size());
     }
 
     @Override

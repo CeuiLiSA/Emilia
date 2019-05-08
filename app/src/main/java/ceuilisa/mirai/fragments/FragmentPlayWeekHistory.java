@@ -6,7 +6,7 @@ import android.view.View;
 import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.adapters.PlayAllHistoryAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.response.HistorySongBean;
 import ceuilisa.mirai.response.PlayWeekHistoryResponse;
@@ -19,7 +19,7 @@ public class FragmentPlayWeekHistory extends BaseListFragment<PlayWeekHistoryRes
     @Override
     Observable<PlayWeekHistoryResponse> initApi() {
         LoginResponse user = Local.getUser();
-        return RetrofitUtil.getImjadApi().getWeekPlayHistory(user.getProfile().getUserId(), 1);
+        return Retro.getImjadApi().getWeekPlayHistory(user.getProfile().getUserId(), 1);
     }
 
     @Override

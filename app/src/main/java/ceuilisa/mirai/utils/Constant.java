@@ -20,6 +20,7 @@ public class Constant {
     public static final String[] PLAY_HISTORY = new String[]{"最近一周", "所有时间"};
     public static final String[] FOLLOW_AND_FOLLOWERS = new String[]{"关注", "粉丝"};
     public static final String[] FOLLOW_HOT_MV = new String[]{"推荐MV", "MV热榜"};
+    public static final String[] FOLLOW_FAVOR = new String[]{"歌手", "专辑"};
     public static final String[] PLAYLIST_TYPE = new String[]{"语种", "风格", "场景", "情感", "主题"};
     public static final String[] PLAYLIST_NEW_SONG = new String[]{"华语", "欧美", "日本", "韩国"};
     public static final String[] SEARCH_TYPE = new String[]{"搜单曲", "搜歌手", "搜专辑", "搜歌单", "搜用户"};

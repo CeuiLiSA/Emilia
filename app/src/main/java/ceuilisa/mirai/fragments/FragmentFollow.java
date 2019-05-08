@@ -11,7 +11,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import ceuilisa.mirai.activities.UserDetailActivity;
 import ceuilisa.mirai.adapters.FollowAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.FollowResponse;
 import ceuilisa.mirai.nodejs.FollowedsBean;
 import ceuilisa.mirai.utils.Channel;
@@ -46,7 +46,7 @@ public class FragmentFollow extends BaseListFragment<FollowResponse, FollowAdapt
 
     @Override
     Observable<FollowResponse> initApi() {
-        return RetrofitUtil.getNodeApi().getFollow(uid, PAGE_SIZE, allItems.size());
+        return Retro.getNodeApi().getFollow(uid, PAGE_SIZE, allItems.size());
     }
 
     @Override

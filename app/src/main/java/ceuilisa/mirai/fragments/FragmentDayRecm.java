@@ -6,7 +6,7 @@ import android.view.View;
 import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.adapters.RecmSongAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.DayRecommend;
 import ceuilisa.mirai.response.TracksBean;
 import io.reactivex.Observable;
@@ -25,7 +25,7 @@ public class FragmentDayRecm extends BaseListFragment<DayRecommend, RecmSongAdap
 
     @Override
     Observable<DayRecommend> initApi() {
-        return RetrofitUtil.getNodeApi().getDayRecommend();
+        return Retro.getNodeApi().getDayRecommend();
     }
 
     @Override

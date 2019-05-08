@@ -14,7 +14,7 @@ import ceuilisa.mirai.fragments.BaseFragment;
 import ceuilisa.mirai.fragments.FragmentArtistAlbum;
 import ceuilisa.mirai.fragments.FragmentArtistInfo;
 import ceuilisa.mirai.fragments.FragmentHotSongs;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.response.ArtistResponse;
 import ceuilisa.mirai.utils.Common;
 import io.reactivex.Observer;
@@ -94,7 +94,7 @@ public class ArtistActivity extends WithPanelActivity {
     }
 
     private void getArtist() {
-        RetrofitUtil.getImjadApi().getArtist(id)
+        Retro.getImjadApi().getArtist(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ArtistResponse>() {

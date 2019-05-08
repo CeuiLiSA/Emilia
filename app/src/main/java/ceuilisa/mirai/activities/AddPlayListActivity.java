@@ -10,7 +10,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import org.greenrobot.eventbus.EventBus;
 
 import ceuilisa.mirai.R;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.response.BaseResponse;
 import ceuilisa.mirai.utils.Channel;
 import ceuilisa.mirai.utils.Common;
@@ -54,7 +54,7 @@ public class AddPlayListActivity extends BaseActivity {
 
     private void addPlaylist() {
         mProgressBar.setVisibility(View.VISIBLE);
-        RetrofitUtil.getNodeApi().createPlaylist(playlistName.getText().toString().trim())
+        Retro.getNodeApi().createPlaylist(playlistName.getText().toString().trim())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseResponse>() {

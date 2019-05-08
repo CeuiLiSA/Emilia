@@ -5,7 +5,7 @@ import android.content.Intent;
 import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.dialogs.LikeSongDialog;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.response.NewSongResponse;
 import ceuilisa.mirai.response.TracksBean;
 import io.reactivex.Observable;
@@ -35,7 +35,7 @@ public class FragmentNewSong extends BaseListFragment<NewSongResponse, PlayListD
 
     @Override
     Observable<NewSongResponse> initApi() {
-        return RetrofitUtil.getNodeApi().newSong(area);
+        return Retro.getNodeApi().newSong(area);
     }
 
     @Override

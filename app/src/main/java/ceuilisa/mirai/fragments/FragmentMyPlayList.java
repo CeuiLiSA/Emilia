@@ -17,7 +17,7 @@ import ceuilisa.mirai.activities.AddPlayListActivity;
 import ceuilisa.mirai.activities.PlayListDetailActivity;
 import ceuilisa.mirai.activities.TemplateFragmentActivity;
 import ceuilisa.mirai.adapters.PlayListAdapter;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.nodejs.PlayListResponse;
 import ceuilisa.mirai.nodejs.PlaylistBean;
@@ -33,7 +33,8 @@ public class FragmentMyPlayList extends BaseListFragment<PlayListResponse, PlayL
     @Override
     Observable<PlayListResponse> initApi() {
         LoginResponse user = Local.getUser();
-        return RetrofitUtil.getNodeApi().getMyPlayList(user.getProfile().getUserId(), PAGE_SIZE, allItems.size());
+        return Retro.getNodeApi().getMyPlayList(user.getProfile().getUserId(),
+                PAGE_SIZE, allItems.size(), System.currentTimeMillis());
     }
 
     @Override

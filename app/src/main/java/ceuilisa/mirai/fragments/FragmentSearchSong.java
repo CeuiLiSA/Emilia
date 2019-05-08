@@ -6,7 +6,7 @@ import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.activities.VideoPlayActivity;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.dialogs.LikeSongDialog;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.SearchSongResponse;
 import ceuilisa.mirai.response.TracksBean;
 import io.reactivex.Observable;
@@ -28,7 +28,7 @@ public class FragmentSearchSong extends BaseListFragment<SearchSongResponse, Pla
 
     @Override
     Observable<SearchSongResponse> initApi() {
-        return RetrofitUtil.getNodeApi().searchSong(keyword, PAGE_SIZE, allItems.size());
+        return Retro.getNodeApi().searchSong(keyword, PAGE_SIZE, allItems.size());
     }
 
     @Override

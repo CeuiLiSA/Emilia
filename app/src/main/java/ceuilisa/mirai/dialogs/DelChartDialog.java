@@ -5,7 +5,7 @@ import android.view.View;
 import org.greenrobot.eventbus.EventBus;
 
 import ceuilisa.mirai.network.ObjListen;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.response.BaseResponse;
 import ceuilisa.mirai.utils.Channel;
 import ceuilisa.mirai.utils.Common;
@@ -52,7 +52,7 @@ public class DelChartDialog extends BaseDialog {
 
 
     private void delSongFromPlaylist(long pid, long trackID) {
-        RetrofitUtil.getNodeApi().delFromChart(pid, trackID)
+        Retro.getNodeApi().delFromChart(pid, trackID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ObjListen<BaseResponse>() {

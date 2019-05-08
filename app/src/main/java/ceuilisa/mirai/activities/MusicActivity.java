@@ -37,7 +37,6 @@ import ceuilisa.mirai.fragments.FragmentLrcView;
 import ceuilisa.mirai.interf.OnPlayComplete;
 import ceuilisa.mirai.interf.OnPrepared;
 import ceuilisa.mirai.network.Operate;
-import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.SongDetailResponse;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.IndicatorLayout;

@@ -6,7 +6,7 @@ import android.view.View;
 import ceuilisa.mirai.activities.PlayListDetailActivity;
 import ceuilisa.mirai.adapters.AlbumListAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.AlbumBean;
 import ceuilisa.mirai.response.SearchAlbumResponse;
 import io.reactivex.Observable;
@@ -28,7 +28,7 @@ public class FragmentSearchAlbum extends BaseListFragment<SearchAlbumResponse, A
 
     @Override
     Observable<SearchAlbumResponse> initApi() {
-        return RetrofitUtil.getNodeApi().searchAlbum(keyword, PAGE_SIZE, allItems.size());
+        return Retro.getNodeApi().searchAlbum(keyword, PAGE_SIZE, allItems.size());
     }
 
     @Override

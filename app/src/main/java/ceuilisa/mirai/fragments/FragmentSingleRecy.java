@@ -112,7 +112,7 @@ public class FragmentSingleRecy extends BaseFragment {
      * 获取本周听歌总次数排行
      */
 //    private void getWeeklyHistory() {
-//        RetrofitUtil.getImjadApi().getWeekPlayHistory(Constant.USER_ID, 1)
+//        Retro.getImjadApi().getWeekPlayHistory(Constant.USER_ID, 1)
 //                .subscribeOn(Schedulers.newThread())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(new Observer<PlayWeekHistoryResponse>() {
@@ -151,7 +151,7 @@ public class FragmentSingleRecy extends BaseFragment {
      * 获取历史听歌总次数排行
      */
 //    private void getAllHistory() {
-//        RetrofitUtil.getImjadApi().getAllPlayHistory(Constant.USER_ID, 0)
+//        Retro.getImjadApi().getAllPlayHistory(Constant.USER_ID, 0)
 //                .subscribeOn(Schedulers.newThread())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(new Observer<PlayAllHistoryResponse>() {

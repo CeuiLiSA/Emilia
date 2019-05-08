@@ -3,7 +3,7 @@ package ceuilisa.mirai.fragments;
 import android.os.Bundle;
 
 import ceuilisa.mirai.adapters.EventAdapter;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.EventResponse;
 import ceuilisa.mirai.nodejs.EventsBean;
 import ceuilisa.mirai.utils.DensityUtil;
@@ -23,7 +23,7 @@ public class FragmentEvents extends BaseListFragment<EventResponse, EventAdapter
     @Override
     Observable<EventResponse> initApi() {
         int userID = (int) getArguments().getSerializable("user id");
-        return RetrofitUtil.getNodeApi().getUserEvents(userID, PAGE_SIZE, allItems.size());
+        return Retro.getNodeApi().getUserEvents(userID, PAGE_SIZE, allItems.size());
     }
 
     @Override

@@ -21,7 +21,7 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListSimpleAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.ObjListen;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.nodejs.PlayListResponse;
 import ceuilisa.mirai.nodejs.PlaylistBean;
@@ -76,7 +76,8 @@ public class AddChartDialog extends DialogFragment {
 
     void getPlaylist() {
         user = Local.getUser();
-        RetrofitUtil.getNodeApi().getMyPlayList(user.getProfile().getUserId(), PAGE_SIZE, allItems.size())
+        Retro.getNodeApi().getMyPlayList(user.getProfile().getUserId(),
+                PAGE_SIZE, allItems.size(), System.currentTimeMillis())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<PlayListResponse>() {
@@ -128,7 +129,7 @@ public class AddChartDialog extends DialogFragment {
 
 
     private void addSongToPlaylist(long pid, long trackID) {
-        RetrofitUtil.getNodeApi().addChart(pid, trackID)
+        Retro.getNodeApi().addChart(pid, trackID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ObjListen<BaseResponse>() {

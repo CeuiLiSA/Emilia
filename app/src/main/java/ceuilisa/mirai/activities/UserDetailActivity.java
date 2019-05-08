@@ -22,7 +22,7 @@ import ceuilisa.mirai.fragments.FragmentAboutUser;
 import ceuilisa.mirai.fragments.FragmentEvents;
 import ceuilisa.mirai.fragments.FragmentUserPlayList;
 import ceuilisa.mirai.network.Operate;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.UserDetailResponse;
 import ceuilisa.mirai.utils.AppBarStateChangeListener;
 import ceuilisa.mirai.utils.Common;
@@ -130,7 +130,7 @@ public class UserDetailActivity extends WithPanelActivity {
     }
 
     private void getUserDetail() {
-        RetrofitUtil.getNodeApi().getUserDetail(userID)
+        Retro.getNodeApi().getUserDetail(userID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UserDetailResponse>() {

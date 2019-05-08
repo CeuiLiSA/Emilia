@@ -17,7 +17,7 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.LoginActivity;
 import ceuilisa.mirai.activities.MainActivity;
 import ceuilisa.mirai.interf.OnPrepared;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.response.BaseResponse;
 import ceuilisa.mirai.utils.Common;
@@ -98,7 +98,7 @@ public class FragmentSign extends BaseFragment {
 
 
     private void getSignNumber() {
-        RetrofitUtil.getNodeApi().getSignNumber(phoneNumber.getText().toString())
+        Retro.getNodeApi().getSignNumber(phoneNumber.getText().toString())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseResponse>() {
@@ -135,7 +135,7 @@ public class FragmentSign extends BaseFragment {
 
 
     private void nowSign() {
-        RetrofitUtil.getNodeApi().signNetEasy(phoneNumber.getText().toString(),
+        Retro.getNodeApi().signNetEasy(phoneNumber.getText().toString(),
                 password.getText().toString(),
                 signNumber.getText().toString(),
                 userName.getText().toString())
@@ -194,7 +194,7 @@ public class FragmentSign extends BaseFragment {
 
 //    private void sign(){
 //        mProgressBar.setVisibility(View.VISIBLE);
-//        RetrofitUtil.getTempApi().sign(userName.getText().toString().trim(),
+//        Retro.getTempApi().sign(userName.getText().toString().trim(),
 //                password.getText().toString().trim())
 //                .subscribeOn(Schedulers.newThread())
 //                .observeOn(AndroidSchedulers.mainThread())

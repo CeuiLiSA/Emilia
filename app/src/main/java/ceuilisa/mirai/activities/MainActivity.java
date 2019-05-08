@@ -160,7 +160,9 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
             intent.putExtra("dataType", "听歌记录");
             mContext.startActivity(intent);
         } else if (id == R.id.nav_gallery) {
-
+            Intent intent = new Intent(mContext, ViewPagerActivity.class);
+            intent.putExtra("dataType", "陈列室");
+            mContext.startActivity(intent);
         } else if (id == R.id.nav_slideshow) {
             Intent intent = new Intent(mContext, ViewPagerActivity.class);
             intent.putExtra("dataType", "推荐mv");

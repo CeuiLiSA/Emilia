@@ -22,7 +22,7 @@ public class Operate {
      * @param isLike
      */
     public static void likeSong(long id, boolean isLike) {
-        RetrofitUtil.getNodeApi().likeSong(id, isLike)
+        Retro.getNodeApi().likeSong(id, isLike)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Listen<LikeSongResponse>() {
@@ -52,7 +52,7 @@ public class Operate {
      * @param isLike
      */
     public static void starPlaylist(long id, boolean isLike) {
-        RetrofitUtil.getNodeApi().starPlaylist(isLike ? "1" : "2", id)
+        Retro.getNodeApi().starPlaylist(isLike ? "1" : "2", id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseResponse>() {
@@ -94,7 +94,7 @@ public class Operate {
      * @param isLike
      */
     public static void starUser(long id, boolean isLike) {
-        RetrofitUtil.getNodeApi().starUser(isLike ? "1" : "2", id)
+        Retro.getNodeApi().starUser(isLike ? "1" : "2", id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseResponse>() {
@@ -142,7 +142,7 @@ public class Operate {
      * @param id
      */
     public static void scrobble(long id, long sourceID) {
-        RetrofitUtil.getNodeApi().scrobble(id, sourceID)
+        Retro.getNodeApi().scrobble(id, sourceID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseResponse>() {

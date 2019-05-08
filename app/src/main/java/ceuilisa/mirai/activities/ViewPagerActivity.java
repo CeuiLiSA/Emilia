@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.fragments.BaseFragment;
+import ceuilisa.mirai.fragments.FragmentFavorAlbum;
+import ceuilisa.mirai.fragments.FragmentFavorArtist;
 import ceuilisa.mirai.fragments.FragmentFollow;
 import ceuilisa.mirai.fragments.FragmentFollowers;
 import ceuilisa.mirai.fragments.FragmentMvRank;
@@ -161,6 +163,29 @@ public class ViewPagerActivity extends WithPanelActivity {
             });
             int currentPage = getIntent().getIntExtra("currentPage", 0);
             mViewPager.setCurrentItem(currentPage);
+        }else if (dataType.equals("陈列室")) {
+            data = Constant.FOLLOW_FAVOR;
+            mToolbar.setTitle("我的收藏");
+            mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+                @Override
+                public Fragment getItem(int i) {
+                    if (i == 0) {
+                        return new FragmentFavorArtist();
+                    } else {
+                        return new FragmentFavorAlbum();
+                    }
+                }
+
+                @Override
+                public int getCount() {
+                    return data.length;
+                }
+
+                @Override
+                public CharSequence getPageTitle(int position) {
+                    return data[position];
+                }
+            });
         }
 
     }

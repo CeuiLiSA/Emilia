@@ -3,6 +3,8 @@ package ceuilisa.mirai.network;
 import ceuilisa.mirai.nodejs.ArtistAlbumResponse;
 import ceuilisa.mirai.nodejs.DayRecommend;
 import ceuilisa.mirai.nodejs.EventResponse;
+import ceuilisa.mirai.nodejs.FavorAlbumResponse;
+import ceuilisa.mirai.nodejs.FavorArtistResponse;
 import ceuilisa.mirai.nodejs.FollowResponse;
 import ceuilisa.mirai.nodejs.FollowerResponse;
 import ceuilisa.mirai.nodejs.LoginResponse;
@@ -45,7 +47,8 @@ public interface NodeApi {
     @GET("/user/playlist")
     Observable<PlayListResponse> getMyPlayList(@Query("uid") int uid,
                                                @Query("limit") int limit,
-                                               @Query("offset") int offset);
+                                               @Query("offset") int offset,
+                                               @Query("timestamp") long timestamp);
 
     @GET("/user/detail")
     Observable<UserDetailResponse> getUserDetail(@Query("uid") int uid);
@@ -144,7 +147,8 @@ public interface NodeApi {
 
 
     @GET("/playlist/detail")
-    Observable<PlayListDetailResponse> getPlayListDetail(@Query("id") long id);
+    Observable<PlayListDetailResponse> getPlayListDetail(@Query("id") long id,
+                                                         @Query("timestamp") long timestamp);
 
 
     @GET("/playlist/create")
@@ -317,4 +321,18 @@ public interface NodeApi {
 
     @GET("/song/detail")
     Observable<SongDetailResponse> getSongDetail(@Query("ids") String ids);
+
+
+    @GET("/artist/sublist")
+    Observable<FavorArtistResponse> getFavorArtist(@Query("limit") int limit,
+                                                   @Query("offset") int offset,
+                                                   @Query("timestamp") long timestamp);
+
+
+    @GET("/album/sublist")
+    Observable<FavorAlbumResponse> getFavorAlbum(@Query("limit") int limit,
+                                                 @Query("offset") int offset,
+                                                 @Query("timestamp") long timestamp);
+
+
 }

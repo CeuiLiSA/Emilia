@@ -14,7 +14,7 @@ import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.CommentListAdapter;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.response.CommentResponse;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Constant;
@@ -63,7 +63,7 @@ public class CommentActivity extends BaseActivity {
     private void fetchComment() {
         allComment.clear();
         nowIndex = 0;
-        RetrofitUtil.getNodeApi().getComments(id, Constant.LIMIT, nowIndex)
+        Retro.getNodeApi().getComments(id, Constant.LIMIT, nowIndex)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<CommentResponse>() {
@@ -95,7 +95,7 @@ public class CommentActivity extends BaseActivity {
     }
 
     private void getNextData() {
-        RetrofitUtil.getNodeApi().getComments(id, Constant.LIMIT, nowIndex)
+        Retro.getNodeApi().getComments(id, Constant.LIMIT, nowIndex)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<CommentResponse>() {

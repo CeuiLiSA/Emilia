@@ -17,7 +17,7 @@ import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListAdapter;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.PlaylistBean;
 import ceuilisa.mirai.response.PlayListTitleResponse;
 import ceuilisa.mirai.utils.Common;
@@ -89,7 +89,7 @@ public class PlayListActivity extends WithPanelActivity {
         nowIndex = 0;
         mImageView.setVisibility(View.INVISIBLE);
         loadProgress.setVisibility(View.VISIBLE);
-        RetrofitUtil.getImjadApi().searchPlaylist(playlistName, Constant.LIMIT, nowIndex)
+        Retro.getImjadApi().searchPlaylist(playlistName, Constant.LIMIT, nowIndex)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<PlayListTitleResponse>() {
@@ -138,7 +138,7 @@ public class PlayListActivity extends WithPanelActivity {
     }
 
     private void getNextData(String playlistName) {
-        RetrofitUtil.getImjadApi().searchPlaylist(playlistName, Constant.LIMIT, nowIndex)
+        Retro.getImjadApi().searchPlaylist(playlistName, Constant.LIMIT, nowIndex)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<PlayListTitleResponse>() {
@@ -172,7 +172,7 @@ public class PlayListActivity extends WithPanelActivity {
 
 //    private void getMyPlaylist() {
 //        UserBean userBean = Local.getUser();
-//        RetrofitUtil.getTempApi().getMyPlaylist(userBean.getUserID())
+//        Retro.getTempApi().getMyPlaylist(userBean.getUserID())
 //                .subscribeOn(Schedulers.newThread())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(new Observer<PlayListTitleResponse>() {

@@ -14,11 +14,12 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitUtil {
+public class Retro {
 
     private static final String IMJAD_BASE_URL = "https://api.imjad.cn/";
     private static final String TENKOA_BASE_URL = "https://v1.hitokoto.cn/";
-    private static final String BASE_URL_2 = "http://192.168.0.112:3000/";
+    //private static final String BASE_URL_2 = "http://192.168.0.112:3000/";
+    private static final String BASE_URL_2 = "http://111.231.101.63:3000/";
     //private static final String BASE_URL_2 = "http://192.168.0.101:3000/";
     private static final String BASE_URL_3 = "http://65.49.235.124/";
     private static Retrofit nodeApi = null;
@@ -36,23 +37,6 @@ public class RetrofitUtil {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(IMJAD_BASE_URL)
-                .build();
-        return retrofit.create(AppApi.class);
-    }
-
-    public static AppApi getTenkoaApi() {
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(
-                message -> Log.i("RetrofitLog", "retrofitBack = " + message));
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient okHttpClient = new OkHttpClient
-                .Builder()
-                .addInterceptor(loggingInterceptor)
-                .build();
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(TENKOA_BASE_URL)
                 .build();
         return retrofit.create(AppApi.class);
     }

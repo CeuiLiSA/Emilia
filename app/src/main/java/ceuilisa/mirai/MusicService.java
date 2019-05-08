@@ -13,8 +13,9 @@ import ceuilisa.mirai.interf.MusicOperate;
 import ceuilisa.mirai.interf.OnPlayComplete;
 import ceuilisa.mirai.interf.OnPrepare;
 import ceuilisa.mirai.network.MusicChannel;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.response.SingleSongResponse;
+import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Local;
 import io.reactivex.Observer;
@@ -28,6 +29,7 @@ public class MusicService extends Service implements MusicOperate {
     private MediaPlayer mPlayer;
     private SingleSongResponse mSingleSong;
     private int nowPlayIndex = -1;
+    private TracksBean currentTrack;
     private boolean isPlaying = false;
     private OnPlayComplete mOnPlayComplete;
     private static volatile MusicService instance = null;
@@ -40,11 +42,11 @@ public class MusicService extends Service implements MusicOperate {
             if (mOnPlayComplete != null) {
                 if (nowPlayIndex != mChannel.getMusicList().size() - 1) {
                     int loopMode = Local.getLoopMode();
-                    if(loopMode == 0){
+                    if (loopMode == 0) {
                         mOnPlayComplete.playNextSong();
-                    }else if(loopMode == 1){
+                    } else if (loopMode == 1) {
                         mOnPlayComplete.singleLoop();
-                    }else if(loopMode == 2){
+                    } else if (loopMode == 2) {
                         mOnPlayComplete.shuffle();
                     }
 
@@ -89,84 +91,107 @@ public class MusicService extends Service implements MusicOperate {
 
     @Override
     public void playMusic(int index, OnPrepare onPrepare) {
-        if(index == nowPlayIndex){
-            if(mSingleSong != null){
-                if(mSingleSong.getData().get(0).getId() == mChannel.getMusicList().get(nowPlayIndex).getId()){
-                    return;
+        if(mChannel.getMusicList().size() == 0){
+            return;
+        }
+        if (nowPlayIndex == -1){ //初始化状态，nowPlay = -1, 则直接播放进来index的歌曲
+            playPlay(index, onPrepare);
+        } else {
+            if(index == nowPlayIndex){//如果进来的index 和nowplayIndex 相同， 则检查歌曲ID
+                if(true){
+                    if(currentTrack != null) {
+                        if(currentTrack.getId() == mChannel.getMusicList().get(index).getId()){
+                            return;
+                        }else {
+                            playPlay(index, onPrepare);
+                        }
+                    }
+                } else {
+                    playPlay(index, onPrepare);
                 }
             }else {
-                    return;
-                }
-            }else {
-                nowPlayIndex = index;
-                mPlayer.stop();
-
-
-                if (!TextUtils.isEmpty(mChannel.getMusicList().get(index).getLocalPath())) {
-                    try {
-                        mPlayer.setDataSource(mChannel.getMusicList().get(index).getLocalPath());
-                        mPlayer.prepareAsync();
-                        mPlayer.setOnPreparedListener(mp -> {
-                            Common.showLog("MusicService setOnPreparedListener");
-                            Common.showToast("播放本地音乐");
-                            isPlaying = true;
-                            if (onPrepare != null) {
-                                onPrepare.updateUI();
-                            }
-                            mp.start();
-                        });
-                    } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                RetrofitUtil.getNodeApi().getSongUrl(mChannel.getMusicList().get(nowPlayIndex).getId())
-                        .subscribeOn(Schedulers.newThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<SingleSongResponse>() {
-                            @Override
-                            public void onSubscribe(Disposable d) {
-                            }
-
-                            @Override
-                            public void onNext(SingleSongResponse playListTitleResponse) {
-                                try {
-                                    mSingleSong = playListTitleResponse;
-                                    mPlayer.reset();
-                                    if (mSingleSong.getData() != null &&
-                                            mSingleSong.getData().get(0).getUrl() != null) {
-                                        mPlayer.setDataSource(mSingleSong.getData().get(0).getUrl());
-                                        Common.showLog("MusicService " + mSingleSong.getData().get(0).getUrl());
-                                        mPlayer.prepareAsync();
-                                        mPlayer.setOnPreparedListener(mp -> {
-                                            Common.showLog("MusicService setOnPreparedListener");
-                                            isPlaying = true;
-                                            if (onPrepare != null) {
-                                                onPrepare.updateUI();
-                                            }
-                                            mp.start();
-                                        });
-                                    } else {
-                                        isPlaying = false;
-                                        Common.showToast(mContext, "歌曲链接不存在");
-                                    }
-                                } catch (IOException e) {
-                                    isPlaying = false;
-                                    e.printStackTrace();
-                                    Common.showToast(e.toString());
-                                }
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                e.printStackTrace();
-                                Common.showLog("MusicService onError");
-                            }
-
-                            @Override
-                            public void onComplete() {
-                            }
-                        });
+                playPlay(index, onPrepare);
             }
+        }
+    }
+
+    private void playPlay(int index, OnPrepare onPrepare){
+        nowPlayIndex = index;
+        mPlayer.stop();
+
+        //先检查本地有没有这首歌
+        if (!TextUtils.isEmpty(mChannel.getMusicList().get(nowPlayIndex).getLocalPath())) {
+            try {
+                mPlayer.reset();
+                Common.showLog("playPlay " + mChannel.getMusicList().get(nowPlayIndex).getLocalPath());
+                mPlayer.setDataSource(mChannel.getMusicList().get(nowPlayIndex).getLocalPath());
+                mPlayer.prepareAsync();
+                isPlaying = true;
+                mPlayer.setOnPreparedListener(mp -> {
+                    Common.showLog("MusicService setOnPreparedListener");
+                    Common.showToast("播放本地音乐");
+                    if (onPrepare != null) {
+                        onPrepare.updateUI();
+                    }
+                    mp.start();
+                    currentTrack = mChannel.getMusicList().get(nowPlayIndex);
+                });
+            } catch (IOException e) {
+                Common.showToast(e.toString());
+                e.printStackTrace();
+            }
+        } else {
+            isPlaying = true;
+            Retro.getNodeApi().getSongUrl(mChannel.getMusicList().get(nowPlayIndex).getId())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<SingleSongResponse>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+                        }
+
+                        @Override
+                        public void onNext(SingleSongResponse playListTitleResponse) {
+                            try {
+                                mSingleSong = playListTitleResponse;
+                                mPlayer.reset();
+                                if (mSingleSong.getData() != null &&
+                                        mSingleSong.getData().get(0).getUrl() != null) {
+                                    mPlayer.setDataSource(mSingleSong.getData().get(0).getUrl());
+                                    Common.showLog("MusicService " + mSingleSong.getData().get(0).getUrl());
+                                    mPlayer.prepareAsync();
+
+                                    mPlayer.setOnPreparedListener(mp -> {
+                                        Common.showLog("MusicService setOnPreparedListener");
+
+                                        if (onPrepare != null) {
+                                            onPrepare.updateUI();
+                                        }
+                                        mp.start();
+
+                                    });
+                                } else {
+                                    isPlaying = false;
+                                    Common.showToast(mContext, "歌曲链接不存在");
+                                }
+                                currentTrack = mChannel.getMusicList().get(nowPlayIndex);
+                            } catch (IOException e) {
+                                isPlaying = false;
+                                e.printStackTrace();
+                                Common.showToast(e.toString());
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            e.printStackTrace();
+                            Common.showLog("MusicService onError");
+                        }
+
+                        @Override
+                        public void onComplete() {
+                        }
+                    });
         }
     }
 
@@ -221,31 +246,31 @@ public class MusicService extends Service implements MusicOperate {
     }
 
 
-    public void nextSongPlay(OnPrepare onPrepare){
-        if(nowPlayIndex == mChannel.getMusicList().size() - 1){
+    public void nextSongPlay(OnPrepare onPrepare) {
+        if (nowPlayIndex == mChannel.getMusicList().size() - 1) {
             Common.showToast("这已经是最后一首歌啦");
-        }else {
+        } else {
             nowPlayIndex = nowPlayIndex + 1;
             playMusic(nowPlayIndex, onPrepare);
         }
     }
 
-    public void lastSongPlay(OnPrepare onPrepare){
-        if(nowPlayIndex == 0){
+    public void lastSongPlay(OnPrepare onPrepare) {
+        if (nowPlayIndex == 0) {
             Common.showToast("这已经是第一首歌啦");
-        }else {
+        } else {
             nowPlayIndex = nowPlayIndex - 1;
             playMusic(nowPlayIndex, onPrepare);
         }
     }
 
 
-    public void shufflePlay(OnPrepare onPrepare){
+    public void shufflePlay(OnPrepare onPrepare) {
         nowPlayIndex = Common.getShuffleIndex();
         playMusic(nowPlayIndex, onPrepare);
     }
 
-    public void singleLoopPlay(OnPrepare onPrepare){
+    public void singleLoopPlay(OnPrepare onPrepare) {
         playMusic(nowPlayIndex, onPrepare);
     }
 }

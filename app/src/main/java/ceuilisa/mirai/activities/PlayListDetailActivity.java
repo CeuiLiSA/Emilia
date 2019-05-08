@@ -27,7 +27,7 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.dialogs.LikeSongDialog;
 import ceuilisa.mirai.network.Operate;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.response.AlbumResponse;
 import ceuilisa.mirai.response.PlayListDetailResponse;
 import ceuilisa.mirai.response.TracksBean;
@@ -176,7 +176,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
     }
 
     private void getPlaylist() {
-        RetrofitUtil.getNodeApi().getPlayListDetail(id)
+        Retro.getNodeApi().getPlayListDetail(id, System.currentTimeMillis())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<PlayListDetailResponse>() {
@@ -286,7 +286,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
     }
 
     private void getAlbum() {
-        RetrofitUtil.getImjadApi().getAlbum(id)
+        Retro.getImjadApi().getAlbum(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<AlbumResponse>() {
@@ -339,7 +339,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
 
 //    private void getMyFavor(){
 //        UserBean userBean = Local.getUser();
-//        RetrofitUtil.getTempApi().getMyFavor(userBean.getUserID())
+//        Retro.getTempApi().getMyFavor(userBean.getUserID())
 //                .subscribeOn(Schedulers.newThread())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(new Observer<PlayListDetailResponse>() {

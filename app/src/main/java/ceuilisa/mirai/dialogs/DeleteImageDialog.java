@@ -38,7 +38,7 @@ public class DeleteImageDialog extends DialogFragment {
 
 //    public void deleteNow(){
 //        mAlertDialog.dismiss();
-//        RetrofitUtil.getTempApi().deleteImage(name)
+//        Retro.getTempApi().deleteImage(name)
 //                .subscribeOn(Schedulers.newThread())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(new Observer<DeleteImageResponse>() {

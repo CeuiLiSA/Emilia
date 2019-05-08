@@ -1,5 +1,8 @@
 package ceuilisa.mirai.response;
 
+import android.text.TextUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import ceuilisa.mirai.nodejs.AlbumBean;
@@ -56,6 +59,16 @@ public class TracksBean {
     private String cf;
     private AlbumBean al, album;
     private int dt;
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    private int duration;
     private Object a;
     private String cd;
     private int no;
@@ -72,7 +85,16 @@ public class TracksBean {
     private int mv;
     private long publishTime;
     private List<ArtistBean> ar, artists;
-    private List<String> alia;
+    private List<String> alia, alias;
+
+    public List<String> getAlias() {
+        return alias;
+    }
+
+    public void setAlias(List<String> alias) {
+        this.alias = alias;
+    }
+
     private List<?> rtUrls;
     private H h;
     private String fileName;
@@ -248,7 +270,13 @@ public class TracksBean {
     }
 
     public int getDt() {
-        return dt;
+        if(dt != 0) {
+            return dt;
+        }
+        if(duration != 0){
+            return duration;
+        }
+        return 0;
     }
 
     public void setDt(int dt) {
@@ -392,7 +420,13 @@ public class TracksBean {
     private String artistName;
 
     public List<String> getAlia() {
-        return alia;
+        if(alia != null && alia.size() != 0){
+            return alia;
+        }
+        if(alias != null && alias.size() != 0){
+            return alias;
+        }
+        return null;
     }
 
     public void setAlia(List<String> alia) {

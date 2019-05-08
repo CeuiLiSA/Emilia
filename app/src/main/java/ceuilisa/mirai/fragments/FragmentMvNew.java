@@ -6,7 +6,7 @@ import android.view.View;
 import ceuilisa.mirai.activities.VideoPlayActivity;
 import ceuilisa.mirai.adapters.MvListAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.MvBean;
 import ceuilisa.mirai.nodejs.MvListResponse;
 import io.reactivex.Observable;
@@ -18,7 +18,7 @@ public class FragmentMvNew extends BaseListFragment<MvListResponse, MvListAdapte
 
     @Override
     Observable<MvListResponse> initApi() {
-        return RetrofitUtil.getNodeApi().getMvFirst(PAGE_SIZE, allItems.size());
+        return Retro.getNodeApi().getMvFirst(PAGE_SIZE, allItems.size());
     }
 
     @Override

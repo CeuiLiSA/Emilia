@@ -18,7 +18,6 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.network.RetrofitUtil;
 import ceuilisa.mirai.nodejs.SongDetailResponse;
 import ceuilisa.mirai.response.LocalMusic;
 import ceuilisa.mirai.response.TracksBean;
@@ -35,7 +34,6 @@ public class FragmentLocalMusic extends BaseFragment {
 
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
-    private Loader<Cursor> loader;
 
     @Override
     void initLayout() {

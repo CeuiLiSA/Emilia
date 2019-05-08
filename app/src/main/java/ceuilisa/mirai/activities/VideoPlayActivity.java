@@ -19,7 +19,7 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.fragments.FragmentMvDetail;
 import ceuilisa.mirai.fragments.FragmentRelatedMv;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.MvPlayUrlResponse;
 import ceuilisa.mirai.utils.Common;
 import io.reactivex.Observer;
@@ -116,7 +116,7 @@ public class VideoPlayActivity extends BaseActivity {
     }
 
     private void getMvUrl(int id) {
-        RetrofitUtil.getNodeApi().getMvPlayUrl(id)
+        Retro.getNodeApi().getMvPlayUrl(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<MvPlayUrlResponse>() {

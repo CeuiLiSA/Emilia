@@ -6,11 +6,14 @@ import android.support.v4.app.ActivityOptionsCompat;
 
 import ceuilisa.mirai.activities.PlayListDetailActivity;
 import ceuilisa.mirai.adapters.PlayListAdapter;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.PlayListResponse;
 import ceuilisa.mirai.nodejs.PlaylistBean;
 import io.reactivex.Observable;
 
+/**
+ * 获取某个用户的歌单列表
+ */
 public class FragmentUserPlayList extends BaseListFragment<PlayListResponse, PlayListAdapter, PlaylistBean> {
 
     public static FragmentUserPlayList newInstance(int userID) {
@@ -24,7 +27,7 @@ public class FragmentUserPlayList extends BaseListFragment<PlayListResponse, Pla
     @Override
     Observable<PlayListResponse> initApi() {
         int userID = (int) getArguments().getSerializable("user id");
-        return RetrofitUtil.getNodeApi().getMyPlayList(userID, PAGE_SIZE, allItems.size());
+        return Retro.getNodeApi().getMyPlayList(userID, PAGE_SIZE, allItems.size(), System.currentTimeMillis());
     }
 
     @Override

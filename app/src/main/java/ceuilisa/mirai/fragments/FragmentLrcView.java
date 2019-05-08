@@ -9,9 +9,10 @@ import java.util.Objects;
 import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.MusicActivity;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.response.LrcResponse;
 import ceuilisa.mirai.utils.Common;
+import ceuilisa.mirai.utils.LyricsHandler;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -62,7 +63,7 @@ public class FragmentLrcView extends BaseFragment{
             if (mChannel != null && mChannel.getMusicList().size() != 0) {
                 index = ((MusicActivity) Objects.requireNonNull(getActivity())).index;
                 mTracksBean = mChannel.getMusicList().get(index);
-                RetrofitUtil.getImjadApi().getLrc(String.valueOf(mTracksBean.getId()))
+                Retro.getImjadApi().getLrc(String.valueOf(mTracksBean.getId()))
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<LrcResponse>() {
@@ -83,8 +84,12 @@ public class FragmentLrcView extends BaseFragment{
                                         mLrcView.loadLrc(playListTitleResponse.getLrc().getLyric());
                                     } else if (playListTitleResponse.getLrc().getLyric() != null &&
                                             playListTitleResponse.getTlyric().getLyric() != null) {
-                                        mLrcView.loadLrc(playListTitleResponse.getLrc().getLyric() +
-                                                playListTitleResponse.getTlyric().getLyric());
+                                        String mergeLyric = LyricsHandler.getInstance()
+                                                .process(
+                                                        playListTitleResponse.getLrc().getLyric() +
+                                                                playListTitleResponse.getTlyric().getLyric()
+                                                ).toString();
+                                        mLrcView.loadLrc(mergeLyric);
                                     } else {
                                     }
                                 }

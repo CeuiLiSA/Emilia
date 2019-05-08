@@ -16,7 +16,7 @@ import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.LoginActivity;
 import ceuilisa.mirai.activities.MainActivity;
 import ceuilisa.mirai.interf.OnPrepared;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Local;
@@ -75,7 +75,7 @@ public class FragmentLogin extends BaseFragment {
 
     private void login() {
         mProgressBar.setVisibility(View.VISIBLE);
-        RetrofitUtil.getNodeApi().loginByPhone(userName.getText().toString().trim(),
+        Retro.getNodeApi().loginByPhone(userName.getText().toString().trim(),
                 password.getText().toString().trim())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

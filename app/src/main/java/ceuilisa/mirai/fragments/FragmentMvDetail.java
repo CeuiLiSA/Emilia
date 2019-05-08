@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import ceuilisa.mirai.R;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.MvBean;
 import ceuilisa.mirai.response.MvDetail;
 import ceuilisa.mirai.utils.Common;
@@ -53,7 +53,7 @@ public class FragmentMvDetail extends BaseFragment {
     }
 
     private void getMvDetail() {
-        RetrofitUtil.getNodeApi().getMvDetail(mvID)
+        Retro.getNodeApi().getMvDetail(mvID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<MvDetail>() {

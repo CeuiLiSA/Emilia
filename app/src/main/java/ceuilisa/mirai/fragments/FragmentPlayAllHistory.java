@@ -6,7 +6,7 @@ import android.view.View;
 import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.adapters.PlayAllHistoryAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.response.HistorySongBean;
 import ceuilisa.mirai.response.PlayAllHistoryResponse;
@@ -19,7 +19,7 @@ public class FragmentPlayAllHistory extends BaseListFragment<PlayAllHistoryRespo
     @Override
     Observable<PlayAllHistoryResponse> initApi() {
         LoginResponse user = Local.getUser();
-        return RetrofitUtil.getImjadApi().getAllPlayHistory(user.getProfile().getUserId(), 0);
+        return Retro.getImjadApi().getAllPlayHistory(user.getProfile().getUserId(), 0);
     }
 
     @Override

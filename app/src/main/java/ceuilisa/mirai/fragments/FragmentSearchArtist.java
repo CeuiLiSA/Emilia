@@ -6,7 +6,7 @@ import android.view.View;
 import ceuilisa.mirai.activities.ArtistActivity;
 import ceuilisa.mirai.adapters.ArtistAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.ArtistBean;
 import ceuilisa.mirai.response.SearchArtistResponse;
 import io.reactivex.Observable;
@@ -28,7 +28,7 @@ public class FragmentSearchArtist extends BaseListFragment<SearchArtistResponse,
 
     @Override
     Observable<SearchArtistResponse> initApi() {
-        return RetrofitUtil.getNodeApi().searchArtist(keyword, PAGE_SIZE, allItems.size());
+        return Retro.getNodeApi().searchArtist(keyword, PAGE_SIZE, allItems.size());
     }
 
     @Override

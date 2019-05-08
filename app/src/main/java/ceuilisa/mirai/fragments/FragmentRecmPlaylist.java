@@ -5,7 +5,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 
 import ceuilisa.mirai.activities.PlayListDetailActivity;
 import ceuilisa.mirai.adapters.RecmPlayListAdapter;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.nodejs.RecmPlayListResponse;
 import ceuilisa.mirai.nodejs.RecommendPlaylistBean;
@@ -20,7 +20,7 @@ public class FragmentRecmPlaylist extends BaseListFragment<RecmPlayListResponse,
     @Override
     Observable<RecmPlayListResponse> initApi() {
         LoginResponse user = Local.getUser();
-        return RetrofitUtil.getNodeApi().getRecmPlayList(user.getProfile().getUserId(), PAGE_SIZE, allItems.size());
+        return Retro.getNodeApi().getRecmPlayList(user.getProfile().getUserId(), PAGE_SIZE, allItems.size());
     }
 
     @Override

@@ -20,7 +20,7 @@ import com.liulishuo.okdownload.core.listener.assist.Listener1Assist;
 import java.io.File;
 
 import ceuilisa.mirai.R;
-import ceuilisa.mirai.network.RetrofitUtil;
+import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.response.SingleSongResponse;
 import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.utils.Common;
@@ -70,7 +70,8 @@ public class DownloadDialog extends DialogFragment {
             mAlertDialog.dismiss();
             Common.showToast(getContext(), "该文件已存在");
         } else {
-            RetrofitUtil.getImjadApi().getSingleSong(mTracksBean.getId())
+            mProgressBar.setVisibility(View.VISIBLE);
+            Retro.getImjadApi().getSingleSong(mTracksBean.getId())
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<SingleSongResponse>() {
@@ -128,13 +129,14 @@ public class DownloadDialog extends DialogFragment {
                             } else {
                                 Common.showToast("请检查网络连接");
                             }
+                            mProgressBar.setVisibility(View.GONE);
                         }
 
                         @Override
                         public void onError(Throwable e) {
                             e.printStackTrace();
                             Common.showToast(e.toString());
-                            mProgressBar.setVisibility(View.INVISIBLE);
+                            mProgressBar.setVisibility(View.GONE);
                         }
 
                         @Override
