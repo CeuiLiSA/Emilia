@@ -4,7 +4,7 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 
-import ceuilisa.mirai.activities.GlobalApp;
+import ceuilisa.mirai.activities.Emilia;
 import ceuilisa.mirai.interf.OnPrepared;
 import ceuilisa.mirai.nodejs.LoginResponse;
 
@@ -22,7 +22,7 @@ public class Local {
 
     public static void saveUser(LoginResponse userBean, OnPrepared<Object> onPrepared) {
         if (sp == null) {
-            sp = GlobalApp.getContext().getSharedPreferences("config", MODE_PRIVATE);
+            sp = Emilia.getContext().getSharedPreferences("config", MODE_PRIVATE);
         }
         SharedPreferences.Editor editor = sp.edit();
         Gson gson = new Gson();
@@ -36,7 +36,7 @@ public class Local {
 
     public static LoginResponse getUser() {
         if (sp == null) {
-            sp = GlobalApp.getContext().getSharedPreferences("config", MODE_PRIVATE);
+            sp = Emilia.getContext().getSharedPreferences("config", MODE_PRIVATE);
         }
         Gson gson = new Gson();
         String json = sp.getString(USER, null);
@@ -52,7 +52,7 @@ public class Local {
 
     public static void clearLocal(OnPrepared<Object> onPrepared) {
         if (sp == null) {
-            sp = GlobalApp.getContext().getSharedPreferences("config", MODE_PRIVATE);
+            sp = Emilia.getContext().getSharedPreferences("config", MODE_PRIVATE);
         }
         SharedPreferences.Editor editor = sp.edit();
         editor.clear();
@@ -68,7 +68,7 @@ public class Local {
      */
     public static int getLoopMode(){
         if (sp == null) {
-            sp = GlobalApp.getContext().getSharedPreferences("config", MODE_PRIVATE);
+            sp = Emilia.getContext().getSharedPreferences("config", MODE_PRIVATE);
         }
         return sp.getInt("loop_mode", 0);
     }
@@ -81,7 +81,7 @@ public class Local {
      */
     public static void setLoopMode(int mode){
         if (sp == null) {
-            sp = GlobalApp.getContext().getSharedPreferences("config", MODE_PRIVATE);
+            sp = Emilia.getContext().getSharedPreferences("config", MODE_PRIVATE);
         }
         SharedPreferences.Editor editor = sp.edit();
         editor.putInt("loop_mode", mode);

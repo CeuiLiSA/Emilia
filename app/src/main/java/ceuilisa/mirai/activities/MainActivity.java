@@ -109,12 +109,6 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
         startService(intent);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Intent intent = new Intent(this, MusicService.class);
-        stopService(intent);
-    }
 
     private void initFragments() {
         mBaseFragments = new BaseFragment[]{new FragmentLeft(), new FragmentMvNew()};

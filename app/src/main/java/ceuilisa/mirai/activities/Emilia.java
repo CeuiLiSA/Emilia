@@ -9,7 +9,7 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 import ceuilisa.mirai.R;
 
-public class GlobalApp extends Application {
+public class Emilia extends Application {
 
     private static Context sContext;
 

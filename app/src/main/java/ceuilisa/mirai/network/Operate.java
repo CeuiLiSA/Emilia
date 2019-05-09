@@ -2,12 +2,15 @@ package ceuilisa.mirai.network;
 
 import org.greenrobot.eventbus.EventBus;
 
+import ceuilisa.mirai.activities.Emilia;
 import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.response.BaseResponse;
 import ceuilisa.mirai.response.LikeSongResponse;
+import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.utils.Channel;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Local;
+import ceuilisa.mirai.utils.ShareOnlineMusic;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -214,5 +217,24 @@ public class Operate {
 
                     }
                 });
+    }
+
+    public static void share(TracksBean tracksBean) {
+        new ShareOnlineMusic(Emilia.getContext(), tracksBean.getName(), tracksBean.getId()) {
+            @Override
+            public void onPrepare() {
+
+            }
+
+            @Override
+            public void onExecuteSuccess(Void aVoid) {
+
+            }
+
+            @Override
+            public void onExecuteFail(Exception e) {
+
+            }
+        }.execute();
     }
 }

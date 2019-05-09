@@ -84,13 +84,15 @@ public class FragmentLrcView extends BaseFragment{
                                         mLrcView.loadLrc(playListTitleResponse.getLrc().getLyric());
                                     } else if (playListTitleResponse.getLrc().getLyric() != null &&
                                             playListTitleResponse.getTlyric().getLyric() != null) {
-                                        String mergeLyric = LyricsHandler.getInstance()
-                                                .process(
-                                                        playListTitleResponse.getLrc().getLyric() +
-                                                                playListTitleResponse.getTlyric().getLyric()
-                                                ).toString();
-                                        Common.showLog("mergeLyric " + mergeLyric);
-                                        mLrcView.loadLrc(mergeLyric);
+//                                        String mergeLyric = LyricsHandler.getInstance()
+//                                                .process(
+//                                                        playListTitleResponse.getLrc().getLyric() +
+//                                                                playListTitleResponse.getTlyric().getLyric()
+//                                                ).toString();
+//                                        Common.showLog("mergeLyric " + mergeLyric);
+//                                        mLrcView.loadLrc(mergeLyric);
+                                        mLrcView.loadLrc(playListTitleResponse.getLrc().getLyric() +
+                                                playListTitleResponse.getTlyric().getLyric());
                                     } else {
                                     }
                                 }

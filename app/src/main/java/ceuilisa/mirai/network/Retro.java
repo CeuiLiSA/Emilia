@@ -7,7 +7,7 @@ import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 
-import ceuilisa.mirai.activities.GlobalApp;
+import ceuilisa.mirai.activities.Emilia;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -58,7 +58,7 @@ public class Retro {
             });
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             ClearableCookieJar cookieJar =
-                    new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(GlobalApp.getContext()));
+                    new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(Emilia.getContext()));
             OkHttpClient okHttpClient = new OkHttpClient
                     .Builder()
                     .addInterceptor(loggingInterceptor)

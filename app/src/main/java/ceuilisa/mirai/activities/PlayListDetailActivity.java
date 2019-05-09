@@ -162,37 +162,55 @@ public class PlayListDetailActivity extends WithPanelActivity {
                     public void onNext(PlayListDetailResponse playListTitleResponse) {
                         if (playListTitleResponse != null &&
                                 playListTitleResponse.getPlaylist() != null) {
-
+                            if (playListTitleResponse.isMyPlaylist()) {
+                                markPlaylist.setVisibility(View.GONE);
+                            }else {
+                                markPlaylist.setVisibility(View.VISIBLE);
+                            }
+                            if (playListTitleResponse.getPlaylist().isSubscribed()) {
+                                markPlaylist.setText("取消收藏");
+                            } else {
+                                markPlaylist.setText("+ 添加收藏");
+                            }
+                            markPlaylist.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (markPlaylist.getText().toString().equals("取消收藏")) {
+                                        Operate.starPlaylist(id, false);
+                                        markPlaylist.setText("+ 添加收藏");
+                                    } else {
+                                        Operate.starPlaylist(id, true);
+                                        markPlaylist.setText("取消收藏");
+                                    }
+                                }
+                            });
+                            mCircleImageView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(mContext, UserDetailActivity.class);
+                                    intent.putExtra("user id",
+                                            playListTitleResponse.getPlaylist().getCreator().getUserId());
+                                    startActivity(intent);
+                                }
+                            });
+                            mTextView2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(mContext, UserDetailActivity.class);
+                                    intent.putExtra("user id",
+                                            playListTitleResponse.getPlaylist().getCreator().getUserId());
+                                    startActivity(intent);
+                                }
+                            });
+                            if (!isDestroyed()) {
+                                Glide.with(mContext).load(playListTitleResponse.getPlaylist().getCreator().
+                                        getAvatarUrl()).into(mCircleImageView);
+                            }
                             if (playListTitleResponse.getPlaylist().getTracks() != null &&
                                     playListTitleResponse.getPlaylist().getTracks().size() > 0) {
 
                                 allDatas.clear();
                                 allDatas.addAll(playListTitleResponse.getPlaylist().getTracks());
-
-
-
-                                if (playListTitleResponse.isMyPlaylist()) {
-                                    markPlaylist.setVisibility(View.GONE);
-                                }else {
-                                    markPlaylist.setVisibility(View.VISIBLE);
-                                }
-                                if (playListTitleResponse.getPlaylist().isSubscribed()) {
-                                    markPlaylist.setText("取消收藏");
-                                } else {
-                                    markPlaylist.setText("+ 添加收藏");
-                                }
-                                markPlaylist.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        if (markPlaylist.getText().toString().equals("取消收藏")) {
-                                            Operate.starPlaylist(id, false);
-                                            markPlaylist.setText("+ 添加收藏");
-                                        } else {
-                                            Operate.starPlaylist(id, true);
-                                            markPlaylist.setText("取消收藏");
-                                        }
-                                    }
-                                });
                                 mAdapter = new PlayListDetailAdapter(allDatas, mContext);
                                 mAdapter.setOnItemClickListener((view, position, viewType) -> {
                                     if (viewType == 0) {
@@ -222,28 +240,6 @@ public class PlayListDetailActivity extends WithPanelActivity {
                                         }
                                     }
                                 });
-                                mCircleImageView.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(mContext, UserDetailActivity.class);
-                                        intent.putExtra("user id",
-                                                playListTitleResponse.getPlaylist().getCreator().getUserId());
-                                        startActivity(intent);
-                                    }
-                                });
-                                mTextView2.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(mContext, UserDetailActivity.class);
-                                        intent.putExtra("user id",
-                                                playListTitleResponse.getPlaylist().getCreator().getUserId());
-                                        startActivity(intent);
-                                    }
-                                });
-                                if (!isDestroyed()) {
-                                    Glide.with(mContext).load(playListTitleResponse.getPlaylist().getCreator().
-                                            getAvatarUrl()).into(mCircleImageView);
-                                }
                                 loadProgress.setVisibility(View.GONE);
                                 mRecyclerView.setAdapter(new ScaleInAnimationAdapter(mAdapter));
                                 showProgress = false;

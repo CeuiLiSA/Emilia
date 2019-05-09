@@ -31,6 +31,9 @@ import ceuilisa.mirai.utils.Local;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
+/**
+ * 区分  创建的歌单，收藏的歌单，列表适配器（PlaylistAdapter 不区分）
+ */
 public class SeparatePlaylistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE_HOT_HEAD = 0;
@@ -107,7 +110,10 @@ public class SeparatePlaylistAdapter extends RecyclerView.Adapter<RecyclerView.V
             } else {
                 Glide.with(mContext).load(partMine.get(realPosition).getCoverImgUrl()).into(((TagHolder) holder).mNiceImageView);
             }
-
+            if (mOnItemClickListener != null) {
+                holder.itemView.setOnClickListener(v ->
+                        mOnItemClickListener.onItemClick(((TagHolder) holder).mNiceImageView, realPosition, 0));
+            }
         } else if (viewType == TYPE_NORMAL_HEAD) {
             ((DividerHolder) holder).mTextView.setText("收藏的歌单");
         } else {
@@ -120,10 +126,10 @@ public class SeparatePlaylistAdapter extends RecyclerView.Adapter<RecyclerView.V
             } else {
                 Glide.with(mContext).load(partOthers.get(realPosition).getCoverImgUrl()).into(((TagHolder) holder).mNiceImageView);
             }
-        }
-        if (mOnItemClickListener != null) {
-            holder.itemView.setOnClickListener(v ->
-                    mOnItemClickListener.onItemClick(holder.itemView, position, 0));
+            if (mOnItemClickListener != null) {
+                holder.itemView.setOnClickListener(v ->
+                        mOnItemClickListener.onItemClick(((TagHolder) holder).mNiceImageView, position - 2, 0));
+            }
         }
     }
 

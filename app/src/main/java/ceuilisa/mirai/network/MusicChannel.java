@@ -34,6 +34,10 @@ public class MusicChannel {
     }
 
     public void setMusicList(List<TracksBean> illustList) {
+        if(illustList == null){
+            return;
+        }
+
         this.musicList = illustList;
     }
 }

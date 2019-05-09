@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+
 import com.bumptech.glide.Glide;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
@@ -77,7 +78,7 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
 
     @Override
     void initView() {
-        if (mChannel.getMusicList() != null && mChannel.getMusicList().size() != 0) {
+        if (mChannel.getMusicList().size() != 0) {
             Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim_about_card_show);
             ConstraintLayout constraintLayout = findViewById(R.id.top_parent);
             constraintLayout.startAnimation(animation);
@@ -209,102 +210,89 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
             });
             mIndicatorLayout = findViewById(R.id.il_indicator);
             mIndicatorLayout.create(mViewPagerContent.length);
-
         }
     }
 
     @Override
     void initData() {
         index = getIntent().getIntExtra("index", -1);
-        if(index != -1){
-            if(index != MusicService.get().getNowPlayIndex()) {
-                MusicService.get().setPlaying(true);
-            }
-            MusicService.get().playMusic(index, () -> {
-                mFragmentCover.resumeAnimation();
-                mHandler.post(mMyRunnable);
-            });
-            refreshLayout();
+        if (index == -1) {
+            return;
         }
+
+
+        MusicService.get().playMusic(index, () -> {
+            mFragmentCover.resumeAnimation();
+            mHandler.post(mMyRunnable);
+        });
+        refreshLayout();
     }
 
     private void refreshLayout() {
-        if (mChannel.getMusicList() != null && mChannel.getMusicList().size() != 0) {
+        if (mChannel.getMusicList().size() != 0) {
             mSeekBar.setProgress(0);
             mTextView3.setText("00: 00");
             mTracksBean = mChannel.getMusicList().get(MusicService.get().getNowPlayIndex());
             if (!isDestroyed()) {
-                    Glide.with(mContext).load(mTracksBean.getAl().getPicUrl())
-                            .bitmapTransform(new BlurTransformation(mContext, 15, 10)).into(mImageView);
-                    mToolbar.setTitle(mTracksBean.getName());
-                    mTextView.setText(mTracksBean.getAl().getName());
-                    if (mTracksBean.getAr().size() == 1) {
-                        mTextView2.setText(mTracksBean.getAr().get(0).getName());
-                    } else {
-                        StringBuilder artist = new StringBuilder();
-                        for (int i = 0; i < mTracksBean.getAr().size(); i++) {
-                            artist.append(mTracksBean.getAr().get(i).getName()).append(" / ");
-                        }
-                        mTextView2.setText(artist.substring(0, artist.length() - 3));
+                Glide.with(mContext).load(mTracksBean.getAl().getPicUrl())
+                        .bitmapTransform(new BlurTransformation(mContext, 15, 10)).into(mImageView);
+                mToolbar.setTitle(mTracksBean.getName());
+                mTextView.setText(mTracksBean.getAl().getName());
+                if (mTracksBean.getAr().size() == 1) {
+                    mTextView2.setText(mTracksBean.getAr().get(0).getName());
+                } else {
+                    StringBuilder artist = new StringBuilder();
+                    for (int i = 0; i < mTracksBean.getAr().size(); i++) {
+                        artist.append(mTracksBean.getAr().get(i).getName()).append(" / ");
                     }
-                    mTextView4.setText(mTime.format(mTracksBean.getDt()));
-                    mSeekBar.setMax(mTracksBean.getDt());
-                    mLikeButton.setLiked(mTracksBean.isLiked());
-                    if (index != MusicService.get().getNowPlayIndex()) {
-                        mHandler.removeCallbacksAndMessages(null);
-                        mSeekBar.setProgress(0);
-                        mTextView3.setText("00: 00");
-                    } else {
-                        if (MusicService.get().isPlayingMusic()) {
-                            Common.showLog("MusicService.get().isPlayingMusic  true");
+                    mTextView2.setText(artist.substring(0, artist.length() - 3));
+                }
+                mTextView4.setText(mTime.format(mTracksBean.getDt()));
+                mSeekBar.setMax(mTracksBean.getDt());
+                mLikeButton.setLiked(mTracksBean.isLiked());
+                if (index != MusicService.get().getNowPlayIndex()) {
+                    mHandler.removeCallbacksAndMessages(null);
+                    mSeekBar.setProgress(0);
+                    mTextView3.setText("00: 00");
+                }
+                judgeState();
+                MusicService.get().setOnPlayComplete(new OnPlayComplete() {
+
+                    @Override
+                    public void playNextSong() {
+                        nextSong();
+                    }
+
+                    @Override
+                    public void singleLoop() {
+                        MusicService.get().setNowPlayIndex(65536);
+                        MusicService.get().playMusic(index, () -> {
                             mFragmentCover.resumeAnimation();
                             mHandler.post(mMyRunnable);
-                            mFloatingActionButton.setImageResource(R.drawable.ic_pause_black_24dp);
-                        } else {
-                            Common.showLog("MusicService.get().isPlayingMusic  false");
-                            mFragmentCover.pauseAnimation();
-                            mSeekBar.setProgress(MusicService.get().getPlayer().getCurrentPosition());
-                            mTextView3.setText(mTime.format(MusicService.get().getPlayer().getCurrentPosition()));
-                            mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
-                        }
+                        });
                     }
-                    MusicService.get().setOnPlayComplete(new OnPlayComplete() {
 
-                        @Override
-                        public void playNextSong() {
-                            nextSong();
-                        }
+                    @Override
+                    public void shuffle() {
+                        index = Common.getShuffleIndex();
+                        MusicService.get().playMusic(index, () -> {
+                            mFragmentCover.resumeAnimation();
+                            mHandler.post(mMyRunnable);
+                        });
+                        mFragmentCover.loadCover();
+                        mFragmentCover.refreshAnimation();
+                        mFragmentLrc.loadLyric();
+                        refreshLayout();
+                    }
 
-                        @Override
-                        public void singleLoop() {
-                            MusicService.get().setNowPlayIndex(65536);
-                            MusicService.get().playMusic(index, () -> {
-                                mFragmentCover.resumeAnimation();
-                                mHandler.post(mMyRunnable);
-                            });
-                        }
-
-                        @Override
-                        public void shuffle() {
-                            index = Common.getShuffleIndex();
-                            MusicService.get().playMusic(index, () -> {
-                                mFragmentCover.resumeAnimation();
-                                mHandler.post(mMyRunnable);
-                            });
-                            mFragmentCover.loadCover();
-                            mFragmentCover.refreshAnimation();
-                            mFragmentLrc.loadLyric();
-                            refreshLayout();
-                        }
-
-                        @Override
-                        public void stop() {
-                            MusicService.get().setPlaying(false);
-                            mFragmentCover.pauseAnimation();
-                            mHandler.removeCallbacksAndMessages(null);
-                            mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
-                        }
-                    });
+                    @Override
+                    public void stop() {
+                        MusicService.get().setPlaying(false);
+                        mFragmentCover.pauseAnimation();
+                        mHandler.removeCallbacksAndMessages(null);
+                        mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+                    }
+                });
             }
         }
     }
@@ -416,5 +404,34 @@ public class MusicActivity extends BaseActivity implements ViewPager.OnPageChang
             mHandler.postDelayed(this, 1000);
             Log.d("&&&&****", "((()(()()()");
         }
+    }
+
+    private void judgeState(){
+        Common.showLog("judgeState judgeState");
+        if(MusicService.get().getState() == MusicService.STATE_EMPTY) {
+            Common.showLog("judgeState 0000");
+            return;
+        }
+        if (MusicService.get().getState() == MusicService.STATE_PLAYING ||
+                MusicService.get().getState() == MusicService.STATE_PREPARING) {
+            Common.showLog("MusicService.get().isPlayingMusic  true");
+            mFragmentCover.resumeAnimation();
+            mHandler.post(mMyRunnable);
+            Common.showLog("judgeState 1111");
+            mFloatingActionButton.setImageResource(R.drawable.ic_pause_black_24dp);
+        } else {
+            Common.showLog("MusicService.get().isPlayingMusic  false");
+            mFragmentCover.pauseAnimation();
+            Common.showLog("judgeState 2222");
+            mSeekBar.setProgress(MusicService.get().getPlayer().getCurrentPosition());
+            mTextView3.setText(mTime.format(MusicService.get().getPlayer().getCurrentPosition()));
+            mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        judgeState();
     }
 }

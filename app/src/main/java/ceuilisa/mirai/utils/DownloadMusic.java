@@ -10,8 +10,7 @@ import com.google.gson.Gson;
 
 import java.io.File;
 
-import ceuilisa.mirai.activities.GlobalApp;
-import ceuilisa.mirai.interf.TrackDao;
+import ceuilisa.mirai.activities.Emilia;
 import ceuilisa.mirai.response.LocalMusic;
 import ceuilisa.mirai.response.TracksBean;
 
@@ -29,7 +28,7 @@ public class DownloadMusic {
             request.setMimeType(MimeTypeMap.getFileExtensionFromUrl(url));
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
             request.setAllowedOverRoaming(false); // 不允许漫游
-            DownloadManager downloadManager = (DownloadManager) GlobalApp.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+            DownloadManager downloadManager = (DownloadManager) Emilia.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
             long id = downloadManager.enqueue(request);
             String musicAbsPath = FileUtils.getMusicDir().concat(fileName);
 
@@ -41,7 +40,7 @@ public class DownloadMusic {
             LocalMusic localMusic = new LocalMusic();
             localMusic.setId(tracksBean.getId());
             localMusic.setTrackJson(new Gson().toJson(tracksBean));
-            AppDatabase.getAppDatabase(GlobalApp.getContext()).trackDao().insertTrack(localMusic);
+            AppDatabase.getAppDatabase(Emilia.getContext()).trackDao().insertTrack(localMusic);
             Common.showToast("下载完成");
             //DownloadMusicInfo downloadMusicInfo = new DownloadMusicInfo(title, musicAbsPath, coverPath);
             //AppCache.get().getDownloadList().put(id, downloadMusicInfo);

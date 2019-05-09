@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Random;
 
 import ceuilisa.mirai.BuildConfig;
-import ceuilisa.mirai.activities.GlobalApp;
+import ceuilisa.mirai.activities.Emilia;
 import ceuilisa.mirai.network.MusicChannel;
 import ceuilisa.mirai.nodejs.ArtistBean;
 import ceuilisa.mirai.response.TracksBean;
@@ -79,7 +79,7 @@ public class Common {
 
     public static <T> void showToast(T t) {
         if (toast == null) {
-            toast = Toast.makeText(GlobalApp.getContext(), String.valueOf(t), Toast.LENGTH_SHORT);
+            toast = Toast.makeText(Emilia.getContext(), String.valueOf(t), Toast.LENGTH_SHORT);
         } else {
             toast.setText(String.valueOf(t));
             toast.setDuration(Toast.LENGTH_SHORT);

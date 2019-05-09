@@ -199,7 +199,7 @@
                 android:layout_centerVertical="true"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_pause_black_24dp"
+                android:src="@drawable/ic_play_arrow_black_24dp"
                 android:tint="@android:color/white" />
 
             <net.steamcrafted.materialiconlib.MaterialIconView

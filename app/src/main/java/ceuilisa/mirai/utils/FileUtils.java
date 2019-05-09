@@ -13,8 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ceuilisa.mirai.R;
-import ceuilisa.mirai.activities.GlobalApp;
-import ceuilisa.mirai.response.TracksBean;
+import ceuilisa.mirai.activities.Emilia;
 
 /**
  * 文件工具类
@@ -93,10 +92,10 @@ public class FileUtils {
         artist = stringFilter(artist);
         title = stringFilter(title);
         if (TextUtils.isEmpty(artist)) {
-            artist = GlobalApp.getContext().getString(R.string.unknown);
+            artist = Emilia.getContext().getString(R.string.unknown);
         }
         if (TextUtils.isEmpty(title)) {
-            title = GlobalApp.getContext().getString(R.string.unknown);
+            title = Emilia.getContext().getString(R.string.unknown);
         }
         return artist + " - " + title;
     }
