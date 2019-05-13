@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        app:navigationIcon="@drawable/ic_arrow_back_white"
+        android:background="@color/colorPrimary"
+        android:elevation="@dimen/four_dp"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_marginEnd="@dimen/sixteen_dp"
+            android:hint="搜索列表内歌曲"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            android:textColorHint="#f6f6f6"
+            android:id="@+id/search_et"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content" />
+
+
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/recy_list"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

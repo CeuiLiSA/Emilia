@@ -37,6 +37,12 @@ import retrofit2.http.Query;
 public interface NodeApi {
 
 
+    /**
+     *
+     * @param phone
+     * @param password
+     * @return
+     */
     @GET("/login/cellphone")
     Observable<LoginResponse> loginByPhone(@Query("phone") String phone,
                                            @Query("password") String password);

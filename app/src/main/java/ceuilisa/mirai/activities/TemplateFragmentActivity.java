@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 
 import ceuilisa.mirai.fragments.FragmentDayRecm;
 import ceuilisa.mirai.fragments.FragmentLocalMusic;
+import ceuilisa.mirai.fragments.FragmentLocalSearch;
 import ceuilisa.mirai.fragments.FragmentMyPlayList;
 import ceuilisa.mirai.fragments.FragmentRecmPlaylist;
 import ceuilisa.mirai.fragments.FragmentSearchAlbum;
@@ -42,6 +43,8 @@ public class TemplateFragmentActivity extends FragmentActivity {
                 //String title = getIntent().getStringExtra("title");
                 //String url = getIntent().getStringExtra("url");
                 //return FragmentWebView.newInstance(title, url);
+            }else if (dataType.equals("列表搜索")) {
+                return new FragmentLocalSearch();
             }
         }
 

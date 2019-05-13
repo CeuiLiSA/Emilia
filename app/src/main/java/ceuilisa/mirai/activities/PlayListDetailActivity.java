@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +28,7 @@ import ceuilisa.mirai.MusicService;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.dialogs.LikeSongDialog;
+import ceuilisa.mirai.fragments.FragmentLocalSearch;
 import ceuilisa.mirai.network.Operate;
 import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.response.AlbumResponse;
@@ -80,6 +83,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
     void initView() {
         super.initView();
         mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         mToolbar.setNavigationOnClickListener(v -> onBackPressed());
         mImageView = findViewById(R.id.playlist_photo);
         mImageView2 = findViewById(R.id.imageView4);
@@ -376,5 +380,24 @@ public class PlayListDetailActivity extends WithPanelActivity {
             getPlaylist();
             Common.showLog("PlayListDetailActivity 里面的");
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_local_music, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_search) {
+            FragmentLocalSearch.sTracksBeanList = allDatas;
+            Intent intent = new Intent(mContext, TemplateFragmentActivity.class);
+            intent.putExtra("dataType", "列表搜索");
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -429,6 +429,20 @@ public class TracksBean {
         return null;
     }
 
+    public String getFullAlia(){
+        if(getAlia() == null){
+            return "";
+        }
+        if(getAlia().size() == 0){
+            return "";
+        }
+        String before = "";
+        for (int i = 0; i < getAlia().size(); i++) {
+            before = before + getAlia().get(i);
+        }
+        return before;
+    }
+
     public void setAlia(List<String> alia) {
         this.alia = alia;
     }
@@ -479,5 +493,15 @@ public class TracksBean {
         public void setSize(long size) {
             this.size = size;
         }
+    }
+
+    public String getContent(){
+        String before = "";
+        before = before + name + " ";
+        before = before + getFullArtistName() + " ";
+        before = before + getAlbumName() + " ";
+        before = before + getAlia() + " ";
+        before = before + getFullAlia() + " ";
+        return before;
     }
 }

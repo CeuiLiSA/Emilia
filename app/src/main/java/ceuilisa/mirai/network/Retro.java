@@ -48,20 +48,16 @@ public class Retro {
     }
 
     public static NodeApi getNodeApi() {
-
         if (nodeApi == null) {
-            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-                @Override
-                public void log(String message) {
-                    Log.i("RetrofitLog", "retrofitBack = " + message);
-                }
-            });
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            HttpLoggingInterceptor log = new HttpLoggingInterceptor(
+                    message -> Log.i("RetrofitLog", "retrofitBack = " + message));
+            log.setLevel(HttpLoggingInterceptor.Level.BODY);
             ClearableCookieJar cookieJar =
-                    new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(Emilia.getContext()));
+                    new PersistentCookieJar(new SetCookieCache(),
+                    new SharedPrefsCookiePersistor(Emilia.getContext()));
             OkHttpClient okHttpClient = new OkHttpClient
                     .Builder()
-                    .addInterceptor(loggingInterceptor)
+                    .addInterceptor(log)
                     .cookieJar(cookieJar)
                     .build();
             nodeApi = new Retrofit.Builder()

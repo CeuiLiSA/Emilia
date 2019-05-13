@@ -16,7 +16,6 @@ import ceuilisa.mirai.response.TracksBean;
 
 public class DownloadMusic {
 
-
     public static void downloadMusic(File file, String url, TracksBean tracksBean) {
         try {
             String fileName = file.getName();
