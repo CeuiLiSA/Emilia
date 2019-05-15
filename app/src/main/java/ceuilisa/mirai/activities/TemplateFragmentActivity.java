@@ -1,6 +1,7 @@
 package ceuilisa.mirai.activities;
 
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 import ceuilisa.mirai.fragments.FragmentDayRecm;
 import ceuilisa.mirai.fragments.FragmentLocalMusic;
@@ -11,6 +12,7 @@ import ceuilisa.mirai.fragments.FragmentSearchAlbum;
 import ceuilisa.mirai.fragments.FragmentSearchArtist;
 import ceuilisa.mirai.fragments.FragmentSearchSong;
 import ceuilisa.mirai.fragments.FragmentSearchUser;
+import ceuilisa.mirai.fragments.FragmentWebView;
 
 public class TemplateFragmentActivity extends FragmentActivity {
 
@@ -39,10 +41,11 @@ public class TemplateFragmentActivity extends FragmentActivity {
                 return FragmentSearchAlbum.newInstance(key);
             } else if (dataType.equals("本地音乐")) {
                 return new FragmentLocalMusic();
-            } else if (dataType.equals("项目主页")) {
-                //String title = getIntent().getStringExtra("title");
-                //String url = getIntent().getStringExtra("url");
-                //return FragmentWebView.newInstance(title, url);
+            } else if (dataType.equals("网页链接")) {
+                String title = getIntent().getStringExtra("title");
+                String url = getIntent().getStringExtra("url");
+                rootView.setVisibility(View.GONE);
+                return FragmentWebView.newInstance(title, url);
             }else if (dataType.equals("列表搜索")) {
                 return new FragmentLocalSearch();
             }

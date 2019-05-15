@@ -41,7 +41,7 @@ public abstract class Listen<T extends ListShow> implements Observer<T> {
 
     }
 
-    abstract void success(T t);
+    public abstract void success(T t);
 
-    abstract void error();
+    public abstract void error();
 }

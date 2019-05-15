@@ -502,6 +502,6 @@ public class TracksBean {
         before = before + getAlbumName() + " ";
         before = before + getAlia() + " ";
         before = before + getFullAlia() + " ";
-        return before;
+        return before.toLowerCase();
     }
 }

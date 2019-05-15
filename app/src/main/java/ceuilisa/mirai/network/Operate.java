@@ -30,7 +30,7 @@ public class Operate {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Listen<LikeSongResponse>() {
                     @Override
-                    void success(LikeSongResponse baseResponse) {
+                    public void success(LikeSongResponse baseResponse) {
                         if (baseResponse.getCode() == 200) {
                             Common.showToast(isLike ? "收藏成功" : "取消收藏");
                             Channel channel = new Channel();
@@ -41,7 +41,7 @@ public class Operate {
                     }
 
                     @Override
-                    void error() {
+                    public void error() {
 
                     }
                 });

@@ -35,9 +35,10 @@ public class VideoPlayActivity extends BaseActivity {
     private Toolbar mToolbar;
     private ProgressBar mProgressBar;
     private ImageView cover;
-    private int mvID;
+    private long mvID;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
+    public String dataType = "";
 
     @Override
     void initLayout() {
@@ -49,7 +50,8 @@ public class VideoPlayActivity extends BaseActivity {
 
     @Override
     void initView() {
-        mvID = getIntent().getIntExtra("mv id", 0);
+        mvID = getIntent().getLongExtra("mv id", 0L);
+        dataType = getIntent().getStringExtra("dataType");
         videoPlayer = findViewById(R.id.video_player);
         mProgressBar = findViewById(R.id.progress_bar);
         mToolbar = findViewById(R.id.toolbar_help);
@@ -112,11 +114,52 @@ public class VideoPlayActivity extends BaseActivity {
 
     @Override
     void initData() {
-        getMvUrl(mvID);
+        if(dataType != null) {
+            if(dataType.equals("mv")) {
+                getMvUrl(mvID);
+            }else if(dataType.equals("video")){
+                getVideoUrl(mvID);
+            }
+        }
     }
 
-    private void getMvUrl(int id) {
+    private void getMvUrl(long id) {
         Retro.getNodeApi().getMvPlayUrl(id)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<MvPlayUrlResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(MvPlayUrlResponse mvPlayUrlResponse) {
+                        if (mvPlayUrlResponse != null) {
+                            videoPlayer.setUp(mvPlayUrlResponse.getData().getUrl(),
+                                    true, " ");
+                            //Glide.with(mContext).load(mMvBean.getCover()).into(cover);
+                            videoPlayer.startPlayLogic();
+                            mProgressBar.setVisibility(View.INVISIBLE);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        mProgressBar.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
+    private void getVideoUrl(long id) {
+        Retro.getNodeApi().getVideoPlayUrl(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<MvPlayUrlResponse>() {

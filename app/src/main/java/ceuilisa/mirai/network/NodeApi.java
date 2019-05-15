@@ -1,6 +1,7 @@
 package ceuilisa.mirai.network;
 
 import ceuilisa.mirai.nodejs.ArtistAlbumResponse;
+import ceuilisa.mirai.nodejs.BannerResponse;
 import ceuilisa.mirai.nodejs.DayRecommend;
 import ceuilisa.mirai.nodejs.EventResponse;
 import ceuilisa.mirai.nodejs.FavorAlbumResponse;
@@ -135,11 +136,19 @@ public interface NodeApi {
 
 
     @GET("/mv/detail")
-    Observable<MvDetail> getMvDetail(@Query("mvid") int mvid);
+    Observable<MvDetail> getMvDetail(@Query("mvid") long mvid);
+
+
+    @GET("/video/detail")
+    Observable<MvDetail> getVideoDetail(@Query("mvid") long mvid);
 
 
     @GET("/mv/url")
-    Observable<MvPlayUrlResponse> getMvPlayUrl(@Query("id") int id);
+    Observable<MvPlayUrlResponse> getMvPlayUrl(@Query("id") long id);
+
+
+    @GET("/video/url")
+    Observable<MvPlayUrlResponse> getVideoPlayUrl(@Query("id") long id);
 
 
     /**
@@ -309,7 +318,7 @@ public interface NodeApi {
 
 
     @GET("/simi/mv")
-    Observable<RelatedMvResponse> getRelatedMv(@Query("mvid") int mvid);
+    Observable<RelatedMvResponse> getRelatedMv(@Query("mvid") long mvid);
 
 
     /**
@@ -360,6 +369,10 @@ public interface NodeApi {
     @GET("/artists")
     Observable<ArtistResponse> getArtistDetail(@Query("id") int id,
                                                @Query("timestamp") long timestamp);
+
+
+    @GET("/banner?type=1")
+    Observable<BannerResponse> getBanner();
 
 
 }

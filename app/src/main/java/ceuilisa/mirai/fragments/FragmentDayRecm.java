@@ -1,9 +1,18 @@
 package ceuilisa.mirai.fragments;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
+import org.greenrobot.eventbus.EventBus;
+
+import ceuilisa.mirai.R;
+import ceuilisa.mirai.activities.AddPlayListActivity;
 import ceuilisa.mirai.activities.MusicActivity;
+import ceuilisa.mirai.activities.TemplateFragmentActivity;
 import ceuilisa.mirai.activities.VideoPlayActivity;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.adapters.RecmSongAdapter;
@@ -28,6 +37,14 @@ public class FragmentDayRecm extends BaseListFragment<DayRecommend, PlayListDeta
     }
 
     @Override
+    View initView(View v) {
+        super.initView(v);
+        ((TemplateFragmentActivity) getActivity()).setSupportActionBar(mToolbar);
+        mToolbar.setNavigationOnClickListener(view -> getActivity().finish());
+        return v;
+    }
+
+    @Override
     Observable<DayRecommend> initApi() {
         return Retro.getNodeApi().getDayRecommend();
     }
@@ -46,6 +63,7 @@ public class FragmentDayRecm extends BaseListFragment<DayRecommend, PlayListDeta
                 } else if (viewType == 1) {
                     Intent intent = new Intent(mContext, VideoPlayActivity.class);
                     intent.putExtra("mv id", allItems.get(position).getMv());
+                    intent.putExtra("dataType", "mv");
                     startActivity(intent);
                 } else if (viewType == 2) {
                     LikeSongDialog dialog = LikeSongDialog.newInstance(
@@ -54,5 +72,28 @@ public class FragmentDayRecm extends BaseListFragment<DayRecommend, PlayListDeta
                 }
             }
         });
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.search_local_music, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_search) {
+            FragmentLocalSearch.sTracksBeanList = allItems;
+            Intent intent = new Intent(mContext, TemplateFragmentActivity.class);
+            intent.putExtra("dataType", "列表搜索");
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

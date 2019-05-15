@@ -34,6 +34,7 @@ public class FragmentMvRank extends BaseListFragment<MvListResponse, MvListAdapt
             public void onItemClick(View view, int position, int viewType) {
                 Intent intent = new Intent(mContext, VideoPlayActivity.class);
                 intent.putExtra("mv id", allItems.get(position).getId());
+                intent.putExtra("dataType", "mv");
                 startActivity(intent);
             }
         });

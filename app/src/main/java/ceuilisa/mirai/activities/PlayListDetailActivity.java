@@ -51,7 +51,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
     private String coverImg, name, author, dataType;
     private Toolbar mToolbar;
     private long id;
-    private TextView mTextView, mTextView2, starPlaylistTv, markPlaylist;
+    private TextView mTextView, mTextView2, starPlaylistTv, markPlaylist, songCount;
     private RCRelativeLayout cornerRela;
     private RecyclerView mRecyclerView;
     private ImageView mImageView;
@@ -94,6 +94,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
         mTextView2 = findViewById(R.id.textView9);
         markPlaylist = findViewById(R.id.mark_playlist);
         cornerRela = findViewById(R.id.corner_rela);
+        songCount = findViewById(R.id.play_this_playlist);
         cornerRela.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,6 +177,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
                             } else {
                                 markPlaylist.setText("+ 添加收藏");
                             }
+                            songCount.setText("播放全部(共" + playListTitleResponse.getPlaylist().getTracks().size() + "首)");
                             markPlaylist.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -210,6 +212,20 @@ public class PlayListDetailActivity extends WithPanelActivity {
                                 Glide.with(mContext).load(playListTitleResponse.getPlaylist().getCreator().
                                         getAvatarUrl()).into(mCircleImageView);
                             }
+                            if (coverImg == null || coverImg.length() == 0) {
+                                mTextView.setText(playListTitleResponse.getPlaylist().getName());
+                                mTextView2.setText(playListTitleResponse.getPlaylist().getCreator().getNickname());
+                                if (playListTitleResponse.getPlaylist().getCoverImgUrl() != null &&
+                                        playListTitleResponse.getPlaylist().getCoverImgUrl().length() != 0) {
+                                    Glide.with(mContext).load(playListTitleResponse.getPlaylist().getCoverImgUrl())
+                                            .bitmapTransform(new BlurTransformation(mContext, 20, 2))
+                                            .into(mImageView);
+                                    Glide.with(mContext).load(playListTitleResponse.getPlaylist().getCoverImgUrl())
+                                            .into(mImageView2);
+                                } else {
+                                    Glide.with(mContext).load(R.mipmap.default_playlist_cover).into(mImageView2);
+                                }
+                            }
                             if (playListTitleResponse.getPlaylist().getTracks() != null &&
                                     playListTitleResponse.getPlaylist().getTracks().size() > 0) {
 
@@ -225,6 +241,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
                                     } else if (viewType == 1) {
                                         Intent intent = new Intent(mContext, VideoPlayActivity.class);
                                         intent.putExtra("mv id", allDatas.get(position).getMv());
+                                        intent.putExtra("dataType", "mv");
                                         startActivity(intent);
                                     } else if (viewType == 2) {
                                         //如果歌单创建者是自己，则可以删除歌单中的歌曲
@@ -293,6 +310,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
                             } else if (viewType == 1) {
                                 Intent intent = new Intent(mContext, VideoPlayActivity.class);
                                 intent.putExtra("mv id", allDatas.get(position).getMv());
+                                intent.putExtra("dataType", "mv");
                                 startActivity(intent);
                             } else if (viewType == 2) {
                                 LikeSongDialog dialog = LikeSongDialog.newInstance(
@@ -300,11 +318,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
                                 dialog.show(getSupportFragmentManager());
                             }
                         });
-//                        if (albumResponse.getAlbum().isSubscribed()) {
-//                            markPlaylist.setText("取消收藏");
-//                        } else {
-//                            markPlaylist.setText("+ 添加收藏");
-//                        }
+                        songCount.setText("播放全部(共" + albumResponse.getSongs().size() + "首)");
                         markPlaylist.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -317,6 +331,7 @@ public class PlayListDetailActivity extends WithPanelActivity {
                                 }
                             }
                         });
+                        mTextView.setText(albumResponse.getAlbum().getName());
                         mTextView2.setText(albumResponse.getAlbum().getArtist().getName());
                         if (!isDestroyed()) {
                             Glide.with(mContext).load(albumResponse.getAlbum()

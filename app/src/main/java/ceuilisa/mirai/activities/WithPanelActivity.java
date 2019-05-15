@@ -26,6 +26,7 @@ public abstract class WithPanelActivity extends NetWorkControlActivity {
     private NiceImageView mNiceImageView;
     private ImageView playPause, playList;
     private TextView songName, artistName;
+    protected RelativeLayout rootView;
 
     @Override
     void initLayout() {
@@ -34,7 +35,7 @@ public abstract class WithPanelActivity extends NetWorkControlActivity {
     @Override
     void initView() {
         super.initView();
-        RelativeLayout relativeLayout = findViewById(R.id.root_view);
+        rootView = findViewById(R.id.root_view);
         timeProgress = findViewById(R.id.time_progress);
         mNiceImageView = findViewById(R.id.now_play_image);
         playPause = findViewById(R.id.play_pause);
@@ -67,7 +68,7 @@ public abstract class WithPanelActivity extends NetWorkControlActivity {
         songName = findViewById(R.id.song_name);
         //songName.setMovementMethod(ScrollingMovementMethod.getInstance());
         artistName = findViewById(R.id.song_author);
-        relativeLayout.setOnClickListener(new View.OnClickListener() {
+        rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, MusicActivity.class);

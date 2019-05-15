@@ -13,9 +13,9 @@ import io.reactivex.Observable;
 
 public class FragmentRelatedMv extends BaseListFragment<RelatedMvResponse, MvListAdapter, MvBean> {
 
-    private int mvID;
+    private long mvID;
 
-    public static FragmentRelatedMv newInstance(int id) {
+    public static FragmentRelatedMv newInstance(long id) {
         FragmentRelatedMv fragmentRelatedMv = new FragmentRelatedMv();
         fragmentRelatedMv.mvID = id;
         return fragmentRelatedMv;
@@ -39,6 +39,7 @@ public class FragmentRelatedMv extends BaseListFragment<RelatedMvResponse, MvLis
             public void onItemClick(View view, int position, int viewType) {
                 Intent intent = new Intent(mContext, VideoPlayActivity.class);
                 intent.putExtra("mv id", allItems.get(position).getId());
+                intent.putExtra("dataType", "mv");
                 startActivity(intent);
             }
         });

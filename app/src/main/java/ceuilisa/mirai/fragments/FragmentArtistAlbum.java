@@ -1,8 +1,10 @@
 package ceuilisa.mirai.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import ceuilisa.mirai.activities.PlayListDetailActivity;
 import ceuilisa.mirai.adapters.AlbumListAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.network.Retro;
@@ -39,7 +41,13 @@ public class FragmentArtistAlbum extends BaseListFragment<ArtistAlbumResponse, A
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, int viewType) {
-
+                Intent intent = new Intent(mContext, PlayListDetailActivity.class);
+                intent.putExtra("id", allItems.get(position).getId());
+                intent.putExtra("name", allItems.get(position).getName());
+                intent.putExtra("author", allItems.get(position).getArtist().getName());
+                intent.putExtra("dataType", "专辑");
+                intent.putExtra("coverImg",allItems.get(position).getPicUrl());
+                startActivity(intent);
             }
         });
     }

@@ -3,9 +3,13 @@ package ceuilisa.mirai.fragments;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -16,6 +20,7 @@ import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.MusicActivity;
+import ceuilisa.mirai.activities.TemplateFragmentActivity;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
 import ceuilisa.mirai.interf.OnItemClickListener;
 import ceuilisa.mirai.nodejs.SongDetailResponse;
@@ -34,6 +39,8 @@ public class FragmentLocalMusic extends BaseFragment {
 
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
+    private Toolbar mToolbar;
+    private List<TracksBean> allItems = new ArrayList<>();
 
     @Override
     void initLayout() {
@@ -42,8 +49,9 @@ public class FragmentLocalMusic extends BaseFragment {
 
     @Override
     View initView(View v) {
-        Toolbar toolbar = v.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(view -> getActivity().finish());
+        mToolbar = v.findViewById(R.id.toolbar);
+        ((TemplateFragmentActivity) getActivity()).setSupportActionBar(mToolbar);
+        mToolbar.setNavigationOnClickListener(view -> getActivity().finish());
         mProgressBar = v.findViewById(R.id.progress);
         LinearLayoutManager manager = new LinearLayoutManager(mContext);
         mRecyclerView = v.findViewById(R.id.recy_list);
@@ -54,17 +62,17 @@ public class FragmentLocalMusic extends BaseFragment {
 
     @Override
     void initData() {
-        List<TracksBean> tracksBeans = new ArrayList<>();
+        allItems = new ArrayList<>();
         List<LocalMusic> localTracks = AppDatabase.getAppDatabase(mContext).trackDao().getLocalTracks();
         Gson gson = new Gson();
         for (int i = 0; i < localTracks.size(); i++) {
-            tracksBeans.add(gson.fromJson(localTracks.get(i).getTrackJson(), TracksBean.class));
+            allItems.add(gson.fromJson(localTracks.get(i).getTrackJson(), TracksBean.class));
         }
-        PlayListDetailAdapter adapter = new PlayListDetailAdapter(tracksBeans, mContext);
+        PlayListDetailAdapter adapter = new PlayListDetailAdapter(allItems, mContext);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, int viewType) {
-                mChannel.setMusicList(tracksBeans);
+                mChannel.setMusicList(allItems);
                 Intent intent = new Intent(mContext, MusicActivity.class);
                 intent.putExtra("index", position);
                 startActivity(intent);
@@ -74,8 +82,28 @@ public class FragmentLocalMusic extends BaseFragment {
         mProgressBar.setVisibility(View.INVISIBLE);
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.search_local_music, menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_search) {
+            FragmentLocalSearch.sTracksBeanList = allItems;
+            Intent intent = new Intent(mContext, TemplateFragmentActivity.class);
+            intent.putExtra("dataType", "列表搜索");
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 //    private void getLocalSongDetail(List<TracksBean> tracksBeans){
 //        String ids = "";
 //        for (int i = 0; i < tracksBeans.size(); i++) {

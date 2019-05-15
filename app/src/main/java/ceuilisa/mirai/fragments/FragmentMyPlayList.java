@@ -72,12 +72,7 @@ public class FragmentMyPlayList extends BaseListFragment<PlayListResponse, Separ
     }
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
-        setHasOptionsMenu(true);
-    }
+
 
     @Override
     public void onDestroy() {
@@ -92,6 +87,12 @@ public class FragmentMyPlayList extends BaseListFragment<PlayListResponse, Separ
         }
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import ceuilisa.mirai.R;
+import ceuilisa.mirai.activities.VideoPlayActivity;
 import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.MvBean;
 import ceuilisa.mirai.response.MvDetail;
@@ -15,10 +16,10 @@ import io.reactivex.schedulers.Schedulers;
 
 public class FragmentMvDetail extends BaseFragment {
 
-    private int mvID;
+    private long mvID;
     private TextView name, playCount, duration, desc, artistInfo;
 
-    public static FragmentMvDetail newInstance(int mvID) {
+    public static FragmentMvDetail newInstance(long mvID) {
         FragmentMvDetail fragmentMvDetail = new FragmentMvDetail();
         fragmentMvDetail.mvID = mvID;
         return fragmentMvDetail;
@@ -41,7 +42,11 @@ public class FragmentMvDetail extends BaseFragment {
 
     @Override
     void initData() {
-        getMvDetail();
+        if(((VideoPlayActivity)getActivity()).dataType.equals("mv")){
+            getMvDetail();
+        }else if(((VideoPlayActivity)getActivity()).dataType.equals("video")){
+            getVideoDetail();
+        }
     }
 
     private void setData(MvBean mvBean) {
@@ -54,6 +59,38 @@ public class FragmentMvDetail extends BaseFragment {
 
     private void getMvDetail() {
         Retro.getNodeApi().getMvDetail(mvID)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<MvDetail>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(MvDetail mvDetail) {
+                        if (mvDetail != null) {
+                            setData(mvDetail.getData());
+                        } else {
+                            Common.showToast("加载失败");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        Common.showToast(e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+
+    private void getVideoDetail() {
+        Retro.getNodeApi().getVideoDetail(mvID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<MvDetail>() {
