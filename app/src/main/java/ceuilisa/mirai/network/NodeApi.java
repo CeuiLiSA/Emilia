@@ -8,10 +8,12 @@ import ceuilisa.mirai.nodejs.FavorAlbumResponse;
 import ceuilisa.mirai.nodejs.FavorArtistResponse;
 import ceuilisa.mirai.nodejs.FollowResponse;
 import ceuilisa.mirai.nodejs.FollowerResponse;
+import ceuilisa.mirai.nodejs.HotPlaylistResponse;
 import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.nodejs.MvListResponse;
 import ceuilisa.mirai.nodejs.MvPlayUrlResponse;
 import ceuilisa.mirai.nodejs.PlayListResponse;
+import ceuilisa.mirai.nodejs.PlaylistTagResponse;
 import ceuilisa.mirai.nodejs.RecmPlayListResponse;
 import ceuilisa.mirai.nodejs.RecmdMvResponse;
 import ceuilisa.mirai.nodejs.RelatedMvResponse;
@@ -379,4 +381,14 @@ public interface NodeApi {
     @GET("/user/record")
     Observable<PlayRecordResponse> getPlayRecord(@Query("uid") int uid,
                                                  @Query("type") int type);
+
+
+    @GET("/playlist/catlist")
+    Observable<PlaylistTagResponse> getPlaylistTag();
+
+    @GET("/top/playlist")
+    Observable<HotPlaylistResponse> getHotPlaylist(@Query("order") String order,
+                                                   @Query("limit") int limit,
+                                                   @Query("offset") int offset,
+                                                   @Query("cat") String cat);
 }

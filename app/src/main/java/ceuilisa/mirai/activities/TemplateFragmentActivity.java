@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import ceuilisa.mirai.fragments.FragmentDayRecm;
+import ceuilisa.mirai.fragments.FragmentHotPlaylist;
 import ceuilisa.mirai.fragments.FragmentLocalMusic;
 import ceuilisa.mirai.fragments.FragmentLocalSearch;
 import ceuilisa.mirai.fragments.FragmentMyPlayList;
@@ -48,6 +49,9 @@ public class TemplateFragmentActivity extends FragmentActivity {
                 return FragmentWebView.newInstance(title, url);
             }else if (dataType.equals("列表搜索")) {
                 return new FragmentLocalSearch();
+            }else if (dataType.equals("热门歌单")) {
+                String tag = getIntent().getStringExtra("tag");
+                return FragmentHotPlaylist.newInstance(tag);
             }
         }
 

@@ -68,28 +68,28 @@ public class FragmentSingleRecy extends BaseFragment {
      * 获取歌单类型的列表（对比着云音乐客户端，本地写死了几十种类型）
      */
     private void getPlaylistType() {
-        final String[] data;
-        if (index == 0) {
-            data = Constant.TYPE_FENGGE;
-        } else if (index == 1) {
-            data = Constant.TYPE_CHANGJIN;
-        } else if (index == 2) {
-            data = Constant.TYPE_QINGAN;
-        } else if (index == 3) {
-            data = Constant.TYPE_ZHUTI;
-        } else {
-            data = Constant.TYPE_YUZHONG;
-        }
-        mRecyclerView.addItemDecoration(new ChatDetailItemDecoration(DensityUtil.dip2px(mContext, 16.0f)));
-        PlayListTypeAdapter adapter = new PlayListTypeAdapter(data, mContext);
-        adapter.setOnItemClickListener((view, position, viewType) -> {
-            Intent intent = new Intent(mContext, PlayListActivity.class);
-            intent.putExtra("dataType", "根据类型搜索歌单");
-            intent.putExtra("key", data[position]);
-            startActivity(intent);
-        });
-        mProgressBar.setVisibility(View.INVISIBLE);
-        mRecyclerView.setAdapter(adapter);
+//        final String[] data;
+//        if (index == 0) {
+//            data = Constant.TYPE_FENGGE;
+//        } else if (index == 1) {
+//            data = Constant.TYPE_CHANGJIN;
+//        } else if (index == 2) {
+//            data = Constant.TYPE_QINGAN;
+//        } else if (index == 3) {
+//            data = Constant.TYPE_ZHUTI;
+//        } else {
+//            data = Constant.TYPE_YUZHONG;
+//        }
+//        mRecyclerView.addItemDecoration(new ChatDetailItemDecoration(DensityUtil.dip2px(mContext, 16.0f)));
+//        PlayListTypeAdapter adapter = new PlayListTypeAdapter(data, mContext);
+//        adapter.setOnItemClickListener((view, position, viewType) -> {
+//            Intent intent = new Intent(mContext, PlayListActivity.class);
+//            intent.putExtra("dataType", "根据类型搜索歌单");
+//            intent.putExtra("key", data[position]);
+//            startActivity(intent);
+//        });
+//        mProgressBar.setVisibility(View.INVISIBLE);
+//        mRecyclerView.setAdapter(adapter);
     }
 
     private void getSearchResult() {

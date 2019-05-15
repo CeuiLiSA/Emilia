@@ -17,8 +17,16 @@ import ceuilisa.mirai.fragments.FragmentMvRecmd;
 import ceuilisa.mirai.fragments.FragmentNewSong;
 import ceuilisa.mirai.fragments.FragmentPlayAllHistory;
 import ceuilisa.mirai.fragments.FragmentPlayWeekHistory;
+import ceuilisa.mirai.fragments.FragmentPlaylistTag;
 import ceuilisa.mirai.fragments.FragmentSingleRecy;
+import ceuilisa.mirai.network.Retro;
+import ceuilisa.mirai.nodejs.BannerResponse;
+import ceuilisa.mirai.nodejs.PlaylistTagResponse;
 import ceuilisa.mirai.utils.Constant;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class ViewPagerActivity extends WithPanelActivity {
 
@@ -75,24 +83,7 @@ public class ViewPagerActivity extends WithPanelActivity {
                 }
             });
         } else if (dataType.equals("歌单分类")) {
-            data = Constant.PLAYLIST_TYPE;
-            mToolbar.setTitle("歌单分类");
-            mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
-                @Override
-                public Fragment getItem(int i) {
-                    return FragmentSingleRecy.newInstance(i, dataType);
-                }
-
-                @Override
-                public int getCount() {
-                    return data.length;
-                }
-
-                @Override
-                public CharSequence getPageTitle(int position) {
-                    return data[position];
-                }
-            });
+            getPlaylistTag();
         } else if (dataType.equals("新歌速递")) {
             data = Constant.PLAYLIST_NEW_SONG;
             mToolbar.setTitle("新歌速递");
@@ -188,5 +179,61 @@ public class ViewPagerActivity extends WithPanelActivity {
             });
         }
 
+    }
+
+
+
+
+    private void getPlaylistTag(){
+        Retro.getNodeApi().getPlaylistTag()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<PlaylistTagResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(PlaylistTagResponse bannerResponse) {
+                        mToolbar.setTitle("歌单分类");
+                        mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+                            @Override
+                            public Fragment getItem(int i) {
+                                return FragmentPlaylistTag.newInstance(bannerResponse, i);
+                            }
+
+                            @Override
+                            public int getCount() {
+                                return 5;
+                            }
+
+                            @Override
+                            public CharSequence getPageTitle(int position) {
+                                if(position == 0) {
+                                    return bannerResponse.getCategories().get_$0();
+                                }else if(position == 1) {
+                                    return bannerResponse.getCategories().get_$1();
+                                }else if(position == 2) {
+                                    return bannerResponse.getCategories().get_$2();
+                                }else if(position == 3) {
+                                    return bannerResponse.getCategories().get_$3();
+                                }else {
+                                    return bannerResponse.getCategories().get_$4();
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

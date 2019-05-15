@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.OnItemClickListener;
 
@@ -19,9 +21,9 @@ public class PlayListTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private OnItemClickListener mOnItemClickListener;
-    private String[] allIllust;
+    private List<String> allIllust;
 
-    public PlayListTypeAdapter(String[] list, Context context) {
+    public PlayListTypeAdapter(List<String> list, Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(mContext);
         allIllust = list;
@@ -36,7 +38,7 @@ public class PlayListTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((TagHolder) holder).mTextView.setText(String.valueOf(allIllust[position]));
+        ((TagHolder) holder).mTextView.setText(String.valueOf(allIllust.get(position)));
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(v ->
                     mOnItemClickListener.onItemClick(holder.itemView, position, 0));
@@ -45,7 +47,7 @@ public class PlayListTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        return allIllust.length;
+        return allIllust.size();
     }
 
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
