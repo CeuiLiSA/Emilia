@@ -154,13 +154,13 @@ public class FragmentSingleRecy extends BaseFragment {
 //        Retro.getImjadApi().getAllPlayHistory(Constant.USER_ID, 0)
 //                .subscribeOn(Schedulers.newThread())
 //                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<PlayAllHistoryResponse>() {
+//                .subscribe(new Observer<PlayRecordResponse>() {
 //                    @Override
 //                    public void onSubscribe(Disposable d) {
 //                    }
 //
 //                    @Override
-//                    public void onNext(PlayAllHistoryResponse playListTitleResponse) {
+//                    public void onNext(PlayRecordResponse playListTitleResponse) {
 //                        PlayAllHistoryAdapter adapter = new PlayAllHistoryAdapter(
 //                                playListTitleResponse.getAllData(), mContext);
 //                        adapter.setOnItemClickListener((view, position, viewType) -> {

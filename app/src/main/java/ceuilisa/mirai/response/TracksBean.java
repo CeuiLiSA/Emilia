@@ -82,7 +82,7 @@ public class TracksBean {
     private Object rurl;
     private int mst;
     private int cp;
-    private int mv;
+    private long mv;
     private long publishTime;
     private List<ArtistBean> ar, artists;
     private List<String> alia, alias;
@@ -379,11 +379,11 @@ public class TracksBean {
         this.cp = cp;
     }
 
-    public int getMv() {
+    public long getMv() {
         return mv;
     }
 
-    public void setMv(int mv) {
+    public void setMv(long mv) {
         this.mv = mv;
     }
 
@@ -426,7 +426,7 @@ public class TracksBean {
         if(alias != null && alias.size() != 0){
             return alias;
         }
-        return null;
+        return new ArrayList<>();
     }
 
     public String getFullAlia(){

@@ -44,7 +44,6 @@
                 android:id="@+id/tab"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tabMode="scrollable"
                 app:tabIndicatorColor="@android:color/white"
                 app:tabIndicatorHeight="2dp"
                 app:tabSelectedTextColor="@android:color/white"

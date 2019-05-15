@@ -26,11 +26,11 @@ import ceuilisa.mirai.response.CommentResponse;
 import ceuilisa.mirai.response.LikeSongResponse;
 import ceuilisa.mirai.response.MvDetail;
 import ceuilisa.mirai.response.NewSongResponse;
+import ceuilisa.mirai.response.PlayRecordResponse;
 import ceuilisa.mirai.response.PlayListDetailResponse;
 import ceuilisa.mirai.response.SearchAlbumResponse;
 import ceuilisa.mirai.response.SearchArtistResponse;
 import ceuilisa.mirai.response.SingleSongResponse;
-import ceuilisa.mirai.response.TracksBean;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -373,4 +373,10 @@ public interface NodeApi {
 
     @GET("/banner?type=1")
     Observable<BannerResponse> getBanner();
+
+
+    //type=1 时只返回 weekData, type=0 时返回 allData
+    @GET("/user/record")
+    Observable<PlayRecordResponse> getPlayRecord(@Query("uid") int uid,
+                                                 @Query("type") int type);
 }

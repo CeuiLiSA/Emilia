@@ -45,10 +45,9 @@ public class FragmentLeft extends BaseFragment {
     View initView(View v) {
         TextView textView = v.findViewById(R.id.textView7);
         textView.setOnClickListener(v12 -> {
-//            Intent intent = new Intent(mContext, TemplateFragmentActivity.class);
-//            intent.putExtra("dataType", "推荐歌单");
-//            mContext.startActivity(intent);
-            mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+            Intent intent = new Intent(mContext, TemplateFragmentActivity.class);
+            intent.putExtra("dataType", "推荐歌单");
+            mContext.startActivity(intent);
         });
 
         TextView textView6 = v.findViewById(R.id.textView6);

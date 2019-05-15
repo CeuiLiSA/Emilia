@@ -1,25 +1,24 @@
 package ceuilisa.mirai.fragments;
 
 import android.content.Intent;
-import android.view.View;
 
 import ceuilisa.mirai.activities.MusicActivity;
-import ceuilisa.mirai.adapters.PlayAllHistoryAdapter;
-import ceuilisa.mirai.interf.OnItemClickListener;
+import ceuilisa.mirai.activities.VideoPlayActivity;
+import ceuilisa.mirai.adapters.PlayListDetailAdapter;
+import ceuilisa.mirai.dialogs.LikeSongDialog;
 import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.LoginResponse;
-import ceuilisa.mirai.response.HistorySongBean;
-import ceuilisa.mirai.response.PlayAllHistoryResponse;
+import ceuilisa.mirai.response.PlayRecordResponse;
+import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.utils.Local;
-import ceuilisa.mirai.utils.Translate;
 import io.reactivex.Observable;
 
-public class FragmentPlayAllHistory extends BaseListFragment<PlayAllHistoryResponse, PlayAllHistoryAdapter, HistorySongBean> {
+public class FragmentPlayAllHistory extends BaseListFragment<PlayRecordResponse, PlayListDetailAdapter, TracksBean> {
 
     @Override
-    Observable<PlayAllHistoryResponse> initApi() {
+    Observable<PlayRecordResponse> initApi() {
         LoginResponse user = Local.getUser();
-        return Retro.getImjadApi().getAllPlayHistory(user.getProfile().getUserId(), 0);
+        return Retro.getNodeApi().getPlayRecord(user.getProfile().getUserId(), 0);
     }
 
     @Override
@@ -29,15 +28,28 @@ public class FragmentPlayAllHistory extends BaseListFragment<PlayAllHistoryRespo
 
     @Override
     void initAdapter() {
-        mAdapter = new PlayAllHistoryAdapter(allItems, mContext);
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position, int viewType) {
-                Translate.translateMusic(allItems);
+        mAdapter = new PlayListDetailAdapter(allItems, mContext);
+        mAdapter.setOnItemClickListener((view, position, viewType) -> {
+            if (viewType == 0) {
+                mChannel.setMusicList(allItems);
                 Intent intent = new Intent(mContext, MusicActivity.class);
                 intent.putExtra("index", position);
                 startActivity(intent);
+            } else if (viewType == 1) {
+                Intent intent = new Intent(mContext, VideoPlayActivity.class);
+                intent.putExtra("mv id", allItems.get(position).getMv());
+                intent.putExtra("dataType", "mv");
+                startActivity(intent);
+            } else if (viewType == 2) {
+                LikeSongDialog dialog = LikeSongDialog.newInstance(
+                        allItems.get(position));
+                dialog.show(getChildFragmentManager());
             }
         });
+    }
+
+    @Override
+    boolean hasNext() {
+        return false;
     }
 }

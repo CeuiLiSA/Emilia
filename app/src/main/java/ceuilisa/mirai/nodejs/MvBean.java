@@ -22,7 +22,7 @@ public class MvBean implements Serializable {
      * alias : ["电影《绿皮书》推广曲"]
      */
 
-    private int id;
+    private long id;
     private String cover;
     private String picUrl;
     private String name;
@@ -128,11 +128,11 @@ public class MvBean implements Serializable {
         this.commentThreadId = commentThreadId;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

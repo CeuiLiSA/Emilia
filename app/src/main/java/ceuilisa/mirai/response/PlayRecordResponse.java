@@ -1,10 +1,12 @@
 package ceuilisa.mirai.response;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ceuilisa.mirai.interf.ListShow;
+import ceuilisa.mirai.utils.Translate;
 
-public class PlayAllHistoryResponse implements ListShow<HistorySongBean> {
+public class PlayRecordResponse implements ListShow<TracksBean> {
 
 
     /**
@@ -13,6 +15,16 @@ public class PlayAllHistoryResponse implements ListShow<HistorySongBean> {
      */
 
     private List<HistorySongBean> allData;
+
+    public List<HistorySongBean> getWeekData() {
+        return weekData;
+    }
+
+    public void setWeekData(List<HistorySongBean> weekData) {
+        this.weekData = weekData;
+    }
+
+    private List<HistorySongBean> weekData;
 
 
     public List<HistorySongBean> getAllData() {
@@ -24,7 +36,13 @@ public class PlayAllHistoryResponse implements ListShow<HistorySongBean> {
     }
 
     @Override
-    public List<HistorySongBean> getList() {
-        return allData;
+    public List<TracksBean> getList() {
+        if(allData != null) {
+            return Translate.translateMusicToList(allData);
+        }
+        if(weekData != null){
+            return Translate.translateMusicToList(weekData);
+        }
+        return null;
     }
 }

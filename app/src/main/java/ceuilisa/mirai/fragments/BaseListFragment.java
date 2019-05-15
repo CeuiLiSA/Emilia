@@ -190,6 +190,9 @@ public abstract class BaseListFragment<Response extends ListShow<ListItem>,
                                     if (mAdapter != null) {
                                         mRecyclerView.setAdapter(mAdapter);
                                     }
+                                }else {
+                                    noData.setVisibility(View.VISIBLE);
+                                    mRefreshLayout.finishRefresh(true);
                                 }
                             } else {
                                 noData.setVisibility(View.VISIBLE);
