@@ -373,6 +373,4 @@ public interface NodeApi {
 
     @GET("/banner?type=1")
     Observable<BannerResponse> getBanner();
-
-
 }
