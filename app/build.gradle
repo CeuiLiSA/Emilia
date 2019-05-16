@@ -50,7 +50,6 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:2.0.1'
     implementation 'com.github.bumptech.glide:glide:3.8.0'
 
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
 
     implementation 'de.hdodenhof:circleimageview:3.0.0'
@@ -73,6 +72,8 @@ dependencies {
     implementation 'com.github.florent37:arclayout:1.0.3'
     implementation 'com.github.ybq:Android-SpinKit:1.2.0'
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+
     implementation 'com.shuyu:GSYVideoPlayer:6.0.3'
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'com.just.agentweb:agentweb:4.0.3-alpha@aar'
