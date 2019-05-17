@@ -19,6 +19,7 @@ import ceuilisa.mirai.activities.ViewPagerActivity;
 import ceuilisa.mirai.network.Listen;
 import ceuilisa.mirai.network.Retro;
 import ceuilisa.mirai.nodejs.BannerResponse;
+import ceuilisa.mirai.player.NotiUtil;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.DensityUtil;
 import ceuilisa.mirai.utils.TouchStopViewPager;
@@ -45,9 +46,11 @@ public class FragmentLeft extends BaseFragment {
     View initView(View v) {
         TextView textView = v.findViewById(R.id.textView7);
         textView.setOnClickListener(v12 -> {
-            Intent intent = new Intent(mContext, TemplateFragmentActivity.class);
-            intent.putExtra("dataType", "推荐歌单");
-            mContext.startActivity(intent);
+//            Intent intent = new Intent(mContext, TemplateFragmentActivity.class);
+//            intent.putExtra("dataType", "推荐歌单");
+//            mContext.startActivity(intent);
+
+            NotiUtil.showNotification(mContext);
         });
 
         TextView textView6 = v.findViewById(R.id.textView6);

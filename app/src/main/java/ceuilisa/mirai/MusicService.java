@@ -114,7 +114,7 @@ public class MusicService extends Service implements MusicOperate {
             state = STATE_EMPTY;
             return;
         }
-        if (nowPlayIndex == -1){ //初始化状态，nowPlay = -1, 则直接播放进来index的歌曲
+        if (nowPlayIndex == -1){ //初始化状态，nowPlay = -1, 则直接播放index的歌曲
             playPlay(index, onPrepare);
         } else {
             if(index == nowPlayIndex){//如果进来的index 和nowplayIndex 相同， 则检查歌曲ID
