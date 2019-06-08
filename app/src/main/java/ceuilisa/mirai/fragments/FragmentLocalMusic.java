@@ -1,8 +1,6 @@
 package ceuilisa.mirai.fragments;
 
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,25 +13,24 @@ import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.activities.MusicActivity;
 import ceuilisa.mirai.activities.TemplateFragmentActivity;
+import ceuilisa.mirai.activities.VideoPlayActivity;
 import ceuilisa.mirai.adapters.PlayListDetailAdapter;
+import ceuilisa.mirai.dialogs.LikeSongDialog;
 import ceuilisa.mirai.interf.OnItemClickListener;
-import ceuilisa.mirai.nodejs.SongDetailResponse;
 import ceuilisa.mirai.response.LocalMusic;
 import ceuilisa.mirai.response.TracksBean;
 import ceuilisa.mirai.utils.AppDatabase;
-import ceuilisa.mirai.utils.Common;
-import ceuilisa.mirai.utils.MusicLoaderCallback;
-import ceuilisa.mirai.utils.ScannerMusic;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
+import ceuilisa.mirai.utils.Channel;
 
 public class FragmentLocalMusic extends BaseFragment {
 
@@ -78,6 +75,23 @@ public class FragmentLocalMusic extends BaseFragment {
                 startActivity(intent);
             }
         });
+        adapter.setOnItemClickListener((view, position, viewType) -> {
+            if (viewType == 0) {
+                mChannel.setMusicList(allItems);
+                Intent intent = new Intent(mContext, MusicActivity.class);
+                intent.putExtra("index", position);
+                startActivity(intent);
+            } else if (viewType == 1) {
+                Intent intent = new Intent(mContext, VideoPlayActivity.class);
+                intent.putExtra("mv id", allItems.get(position).getMv());
+                intent.putExtra("dataType", "mv");
+                startActivity(intent);
+            } else if (viewType == 2) {
+                LikeSongDialog dialog = LikeSongDialog.newInstance(
+                        allItems.get(position));
+                dialog.show(getChildFragmentManager());
+            }
+        });
         mRecyclerView.setAdapter(adapter);
         mProgressBar.setVisibility(View.INVISIBLE);
     }
@@ -86,6 +100,7 @@ public class FragmentLocalMusic extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -104,6 +119,20 @@ public class FragmentLocalMusic extends BaseFragment {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(Channel channel) {
+        if (channel.getReceiver().equals(className)) {
+            initData();
+        }
+    }
+
 //    private void getLocalSongDetail(List<TracksBean> tracksBeans){
 //        String ids = "";
 //        for (int i = 0; i < tracksBeans.size(); i++) {

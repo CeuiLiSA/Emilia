@@ -41,8 +41,6 @@ public class MusicService extends Service implements MusicOperate {
     private AudioFocusManager audioFocusManager;
     private AudioManager mAudioManager;
 
-
-
     private int state = 0;
 
     public static final int STATE_EMPTY = 1;

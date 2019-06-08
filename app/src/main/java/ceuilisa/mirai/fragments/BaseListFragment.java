@@ -16,6 +16,7 @@ import java.util.List;
 import ceuilisa.mirai.R;
 import ceuilisa.mirai.interf.ListShow;
 import ceuilisa.mirai.utils.Common;
+import ceuilisa.mirai.utils.NetworkUtils;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -165,56 +166,63 @@ public abstract class BaseListFragment<Response extends ListShow<ListItem>,
      * 获取第一波数据
      */
     public void getFirstData() {
-        allItems.clear();
-        mApi = initApi();
-        if (mApi != null) {
-            mProgressBar.setVisibility(View.VISIBLE);
-            noData.setVisibility(View.INVISIBLE);
-            mApi.subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<Response>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
+        if (NetworkUtils.isNetworkAvailable(mContext)) {
+            allItems.clear();
+            mApi = initApi();
+            if (mApi != null) {
+                mProgressBar.setVisibility(View.VISIBLE);
+                noData.setVisibility(View.INVISIBLE);
+                mApi.subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<Response>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
 
-                        }
-
-                        @Override
-                        public void onNext(Response response) {
-                            if (response != null) {
-                                if (response.getList().size() != 0) {
-                                    allItems.clear();
-                                    allItems.addAll(response.getList());
-                                    initAdapter();
-                                    mRefreshLayout.finishRefresh(true);
-                                    noData.setVisibility(View.INVISIBLE);
-                                    if (mAdapter != null) {
-                                        mRecyclerView.setAdapter(mAdapter);
-                                    }
-                                }else {
-                                    noData.setVisibility(View.VISIBLE);
-                                    mRefreshLayout.finishRefresh(true);
-                                }
-                            } else {
-                                noData.setVisibility(View.VISIBLE);
-                                mRefreshLayout.finishRefresh(false);
                             }
-                            mProgressBar.setVisibility(View.INVISIBLE);
-                        }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            e.printStackTrace();
-                            noData.setVisibility(View.VISIBLE);
-                            mProgressBar.setVisibility(View.INVISIBLE);
-                            mRefreshLayout.finishRefresh(false);
-                            Common.showToast(e.toString());
-                        }
+                            @Override
+                            public void onNext(Response response) {
+                                if (response != null) {
+                                    if (response.getList().size() != 0) {
+                                        allItems.clear();
+                                        allItems.addAll(response.getList());
+                                        initAdapter();
+                                        mRefreshLayout.finishRefresh(true);
+                                        noData.setVisibility(View.INVISIBLE);
+                                        if (mAdapter != null) {
+                                            mRecyclerView.setAdapter(mAdapter);
+                                        }
+                                    } else {
+                                        noData.setVisibility(View.VISIBLE);
+                                        mRefreshLayout.finishRefresh(true);
+                                    }
+                                } else {
+                                    noData.setVisibility(View.VISIBLE);
+                                    mRefreshLayout.finishRefresh(false);
+                                }
+                                mProgressBar.setVisibility(View.INVISIBLE);
+                            }
 
-                        @Override
-                        public void onComplete() {
+                            @Override
+                            public void onError(Throwable e) {
+                                e.printStackTrace();
+                                noData.setVisibility(View.VISIBLE);
+                                mProgressBar.setVisibility(View.INVISIBLE);
+                                mRefreshLayout.finishRefresh(false);
+                                Common.showToast(e.toString());
+                            }
 
-                        }
-                    });
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
+            }
+        } else {
+            mProgressBar.setVisibility(View.INVISIBLE);
+            noData.setVisibility(View.VISIBLE);
+            mRefreshLayout.finishRefresh(false);
+            Common.showToast("请检查网络连接");
         }
     }
 
@@ -222,40 +230,47 @@ public abstract class BaseListFragment<Response extends ListShow<ListItem>,
      * 获取后续数据
      */
     public void getNextData() {
-        mApi = initApi();
-        if (mApi != null) {
-            mApi.subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<Response>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
+        if (NetworkUtils.isNetworkAvailable(mContext)) {
+            mApi = initApi();
+            if (mApi != null) {
+                mApi.subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<Response>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
 
-                        }
-
-                        @Override
-                        public void onNext(Response response) {
-                            if (response != null) {
-                                allItems.addAll(response.getList());
-                                mRefreshLayout.finishLoadMore(true);
-                                if (mAdapter != null) {
-                                    mAdapter.notifyDataSetChanged();
-                                }
-                            } else {
-                                mRefreshLayout.finishLoadMore(false);
                             }
-                        }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            mRefreshLayout.finishLoadMore(false);
-                            Common.showToast(e.toString());
-                        }
+                            @Override
+                            public void onNext(Response response) {
+                                if (response != null) {
+                                    allItems.addAll(response.getList());
+                                    mRefreshLayout.finishLoadMore(true);
+                                    if (mAdapter != null) {
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                } else {
+                                    mRefreshLayout.finishLoadMore(false);
+                                }
+                            }
 
-                        @Override
-                        public void onComplete() {
+                            @Override
+                            public void onError(Throwable e) {
+                                mRefreshLayout.finishLoadMore(false);
+                                Common.showToast(e.toString());
+                            }
 
-                        }
-                    });
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
+            }
+        } else {
+            mProgressBar.setVisibility(View.INVISIBLE);
+            noData.setVisibility(View.VISIBLE);
+            mRefreshLayout.finishRefresh(false);
+            Common.showToast("请检查网络连接");
         }
     }
 }

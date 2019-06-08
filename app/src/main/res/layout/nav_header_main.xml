@@ -28,20 +28,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_name"
-        android:layout_marginStart="@dimen/sixteen_dp"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:layout_above="@+id/email"
-        android:text="@string/nav_header_title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="@dimen/eight_dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/sixteen_dp"
         android:layout_marginBottom="@dimen/sixteen_dp"
-        android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content"
-        android:text="@string/nav_header_subtitle" />
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:text="@string/nav_header_title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 </RelativeLayout>

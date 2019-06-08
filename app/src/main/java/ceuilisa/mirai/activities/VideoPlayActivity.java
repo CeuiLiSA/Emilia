@@ -74,7 +74,6 @@ public class VideoPlayActivity extends BaseActivity {
             public void onClick(View v) {
                 orientationUtils.resolveByClick();
                 videoPlayer.startWindowFullscreen(mContext, false, false);
-                Common.showToast("WTF??");
             }
         });
         //是否可以滑动调整

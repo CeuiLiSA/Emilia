@@ -142,7 +142,15 @@ public class TracksBean {
     }
 
     public String getAlbumName() {
-        return albumName;
+        if(!TextUtils.isEmpty(albumName)) {
+            return albumName;
+        }else {
+            if(getAl() != null) {
+                return getAl().getName();
+            }else {
+                return "";
+            }
+        }
     }
 
     public void setAlbumName(String albumName) {
@@ -497,11 +505,11 @@ public class TracksBean {
 
     public String getContent(){
         String before = "";
-        before = before + name + " ";
-        before = before + getFullArtistName() + " ";
-        before = before + getAlbumName() + " ";
-        before = before + getAlia() + " ";
-        before = before + getFullAlia() + " ";
+        before += name + " ";
+        before += getFullArtistName() + " ";
+        before += getAlbumName() + " ";
+        before += getAlia() + " ";
+        before += getFullAlia() + " ";
         return before.toLowerCase();
     }
 }

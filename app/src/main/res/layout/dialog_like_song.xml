@@ -89,6 +89,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_marginStart="@dimen/sixteen_dp"
+        android:id="@+id/delete_divider"
         android:background="#e8e8e8"
         android:layout_height="1dp" />
 
@@ -96,6 +97,22 @@
         android:layout_width="wrap_content"
         android:id="@+id/delete"
         android:text="删除"
+        android:textColor="#313131"
+        android:layout_margin="@dimen/sixteen_dp"
+        android:textSize="16sp"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:background="#e8e8e8"
+        android:id="@+id/delete_divider_2"
+        android:layout_height="1dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/delete_local_file"
+        android:text="删除本地歌曲"
         android:textColor="#313131"
         android:layout_margin="@dimen/sixteen_dp"
         android:textSize="16sp"

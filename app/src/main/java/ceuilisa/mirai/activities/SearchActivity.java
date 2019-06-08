@@ -41,30 +41,35 @@ public class SearchActivity extends WithPanelActivity implements MaterialSearchB
                     if (searchType != 0) {
                         searchType = 0;
                         searchBar.setPlaceHolder(Constant.SEARCH_TYPE[searchType]);
+                        Common.showToast(Constant.SEARCH_TYPE[searchType]);
                     }
                     break;
                 case R.id.search_singer:
                     if (searchType != 1) {
                         searchType = 1;
                         searchBar.setPlaceHolder(Constant.SEARCH_TYPE[searchType]);
+                        Common.showToast(Constant.SEARCH_TYPE[searchType]);
                     }
                     break;
                 case R.id.search_album:
                     if (searchType != 2) {
                         searchType = 2;
                         searchBar.setPlaceHolder(Constant.SEARCH_TYPE[searchType]);
+                        Common.showToast(Constant.SEARCH_TYPE[searchType]);
                     }
                     break;
                 case R.id.search_playlist:
                     if (searchType != 3) {
                         searchType = 3;
                         searchBar.setPlaceHolder(Constant.SEARCH_TYPE[searchType]);
+                        Common.showToast(Constant.SEARCH_TYPE[searchType]);
                     }
                     break;
                 case R.id.search_user:
                     if (searchType != 4) {
                         searchType = 4;
                         searchBar.setPlaceHolder(Constant.SEARCH_TYPE[searchType]);
+                        Common.showToast(Constant.SEARCH_TYPE[searchType]);
                     }
                     break;
                 default:

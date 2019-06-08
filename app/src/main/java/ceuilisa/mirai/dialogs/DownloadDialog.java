@@ -55,8 +55,7 @@ public class DownloadDialog extends DialogFragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_download, null);
         mProgressBar = view.findViewById(R.id.progress);
         TextView textView = view.findViewById(R.id.song_size);
-        textView.setText(String.format("这将会占用%s的存储空间，是否继续？", FileUtil.convertFileSize(
-                mTracksBean.getH().getSize())));
+        textView.setText(String.format("这将会占用%s的存储空间，是否继续？", "一定"));
         view.findViewById(R.id.download_now).setOnClickListener(v -> startDownload());
         view.findViewById(R.id.cancel).setOnClickListener(v -> mAlertDialog.dismiss());
         builder.setView(view);

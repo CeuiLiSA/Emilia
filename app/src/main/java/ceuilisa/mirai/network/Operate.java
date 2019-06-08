@@ -237,4 +237,8 @@ public class Operate {
             }
         }.execute();
     }
+
+    public static void deleteLocalFile(){
+
+    }
 }
