@@ -85,6 +85,7 @@
             android:textColor="#616161"
             android:layout_marginTop="@dimen/four_dp"
             android:layout_marginBottom="@dimen/eight_dp"
+            android:inputType="textPassword"
             android:id="@+id/wangyiyun_id"
             android:layout_marginStart="@dimen/sixteen_dp"
             android:layout_below="@+id/s_wangyiyun_id"

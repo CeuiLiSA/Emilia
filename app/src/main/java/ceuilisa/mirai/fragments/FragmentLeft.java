@@ -26,6 +26,7 @@ import ceuilisa.mirai.utils.TouchStopViewPager;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
+
 public class FragmentLeft extends BaseFragment {
 
     private TouchStopViewPager mViewPager;
@@ -145,6 +146,11 @@ public class FragmentLeft extends BaseFragment {
         scrollHandler.post(runnable);
     }
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 
     Runnable runnable = new Runnable() {
         @Override

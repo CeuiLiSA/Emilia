@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
 
@@ -26,14 +27,6 @@
             android:name=".activities.ArtistActivity"
             android:label="@string/title_activity_artist"
             android:theme="@style/AppTheme"></activity>
-
-
-        <receiver android:name=".utils.StatusBarReceiver">
-            <intent-filter>
-                <action android:name="me.wcy.music.STATUS_BAR_ACTIONS" />
-            </intent-filter>
-        </receiver>
-
 
 
         <service
@@ -67,6 +60,11 @@
         <activity android:name=".activities.UserDetailActivity" />
         <activity android:name=".activities.TemplateFragmentActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged|adjustPan"/>
+
+
+
+
+
         <activity android:name=".activities.VideoPlayActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>

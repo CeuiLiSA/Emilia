@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
+import com.shuyu.gsyvideoplayer.player.IjkPlayerManager;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
@@ -26,6 +27,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 public class VideoPlayActivity extends BaseActivity {
 
@@ -56,10 +58,17 @@ public class VideoPlayActivity extends BaseActivity {
         mProgressBar = findViewById(R.id.progress_bar);
         mToolbar = findViewById(R.id.toolbar_help);
         mToolbar.setNavigationOnClickListener(v -> finish());
+        IjkPlayerManager.setLogLevel(IjkMediaPlayer.IJK_LOG_SILENT);
         //增加封面
         cover = new ImageView(this);
         cover.setScaleType(ImageView.ScaleType.CENTER_CROP);
         cover.setImageResource(R.color.colorPrimary);
+        orientationUtils = new OrientationUtils(this, videoPlayer);
+//初始化不打开外部的旋转
+        orientationUtils.setEnable(false);
+
+
+
         videoPlayer.setThumbImageView(cover);
         //增加title
         videoPlayer.getTitleTextView().setVisibility(View.GONE);
@@ -67,13 +76,13 @@ public class VideoPlayActivity extends BaseActivity {
         videoPlayer.getBackButton().setVisibility(View.GONE);
         //设置旋转
         orientationUtils = new OrientationUtils(this, videoPlayer);
-        orientationUtils.setEnable(true);
         //设置全屏按键功能,这是使用的是选择屏幕，而不是全屏
         videoPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 orientationUtils.resolveByClick();
-                videoPlayer.startWindowFullscreen(mContext, false, false);
+
+                videoPlayer.startWindowFullscreen(mContext, false, true);
             }
         });
         //是否可以滑动调整
@@ -214,13 +223,12 @@ public class VideoPlayActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        //先返回正常状态
-        if (orientationUtils.getScreenType() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-            videoPlayer.getFullscreenButton().performClick();
+        if (orientationUtils != null) {
+            orientationUtils.backToProtVideo();
+        }
+        if (GSYVideoManager.backFromWindowFull(this)) {
             return;
         }
-        //释放所有
-        videoPlayer.setVideoAllCallBack(null);
         super.onBackPressed();
     }
 }

@@ -29,6 +29,7 @@ import ceuilisa.mirai.interf.OnPrepared;
 import ceuilisa.mirai.nodejs.LoginResponse;
 import ceuilisa.mirai.utils.Common;
 import ceuilisa.mirai.utils.Local;
+import ceuilisa.mirai.utils.ShareApp;
 
 public class MainActivity extends WithPanelActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -165,7 +166,22 @@ public class MainActivity extends WithPanelActivity implements NavigationView.On
             Intent intent = new Intent(mContext, SettingsActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_share) {
+            new ShareApp(mContext) {
+                @Override
+                public void onPrepare() {
 
+                }
+
+                @Override
+                public void onExecuteSuccess(Void aVoid) {
+
+                }
+
+                @Override
+                public void onExecuteFail(Exception e) {
+
+                }
+            }.execute();
         } else if (id == R.id.nav_send) {
 //            Intent intent = new Intent(mContext, TemplateFragmentActivity.class);
 //            intent.putExtra("dataType", "项目主页");

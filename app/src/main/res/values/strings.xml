@@ -119,5 +119,6 @@
     <string name="playlist_remove_item">PlayListDetailActivity remove item</string>
     <string name="unknown" >未知</string>
     <string name="share_music">我用%1$s分享了歌曲《%2$s》%3$s</string>
+    <string name="share_app">Emilia是一款已开源的界面精美的网络播放器，项目主页%1$s，快来看看吧</string>
     <string name="share">分享</string>
 </resources>
